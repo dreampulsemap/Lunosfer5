@@ -379,6 +379,8 @@
     <string name="editor_select_clip_first">Önce bir klip seç</string>
     <string name="editor_speed_format">Hız: %1$.1fx</string>
     <string name="editor_clip_volume_format">Klip sesi: %1$d%%</string>
+    <string name="editor_delete_clip_description">Klibi sil</string>
+    <string name="editor_duration_format">Süre: %1$.1fsn</string>
     <string name="editor_new_reel_title">Yeni bir reels başlat</string>
     <string name="editor_new_reel_subtitle">Milyonlarca stok video ve görselden seç</string>
     <string name="editor_pixabay_button">Pixabay\'den Seç</string>
