@@ -361,6 +361,8 @@
     <string name="editor_select_clip_first">Сначала выберите клип</string>
     <string name="editor_speed_format">Скорость: %1$.1fx</string>
     <string name="editor_clip_volume_format">Громкость клипа: %1$d%%</string>
+    <string name="editor_delete_clip_description">Удалить клип</string>
+    <string name="editor_duration_format">Длительность: %1$.1fс</string>
     <string name="editor_new_reel_title">Создать новый reel</string>
     <string name="editor_new_reel_subtitle">Выбирайте из миллионов стоковых видео и изображений</string>
     <string name="editor_pixabay_button">Выбрать из Pixabay</string>
