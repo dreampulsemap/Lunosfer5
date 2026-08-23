@@ -439,6 +439,8 @@
     <string name="editor_select_clip_first">Select a clip first</string>
     <string name="editor_speed_format">Speed: %1$.1fx</string>
     <string name="editor_clip_volume_format">Clip volume: %1$d%%</string>
+    <string name="editor_delete_clip_description">Delete clip</string>
+    <string name="editor_duration_format">Duration: %1$.1fs</string>
     <string name="editor_new_reel_title">Start a new reel</string>
     <string name="editor_new_reel_subtitle">Choose from millions of stock videos and images</string>
     <string name="editor_pixabay_button">Choose from Pixabay</string>
