@@ -1,5 +1,6 @@
 package io.lunosfer.dreamap.ui.components
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -364,13 +365,30 @@ fun PixabayMediaPickerDialog(
                                         ?: hit.videos?.small?.thumbnail?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.medium?.thumbnail?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.large?.thumbnail?.takeIf { it.isNotBlank() }
+                                        ?: hit.thumbnailUrl?.takeIf { it.isNotBlank() }
+                                        ?: hit.thumbnail?.takeIf { it.isNotBlank() }
+                                        ?: hit.previewUrl?.takeIf { it.isNotBlank() }
                                         ?: if (!hit.picture_id.isNullOrBlank()) "https://i.vimeocdn.com/video/${hit.picture_id}_295x166.jpg" else ""
                                     val videoUrl = hit.videos?.medium?.url?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.large?.url?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.small?.url?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.tiny?.url?.takeIf { it.isNotBlank() }
+                                        ?: hit.videoUrl?.takeIf { it.isNotBlank() }
                                         ?: ""
                                     val tagsStr = hit.tags.joinToString(", ")
+
+                                    if (thumb.isBlank() && videoUrl.isBlank()) {
+                                        // "videos" nesnesi (ve olası flatten yedek alanlar) tamamen boş geldi.
+                                        // Bu genelde backend'deki /api/pixabay/search-videos route'unun
+                                        // Pixabay'in döndüğü "videos" alanını client'a iletmediğinin işaretidir.
+                                        LaunchedEffect(hit.id) {
+                                            Log.w(
+                                                "PixabayPicker",
+                                                "Video hit #${hit.id} (\"$tagsStr\") için thumbnail/url bulunamadı. " +
+                                                    "hit.videos=${hit.videos}"
+                                            )
+                                        }
+                                    }
 
                                     Box(
                                         modifier = Modifier
@@ -427,6 +445,19 @@ fun PixabayMediaPickerDialog(
                                                 contentScale = ContentScale.Crop,
                                                 modifier = Modifier.fillMaxSize()
                                             )
+                                        } else {
+                                            // Thumbnail bulunamadı — düz siyah kutu yerine görünür bir yer tutucu göster
+                                            Box(
+                                                modifier = Modifier.fillMaxSize(),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                Icon(
+                                                    Icons.Default.Videocam,
+                                                    contentDescription = null,
+                                                    tint = Color.White.copy(alpha = 0.25f),
+                                                    modifier = Modifier.size(26.dp)
+                                                )
+                                            }
                                         }
 
                                         // Dark gradient overlay
