@@ -360,6 +360,8 @@
     <string name="editor_select_clip_first">先にクリップを選択してください</string>
     <string name="editor_speed_format">速度: %1$.1fx</string>
     <string name="editor_clip_volume_format">クリップ音量: %1$d%%</string>
+    <string name="editor_delete_clip_description">クリップを削除</string>
+    <string name="editor_duration_format">長さ: %1$.1f秒</string>
     <string name="editor_new_reel_title">新しいリールを作成</string>
     <string name="editor_new_reel_subtitle">何百万ものストック動画・画像から選択</string>
     <string name="editor_pixabay_button">Pixabayから選択</string>
