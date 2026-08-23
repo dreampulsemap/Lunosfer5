@@ -267,6 +267,19 @@ class VideoEditorViewModel(application: Application) : AndroidViewModel(applicat
         _state.value = _state.value.copy(clips = _state.value.clips.map { if (it.id == clipId) it.copy(speed = speed) else it })
     }
 
+    /** Yalnızca IMAGE tipi klipler için süre (görüntülenme süresi) ayarlar. */
+    fun setClipDuration(clipId: String, durationMs: Long) {
+        val clamped = durationMs.coerceIn(MIN_IMAGE_DURATION_MS, MAX_IMAGE_DURATION_MS)
+        _state.value = _state.value.copy(
+            clips = _state.value.clips.map { clip ->
+                if (clip.id == clipId && clip.type == ClipType.IMAGE) {
+                    clip.copy(trimEndMs = clip.trimStartMs + clamped)
+                } else clip
+            }
+        )
+        rebuildTimeline()
+    }
+
     fun setClipVolume(clipId: String, volume: Float) {
         _state.value = _state.value.copy(clips = _state.value.clips.map { if (it.id == clipId) it.copy(volume = volume) else it })
     }
