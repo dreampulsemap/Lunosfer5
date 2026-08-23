@@ -362,6 +362,8 @@
     <string name="editor_select_clip_first">请先选择一个片段</string>
     <string name="editor_speed_format">速度：%1$.1fx</string>
     <string name="editor_clip_volume_format">片段音量：%1$d%%</string>
+    <string name="editor_delete_clip_description">删除片段</string>
+    <string name="editor_duration_format">时长：%1$.1f秒</string>
     <string name="editor_new_reel_title">开始制作新的 Reel</string>
     <string name="editor_new_reel_subtitle">从数百万个素材视频和图片中选择</string>
     <string name="editor_pixabay_button">从 Pixabay 选择</string>
