@@ -10,7 +10,8 @@ import java.util.UUID
 
 enum class ClipType { VIDEO, IMAGE }
 
-const val DEFAULT_IMAGE_DURATION_MS = 5_000L
+const val DEFAULT_IMAGE_DURATION_MS = 2_000L
+const val MIN_IMAGE_DURATION_MS = 1_000L
 const val MAX_IMAGE_DURATION_MS = 30_000L
 
 data class MediaClip(
