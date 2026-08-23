@@ -43,6 +43,7 @@ fun ToolPanelSheet(
     onMusicVolumeChange: (Float) -> Unit,
     onSpeedChange: (Float) -> Unit,
     onVolumeChange: (Float) -> Unit,
+    onDurationChange: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -54,7 +55,7 @@ fun ToolPanelSheet(
             EditorTool.FILTERS -> FilterRow(selectedFilterId = selectedClip?.filterId ?: "none", onSelect = onFilterSelect)
             EditorTool.TEXT -> TextComposer(onAddText = onAddText)
             EditorTool.MUSIC -> MusicPane(musicTrack, onPickMusic, onRemoveMusic, onMusicVolumeChange)
-            EditorTool.ADJUST -> AdjustPane(selectedClip, onSpeedChange, onVolumeChange)
+            EditorTool.ADJUST -> AdjustPane(selectedClip, onSpeedChange, onVolumeChange, onDurationChange)
             EditorTool.NONE -> {}
         }
     }
@@ -137,16 +138,32 @@ private fun MusicPane(musicTrack: MusicTrack?, onPick: () -> Unit, onRemove: () 
 }
 
 @Composable
-private fun AdjustPane(selectedClip: MediaClip?, onSpeedChange: (Float) -> Unit, onVolumeChange: (Float) -> Unit) {
+private fun AdjustPane(
+    selectedClip: MediaClip?,
+    onSpeedChange: (Float) -> Unit,
+    onVolumeChange: (Float) -> Unit,
+    onDurationChange: (Long) -> Unit,
+) {
     if (selectedClip == null) {
         Text(stringResource(R.string.editor_select_clip_first), color = Color.White.copy(alpha = 0.7f), modifier = Modifier.padding(horizontal = 16.dp))
         return
     }
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
-        Text(stringResource(R.string.editor_speed_format, selectedClip.speed), color = Color.White, style = MaterialTheme.typography.labelMedium)
-        Slider(value = selectedClip.speed, onValueChange = onSpeedChange, valueRange = 0.5f..2f, colors = SliderDefaults.colors(thumbColor = BrandPrimary500, activeTrackColor = BrandPrimary500))
-        Spacer(Modifier.height(8.dp))
-        Text(stringResource(R.string.editor_clip_volume_format, (selectedClip.volume * 100).toInt()), color = Color.White, style = MaterialTheme.typography.labelMedium)
-        Slider(value = selectedClip.volume, onValueChange = onVolumeChange, colors = SliderDefaults.colors(thumbColor = BrandPrimary500, activeTrackColor = BrandPrimary500))
+        if (selectedClip.type == ClipType.IMAGE) {
+            val durationSeconds = selectedClip.trimmedDurationMs / 1000f
+            Text(stringResource(R.string.editor_duration_format, durationSeconds), color = Color.White, style = MaterialTheme.typography.labelMedium)
+            Slider(
+                value = durationSeconds,
+                onValueChange = { onDurationChange((it * 1000L).toLong()) },
+                valueRange = (MIN_IMAGE_DURATION_MS / 1000f)..(MAX_IMAGE_DURATION_MS / 1000f),
+                colors = SliderDefaults.colors(thumbColor = BrandPrimary500, activeTrackColor = BrandPrimary500),
+            )
+        } else {
+            Text(stringResource(R.string.editor_speed_format, selectedClip.speed), color = Color.White, style = MaterialTheme.typography.labelMedium)
+            Slider(value = selectedClip.speed, onValueChange = onSpeedChange, valueRange = 0.5f..2f, colors = SliderDefaults.colors(thumbColor = BrandPrimary500, activeTrackColor = BrandPrimary500))
+            Spacer(Modifier.height(8.dp))
+            Text(stringResource(R.string.editor_clip_volume_format, (selectedClip.volume * 100).toInt()), color = Color.White, style = MaterialTheme.typography.labelMedium)
+            Slider(value = selectedClip.volume, onValueChange = onVolumeChange, colors = SliderDefaults.colors(thumbColor = BrandPrimary500, activeTrackColor = BrandPrimary500))
+        }
     }
 }

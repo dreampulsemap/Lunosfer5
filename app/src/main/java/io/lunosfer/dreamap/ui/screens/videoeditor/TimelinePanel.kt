@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material3.Icon
@@ -37,6 +38,7 @@ fun TimelinePanel(
     selectedClipId: String?,
     onClipClick: (String) -> Unit,
     onAddClick: () -> Unit,
+    onDeleteClip: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -68,6 +70,25 @@ fun TimelinePanel(
                     tint = Color.White.copy(alpha = 0.9f),
                     modifier = Modifier.size(16.dp),
                 )
+                if (selected) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(2.dp)
+                            .size(18.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(Color.Black.copy(alpha = 0.75f))
+                            .clickable { onDeleteClip(clip.id) },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            Icons.Filled.Close,
+                            contentDescription = stringResource(R.string.editor_delete_clip_description),
+                            tint = Color.White,
+                            modifier = Modifier.size(12.dp),
+                        )
+                    }
+                }
             }
         }
         Box(

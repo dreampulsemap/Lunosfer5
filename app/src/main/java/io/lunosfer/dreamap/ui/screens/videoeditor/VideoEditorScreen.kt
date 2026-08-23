@@ -195,6 +195,7 @@ fun VideoEditorScreen(
                     onMusicVolumeChange = viewModel::setMusicVolume,
                     onSpeedChange = { speed -> state.selectedClipId?.let { viewModel.setClipSpeed(it, speed) } },
                     onVolumeChange = { vol -> state.selectedClipId?.let { viewModel.setClipVolume(it, vol) } },
+                    onDurationChange = { durationMs -> state.selectedClipId?.let { viewModel.setClipDuration(it, durationMs) } },
                 )
             }
 
@@ -220,6 +221,7 @@ fun VideoEditorScreen(
                     selectedClipId = state.selectedClipId,
                     onClipClick = viewModel::selectClip,
                     onAddClick = { showPixabayDialog = true }, // timeline'a + de birincil olarak Pixabay'i açar
+                    onDeleteClip = viewModel::removeClip,
                 )
             }
         }
