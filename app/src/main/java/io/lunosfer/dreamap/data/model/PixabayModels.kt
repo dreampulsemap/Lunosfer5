@@ -103,7 +103,14 @@ data class PixabayVideoHit(
     val duration: Int = 0,
     val user: String = "",
     val picture_id: String? = null,
-    val videos: PixabayVideoDetailsMap? = null
+    val videos: PixabayVideoDetailsMap? = null,
+    // Backend bazen (özellikle web tarafı için sadeleştirilmiş) düz alanlar
+    // dönebiliyor. "videos" nesnesi boş/eksik gelirse bu alanlar yedek
+    // olarak kullanılır — bkz. PixabayMediaPickerDialog thumb/videoUrl.
+    val videoUrl: String? = null,
+    val thumbnailUrl: String? = null,
+    val thumbnail: String? = null,
+    val previewUrl: String? = null
 )
 
 @Serializable
