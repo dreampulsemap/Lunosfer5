@@ -360,6 +360,8 @@
     <string name="editor_select_clip_first">Sélectionne d\'abord un clip</string>
     <string name="editor_speed_format">Vitesse : %1$.1fx</string>
     <string name="editor_clip_volume_format">Volume du clip : %1$d%%</string>
+    <string name="editor_delete_clip_description">Supprimer le clip</string>
+    <string name="editor_duration_format">Durée : %1$.1fs</string>
     <string name="editor_new_reel_title">Créer un nouveau reel</string>
     <string name="editor_new_reel_subtitle">Choisis parmi des millions de vidéos et images libres de droits</string>
     <string name="editor_pixabay_button">Choisir depuis Pixabay</string>
