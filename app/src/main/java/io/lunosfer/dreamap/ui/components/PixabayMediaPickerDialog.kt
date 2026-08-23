@@ -365,22 +365,21 @@ fun PixabayMediaPickerDialog(
                                         ?: hit.videos?.small?.thumbnail?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.medium?.thumbnail?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.large?.thumbnail?.takeIf { it.isNotBlank() }
-                                        ?: hit.thumbnailUrl?.takeIf { it.isNotBlank() }
-                                        ?: hit.thumbnail?.takeIf { it.isNotBlank() }
-                                        ?: hit.previewUrl?.takeIf { it.isNotBlank() }
+                                        ?: hit.thumbnailURL?.takeIf { it.isNotBlank() }
                                         ?: if (!hit.picture_id.isNullOrBlank()) "https://i.vimeocdn.com/video/${hit.picture_id}_295x166.jpg" else ""
                                     val videoUrl = hit.videos?.medium?.url?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.large?.url?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.small?.url?.takeIf { it.isNotBlank() }
                                         ?: hit.videos?.tiny?.url?.takeIf { it.isNotBlank() }
-                                        ?: hit.videoUrl?.takeIf { it.isNotBlank() }
+                                        ?: hit.downloadURL?.takeIf { it.isNotBlank() }
+                                        ?: hit.previewURL?.takeIf { it.isNotBlank() }
                                         ?: ""
                                     val tagsStr = hit.tags.joinToString(", ")
 
                                     if (thumb.isBlank() && videoUrl.isBlank()) {
-                                        // "videos" nesnesi (ve olası flatten yedek alanlar) tamamen boş geldi.
-                                        // Bu genelde backend'deki /api/pixabay/search-videos route'unun
-                                        // Pixabay'in döndüğü "videos" alanını client'a iletmediğinin işaretidir.
+                                        // "videos" nesnesi de düz previewURL/downloadURL/thumbnailURL
+                                        // alanları da boş geldi — bu artık gerçek bir edge-case
+                                        // (ör. Pixabay'de o video için thumbnail hiç yoksa).
                                         LaunchedEffect(hit.id) {
                                             Log.w(
                                                 "PixabayPicker",
