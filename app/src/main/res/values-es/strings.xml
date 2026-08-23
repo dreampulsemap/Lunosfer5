@@ -361,6 +361,8 @@
     <string name="editor_select_clip_first">Selecciona primero un clip</string>
     <string name="editor_speed_format">Velocidad: %1$.1fx</string>
     <string name="editor_clip_volume_format">Volumen del clip: %1$d%%</string>
+    <string name="editor_delete_clip_description">Eliminar clip</string>
+    <string name="editor_duration_format">Duración: %1$.1fs</string>
     <string name="editor_new_reel_title">Crea un nuevo reel</string>
     <string name="editor_new_reel_subtitle">Elige entre millones de videos e imágenes de stock</string>
     <string name="editor_pixabay_button">Elegir de Pixabay</string>
