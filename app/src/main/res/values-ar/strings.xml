@@ -362,6 +362,8 @@
     <string name="editor_select_clip_first">اختر مقطعًا أولاً</string>
     <string name="editor_speed_format">السرعة: %1$.1fx</string>
     <string name="editor_clip_volume_format">صوت المقطع: %1$d%%</string>
+    <string name="editor_delete_clip_description">حذف المقطع</string>
+    <string name="editor_duration_format">المدة: %1$.1f ث</string>
     <string name="editor_new_reel_title">ابدأ ريلز جديد</string>
     <string name="editor_new_reel_subtitle">اختر من ملايين الفيديوهات والصور الجاهزة</string>
     <string name="editor_pixabay_button">الاختيار من Pixabay</string>
