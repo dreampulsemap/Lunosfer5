@@ -1,0 +1,28 @@
+--- app/src/main/java/io/lunosfer/dreamap/ui/screens/AuthScreen.kt
++++ app/src/main/java/io/lunosfer/dreamap/ui/screens/AuthScreen.kt
+@@ -232,7 +232,10 @@
+                     onClick = {
+                         coroutineScope.launch {
+                             try {
+-                                supabaseClient.auth.signInWith(Google)
++                                val url = supabaseClient.auth.getOAuthUrl(
++                                    provider = Google,
++                                    redirectUrl = "io.lunosfer.dreamap://auth-callback"
++                                )
++                                context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url)))
+                             } catch (e: Exception) {
+                                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                             }
+@@ -250,7 +253,10 @@
+                     onClick = {
+                         coroutineScope.launch {
+                             try {
+-                                supabaseClient.auth.signInWith(Github)
++                                val url = supabaseClient.auth.getOAuthUrl(
++                                    provider = Github,
++                                    redirectUrl = "io.lunosfer.dreamap://auth-callback"
++                                )
++                                context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url)))
+                             } catch (e: Exception) {
+                                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                             }

@@ -1,0 +1,930 @@
+package io.lunosfer.dreamap.ui.screens
+
+import android.widget.Toast
+import io.lunosfer.dreamap.R
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material.icons.outlined.ModeComment
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
+import io.github.jan.supabase.auth.auth
+import io.lunosfer.dreamap.data.model.Goal
+import io.lunosfer.dreamap.data.model.GoalComment
+import io.lunosfer.dreamap.data.model.MicroGoal
+import io.lunosfer.dreamap.data.model.PixabaySelectedMedia
+import io.lunosfer.dreamap.supabase.supabaseClient
+import io.lunosfer.dreamap.ui.components.PixabayMediaPickerDialog
+import io.lunosfer.dreamap.ui.theme.*
+import io.lunosfer.dreamap.ui.viewmodel.GoalDetailUiState
+import io.lunosfer.dreamap.ui.viewmodel.GoalDetailViewModel
+
+@Composable
+fun GoalDetailScreen(
+    goalId: String,
+    onBack: () -> Unit,
+    onUserClick: ((String) -> Unit)? = null,
+    onOpenReelsEditor: ((String) -> Unit)? = null,
+    onWatchVideo: ((String) -> Unit)? = null,
+    onWatchSlides: ((String) -> Unit)? = null,
+    onEditSlides: ((String) -> Unit)? = null
+) {
+    val factory = remember(goalId) { GoalDetailViewModel.Factory(goalId) }
+    val viewModel: GoalDetailViewModel = viewModel(factory = factory)
+    val state by viewModel.state.collectAsState()
+    val context = LocalContext.current
+    val currentUserId = supabaseClient.auth.currentUserOrNull()?.id
+
+    LaunchedEffect(state) {
+        val s = state as? GoalDetailUiState.Success
+        if (s?.actionError != null) {
+            Toast.makeText(context, s.actionError, Toast.LENGTH_SHORT).show()
+            viewModel.clearActionError()
+        }
+        if (s?.actionMessage != null) {
+            Toast.makeText(context, s.actionMessage, Toast.LENGTH_SHORT).show()
+            viewModel.clearActionMessage()
+        }
+    }
+
+    Scaffold(
+        containerColor = Void950
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .padding(padding)
+                .fillMaxSize()
+        ) {
+            when (val s = state) {
+                is GoalDetailUiState.Loading -> {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center), color = AstralGold)
+                }
+                is GoalDetailUiState.Error -> {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = s.message, color = SemanticDanger400)
+                        Spacer(Modifier.height(16.dp))
+                        OutlinedButton(
+                            onClick = { viewModel.loadGoal() },
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = AstralGold)
+                        ) {
+                            Text(stringResource(R.string.goal_detail_retry))
+                        }
+                    }
+                }
+                is GoalDetailUiState.Success -> {
+                    GoalDetailContent(
+                        state = s,
+                        currentUserId = currentUserId,
+                        onBack = onBack,
+                        onUserClick = onUserClick,
+                        onOpenReelsEditor = onOpenReelsEditor,
+                        onWatchVideo = onWatchVideo,
+                        onWatchSlides = onWatchSlides,
+                        onEditSlides = onEditSlides,
+                        onToggleSave = viewModel::toggleSave,
+                        onGiveMana = viewModel::giveMana,
+                        onRemoveMana = viewModel::removeMana,
+                        onAddComment = viewModel::addComment,
+                        onDeleteComment = viewModel::deleteComment,
+                        onUpdateStatus = { status, story, onComplete ->
+                            viewModel.updateStatus(status, story, onComplete)
+                        },
+                        onDeleteGoal = { viewModel.deleteGoal(onSuccess = onBack) },
+                        onGenerateCover = viewModel::generateCover,
+                        onAddPixabayImage = viewModel::addPixabayImage,
+                        onAddMultiplePixabayMedias = viewModel::addMultiplePixabayMedias,
+                        onAddUrlImage = viewModel::addUrlImage,
+                        onRemoveImage = viewModel::removeImage,
+                        onTranslateText = viewModel::translate
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+private fun GoalDetailContent(
+    state: GoalDetailUiState.Success,
+    currentUserId: String?,
+    onBack: () -> Unit,
+    onUserClick: ((String) -> Unit)?,
+    onOpenReelsEditor: ((String) -> Unit)?,
+    onWatchVideo: ((String) -> Unit)? = null,
+    onWatchSlides: ((String) -> Unit)? = null,
+    onEditSlides: ((String) -> Unit)? = null,
+    onToggleSave: () -> Unit,
+    onGiveMana: (Int) -> Unit,
+    onRemoveMana: () -> Unit,
+    onAddComment: (String) -> Unit,
+    onDeleteComment: (String) -> Unit,
+    onUpdateStatus: (String, String?, () -> Unit) -> Unit,
+    onDeleteGoal: () -> Unit,
+    onGenerateCover: () -> Unit = {},
+    onAddPixabayImage: (Long, String, String, String) -> Unit = { _, _, _, _ -> },
+    onAddMultiplePixabayMedias: (List<PixabaySelectedMedia>) -> Unit = {},
+    onAddUrlImage: (String) -> Unit = {},
+    onRemoveImage: (String) -> Unit = {},
+    onTranslateText: (String, (String) -> Unit) -> Unit = { _, _ -> }
+) {
+    val goal = state.goal
+    val isOwner = currentUserId != null && currentUserId == goal.userId
+    var showStatusDialog by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var showCommentsSection by remember { mutableStateOf(true) }
+    var showPixabayDialog by remember { mutableStateOf(false) }
+    var showUrlDialog by remember { mutableStateOf(false) }
+    var urlInputText by remember { mutableStateOf("") }
+    var translatedDesc by remember { mutableStateOf<String?>(null) }
+    var isTranslatingDesc by remember { mutableStateOf(false) }
+
+    if (showPixabayDialog) {
+        PixabayMediaPickerDialog(
+            onDismissRequest = { showPixabayDialog = false },
+            onImageSelected = { pixabayId, imageUrl, tags, user ->
+                showPixabayDialog = false
+                onAddPixabayImage(pixabayId, imageUrl, tags, user)
+            },
+            onVideoSelected = { pixabayId, videoUrl, tags, user, _ ->
+                showPixabayDialog = false
+                onAddPixabayImage(pixabayId, videoUrl, tags, user)
+            },
+            onMultipleMediaSelected = { items ->
+                showPixabayDialog = false
+                onAddMultiplePixabayMedias(items)
+            }
+        )
+    }
+
+    if (showUrlDialog) {
+        AlertDialog(
+            onDismissRequest = { showUrlDialog = false },
+            containerColor = Void900,
+            title = { Text(stringResource(R.string.goal_detail_add_image_url), color = AstralGold, fontSize = 16.sp) },
+            text = {
+                OutlinedTextField(
+                    value = urlInputText,
+                    onValueChange = { urlInputText = it },
+                    placeholder = { Text(stringResource(R.string.goal_detail_url_placeholder), color = Color.Gray, fontSize = 12.sp) },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = AstralGold,
+                        unfocusedBorderColor = Color.Gray,
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (urlInputText.isNotBlank()) {
+                            onAddUrlImage(urlInputText.trim())
+                            urlInputText = ""
+                            showUrlDialog = false
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = AetherViolet)
+                ) {
+                    Text(stringResource(R.string.goal_detail_add), color = Color.White)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showUrlDialog = false }) {
+                    Text(stringResource(R.string.goal_detail_cancel), color = Color.Gray)
+                }
+            }
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        // Top Nav Bar
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = Color.White)
+            }
+            Text(
+                text = stringResource(R.string.goal_detail_title),
+                color = AstralGold,
+                style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
+            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onToggleSave) {
+                    Icon(
+                        imageVector = if (state.hasSaved) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
+                        contentDescription = null,
+                        tint = AstralGold
+                    )
+                }
+                if (isOwner) {
+                    IconButton(onClick = { showDeleteDialog = true }) {
+                        Icon(Icons.Filled.Delete, contentDescription = null, tint = SemanticDanger400)
+                    }
+                }
+            }
+        }
+
+        // Main Goal Card
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(containerColor = Void900),
+            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.1f))
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                // Cover Image if present
+                if (!goal.coverImageUrl.isNullOrBlank()) {
+                    AsyncImage(
+                        model = goal.coverImageUrl,
+                        contentDescription = goal.title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                    )
+                }
+
+                // "Vizyonu İzle" — video varsa VisionVideoPlayer'a, yoksa
+                // (eski/video'suz vizyon) slayt fallback'ine gider. Web'deki
+                // GoalDetailModal.jsx'teki tek giriş noktasıyla aynı mantık.
+                val hasVideo = !goal.visionVideoUrl.isNullOrBlank()
+                val hasSlides = (goal.slideCount ?: 0) > 0
+                if ((hasVideo && onWatchVideo != null) || (!hasVideo && hasSlides && onWatchSlides != null)) {
+                    Button(
+                        onClick = {
+                            if (hasVideo) onWatchVideo?.invoke(goal.id) else onWatchSlides?.invoke(goal.id)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary500)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.goal_detail_watch_vision),
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 1.sp
+                        )
+                    }
+                }
+
+                // Cover & Gallery Management Bar (Owner)
+                if (isOwner) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        AssistChip(
+                            onClick = onGenerateCover,
+                            label = { Text(stringResource(R.string.goal_detail_ai_cover), fontSize = 10.sp, color = AstralGold) },
+                            colors = AssistChipDefaults.assistChipColors(containerColor = Void800)
+                        )
+                        AssistChip(
+                            onClick = { showPixabayDialog = true },
+                            label = { Text(stringResource(R.string.goal_detail_pixabay), fontSize = 10.sp, color = Color.White) },
+                            colors = AssistChipDefaults.assistChipColors(containerColor = Void800)
+                        )
+                        AssistChip(
+                            onClick = { showUrlDialog = true },
+                            label = { Text(stringResource(R.string.goal_detail_url_label), fontSize = 10.sp, color = Color.White) },
+                            colors = AssistChipDefaults.assistChipColors(containerColor = Void800)
+                        )
+                        if (onOpenReelsEditor != null) {
+                            AssistChip(
+                                onClick = { onOpenReelsEditor(goal.id) },
+                                label = {
+                                    Text(
+                                        stringResource(
+                                            if (goal.visionVideoUrl.isNullOrBlank()) R.string.goalDetail_addReel else R.string.goalDetail_editReel
+                                        ),
+                                        fontSize = 10.sp, color = BrandPrimary500
+                                    )
+                                },
+                                colors = AssistChipDefaults.assistChipColors(containerColor = Void800)
+                            )
+                        }
+                        if (onEditSlides != null) {
+                            AssistChip(
+                                onClick = { onEditSlides(goal.id) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.goal_detail_edit_slides),
+                                        fontSize = 10.sp, color = AstralGold
+                                    )
+                                },
+                                colors = AssistChipDefaults.assistChipColors(containerColor = Void800)
+                            )
+                        }
+                        if (!goal.coverImageUrl.isNullOrBlank()) {
+                            AssistChip(
+                                onClick = { onRemoveImage(goal.coverImageUrl) },
+                                label = { Text("\uD83D\uDDD1\uFE0F", fontSize = 10.sp, color = SemanticDanger400) },
+                                colors = AssistChipDefaults.assistChipColors(containerColor = Void800)
+                            )
+                        }
+                    }
+                }
+
+                // Author Info Row
+                if (goal.owner != null || goal.userId.isNotBlank()) {
+                    Row(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable { if (onUserClick != null && goal.userId.isNotBlank()) onUserClick(goal.userId) }
+                            .padding(vertical = 2.dp, horizontal = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        if (!goal.owner?.avatarUrl.isNullOrBlank()) {
+                            AsyncImage(
+                                model = goal.owner?.avatarUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .clip(CircleShape)
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .clip(CircleShape)
+                                    .background(AstralGold.copy(alpha = 0.2f)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = goal.owner?.nameOrFallback?.take(1)?.uppercase() ?: "?",
+                                    color = AstralGold,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                        Text(
+                            text = goal.owner?.nameOrFallback ?: "@${goal.userId.take(8)}",
+                            color = AstralGold,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+
+                // Header Row: Status Badge & Believers
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    val statusText = when (goal.status) {
+                        "completed" -> stringResource(R.string.goal_detail_status_completed)
+                        "abandoned" -> stringResource(R.string.goal_detail_status_abandoned)
+                        else -> stringResource(R.string.goal_detail_status_active)
+                    }
+                    val statusBg = when (goal.status) {
+                        "completed" -> SemanticSuccess500
+                        "abandoned" -> Color(0xFF6B7280)
+                        else -> AetherViolet
+                    }
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(50))
+                            .background(statusBg.copy(alpha = 0.2f))
+                            .border(BorderStroke(0.5.dp, statusBg), shape = RoundedCornerShape(50))
+                            .padding(horizontal = 10.dp, vertical = 4.dp)
+                    ) {
+                        Text(
+                            text = statusText,
+                            color = statusBg,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Icon(Icons.Filled.Star, contentDescription = null, tint = AstralGold, modifier = Modifier.size(16.dp))
+                        Text(stringResource(R.string.goal_detail_mana_count, state.believersCount), color = AstralGold, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    }
+                }
+
+                // Title
+                Text(
+                    text = goal.title,
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontFamily = SerifFontFamily,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+
+                // Description
+                if (!goal.description.isNullOrBlank()) {
+                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(
+                            text = goal.description,
+                            color = Color(0xFFCBD5E1),
+                            fontSize = 14.sp,
+                            lineHeight = 20.sp
+                        )
+                        // Translate option
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            TextButton(
+                                onClick = {
+                                    if (translatedDesc == null) {
+                                        isTranslatingDesc = true
+                                        onTranslateText(goal.description) { res ->
+                                            isTranslatingDesc = false
+                                            translatedDesc = res
+                                        }
+                                    } else {
+                                        translatedDesc = null
+                                    }
+                                }
+                            ) {
+                                Text(
+                                    text = if (isTranslatingDesc) stringResource(R.string.goal_detail_translating)
+                                        else if (translatedDesc != null) stringResource(R.string.goal_detail_see_original)
+                                        else stringResource(R.string.goal_detail_translate),
+                                    color = AstralGold,
+                                    fontSize = 11.sp
+                                )
+                            }
+                        }
+                        if (translatedDesc != null) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Void800)
+                                    .padding(8.dp)
+                            ) {
+                                Text(
+                                    text = translatedDesc ?: "",
+                                    color = Color.LightGray,
+                                    fontSize = 13.sp,
+                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Target Date
+                if (!goal.targetDate.isNullOrBlank()) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Icon(Icons.Filled.CalendarToday, contentDescription = null, tint = AstralGold, modifier = Modifier.size(14.dp))
+                        Text(
+                            text = stringResource(R.string.goal_detail_target_date, goal.targetDate.take(10)),
+                            color = Color(0xFF94A3B8),
+                            fontSize = 12.sp
+                        )
+                    }
+                }
+
+                // Progress Bar
+                val progress = (goal.completionPercentage?.toFloat() ?: 0f) / 100f
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(stringResource(R.string.goal_detail_progress), color = Color.Gray, fontSize = 11.sp)
+                        Text(stringResource(R.string.goal_detail_percentage, goal.completionPercentage?.toInt() ?: 0), color = AstralGold, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    }
+                    LinearProgressIndicator(
+                        progress = { progress.coerceIn(0f, 1f) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(6.dp)
+                            .clip(RoundedCornerShape(50)),
+                        color = AstralGold,
+                        trackColor = Void800
+                    )
+                }
+
+                // Micro Goals / Roadmap
+                val microGoals = goal.microGoals
+                if (!microGoals.isNullOrEmpty()) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        stringResource(R.string.goal_detail_roadmap, microGoals.count { it.isCompleted }, microGoals.size),
+                        color = AstralGold, fontSize = 13.sp, fontWeight = FontWeight.Bold
+                    )
+                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        microGoals.forEach { mg ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Icon(
+                                    imageVector = if (mg.isCompleted) Icons.Filled.CheckCircle else Icons.Filled.RadioButtonUnchecked,
+                                    contentDescription = null,
+                                    tint = if (mg.isCompleted) AstralGold else Color.Gray,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Text(
+                                    text = mg.title,
+                                    color = if (mg.isCompleted) Color.Gray else Color.White,
+                                    fontSize = 13.sp
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Owner Info Row
+                val owner = goal.owner
+                if (owner != null) {
+                    Divider(color = Color.White.copy(alpha = 0.08f), modifier = Modifier.padding(vertical = 4.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        if (!owner.avatarUrl.isNullOrBlank()) {
+                            AsyncImage(
+                                model = owner.avatarUrl,
+                                contentDescription = owner.nameOrFallback,
+                                modifier = Modifier
+                                    .size(28.dp)
+                                    .clip(CircleShape)
+                            )
+                        }
+                        Text(stringResource(R.string.goal_detail_owner, owner.nameOrFallback), color = Color.Gray, fontSize = 12.sp)
+                    }
+                }
+            }
+        }
+
+        // Action Buttons Row (Owner: Update Status | Non-Owner: Give/Remove Mana)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            if (isOwner && goal.status == "active") {
+                Button(
+                    onClick = { showStatusDialog = true },
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(containerColor = AetherViolet)
+                ) {
+                    Text(stringResource(R.string.goal_detail_update_status_btn), fontSize = 13.sp, color = Color.White)
+                }
+            } else if (!isOwner && goal.status == "active") {
+                if (!state.hasReacted) {
+                    Button(
+                        onClick = { onGiveMana(1) },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(containerColor = AstralGold)
+                    ) {
+                        Icon(Icons.Filled.Star, contentDescription = null, tint = Void950, modifier = Modifier.size(16.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text(stringResource(R.string.goal_detail_give_mana), color = Void950, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                    }
+                } else {
+                    OutlinedButton(
+                        onClick = onRemoveMana,
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = AstralGold),
+                        border = BorderStroke(1.dp, AstralGold)
+                    ) {
+                        Text(stringResource(R.string.goal_detail_remove_mana), fontSize = 12.sp)
+                    }
+                }
+            }
+        }
+
+        // Comments Section
+        GoalCommentsView(
+            comments = state.comments,
+            isLoading = state.isLoadingComments,
+            isSubmitting = state.isSubmittingComment,
+            currentUserId = currentUserId,
+            onAddComment = onAddComment,
+            onDeleteComment = onDeleteComment
+        )
+    }
+
+    // Status Update Dialog
+    if (showStatusDialog) {
+        UpdateGoalStatusDialog(
+            onDismiss = { showStatusDialog = false },
+            onConfirm = { status, story ->
+                onUpdateStatus(status, story) { showStatusDialog = false }
+            }
+        )
+    }
+
+    // Delete Goal Dialog
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            containerColor = Void900,
+            title = { Text(stringResource(R.string.goal_detail_delete_title), color = Color.White) },
+            text = { Text(stringResource(R.string.goal_detail_delete_confirm), color = Color.LightGray) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteDialog = false
+                        onDeleteGoal()
+                    }
+                ) {
+                    Text(stringResource(R.string.goal_detail_delete_btn), color = SemanticDanger400)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text(stringResource(R.string.goal_detail_cancel), color = Color.Gray)
+                }
+            }
+        )
+    }
+}
+
+@Composable
+private fun GoalCommentsView(
+    comments: List<GoalComment>,
+    isLoading: Boolean,
+    isSubmitting: Boolean,
+    currentUserId: String?,
+    onAddComment: (String) -> Unit,
+    onDeleteComment: (String) -> Unit
+) {
+    var commentText by remember { mutableStateOf("") }
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Void900),
+        border = BorderStroke(1.dp, Color.White.copy(alpha = 0.1f))
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(14.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.goal_detail_comments_count, comments.size),
+                color = AstralGold,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
+            )
+            if (isLoading) {
+                CircularProgressIndicator(
+                    color = AstralGold,
+                    modifier = Modifier.size(24.dp).align(Alignment.CenterHorizontally)
+                )
+            } else if (comments.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.goal_detail_no_comments),
+                    color = Color.Gray,
+                    fontSize = 12.sp
+                )
+            } else {
+                comments.forEach { comment ->
+                    GoalCommentRow(
+                        comment = comment,
+                        currentUserId = currentUserId,
+                        onDelete = { onDeleteComment(comment.id) }
+                    )
+                }
+            }
+            // Input Row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                OutlinedTextField(
+                    value = commentText,
+                    onValueChange = { if (it.length <= 1000) commentText = it },
+                    placeholder = { Text(stringResource(R.string.goal_detail_comment_placeholder), color = Color.Gray, fontSize = 12.sp) },
+                    modifier = Modifier.weight(1f),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = AstralGold,
+                        unfocusedBorderColor = Void800,
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
+                )
+                IconButton(
+                    onClick = {
+                        if (commentText.isNotBlank()) {
+                            onAddComment(commentText)
+                            commentText = ""
+                        }
+                    },
+                    enabled = !isSubmitting && commentText.isNotBlank(),
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(if (commentText.isNotBlank()) AstralGold else Void800)
+                ) {
+                    if (isSubmitting) {
+                        CircularProgressIndicator(color = Void950, modifier = Modifier.size(18.dp))
+                    } else {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Send,
+                            contentDescription = null,
+                            tint = Void950,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun GoalCommentRow(
+    comment: GoalComment,
+    currentUserId: String?,
+    onDelete: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(10.dp))
+            .background(Void800.copy(alpha = 0.5f))
+            .padding(10.dp),
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        val avatarUrl = comment.userProfile?.avatarUrl
+        if (!avatarUrl.isNullOrBlank()) {
+            AsyncImage(
+                model = avatarUrl,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(28.dp)
+                    .clip(CircleShape)
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .size(28.dp)
+                    .clip(CircleShape)
+                    .background(AstralGold.copy(alpha = 0.3f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = comment.userProfile?.nameOrFallback?.take(1)?.uppercase() ?: "?",
+                    color = AstralGold,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = comment.userProfile?.nameOrFallback ?: stringResource(R.string.goal_detail_default_user),
+                color = AstralGold,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(
+                text = comment.content,
+                color = Color.White,
+                fontSize = 12.sp
+            )
+        }
+        if (currentUserId != null && currentUserId == comment.userId) {
+            IconButton(
+                onClick = onDelete,
+                modifier = Modifier.size(24.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = null,
+                    tint = Color.Gray,
+                    modifier = Modifier.size(14.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun UpdateGoalStatusDialog(
+    onDismiss: () -> Unit,
+    onConfirm: (status: String, story: String?) -> Unit
+) {
+    var selectedStatus by remember { mutableStateOf("completed") }
+    var storyText by remember { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Void900,
+        title = { Text(stringResource(R.string.goal_detail_update_status_title), color = Color.White, fontWeight = FontWeight.Bold) },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Text(stringResource(R.string.goal_detail_select_outcome), color = Color.LightGray, fontSize = 13.sp)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilterChip(
+                        selected = selectedStatus == "completed",
+                        onClick = { selectedStatus = "completed" },
+                        label = { Text(stringResource(R.string.goal_detail_completed_chip), fontSize = 12.sp) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = SemanticSuccess500,
+                            selectedLabelColor = Color.White
+                        )
+                    )
+                    FilterChip(
+                        selected = selectedStatus == "abandoned",
+                        onClick = { selectedStatus = "abandoned" },
+                        label = { Text(stringResource(R.string.goal_detail_abandoned_chip), fontSize = 12.sp) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = Color(0xFF6B7280),
+                            selectedLabelColor = Color.White
+                        )
+                    )
+                }
+                OutlinedTextField(
+                    value = storyText,
+                    onValueChange = { if (it.length <= 2000) storyText = it },
+                    label = { Text(if (selectedStatus == "completed") stringResource(R.string.goal_detail_victory_story) else stringResource(R.string.goal_detail_abandon_reason)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 3,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = AstralGold,
+                        unfocusedBorderColor = Void800,
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirm(selectedStatus, storyText.trim().ifEmpty { null })
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = AstralGold)
+            ) {
+                Text(stringResource(R.string.goal_detail_update_btn), color = Void950, fontWeight = FontWeight.Bold)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.goal_detail_cancel), color = Color.Gray)
+            }
+        }
+    )
+}
