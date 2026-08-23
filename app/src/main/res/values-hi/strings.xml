@@ -362,6 +362,8 @@
     <string name="editor_select_clip_first">पहले एक क्लिप चुनें</string>
     <string name="editor_speed_format">गति: %1$.1fx</string>
     <string name="editor_clip_volume_format">क्लिप वॉल्यूम: %1$d%%</string>
+    <string name="editor_delete_clip_description">क्लिप हटाएं</string>
+    <string name="editor_duration_format">अवधि: %1$.1f सेकंड</string>
     <string name="editor_new_reel_title">नया रील शुरू करें</string>
     <string name="editor_new_reel_subtitle">लाखों स्टॉक वीडियो और इमेज में से चुनें</string>
     <string name="editor_pixabay_button">Pixabay से चुनें</string>
