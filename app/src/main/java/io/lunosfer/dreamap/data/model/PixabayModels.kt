@@ -104,13 +104,14 @@ data class PixabayVideoHit(
     val user: String = "",
     val picture_id: String? = null,
     val videos: PixabayVideoDetailsMap? = null,
-    // Backend bazen (özellikle web tarafı için sadeleştirilmiş) düz alanlar
-    // dönebiliyor. "videos" nesnesi boş/eksik gelirse bu alanlar yedek
-    // olarak kullanılır — bkz. PixabayMediaPickerDialog thumb/videoUrl.
-    val videoUrl: String? = null,
-    val thumbnailUrl: String? = null,
-    val thumbnail: String? = null,
-    val previewUrl: String? = null
+    // Gerçek backend şekli (web: pages/api/pixabay/search-videos.js) "videos"
+    // nesnesini değil düz alanlar döner: previewURL/downloadURL birer .mp4
+    // (web tarafı bunları <video> ile oynatıyor), thumbnailURL ise statik
+    // poster JPG (backend'e az önce eklendi — önceden hiç dönmüyordu, bu
+    // yüzden Android'de video kartları siyah ve seçilemez kalıyordu).
+    val previewURL: String? = null,
+    val downloadURL: String? = null,
+    val thumbnailURL: String? = null
 )
 
 @Serializable
