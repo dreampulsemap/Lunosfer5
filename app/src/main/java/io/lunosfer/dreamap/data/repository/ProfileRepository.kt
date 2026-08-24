@@ -29,7 +29,7 @@ class ProfileRepository {
         // Fallback to public-profile API
         val res = api.getPublicProfile(userId = userId, page = 0)
         val p = res.profile
-            ?: throw Exception("Profil bulunamadı")
+            ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_not_found))
         FullUserProfile(
             id = p.id,
             username = p.username,
@@ -63,7 +63,7 @@ class ProfileRepository {
         try {
             val res = api.updateProfile(request)
             if (!res.success) {
-                throw Exception(res.error ?: res.message ?: "Profil güncellenemedi")
+                throw Exception(res.error ?: res.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_update_failed))
             }
             res.profile ?: FullUserProfile(id = request.userId)
         } catch (e: HttpException) {
@@ -102,9 +102,9 @@ class ProfileRepository {
             } catch (_: Exception) {}
         }
         return when (e.code()) {
-            409 -> "Bu kullanıcı adı zaten başka bir kullanıcı tarafından kullanılıyor."
-            400 -> "Profil bilgileri geçersiz. Lütfen kontrol edip tekrar deneyin."
-            else -> "Profil güncellenirken bir hata oluştu (${e.code()})."
+            409 -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_username_taken)
+            400 -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_invalid_data)
+            else -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_update_generic).format(e.code())
         }
     }
 }

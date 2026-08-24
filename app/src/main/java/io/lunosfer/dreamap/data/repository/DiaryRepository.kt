@@ -28,7 +28,7 @@ class DiaryRepository {
 
     suspend fun createEntry(input: CreateDiaryInput): Result<DiaryEntry> = runCatching {
         val res = api.createDiaryEntry(input)
-        res.entry ?: throw Exception(res.error ?: "Girdi oluşturulamadı")
+        res.entry ?: throw Exception(res.error ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.diary_error_entry_create_failed))
     }
 
     suspend fun deleteEntry(entryId: String): Result<Unit> = runCatching {

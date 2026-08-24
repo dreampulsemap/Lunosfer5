@@ -51,10 +51,10 @@ class MessagesRepository {
         fileName: String
     ): Result<String> = runCatching {
         val userId = supabaseClient.auth.currentUserOrNull()?.id
-            ?: throw IllegalStateException("Yüklemek için giriş yapmış olmalısınız.")
+            ?: throw IllegalStateException(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.messages_error_login_required_upload))
 
         val bytes = context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
-            ?: throw IllegalStateException("Dosya okunamadı.")
+            ?: throw IllegalStateException(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.messages_error_file_read))
 
         val storagePath = "$userId/${UUID.randomUUID()}-$fileName"
 

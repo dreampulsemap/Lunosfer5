@@ -27,7 +27,7 @@ class VisionRepository {
         if (res.goal == null && res.error != null) {
             throw Exception(res.error)
         }
-        res.goal ?: throw Exception("Vizyon oluşturulamadı")
+        res.goal ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_create_failed))
     }
 
     suspend fun updateGoalStatus(goalId: String, status: String, story: String? = null): Result<Goal> = runCatching {
@@ -35,7 +35,7 @@ class VisionRepository {
         if (res.goal == null && res.error != null) {
             throw Exception(res.error)
         }
-        res.goal ?: throw Exception("Durum güncellenemedi")
+        res.goal ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_status_update_failed))
     }
 
     suspend fun deleteGoal(goalId: String): Result<Unit> = runCatching {
@@ -107,12 +107,12 @@ class VisionRepository {
 
     suspend fun createGoalSlide(goalId: String, imageUrl: String, caption: String? = null, durationSeconds: Int? = null): Result<GoalSlide> = runCatching {
         val res = api.createGoalSlide(CreateSlideRequest(goalId, imageUrl, caption, durationSeconds))
-        res.slide ?: throw Exception(res.error ?: "Slayt oluşturulamadı")
+        res.slide ?: throw Exception(res.error ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_create_slide))
     }
 
     suspend fun updateGoalSlide(request: UpdateSlideRequest): Result<GoalSlide> = runCatching {
         val res = api.updateGoalSlide(request)
-        res.slide ?: throw Exception(res.error ?: "Slayt güncellenemedi")
+        res.slide ?: throw Exception(res.error ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_slide_update_failed))
     }
 
     suspend fun reorderGoalSlides(goalId: String, orderedSlideIds: List<String>): Result<Unit> = runCatching {
@@ -157,7 +157,7 @@ class VisionRepository {
         if (res.ok == false && res.error != null) {
             throw Exception(res.error)
         }
-        res.coverImageUrl ?: res.url ?: throw Exception("Kapak görseli üretilemedi")
+        res.coverImageUrl ?: res.url ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_cover_image_generate_failed))
     }
 
     suspend fun addGoalImageFromPixabay(
@@ -228,7 +228,7 @@ class VisionRepository {
     suspend fun generateDailySeed(goalId: String, lang: String = "tr"): Result<DailySeedItem?> = runCatching {
         val res = api.generateDailySeed(GenerateSeedRequest(goalId, lang))
         if (res.ok == false) {
-            throw Exception("Tohum üretilemedi")
+            throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_seed_generate_failed))
         }
         res.seed
     }

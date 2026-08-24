@@ -13,7 +13,7 @@ class FriendsRepository {
     suspend fun sendFriendRequest(userId: String, friendId: String): Result<FriendRequestResponse> = runCatching {
         val res = api.sendFriendRequest(FriendRequestInput(userId = userId, friendId = friendId))
         if (!res.success && res.error != null) {
-            throw Exception(res.error ?: res.message ?: "Takip isteği gönderilemedi")
+            throw Exception(res.error ?: res.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_error_follow_request_failed))
         }
         res
     }
@@ -21,7 +21,7 @@ class FriendsRepository {
     suspend fun respondToFriendRequest(friendshipId: String, userId: String, action: String): Result<FriendRespondResponse> = runCatching {
         val res = api.respondToFriendRequest(FriendRespondInput(friendshipId = friendshipId, userId = userId, action = action))
         if (!res.success && res.error != null) {
-            throw Exception(res.error ?: res.message ?: "İşlem başarısız")
+            throw Exception(res.error ?: res.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed))
         }
         res
     }
