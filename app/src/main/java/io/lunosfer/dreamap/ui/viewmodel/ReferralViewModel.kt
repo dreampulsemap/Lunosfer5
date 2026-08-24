@@ -66,7 +66,7 @@ class ReferralViewModel(
                 }
                 .onFailure { err ->
                     _isClaiming.value = false
-                    _claimError.value = err.message ?: "Davet kodu kullanılamadı"
+                    _claimError.value = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.referral_error_code_invalid)
                 }
         }
     }

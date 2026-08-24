@@ -80,7 +80,7 @@ class PublicProfileViewModel(
                 } else {
                     val current = _state.value as? PublicProfileUiState.Success
                     if (current != null) {
-                        _state.value = current.copy(isLoadingMore = false, actionError = err.message ?: "Daha fazla yüklenemedi")
+                        _state.value = current.copy(isLoadingMore = false, actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.public_profile_error_load_more))
                     }
                 }
             }
@@ -102,14 +102,14 @@ class PublicProfileViewModel(
             repository.sendFriendRequest(userId = uid, friendId = userId).onSuccess { res ->
                 val latest = _state.value as? PublicProfileUiState.Success ?: return@onSuccess
                 val newStatus = res.status ?: "pending"
-                val msg = if (newStatus == "accepted") "Takip edildi" else "Takip isteği gönderildi"
+                val msg = if (newStatus == "accepted") io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_msg_followed) else io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_msg_follow_requested)
                 _state.value = latest.copy(
                     friendshipStatus = newStatus,
                     actionMessage = msg
                 )
             }.onFailure { err ->
                 val latest = _state.value as? PublicProfileUiState.Success ?: return@onFailure
-                _state.value = latest.copy(actionError = err.message ?: "Takip isteği gönderilemedi")
+                _state.value = latest.copy(actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_error_follow_request_failed))
             }
         }
     }

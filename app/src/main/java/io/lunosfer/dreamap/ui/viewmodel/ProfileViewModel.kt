@@ -106,11 +106,11 @@ class ProfileViewModel(
         val current = _state.value as? ProfileUiState.Content ?: return
 
         if (username.isNotBlank() && (username.length < 3 || username.length > 32)) {
-            _state.value = current.copy(actionError = "Kullanıcı adı 3 ile 32 karakter arasında olmalıdır.")
+            _state.value = current.copy(actionError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_username_length))
             return
         }
         if (displayName.length > 60) {
-            _state.value = current.copy(actionError = "Görünen ad en fazla 60 karakter olabilir.")
+            _state.value = current.copy(actionError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_display_name_length))
             return
         }
 
@@ -140,13 +140,13 @@ class ProfileViewModel(
                     profile = updatedProfile,
                     isSavingProfile = false,
                     isEditModalOpen = false,
-                    actionMessage = "Profil başarıyla güncellendi."
+                    actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_success_updated)
                 )
             }.onFailure { err ->
                 val latest = _state.value as? ProfileUiState.Content ?: return@onFailure
                 _state.value = latest.copy(
                     isSavingProfile = false,
-                    actionError = err.message ?: "Profil güncellenemedi."
+                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_update_failed)
                 )
             }
         }
@@ -190,7 +190,7 @@ class ProfileViewModel(
                     _state.value = latest.copy(
                         isDeletingAccount = false,
                         isDeleteAccountDialogOpen = false,
-                        actionError = err.message ?: "Hesap silinemedi. Lütfen tekrar deneyin."
+                        actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_delete_account_failed)
                     )
                 }
         }

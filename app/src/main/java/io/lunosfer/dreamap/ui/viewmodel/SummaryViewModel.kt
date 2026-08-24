@@ -49,7 +49,7 @@ class SummaryViewModel(
                     else _monthlySummaryState.value = SummaryUiState.Success(summary)
                 }
                 .onFailure { err ->
-                    val errorMsg = err.message ?: "Özet yüklenemedi"
+                    val errorMsg = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.summary_error_load)
                     if (periodType == "weekly") _weeklySummaryState.value = SummaryUiState.Error(errorMsg)
                     else _monthlySummaryState.value = SummaryUiState.Error(errorMsg)
                 }
@@ -70,7 +70,7 @@ class SummaryViewModel(
                 }
                 .onFailure { err ->
                     _isGenerating.value = false
-                    val errorMsg = err.message ?: "Özet oluşturulamadı"
+                    val errorMsg = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.summary_error_create)
                     if (periodType == "weekly") _weeklySummaryState.value = SummaryUiState.Error(errorMsg)
                     else _monthlySummaryState.value = SummaryUiState.Error(errorMsg)
                 }

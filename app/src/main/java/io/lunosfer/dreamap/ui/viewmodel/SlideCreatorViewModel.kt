@@ -75,17 +75,17 @@ class SlideCreatorViewModel(
             try {
                 val bytes = context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
                 if (bytes == null || bytes.isEmpty()) {
-                    setError("Görsel okunamadı.")
+                    setError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_image_read))
                     return@launch
                 }
                 val fileName = "slide_${System.currentTimeMillis()}.jpg"
                 repository.uploadSlideImage(bytes, fileName).onSuccess { url ->
                     createSlideWithImage(imageUrl = url, durationSeconds = DEFAULT_IMAGE_DURATION_SECONDS)
                 }.onFailure { err ->
-                    setError(err.message ?: "Yükleme başarısız oldu.")
+                    setError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
                 }
             } catch (e: Exception) {
-                setError(e.message ?: "Yükleme başarısız oldu.")
+                setError(e.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
             }
         }
     }
@@ -109,7 +109,7 @@ class SlideCreatorViewModel(
             try {
                 val sizeBytes = context.contentResolver.openFileDescriptor(uri, "r")?.use { it.statSize } ?: -1L
                 if (sizeBytes > MAX_VIDEO_BYTES) {
-                    setError("Video çok büyük (en fazla ${MAX_VIDEO_BYTES / (1024 * 1024)} MB).")
+                    setError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_video_too_large).format(MAX_VIDEO_BYTES / (1024 * 1024)))
                     return@launch
                 }
 
@@ -117,17 +117,17 @@ class SlideCreatorViewModel(
 
                 val bytes = context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
                 if (bytes == null || bytes.isEmpty()) {
-                    setError("Video okunamadı.")
+                    setError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_video_read))
                     return@launch
                 }
                 val fileName = "slide_${System.currentTimeMillis()}.mp4"
                 repository.uploadSlideImage(bytes, fileName).onSuccess { url ->
                     createSlideWithImage(imageUrl = url, durationSeconds = durationSeconds)
                 }.onFailure { err ->
-                    setError(err.message ?: "Yükleme başarısız oldu.")
+                    setError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
                 }
             } catch (e: Exception) {
-                setError(e.message ?: "Yükleme başarısız oldu.")
+                setError(e.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
             }
         }
     }
@@ -215,7 +215,7 @@ class SlideCreatorViewModel(
             ).onSuccess { styled -> finishCreate(styled) }
                 .onFailure { finishCreate(created) } // stil kaydı başarısız olsa da slayt zaten var, düzenleyiciden tekrar denenebilir
         }.onFailure { err ->
-            setError(err.message ?: "Slayt oluşturulamadı.")
+            setError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_create_slide))
         }
     }
 

@@ -81,7 +81,7 @@ class AddFriendViewModel(
                 val latest = _state.value as? AddFriendUiState.Content ?: return@onFailure
                 _state.value = latest.copy(
                     isSearching = false,
-                    actionError = err.message ?: "Arama yapılamadı"
+                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.add_friend_error_search_failed)
                 )
             }
         }
@@ -100,14 +100,14 @@ class AddFriendViewModel(
                         user.copy(friendshipStatus = newStatus)
                     } else user
                 }
-                val msg = if (newStatus == "accepted") "Takip edildi" else "Takip isteği gönderildi"
+                val msg = if (newStatus == "accepted") io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_msg_followed) else io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_msg_follow_requested)
                 _state.value = latest.copy(
                     searchResults = updatedResults,
                     actionMessage = msg
                 )
             }.onFailure { err ->
                 val latest = _state.value as? AddFriendUiState.Content ?: return@onFailure
-                _state.value = latest.copy(actionError = err.message ?: "İstek gönderilemedi")
+                _state.value = latest.copy(actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_error_request_failed))
             }
         }
     }
@@ -120,14 +120,14 @@ class AddFriendViewModel(
             repository.respondToFriendRequest(friendshipId = friendshipId, userId = uid, action = action).onSuccess {
                 val latest = _state.value as? AddFriendUiState.Content ?: return@onSuccess
                 val updatedPending = latest.pendingRequests.filterNot { it.id == friendshipId }
-                val msg = if (action == "accepted") "Takip isteği kabul edildi" else "İstek reddedildi"
+                val msg = if (action == "accepted") io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_msg_request_accepted) else io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_msg_request_declined)
                 _state.value = latest.copy(
                     pendingRequests = updatedPending,
                     actionMessage = msg
                 )
             }.onFailure { err ->
                 val latest = _state.value as? AddFriendUiState.Content ?: return@onFailure
-                _state.value = latest.copy(actionError = err.message ?: "İşlem gerçekleştirilemedi")
+                _state.value = latest.copy(actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.add_friend_error_action_failed))
             }
         }
     }

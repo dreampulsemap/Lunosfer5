@@ -71,7 +71,7 @@ class NotificationsViewModel(
                 val latest = _state.value as? NotificationsUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     isMarkingRead = false,
-                    actionError = err.message ?: "Okundu işaretlenemedi"
+                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.notifications_error_mark_read)
                 )
                 onComplete()
             }

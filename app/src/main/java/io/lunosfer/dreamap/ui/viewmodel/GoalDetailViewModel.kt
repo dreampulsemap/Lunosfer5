@@ -108,13 +108,13 @@ class GoalDetailViewModel(
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onSuccess
                 _state.value = latest.copy(
                     hasSaved = isSaved,
-                    actionMessage = if (isSaved) "Vizyon kaydedildi" else "Kayıt kaldırıldı"
+                    actionMessage = if (isSaved) io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_saved) else io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_unsaved)
                 )
             }.onFailure { err ->
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     hasSaved = wasSaved,
-                    actionError = err.message ?: "Kayıt işlemi başarısız"
+                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_save_failed)
                 )
             }
         }
@@ -134,7 +134,7 @@ class GoalDetailViewModel(
         viewModelScope.launch {
             repository.giveMana(goalId, amount).onSuccess { res ->
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onSuccess
-                val msg = "Vizyona Mana aktarıldı! (Kalan Mana: ${res.manaBalance ?: "—"})"
+                val msg = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_mana_transferred).format(res.manaBalance ?: "—")
                 _state.value = latest.copy(actionMessage = msg)
             }.onFailure { err ->
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
@@ -168,13 +168,13 @@ class GoalDetailViewModel(
         viewModelScope.launch {
             repository.removeMana(goalId).onSuccess {
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onSuccess
-                _state.value = latest.copy(actionMessage = "Mana reaksiyonu kaldırıldı")
+                _state.value = latest.copy(actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_mana_reaction_removed))
             }.onFailure { err ->
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     hasReacted = wasReacted,
                     believersCount = oldCount,
-                    actionError = err.message ?: "İşlem başarısız"
+                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)
                 )
             }
         }
@@ -222,16 +222,16 @@ class GoalDetailViewModel(
                 if (current != null) {
                     _state.value = current.copy(
                         goal = updatedGoal,
-                        actionMessage = "Vizyon durumu güncellendi"
+                        actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_status_updated)
                     )
                 }
                 onComplete()
             }.onFailure { err ->
                 val msg = err.message ?: ""
                 val errText = when {
-                    msg.contains("not_owner", ignoreCase = true) || msg.contains("403") -> "Bu işlem için yetkiniz yok"
-                    msg.contains("goal_already_resolved", ignoreCase = true) -> "Tamamlanmış veya bırakılmış bir hedef değiştirilemez"
-                    else -> err.message ?: "Durum güncellenemedi"
+                    msg.contains("not_owner", ignoreCase = true) || msg.contains("403") -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_not_authorized)
+                    msg.contains("goal_already_resolved", ignoreCase = true) -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_resolved_immutable)
+                    else -> err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_status_update_failed)
                 }
                 setActionError(errText)
             }
@@ -243,7 +243,7 @@ class GoalDetailViewModel(
             repository.deleteGoal(goalId).onSuccess {
                 onSuccess()
             }.onFailure { err ->
-                setActionError(err.message ?: "Silme işlemi başarısız")
+                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_delete_failed))
             }
         }
     }
@@ -257,11 +257,11 @@ class GoalDetailViewModel(
                 .onSuccess { newUrl ->
                     _state.value = current.copy(
                         goal = current.goal.copy(coverImageUrl = newUrl),
-                        actionMessage = "Yapay zeka kapak görseli oluşturuldu"
+                        actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_ai_cover_created)
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: "Kapak üretilemedi")
+                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_cover_generate_failed))
                 }
         }
     }
@@ -273,11 +273,11 @@ class GoalDetailViewModel(
                 .onSuccess { newUrl ->
                     _state.value = current.copy(
                         goal = current.goal.copy(coverImageUrl = newUrl),
-                        actionMessage = "Görsel eklendi"
+                        actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_image_added)
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: "Görsel eklenemedi")
+                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_add_failed))
                 }
         }
     }
@@ -315,11 +315,11 @@ class GoalDetailViewModel(
                 .onSuccess { newUrl ->
                     _state.value = current.copy(
                         goal = current.goal.copy(coverImageUrl = newUrl),
-                        actionMessage = "Görsel eklendi"
+                        actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_image_added)
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: "Görsel eklenemedi")
+                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_add_failed))
                 }
         }
     }
@@ -331,11 +331,11 @@ class GoalDetailViewModel(
                 .onSuccess { newCoverUrl ->
                     _state.value = current.copy(
                         goal = current.goal.copy(coverImageUrl = newCoverUrl),
-                        actionMessage = "Kapak görseli güncellendi"
+                        actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_cover_updated)
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: "Kapak ayarlanamadı")
+                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_cover_set_failed))
                 }
         }
     }
@@ -348,11 +348,11 @@ class GoalDetailViewModel(
                     val newCover = if (current.goal.coverImageUrl == imageUrl) null else current.goal.coverImageUrl
                     _state.value = current.copy(
                         goal = current.goal.copy(coverImageUrl = newCover),
-                        actionMessage = "Görsel kaldırıldı"
+                        actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_image_removed)
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: "Görsel kaldırılamadı")
+                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_remove_failed))
                 }
         }
     }
@@ -370,10 +370,10 @@ class GoalDetailViewModel(
                 if (tr.isNotBlank()) {
                     onTranslated(tr)
                 } else {
-                    setActionError("Çeviri alınamadı")
+                    setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_translation_fetch_failed))
                 }
             }.onFailure { err ->
-                setActionError(err.message ?: "Çeviri başarısız")
+                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_translation_failed))
             }
         }
     }

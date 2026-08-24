@@ -134,7 +134,7 @@ class ThreadViewModel(
                 uploadResult.getOrElse { error ->
                     _state.value = _state.value.copy(
                         isSending = false,
-                        sendError = "Dosya yüklenemedi: ${error.message ?: "bilinmeyen hata"}"
+                        sendError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_file_upload).format(error.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_unknown_error))
                     )
                     return@launch
                 }
@@ -160,7 +160,7 @@ class ThreadViewModel(
                 .onFailure { error ->
                     _state.value = _state.value.copy(
                         isSending = false,
-                        sendError = error.message ?: "Mesaj gönderilemedi"
+                        sendError = error.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_send_message)
                     )
                 }
         }

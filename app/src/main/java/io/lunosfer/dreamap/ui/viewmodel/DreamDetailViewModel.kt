@@ -71,7 +71,7 @@ class DreamDetailViewModel : ViewModel() {
 
     fun toggleLike(dreamId: Long, userId: String?) {
         if (userId.isNullOrBlank()) {
-            setActionError("Beğenmek için giriş yapmalısınız")
+            setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_login_required_like))
             return
         }
         val current = _state.value as? DreamDetailUiState.Success ?: return
@@ -108,7 +108,7 @@ class DreamDetailViewModel : ViewModel() {
                 _state.value = latest.copy(
                     isLiked = wasLiked,
                     likesCount = oldCount,
-                    actionError = "Beğeni işlemi başarısız"
+                    actionError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_like_failed)
                 )
             }
         }
@@ -116,7 +116,7 @@ class DreamDetailViewModel : ViewModel() {
 
     fun addComment(dreamId: Long, userId: String?, content: String) {
         if (userId.isNullOrBlank()) {
-            setActionError("Yorum yapmak için giriş yapmalısınız")
+            setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_login_required_comment))
             return
         }
         if (content.isBlank()) return
@@ -177,7 +177,7 @@ class DreamDetailViewModel : ViewModel() {
                 }
                 onComplete()
             }.onFailure { err ->
-                setActionError(err.message ?: "Güncelleme başarısız")
+                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_update_failed))
             }
         }
     }
@@ -187,7 +187,7 @@ class DreamDetailViewModel : ViewModel() {
             repository.deleteDream(dreamId, userId, softDelete).onSuccess {
                 onSuccess()
             }.onFailure { err ->
-                setActionError(err.message ?: "Silme işlemi başarısız")
+                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_delete_failed))
             }
         }
     }
@@ -203,9 +203,9 @@ class DreamDetailViewModel : ViewModel() {
                 if (msg.contains("no_auras", ignoreCase = true) || msg.contains("402")) {
                     setActionError("Yetersiz Aura")
                 } else if (msg.contains("forbidden", ignoreCase = true) || msg.contains("403")) {
-                    setActionError("Bu işlem için yetkiniz yok")
+                    setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_not_authorized))
                 } else {
-                    setActionError("Parlatma işlemi başarısız")
+                    setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_boost_failed))
                 }
             }
         }
@@ -213,7 +213,7 @@ class DreamDetailViewModel : ViewModel() {
 
     fun addBounty(dreamId: Long, amount: Int) {
         if (amount < 1) {
-            setActionError("Geçerli bir ödül miktarı girin")
+            setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_invalid_bounty_amount))
             return
         }
         viewModelScope.launch {
@@ -230,9 +230,9 @@ class DreamDetailViewModel : ViewModel() {
                 if (msg.contains("no_auras", ignoreCase = true) || msg.contains("402")) {
                     setActionError("Yetersiz Aura")
                 } else if (msg.contains("forbidden", ignoreCase = true) || msg.contains("403")) {
-                    setActionError("Bu işlem için yetkiniz yok")
+                    setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_not_authorized))
                 } else {
-                    setActionError("Ödül eklenemedi")
+                    setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_add_bounty_failed))
                 }
             }
         }
@@ -251,11 +251,11 @@ class DreamDetailViewModel : ViewModel() {
         viewModelScope.launch {
             repository.generateDeepAnalysis(dreamId).onSuccess { response ->
                 val latest = _state.value as? DreamDetailUiState.Success ?: return@onSuccess
-                val text = response.resultText ?: "Derin analiz başarıyla tamamlandı."
+                val text = response.resultText ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_deep_analysis_success)
                 _state.value = latest.copy(
                     isGeneratingDeepAnalysis = false,
                     deepAnalysisResult = text,
-                    actionMessage = "Derin analiz hazırlandı!"
+                    actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_deep_analysis_ready)
                 )
                 repository.getDream(dreamId).onSuccess { updatedDream ->
                     val latest2 = _state.value as? DreamDetailUiState.Success ?: return@onSuccess
@@ -265,8 +265,8 @@ class DreamDetailViewModel : ViewModel() {
                 val latest = _state.value as? DreamDetailUiState.Success ?: return@onFailure
                 val msg = error.message ?: ""
                 val errText = when {
-                    msg.contains("no_auras", ignoreCase = true) || msg.contains("402") -> "Derin analiz için Aura yetersiz."
-                    else -> "Derin analiz üretilemedi."
+                    msg.contains("no_auras", ignoreCase = true) || msg.contains("402") -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_insufficient_aura)
+                    else -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_deep_analysis_failed)
                 }
                 _state.value = latest.copy(
                     isGeneratingDeepAnalysis = false,
