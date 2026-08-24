@@ -17,7 +17,7 @@ data class DiaryRing(
 ) {
     val nameOrFallback: String get() = displayName?.takeIf { it.isNotBlank() }
         ?: username?.takeIf { it.isNotBlank() }
-        ?: "Kullanıcı"
+        ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_user_fallback)
 }
 
 @Serializable
