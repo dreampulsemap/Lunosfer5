@@ -45,6 +45,7 @@ fun DiaryComposerScreen(
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
     val contentState = state as? DiaryComposerUiState.Content ?: DiaryComposerUiState.Content()
+    val sharedMessage = stringResource(R.string.diary_composer_toast_shared)
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -54,7 +55,7 @@ fun DiaryComposerScreen(
 
     LaunchedEffect(contentState.isSuccess) {
         if (contentState.isSuccess) {
-            Toast.makeText(context, "Günce paylaşıldı!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, sharedMessage, Toast.LENGTH_SHORT).show()
             onBack()
         }
     }
@@ -78,7 +79,7 @@ fun DiaryComposerScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Geri", tint = Color.White)
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.common_back_cd), tint = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Void950)
@@ -95,15 +96,15 @@ fun DiaryComposerScreen(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             // Media Type Selector Tabs
-            Text("İçerik Tipi", color = AstralGold, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.diary_composer_content_type_label), color = AstralGold, fontSize = 13.sp, fontWeight = FontWeight.Bold)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 val types = listOf(
-                    Triple("text", "Metin", Icons.Default.TextFields),
-                    Triple("photo", "Fotoğraf", Icons.Default.Image),
-                    Triple("video", "Video", Icons.Default.Videocam)
+                    Triple("text", stringResource(R.string.diary_composer_type_text), Icons.Default.TextFields),
+                    Triple("photo", stringResource(R.string.diary_composer_type_photo), Icons.Default.Image),
+                    Triple("video", stringResource(R.string.diary_composer_type_video), Icons.Default.Videocam)
                 )
 
                 types.forEach { (type, label, icon) ->
@@ -143,7 +144,7 @@ fun DiaryComposerScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         Text(
-                            text = if (contentState.mediaType == "photo") "Fotoğraf Seçimi" else "Video Seçimi",
+                            text = if (contentState.mediaType == "photo") stringResource(R.string.diary_composer_photo_selection_label) else stringResource(R.string.diary_composer_video_selection_label),
                             color = AstralGold,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
@@ -161,7 +162,7 @@ fun DiaryComposerScreen(
                         ) {
                             Icon(Icons.Default.Image, contentDescription = null, tint = AstralGold)
                             Spacer(Modifier.width(8.dp))
-                            Text("Galeriden veya Kameradan Seç", color = Color.White, fontSize = 13.sp)
+                            Text(stringResource(R.string.diary_composer_pick_from_gallery_camera), color = Color.White, fontSize = 13.sp)
                         }
 
                         // Preview or Uploading Indicator
@@ -171,7 +172,7 @@ fun DiaryComposerScreen(
                                 horizontalArrangement = Arrangement.spacedBy(10.dp)
                             ) {
                                 CircularProgressIndicator(modifier = Modifier.size(20.dp), color = AstralGold)
-                                Text("Medya yükleniyor...", color = Color.Gray, fontSize = 12.sp)
+                                Text(stringResource(R.string.diary_composer_media_uploading), color = Color.Gray, fontSize = 12.sp)
                             }
                         } else if (contentState.mediaUrl.isNotBlank()) {
                             Box(
@@ -183,7 +184,7 @@ fun DiaryComposerScreen(
                             ) {
                                 AsyncImage(
                                     model = contentState.mediaUrl,
-                                    contentDescription = "Önizleme",
+                                    contentDescription = stringResource(R.string.common_preview_cd),
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier.fillMaxSize()
                                 )
@@ -194,7 +195,7 @@ fun DiaryComposerScreen(
                         OutlinedTextField(
                             value = contentState.mediaUrl,
                             onValueChange = { viewModel.setMediaUrl(it) },
-                            label = { Text("veya Medya Bağlantısı (URL)", color = Color.Gray) },
+                            label = { Text(stringResource(R.string.diary_composer_media_url_label), color = Color.Gray) },
                             modifier = Modifier.fillMaxWidth(),
                             singleLine = true,
                             colors = OutlinedTextFieldDefaults.colors(
@@ -211,7 +212,7 @@ fun DiaryComposerScreen(
             // Caption Field
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(
-                    text = if (contentState.mediaType == "text") "Metin Girdisi (Zorunlu)" else "Açıklama (Opsiyonel)",
+                    text = if (contentState.mediaType == "text") stringResource(R.string.diary_composer_text_input_required) else stringResource(R.string.diary_composer_description_optional),
                     color = AstralGold,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold
@@ -220,7 +221,7 @@ fun DiaryComposerScreen(
                 OutlinedTextField(
                     value = contentState.caption,
                     onValueChange = { viewModel.setCaption(it) },
-                    placeholder = { Text("Neler düşünüyorsun, bugün neler yaptın?", color = Color.Gray) },
+                    placeholder = { Text(stringResource(R.string.diary_composer_placeholder), color = Color.Gray) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(min = 100.dp, max = 200.dp),
@@ -243,12 +244,12 @@ fun DiaryComposerScreen(
 
             // Visibility Selector
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Görünürlük", color = AstralGold, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.common_visibility_label), color = AstralGold, fontSize = 13.sp, fontWeight = FontWeight.Bold)
 
                 val visibilities = listOf(
-                    "private" to "Gizli (Sadece Ben)",
-                    "friends" to "Arkadaşlar",
-                    "public" to "Herkese Açık"
+                    "private" to stringResource(R.string.visibility_private),
+                    "friends" to stringResource(R.string.visibility_friends),
+                    "public" to stringResource(R.string.visibility_public)
                 )
 
                 visibilities.forEach { (visKey, visLabel) ->
@@ -292,7 +293,7 @@ fun DiaryComposerScreen(
                             border = BorderStroke(1.dp, Void800)
                         ) {
                             Text(
-                                text = selectedGoal?.title ?: "Bir Vizyon Seç...",
+                                text = selectedGoal?.title ?: stringResource(R.string.diary_composer_select_vision_placeholder),
                                 color = if (selectedGoal != null) AstralGold else Color.Gray,
                                 fontSize = 13.sp
                             )

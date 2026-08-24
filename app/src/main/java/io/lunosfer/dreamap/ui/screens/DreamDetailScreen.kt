@@ -99,7 +99,7 @@ fun DreamDetailScreen(
                             .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = "Hata: ${s.message}", color = SemanticDanger400)
+                        Text(text = stringResource(R.string.dream_detail_generic_error_prefix).format(s.message), color = SemanticDanger400)
                         Spacer(Modifier.height(16.dp))
                         OutlinedButton(
                             onClick = { viewModel.loadDream(dreamId) },
@@ -198,7 +198,7 @@ fun DreamDetailContent(
                 IconButton(onClick = onBack, modifier = Modifier.size(36.dp)) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Geri",
+                        contentDescription = stringResource(R.string.common_back_cd),
                         tint = Color.White,
                         modifier = Modifier.size(20.dp)
                     )
@@ -222,7 +222,7 @@ fun DreamDetailContent(
 
                     if (dream.owner != null || dream.userId.isNotBlank()) {
                         Text(
-                            text = "@${dream.owner?.username ?: dream.owner?.nameOrFallback ?: "yazar"}",
+                            text = "@${dream.owner?.username ?: dream.owner?.nameOrFallback ?: stringResource(R.string.dream_detail_author_fallback)}",
                             color = Color(0xFF38BDF8),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
@@ -648,7 +648,7 @@ private fun CommentItemRow(
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = comment.userProfile?.nameOrFallback ?: "Kullanıcı",
+                text = comment.userProfile?.nameOrFallback ?: stringResource(R.string.common_user_fallback),
                 color = AstralGold,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Bold

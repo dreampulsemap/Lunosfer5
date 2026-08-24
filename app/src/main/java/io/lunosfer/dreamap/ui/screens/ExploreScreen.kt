@@ -71,10 +71,10 @@ fun ExploreScreen(
             }
         ) {
             val tabs = listOf(
-                Triple(ExploreTab.DREAMSCAPE, "Rüyalar", Icons.Filled.NightsStay),
-                Triple(ExploreTab.VISION, "Vizyon Panosu", Icons.Filled.TrackChanges),
-                Triple(ExploreTab.VICTORY, "Zafer Duvarı", Icons.Filled.EmojiEvents),
-                Triple(ExploreTab.PHOENIX, "Anka Duvarı", Icons.Filled.AutoAwesome)
+                Triple(ExploreTab.DREAMSCAPE, stringResource(R.string.explore_tab_dreams), Icons.Filled.NightsStay),
+                Triple(ExploreTab.VISION, stringResource(R.string.explore_tab_vision_board), Icons.Filled.TrackChanges),
+                Triple(ExploreTab.VICTORY, stringResource(R.string.explore_tab_victory_wall), Icons.Filled.EmojiEvents),
+                Triple(ExploreTab.PHOENIX, stringResource(R.string.explore_tab_phoenix_wall), Icons.Filled.AutoAwesome)
             )
 
             tabs.forEach { (tab, title, icon) ->
@@ -185,7 +185,7 @@ private fun ExploreGrid(dreams: List<Dream>) {
     if (dreams.isEmpty()) {
         Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
             Text(
-                "Henüz keşfedilecek bir şey yok",
+                stringResource(R.string.explore_empty_state),
                 color = Color(0xFF94A3B8),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center

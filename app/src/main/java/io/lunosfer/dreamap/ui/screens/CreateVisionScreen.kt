@@ -48,6 +48,23 @@ fun CreateVisionScreen(
     val coroutineScope = rememberCoroutineScope()
     val repository = remember { VisionRepository() }
 
+    val coverImageCd = stringResource(R.string.create_vision_cover_image_cd)
+    val removeCd = stringResource(R.string.common_remove_cd)
+    val selectDatePlaceholder = stringResource(R.string.create_vision_select_date_placeholder)
+    val selectDateCd = stringResource(R.string.create_vision_select_date_cd)
+    val visibilityPublicLabel = stringResource(R.string.visibility_public)
+    val visibilityFriendsLabel = stringResource(R.string.create_vision_visibility_friends)
+    val visibilityPrivateLabel = stringResource(R.string.create_vision_visibility_private)
+    val addStepCd = stringResource(R.string.create_vision_add_step_cd)
+    val errorTitleRequired = stringResource(R.string.create_vision_error_title_required)
+    val errorTitleTooLong = stringResource(R.string.create_vision_error_title_too_long)
+    val errorDescriptionTooLong = stringResource(R.string.create_vision_error_description_too_long)
+    val toastSuccess = stringResource(R.string.create_vision_toast_success)
+    val errorTitleMissing = stringResource(R.string.create_vision_error_title_missing)
+    val errorTitleTooLongServer = stringResource(R.string.create_vision_error_title_too_long_server)
+    val errorDescriptionTooLongServer = stringResource(R.string.create_vision_error_description_too_long_server)
+    val errorVisionCreateFailed = stringResource(R.string.vision_error_create_failed)
+
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var targetDate by remember { mutableStateOf<String?>(null) }
@@ -87,7 +104,7 @@ fun CreateVisionScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Yeni Vizyon Oluştur",
+                        stringResource(R.string.create_vision_title),
                         color = Color.White,
                         style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
                     )
@@ -96,7 +113,7 @@ fun CreateVisionScreen(
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Geri",
+                            contentDescription = stringResource(R.string.common_back_cd),
                             tint = Color.White
                         )
                     }
@@ -227,7 +244,7 @@ fun CreateVisionScreen(
                     ) {
                         AsyncImage(
                             model = coverImageUrl,
-                            contentDescription = "Kapak Görseli",
+                            contentDescription = coverImageCd,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
                         )
@@ -244,7 +261,7 @@ fun CreateVisionScreen(
                                 .clip(RoundedCornerShape(50))
                                 .background(Void950.copy(alpha = 0.7f))
                         ) {
-                            Icon(Icons.Default.Close, contentDescription = "Kaldır", tint = Color.White)
+                            Icon(Icons.Default.Close, contentDescription = removeCd, tint = Color.White)
                         }
                     }
                 }
@@ -267,13 +284,13 @@ fun CreateVisionScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = targetDate ?: "Tarih Seçin",
+                            text = targetDate ?: selectDatePlaceholder,
                             color = if (targetDate != null) Color.White else Color.Gray,
                             fontSize = 14.sp
                         )
                         Icon(
                             imageVector = Icons.Default.CalendarToday,
-                            contentDescription = "Tarih Seç",
+                            contentDescription = selectDateCd,
                             tint = AstralGold,
                             modifier = Modifier.size(18.dp)
                         )
@@ -289,9 +306,9 @@ fun CreateVisionScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     val options = listOf(
-                        "public" to "Herkese Açık",
-                        "friends" to "Arkadaşlara Özel",
-                        "private" to "Gizli"
+                        "public" to visibilityPublicLabel,
+                        "friends" to visibilityFriendsLabel,
+                        "private" to visibilityPrivateLabel
                     )
                     options.forEach { (key, label) ->
                         val selected = visibility == key
@@ -353,7 +370,7 @@ fun CreateVisionScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Add,
-                            contentDescription = "Adım Ekle",
+                            contentDescription = addStepCd,
                             tint = Void950
                         )
                     }
@@ -391,7 +408,7 @@ fun CreateVisionScreen(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.Close,
-                                            contentDescription = "Kaldır",
+                                            contentDescription = removeCd,
                                             tint = Color.Gray,
                                             modifier = Modifier.size(16.dp)
                                         )
@@ -409,15 +426,15 @@ fun CreateVisionScreen(
             Button(
                 onClick = {
                     if (title.isBlank()) {
-                        errorMessage = "Başlık girilmesi zorunludur"
+                        errorMessage = errorTitleRequired
                         return@Button
                     }
                     if (title.length > 120) {
-                        errorMessage = "Başlık 120 karakteri geçemez"
+                        errorMessage = errorTitleTooLong
                         return@Button
                     }
                     if (description.length > 2000) {
-                        errorMessage = "Açıklama 2000 karakteri geçemez"
+                        errorMessage = errorDescriptionTooLong
                         return@Button
                     }
 
@@ -461,7 +478,7 @@ fun CreateVisionScreen(
                             }
 
                             isSubmitting = false
-                            Toast.makeText(context, "Vizyon başarıyla oluşturuldu!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, toastSuccess, Toast.LENGTH_SHORT).show()
                             // Vizyonun slayt/videosunu oluşturma adımı ekleme sırasında hiç
                             // yapılmıyordu — kullanıcıyı doğrudan Reels/Video editörüne
                             // yönlendirip bunu tamamlatıyoruz (mevcut mimaride "Vizyonu İzle"
@@ -477,10 +494,10 @@ fun CreateVisionScreen(
                             val err = createResult.exceptionOrNull()
                             val msg = err?.message ?: ""
                             errorMessage = when {
-                                msg.contains("title_required", ignoreCase = true) -> "Başlık girmelisiniz"
-                                msg.contains("title_too_long", ignoreCase = true) -> "Başlık çok uzun"
-                                msg.contains("description_too_long", ignoreCase = true) -> "Açıklama çok uzun"
-                                else -> err?.message ?: "Vizyon oluşturulamadı"
+                                msg.contains("title_required", ignoreCase = true) -> errorTitleMissing
+                                msg.contains("title_too_long", ignoreCase = true) -> errorTitleTooLongServer
+                                msg.contains("description_too_long", ignoreCase = true) -> errorDescriptionTooLongServer
+                                else -> err?.message ?: errorVisionCreateFailed
                             }
                         }
                     }

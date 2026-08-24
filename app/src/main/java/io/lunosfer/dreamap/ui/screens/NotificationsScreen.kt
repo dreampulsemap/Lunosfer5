@@ -64,7 +64,7 @@ fun NotificationsScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Geri", tint = Color.White)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back_cd), tint = Color.White)
                     }
                 },
                 actions = {
@@ -159,28 +159,28 @@ private fun NotificationRow(
     val (icon, title, body) = when (notification.type) {
         "new_follower" -> Triple(
             Icons.Default.Person,
-            "Yeni Takipçi",
-            "${actor?.nameOrFallback ?: "Biri"} seni takip etmeye başladı."
+            stringResource(R.string.notif_new_follower_title),
+            stringResource(R.string.notif_new_follower_body).format(actor?.nameOrFallback ?: stringResource(R.string.common_someone_fallback))
         )
         "friend_request" -> Triple(
             Icons.Default.PersonAdd,
-            "Takip İsteği",
-            "${actor?.nameOrFallback ?: "Biri"} sana takip isteği gönderdi."
+            stringResource(R.string.notif_follow_request_title),
+            stringResource(R.string.notif_follow_request_body).format(actor?.nameOrFallback ?: stringResource(R.string.common_someone_fallback))
         )
         "analysis_ready" -> Triple(
             Icons.Default.AutoAwesome,
-            "Rüya Analizi Hazır",
-            "Rüyanızın derin Jungcu analizi tamamlandı! Görmek için tıklayın."
+            stringResource(R.string.notif_dream_analysis_ready_title),
+            stringResource(R.string.notif_dream_analysis_ready_body)
         )
         "analysis_failed" -> Triple(
             Icons.Default.ErrorOutline,
-            "Analiz Başarısız",
-            "Rüya analizi oluşturulurken bir hata oluştu."
+            stringResource(R.string.notif_dream_analysis_failed_title),
+            stringResource(R.string.notif_dream_analysis_failed_body)
         )
         else -> Triple(
             Icons.Default.Notifications,
-            "Yeni Bildirim",
-            "Yeni bir bildiriminiz var."
+            stringResource(R.string.notif_generic_title),
+            stringResource(R.string.notif_generic_body)
         )
     }
 

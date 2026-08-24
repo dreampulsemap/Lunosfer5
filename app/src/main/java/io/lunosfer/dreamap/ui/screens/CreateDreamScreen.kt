@@ -369,7 +369,7 @@ fun CreateDreamScreen(navController: NavController) {
                     .padding(horizontal = 12.dp, vertical = 6.dp)
             ) {
                 Text(
-                    text = "✦ LUNOSFER JOURNAL",
+                    text = stringResource(R.string.create_dream_journal_watermark),
                     color = AstralGold,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
@@ -641,7 +641,7 @@ val charCount = content.length
                         return@Button
                     }
                     if (content.length > 12000) {
-                        errorMessage = "Rüya metni 12.000 karakteri geçemez"
+                        errorMessage = context.getString(R.string.create_dream_error_content_too_long)
                         return@Button
                     }
                     errorMessage = null

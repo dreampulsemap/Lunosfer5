@@ -291,7 +291,7 @@ private fun DreamFeedCard(dream: Dream, onDreamClick: (Long) -> Unit) {
         ) {
             // Header: Owner, Date, Visibility
             FeedCardOwnerHeader(
-                ownerName = dream.owner?.nameOrFallback ?: "Bilinmeyen",
+                ownerName = dream.owner?.nameOrFallback ?: stringResource(R.string.common_unknown_fallback),
                 avatarUrl = dream.owner?.avatarUrl,
                 dreamDate = dream.dreamDate ?: dream.createdAt,
                 visibility = dream.visibility
@@ -655,7 +655,7 @@ private fun VisionFeedCard(goal: Goal, onClick: () -> Unit) {
     ) {
         Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             FeedCardOwnerHeader(
-                ownerName = goal.owner?.nameOrFallback ?: "Bilinmeyen",
+                ownerName = goal.owner?.nameOrFallback ?: stringResource(R.string.common_unknown_fallback),
                 avatarUrl = goal.owner?.avatarUrl,
                 visibility = stringResource(R.string.home_feed_vision_badge)
             )

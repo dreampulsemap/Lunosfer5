@@ -18,6 +18,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -75,7 +76,7 @@ fun DiaryStoryViewerScreen(
                         onClick = onBack,
                         colors = ButtonDefaults.buttonColors(containerColor = AstralGold)
                     ) {
-                        Text("Geri Dön", color = Void950)
+                        Text(stringResource(R.string.common_go_back), color = Void950)
                     }
                 }
             }
@@ -248,7 +249,7 @@ fun DiaryStoryViewerScreen(
 
                                 Column {
                                     Text(
-                                        text = s.owner?.nameOrFallback ?: "Kullanıcı",
+                                        text = s.owner?.nameOrFallback ?: stringResource(R.string.common_user_fallback),
                                         color = Color.White,
                                         fontSize = 14.sp,
                                         fontWeight = FontWeight.Bold
@@ -299,7 +300,7 @@ fun DiaryStoryViewerScreen(
                                     ) {
                                         Icon(
                                             Icons.Default.Delete,
-                                            contentDescription = "Sil",
+                                            contentDescription = stringResource(R.string.common_delete_action),
                                             tint = SemanticDanger400
                                         )
                                     }
@@ -308,7 +309,7 @@ fun DiaryStoryViewerScreen(
                                 IconButton(onClick = onBack) {
                                     Icon(
                                         Icons.Default.Close,
-                                        contentDescription = "Kapat",
+                                        contentDescription = stringResource(R.string.common_close_action),
                                         tint = Color.White
                                     )
                                 }

@@ -697,10 +697,10 @@ private fun ThreadInputBar(
 }
 
 private fun attachmentLabel(type: String): String = when (type) {
-    "image" -> "📷 Fotoğraf"
-    "video" -> "🎥 Video"
-    "file" -> "📎 Dosya"
-    else -> "Ek"
+    "image" -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_attachment_photo)
+    "video" -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_attachment_video)
+    "file" -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_attachment_file)
+    else -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_attachment_generic)
 }
 
 private fun parseSupabaseTimestamp(isoTimestamp: String): java.util.Date? {

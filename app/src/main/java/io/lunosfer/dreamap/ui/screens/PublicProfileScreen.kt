@@ -71,14 +71,14 @@ fun PublicProfileScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Kullanıcı Profili",
+                        stringResource(R.string.public_profile_title),
                         color = Color.White,
                         style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Geri", tint = Color.White)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back_cd), tint = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Void950)
