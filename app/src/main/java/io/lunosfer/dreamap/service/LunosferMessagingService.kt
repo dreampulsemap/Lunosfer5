@@ -63,10 +63,10 @@ class LunosferMessagingService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Lunosfer Bildirimleri",
+                getString(R.string.notif_channel_name),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = "Lunosfer mesaj ve etkileşim bildirimleri"
+                description = getString(R.string.notif_channel_description)
             }
             notificationManager.createNotificationChannel(channel)
         }
