@@ -177,6 +177,11 @@ interface LunosferApi {
     @POST("api/goals/report")
     suspend fun reportGoal(@Body request: io.lunosfer.dreamap.data.model.ReportGoalRequest): io.lunosfer.dreamap.data.model.ReportGoalResponse
 
+    // Başkasına ait bir vizyonu tek tıkla kendi vizyonlarına kopyalar
+    // (goals.source_goal_id ile izlenir) — bkz. CloneGoalRequest/Response.
+    @POST("api/goals/clone")
+    suspend fun cloneGoal(@Body request: io.lunosfer.dreamap.data.model.CloneGoalRequest): io.lunosfer.dreamap.data.model.CloneGoalResponse
+
     // --- Vizyon Slaytları ---
 
     @GET("api/goals/slides/list")
