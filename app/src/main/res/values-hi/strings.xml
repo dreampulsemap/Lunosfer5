@@ -574,6 +574,10 @@
     <string name="vision_error_slide_update_failed">स्लाइड अपडेट नहीं हो सकी</string>
     <string name="vision_error_cover_image_generate_failed">कवर छवि नहीं बनाई जा सकी</string>
     <string name="vision_error_seed_generate_failed">सीड उत्पन्न नहीं हो सका</string>
+    <string name="vision_action_add_to_my_visions_cd">मेरे विज़न में जोड़ें</string>
+    <string name="vision_clone_msg_added">आपके विज़न में जोड़ा गया</string>
+    <string name="vision_clone_msg_already_added">आपने यह विज़न पहले ही जोड़ लिया है</string>
+    <string name="vision_clone_error_failed">विज़न जोड़ा नहीं जा सका</string>
     <string name="diary_error_entry_create_failed">प्रविष्टि नहीं बनाई जा सकी</string>
     <string name="diary_composer_toast_shared">डायरी प्रविष्टि साझा की गई!</string>
     <string name="diary_composer_content_type_label">सामग्री प्रकार</string>
