@@ -573,6 +573,10 @@
     <string name="vision_error_slide_update_failed">No se pudo actualizar la diapositiva</string>
     <string name="vision_error_cover_image_generate_failed">No se pudo generar la imagen de portada</string>
     <string name="vision_error_seed_generate_failed">No se pudo generar la semilla</string>
+    <string name="vision_action_add_to_my_visions_cd">Añadir a mis visiones</string>
+    <string name="vision_clone_msg_added">Añadido a tus visiones</string>
+    <string name="vision_clone_msg_already_added">Ya has añadido esta visión</string>
+    <string name="vision_clone_error_failed">No se pudo añadir la visión</string>
     <string name="diary_error_entry_create_failed">No se pudo crear la entrada</string>
     <string name="diary_composer_toast_shared">¡Entrada del diario compartida!</string>
     <string name="diary_composer_content_type_label">Tipo de contenido</string>
