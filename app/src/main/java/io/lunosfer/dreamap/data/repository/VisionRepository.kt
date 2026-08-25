@@ -150,6 +150,20 @@ class VisionRepository {
         res.alreadyReported
     }
 
+    /**
+     * Başkasına ait bir vizyonu ("Kendi Vizyonlarıma Ekle") tek tıkla klonlar.
+     * reportGoal ile aynı "zaten yapılmış" deseni: alreadyCloned=true dönerse
+     * bu bir hata değildir, sadece bilgilendirici bir durumdur (UI ayrı bir
+     * mesajla gösterebilir).
+     */
+    suspend fun cloneGoal(goalId: String): Result<CloneGoalResponse> = runCatching {
+        val res = api.cloneGoal(CloneGoalRequest(goalId))
+        if (!res.success && !res.alreadyCloned && res.error != null) {
+            throw Exception(res.error)
+        }
+        res
+    }
+
     // --- Goal Cover & Gallery Media ---
 
     suspend fun generateGoalCover(goalId: String?, title: String?, description: String?): Result<String> = runCatching {
