@@ -572,6 +572,10 @@
     <string name="vision_error_slide_update_failed">スライドを更新できませんでした</string>
     <string name="vision_error_cover_image_generate_failed">カバー画像を生成できませんでした</string>
     <string name="vision_error_seed_generate_failed">シードを生成できませんでした</string>
+    <string name="vision_action_add_to_my_visions_cd">自分のビジョンに追加</string>
+    <string name="vision_clone_msg_added">あなたのビジョンに追加しました</string>
+    <string name="vision_clone_msg_already_added">このビジョンはすでに追加されています</string>
+    <string name="vision_clone_error_failed">ビジョンを追加できませんでした</string>
     <string name="diary_error_entry_create_failed">エントリーを作成できませんでした</string>
     <string name="diary_composer_toast_shared">日記を共有しました!</string>
     <string name="diary_composer_content_type_label">コンテンツタイプ</string>
