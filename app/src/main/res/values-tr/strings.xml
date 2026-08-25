@@ -591,6 +591,10 @@
     <string name="vision_error_slide_update_failed">Slayt güncellenemedi</string>
     <string name="vision_error_cover_image_generate_failed">Kapak görseli üretilemedi</string>
     <string name="vision_error_seed_generate_failed">Tohum üretilemedi</string>
+    <string name="vision_action_add_to_my_visions_cd">Kendi vizyonlarıma ekle</string>
+    <string name="vision_clone_msg_added">Vizyonlarınıza eklendi</string>
+    <string name="vision_clone_msg_already_added">Bu vizyonu zaten eklemiştiniz</string>
+    <string name="vision_clone_error_failed">Vizyon eklenemedi</string>
     <string name="diary_error_entry_create_failed">Girdi oluşturulamadı</string>
     <string name="diary_composer_toast_shared">Günce paylaşıldı!</string>
     <string name="diary_composer_content_type_label">İçerik Tipi</string>
