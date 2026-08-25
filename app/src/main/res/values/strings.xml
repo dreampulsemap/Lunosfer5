@@ -609,6 +609,10 @@
     <string name="vision_error_slide_update_failed">Slide couldn\'t be updated</string>
     <string name="vision_error_cover_image_generate_failed">Cover image couldn\'t be generated</string>
     <string name="vision_error_seed_generate_failed">Seed couldn\'t be generated</string>
+    <string name="vision_action_add_to_my_visions_cd">Add to my visions</string>
+    <string name="vision_clone_msg_added">Added to your visions</string>
+    <string name="vision_clone_msg_already_added">You already added this vision</string>
+    <string name="vision_clone_error_failed">Vision couldn\'t be added</string>
     <string name="diary_error_entry_create_failed">Entry couldn\'t be created</string>
     <string name="diary_composer_toast_shared">Diary entry shared!</string>
     <string name="diary_composer_content_type_label">Content Type</string>
