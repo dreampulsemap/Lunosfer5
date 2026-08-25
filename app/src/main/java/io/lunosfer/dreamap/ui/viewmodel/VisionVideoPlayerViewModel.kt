@@ -41,7 +41,13 @@ sealed class VisionVideoPlayerUiState {
         // --- Bildir (rapor) ---
         val showReportSheet: Boolean = false,
         val isSubmittingReport: Boolean = false,
-        val reportResultToast: Boolean? = null
+        val reportResultToast: Boolean? = null,
+        // --- Kendi Vizyonlarıma Ekle (klonla) ---
+        // isCloning: istek sürüyor. cloneResultToast: null = gösterme,
+        // true = "zaten eklenmişti", false = "eklendi" — ikisi de success,
+        // farklı mesaj (reportResultToast ile aynı desen).
+        val isCloning: Boolean = false,
+        val cloneResultToast: Boolean? = null
     ) : VisionVideoPlayerUiState()
     data class Error(val message: String) : VisionVideoPlayerUiState()
 }
@@ -237,6 +243,29 @@ class VisionVideoPlayerViewModel(
     fun consumeReportResultToast() {
         val current = _state.value as? VisionVideoPlayerUiState.Content ?: return
         _state.value = current.copy(reportResultToast = null)
+    }
+
+    // --- Kendi Vizyonlarıma Ekle (klonla) ---
+
+    /** Sahibi kendi vizyonunu ekleyemez — toggleMana'daki isOwner koruması ile aynı mantık. */
+    fun cloneToMyVisions() {
+        val current = _state.value as? VisionVideoPlayerUiState.Content ?: return
+        if (current.isOwner || current.isCloning) return
+        _state.value = current.copy(isCloning = true)
+        viewModelScope.launch {
+            repository.cloneGoal(goalId).onSuccess { res ->
+                val latest = _state.value as? VisionVideoPlayerUiState.Content ?: return@onSuccess
+                _state.value = latest.copy(isCloning = false, cloneResultToast = res.alreadyCloned)
+            }.onFailure { err ->
+                val latest = _state.value as? VisionVideoPlayerUiState.Content ?: return@onFailure
+                _state.value = latest.copy(isCloning = false, actionError = err.message)
+            }
+        }
+    }
+
+    fun consumeCloneResultToast() {
+        val current = _state.value as? VisionVideoPlayerUiState.Content ?: return
+        _state.value = current.copy(cloneResultToast = null)
     }
 
     class Factory(private val goalId: String) : ViewModelProvider.Factory {

@@ -26,7 +26,8 @@ sealed class GoalDetailUiState {
         val hasReacted: Boolean = false,
         val believersCount: Int = 0,
         val actionError: String? = null,
-        val actionMessage: String? = null
+        val actionMessage: String? = null,
+        val isCloning: Boolean = false
     ) : GoalDetailUiState()
     data class Error(val message: String) : GoalDetailUiState()
 }
@@ -392,6 +393,35 @@ class GoalDetailViewModel(
     fun clearActionMessage() {
         val current = _state.value as? GoalDetailUiState.Success ?: return
         _state.value = current.copy(actionMessage = null)
+    }
+
+    // --- Kendi Vizyonlarıma Ekle (klonla) ---
+
+    /**
+     * isOwner çağıran ekrandan gelir (GoalDetailScreen zaten
+     * currentUserId == goal.userId hesabını yapıyor) — burada tekrar
+     * hesaplamak yerine tek bir doğruluk kaynağını kullanıyoruz.
+     */
+    fun cloneToMyVisions(isOwner: Boolean) {
+        val current = _state.value as? GoalDetailUiState.Success ?: return
+        if (isOwner || current.isCloning) return
+        _state.value = current.copy(isCloning = true)
+        viewModelScope.launch {
+            repository.cloneGoal(goalId).onSuccess { res ->
+                val latest = _state.value as? GoalDetailUiState.Success ?: return@onSuccess
+                val msg = if (res.alreadyCloned)
+                    io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_clone_msg_already_added)
+                else
+                    io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_clone_msg_added)
+                _state.value = latest.copy(isCloning = false, actionMessage = msg)
+            }.onFailure { err ->
+                val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
+                _state.value = latest.copy(
+                    isCloning = false,
+                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_clone_error_failed)
+                )
+            }
+        }
     }
 
     class Factory(private val goalId: String) : ViewModelProvider.Factory {
