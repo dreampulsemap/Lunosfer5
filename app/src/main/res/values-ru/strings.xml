@@ -573,6 +573,10 @@
     <string name="vision_error_slide_update_failed">Не удалось обновить слайд</string>
     <string name="vision_error_cover_image_generate_failed">Не удалось создать изображение обложки</string>
     <string name="vision_error_seed_generate_failed">Не удалось создать зерно</string>
+    <string name="vision_action_add_to_my_visions_cd">Добавить в мои видения</string>
+    <string name="vision_clone_msg_added">Добавлено в ваши видения</string>
+    <string name="vision_clone_msg_already_added">Вы уже добавили это видение</string>
+    <string name="vision_clone_error_failed">Не удалось добавить видение</string>
     <string name="diary_error_entry_create_failed">Не удалось создать запись</string>
     <string name="diary_composer_toast_shared">Запись дневника опубликована!</string>
     <string name="diary_composer_content_type_label">Тип контента</string>
