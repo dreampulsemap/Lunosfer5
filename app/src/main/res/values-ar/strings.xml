@@ -574,6 +574,10 @@
     <string name="vision_error_slide_update_failed">تعذّر تحديث الشريحة</string>
     <string name="vision_error_cover_image_generate_failed">تعذّر إنشاء صورة الغلاف</string>
     <string name="vision_error_seed_generate_failed">تعذّر إنشاء البذرة</string>
+    <string name="vision_action_add_to_my_visions_cd">إضافة إلى رؤاي</string>
+    <string name="vision_clone_msg_added">تمت الإضافة إلى رؤاك</string>
+    <string name="vision_clone_msg_already_added">لقد أضفت هذه الرؤية بالفعل</string>
+    <string name="vision_clone_error_failed">تعذّرت إضافة الرؤية</string>
     <string name="diary_error_entry_create_failed">تعذّر إنشاء الإدخال</string>
     <string name="diary_composer_toast_shared">تمت مشاركة اليوميات!</string>
     <string name="diary_composer_content_type_label">نوع المحتوى</string>
