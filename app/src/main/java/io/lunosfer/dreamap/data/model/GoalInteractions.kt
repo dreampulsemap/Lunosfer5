@@ -63,6 +63,26 @@ data class SaveGoalResponse(
     val error: String? = null
 )
 
+// --- Klonla ("Kendi Vizyonlarıma Ekle") ---
+// Başkasına ait (visibility=public) bir vizyonu, aynı içerikle (başlık,
+// açıklama, kapak + varsa vizyon videosu/slaytları) kullanıcının kendi
+// vizyonlarına yeni bir goals satırı olarak kopyalar. goals.source_goal_id
+// (bkz. Supabase migration) sayesinde aynı vizyon ikinci kez eklenmeye
+// çalışılırsa backend hata yerine already_cloned:true döner — pages/api/
+// goals/report.js'teki already_reported ile birebir aynı desen.
+@Serializable
+data class CloneGoalRequest(
+    val goalId: String
+)
+
+@Serializable
+data class CloneGoalResponse(
+    val success: Boolean = false,
+    @SerialName("already_cloned") val alreadyCloned: Boolean = false,
+    val goal: Goal? = null,
+    val error: String? = null
+)
+
 // --- Give Mana ---
 
 @Serializable
