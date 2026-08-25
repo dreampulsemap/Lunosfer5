@@ -125,7 +125,8 @@ fun GoalDetailScreen(
                         onAddMultiplePixabayMedias = viewModel::addMultiplePixabayMedias,
                         onAddUrlImage = viewModel::addUrlImage,
                         onRemoveImage = viewModel::removeImage,
-                        onTranslateText = viewModel::translate
+                        onTranslateText = viewModel::translate,
+                        onCloneToMyVisions = { viewModel.cloneToMyVisions(isOwner = currentUserId != null && currentUserId == s.goal.userId) }
                     )
                 }
             }
@@ -154,7 +155,8 @@ private fun GoalDetailContent(
     onAddMultiplePixabayMedias: (List<PixabaySelectedMedia>) -> Unit = {},
     onAddUrlImage: (String) -> Unit = {},
     onRemoveImage: (String) -> Unit = {},
-    onTranslateText: (String, (String) -> Unit) -> Unit = { _, _ -> }
+    onTranslateText: (String, (String) -> Unit) -> Unit = { _, _ -> },
+    onCloneToMyVisions: () -> Unit = {}
 ) {
     val goal = state.goal
     val isOwner = currentUserId != null && currentUserId == goal.userId
@@ -254,6 +256,23 @@ private fun GoalDetailContent(
                         contentDescription = null,
                         tint = AstralGold
                     )
+                }
+                if (!isOwner) {
+                    IconButton(onClick = onCloneToMyVisions, enabled = !state.isCloning) {
+                        if (state.isCloning) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(20.dp),
+                                strokeWidth = 2.dp,
+                                color = AstralGold
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Filled.Add,
+                                contentDescription = stringResource(R.string.vision_action_add_to_my_visions_cd),
+                                tint = AstralGold
+                            )
+                        }
+                    }
                 }
                 if (isOwner) {
                     IconButton(onClick = { showDeleteDialog = true }) {

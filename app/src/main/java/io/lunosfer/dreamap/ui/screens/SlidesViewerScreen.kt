@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Comment
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Close
@@ -55,6 +56,7 @@ import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.SlidesViewerUiState
 import io.lunosfer.dreamap.ui.viewmodel.SlidesViewerViewModel
+import kotlinx.coroutines.delay
 
 /**
  * "Vizyon Slaytları" — components/SlidesViewer.jsx'in Android karşılığı.
@@ -125,7 +127,9 @@ fun SlidesViewerScreen(
                     onDeleteComment = viewModel::deleteComment,
                     onOpenReport = viewModel::openReportSheet,
                     onCloseReport = viewModel::closeReportSheet,
-                    onSubmitReport = viewModel::submitReport
+                    onSubmitReport = viewModel::submitReport,
+                    onCloneToMyVisions = viewModel::cloneToMyVisions,
+                    onConsumeCloneToast = viewModel::consumeCloneResultToast
                 )
             }
             is SlidesViewerUiState.Closed -> {}
@@ -152,7 +156,9 @@ internal fun SlidesViewerContent(
     onDeleteComment: (String) -> Unit = {},
     onOpenReport: () -> Unit = {},
     onCloseReport: () -> Unit = {},
-    onSubmitReport: (GoalReportReason, String?) -> Unit = { _, _ -> }
+    onSubmitReport: (GoalReportReason, String?) -> Unit = { _, _ -> },
+    onCloneToMyVisions: () -> Unit = {},
+    onConsumeCloneToast: () -> Unit = {}
 ) {
     val slide = state.currentSlide ?: return
     val isPlaying = !state.isPaused
@@ -377,6 +383,47 @@ internal fun SlidesViewerContent(
                     fontWeight = FontWeight.SemiBold
                 )
             }
+
+            if (!state.isOwner) {
+                IconButton(onClick = onCloneToMyVisions, enabled = !state.isCloning) {
+                    if (state.isCloning) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(22.dp),
+                            strokeWidth = 2.dp,
+                            color = Color.White
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(R.string.vision_action_add_to_my_visions_cd),
+                            tint = Color.White,
+                            modifier = Modifier.size(26.dp)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    state.cloneResultToast?.let { alreadyCloned ->
+        LaunchedEffect(alreadyCloned) {
+            delay(2200)
+            onConsumeCloneToast()
+        }
+        Box(modifier = Modifier.fillMaxSize()) {
+            Text(
+                text = stringResource(
+                    if (alreadyCloned) R.string.vision_clone_msg_already_added else R.string.vision_clone_msg_added
+                ),
+                color = Color.White,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 100.dp)
+                    .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(16.dp))
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
         }
     }
 

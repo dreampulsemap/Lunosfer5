@@ -150,6 +150,8 @@ private fun VisionReelVideoPage(
                 onOpenReport = viewModel::openReportSheet,
                 onCloseReport = viewModel::closeReportSheet,
                 onSubmitReport = viewModel::submitReport,
+                onCloneToMyVisions = viewModel::cloneToMyVisions,
+                onConsumeCloneToast = viewModel::consumeCloneResultToast,
                 isActive = isActive
             )
         }
@@ -201,7 +203,9 @@ private fun VisionReelSlidesPage(
                 onDeleteComment = viewModel::deleteComment,
                 onOpenReport = viewModel::openReportSheet,
                 onCloseReport = viewModel::closeReportSheet,
-                onSubmitReport = viewModel::submitReport
+                onSubmitReport = viewModel::submitReport,
+                onCloneToMyVisions = viewModel::cloneToMyVisions,
+                onConsumeCloneToast = viewModel::consumeCloneResultToast
             )
             is SlidesViewerUiState.Closed -> {}
         }
