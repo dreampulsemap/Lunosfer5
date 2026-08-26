@@ -198,6 +198,7 @@
     <string name="notifications_empty">Aún no tienes notificaciones.</string>
     <string name="goal_detail_title">Detalle de la visión</string>
     <string name="profile_private_badge">Cuenta privada</string>
+    <string name="profile_friends_badge">Cuenta solo para amigos</string>
     <string name="home_feed_archetypes_label">Arquetipos</string>
     <string name="home_feed_vision_badge">VISIÓN</string>
     <string name="error_diary_feed_load">No se pudo cargar el feed del diario</string>
@@ -229,6 +230,9 @@
     <string name="profile_free_video_wait">Derecho de video gratis: %1$s se desbloqueará</string>
     <string name="diary_composer_share_btn">Compartir diario</string>
     <string name="profile_edit_private_desc">Solo las personas que apruebes podrán ver tus sueños</string>
+    <string name="profile_visibility_public_desc">Cualquiera puede ver tu perfil y publicaciones</string>
+    <string name="profile_visibility_friends_desc">Solo tus amigos pueden ver tu perfil y publicaciones</string>
+    <string name="profile_visibility_private_desc">Solo tú puedes ver tu perfil; todas tus publicaciones también serán privadas automáticamente</string>
     <string name="main_menu_spiritual_tools">Herramientas espirituales</string>
     <string name="dream_detail_image_cd">Imagen del sueño</string>
     <string name="profile_edit_cancel">Cancelar</string>
@@ -300,6 +304,8 @@
     <string name="error_profile_load">Error al cargar el perfil</string>
     <string name="create_vision_roadmap_placeholder">Añade un paso (ej., Palabras básicas A1)</string>
     <string name="create_vision_visibility_label">Visibilidad</string>
+    <string name="visibility_locked_private_note">Tu perfil es totalmente privado, así que esta publicación también será privada automáticamente.</string>
+    <string name="visibility_restricted_to_friends_note">Tu perfil es solo para amigos, así que no puedes hacer pública esta publicación.</string>
     <string name="error_delete_failed">Error al eliminar</string>
     <string name="dream_detail_comment_placeholder">Escribe un comentario...</string>
     <string name="diary_ring_self">Tú</string>
@@ -438,6 +444,7 @@
     <string name="goal_detail_cancel">Cancelar</string>
     <string name="goal_detail_ai_cover">🤖 Portada IA</string>
     <string name="goal_detail_pixabay">🖼️ Pixabay</string>
+    <string name="goal_detail_visibility_description">Editar visibilidad</string>
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d Maná</string>
     <string name="goal_detail_progress">Progreso</string>
@@ -554,7 +561,9 @@
     <string name="goal_detail_msg_mana_transferred">¡Maná enviado a la visión! (Maná restante: %1$s)</string>
     <string name="goal_detail_msg_mana_reaction_removed">Reacción de maná eliminada</string>
     <string name="goal_detail_error_status_update_failed">No se pudo actualizar el estado</string>
+    <string name="goal_detail_error_visibility_update_failed">No se pudo actualizar la visibilidad</string>
     <string name="goal_detail_msg_status_updated">Estado de la visión actualizado</string>
+    <string name="goal_detail_msg_visibility_updated">Visibilidad actualizada</string>
     <string name="goal_detail_error_resolved_immutable">No se puede modificar una meta completada o abandonada</string>
     <string name="goal_detail_msg_ai_cover_created">Imagen de portada con IA creada</string>
     <string name="goal_detail_error_cover_generate_failed">No se pudo generar la portada</string>
