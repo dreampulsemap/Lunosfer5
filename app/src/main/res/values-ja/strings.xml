@@ -197,6 +197,7 @@
     <string name="notifications_empty">通知はまだありません。</string>
     <string name="goal_detail_title">ビジョンの詳細</string>
     <string name="profile_private_badge">非公開アカウント</string>
+    <string name="profile_friends_badge">友達限定アカウント</string>
     <string name="home_feed_archetypes_label">元型</string>
     <string name="home_feed_vision_badge">ビジョン</string>
     <string name="error_diary_feed_load">日記フィードの読み込みに失敗しました</string>
@@ -228,6 +229,9 @@
     <string name="profile_free_video_wait">無料動画の権利: %1$s にロックが解除されます</string>
     <string name="diary_composer_share_btn">ジャーナルを共有</string>
     <string name="profile_edit_private_desc">あなたが承認した人のみがあなたの夢を見ることができます</string>
+    <string name="profile_visibility_public_desc">誰でもプロフィールと投稿を見ることができます</string>
+    <string name="profile_visibility_friends_desc">友達だけがプロフィールと投稿を見ることができます</string>
+    <string name="profile_visibility_private_desc">プロフィールを見られるのはあなただけで、投稿もすべて自動的に非公開になります</string>
     <string name="main_menu_spiritual_tools">スピリチュアルツール</string>
     <string name="dream_detail_image_cd">夢の画像</string>
     <string name="profile_edit_cancel">キャンセル</string>
@@ -299,6 +303,8 @@
     <string name="error_profile_load">プロフィールの読み込みに失敗しました</string>
     <string name="create_vision_roadmap_placeholder">ステップを追加（例：基礎的なA1の単語）</string>
     <string name="create_vision_visibility_label">公開範囲</string>
+    <string name="visibility_locked_private_note">プロフィールが完全非公開のため、この投稿も自動的に非公開になります。</string>
+    <string name="visibility_restricted_to_friends_note">プロフィールが友達限定のため、この投稿を公開にすることはできません。</string>
     <string name="error_delete_failed">削除に失敗しました</string>
     <string name="dream_detail_comment_placeholder">コメントを書く...</string>
     <string name="diary_ring_self">あなた</string>
@@ -437,6 +443,7 @@
     <string name="goal_detail_cancel">キャンセル</string>
     <string name="goal_detail_ai_cover">🤖 AIカバー</string>
     <string name="goal_detail_pixabay">🖼️ Pixabay</string>
+    <string name="goal_detail_visibility_description">公開範囲を編集</string>
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d マナ</string>
     <string name="goal_detail_progress">進捗</string>
@@ -553,7 +560,9 @@
     <string name="goal_detail_msg_mana_transferred">ビジョンにマナを送りました!(残りマナ: %1$s)</string>
     <string name="goal_detail_msg_mana_reaction_removed">マナリアクションを削除しました</string>
     <string name="goal_detail_error_status_update_failed">ステータスを更新できませんでした</string>
+    <string name="goal_detail_error_visibility_update_failed">公開範囲を更新できませんでした</string>
     <string name="goal_detail_msg_status_updated">ビジョンのステータスを更新しました</string>
+    <string name="goal_detail_msg_visibility_updated">公開範囲を更新しました</string>
     <string name="goal_detail_error_resolved_immutable">完了または放棄した目標は変更できません</string>
     <string name="goal_detail_msg_ai_cover_created">AIカバー画像を作成しました</string>
     <string name="goal_detail_error_cover_generate_failed">カバーを生成できませんでした</string>
