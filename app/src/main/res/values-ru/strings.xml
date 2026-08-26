@@ -217,12 +217,16 @@
     <string name="profile_find_friends_btn">Найти и добавить друзей</string>
     <string name="profile_logout_btn">Выйти</string>
     <string name="profile_private_badge">Закрытый аккаунт</string>
+    <string name="profile_friends_badge">Аккаунт только для друзей</string>
     <string name="profile_edit_action">Редактировать</string>
     <string name="profile_edit_username_label">Имя пользователя (3-32 символа)</string>
     <string name="profile_edit_display_name_label">Отображаемое имя (макс. 60)</string>
     <string name="profile_edit_avatar_url_label">URL фото профиля</string>
     <string name="profile_edit_private_title">Закрытый профиль</string>
     <string name="profile_edit_private_desc">Только одобренные вами люди могут видеть ваши сны</string>
+    <string name="profile_visibility_public_desc">Ваш профиль и публикации может видеть кто угодно</string>
+    <string name="profile_visibility_friends_desc">Ваш профиль и публикации видят только ваши друзья</string>
+    <string name="profile_visibility_private_desc">Ваш профиль видите только вы; все ваши публикации автоматически становятся приватными</string>
     <string name="profile_edit_gender_label">Пол</string>
     <string name="profile_edit_cancel">Отмена</string>
     <string name="profile_edit_save">Сохранить</string>
@@ -246,6 +250,8 @@
     <string name="create_vision_cover_pixabay_btn">🖼️ Выбрать из галереи Pixabay</string>
     <string name="create_vision_date_label">Целевая дата (Необязательно)</string>
     <string name="create_vision_visibility_label">Видимость</string>
+    <string name="visibility_locked_private_note">Ваш профиль полностью приватный, поэтому эта публикация тоже будет приватной автоматически.</string>
+    <string name="visibility_restricted_to_friends_note">Ваш профиль доступен только друзьям, поэтому вы не можете сделать эту публикацию публичной.</string>
     <string name="create_vision_roadmap_placeholder">Добавить шаг (напр., базовые слова A1)</string>
     <string name="create_vision_roadmap_label">План (Мини-цели) (%1$d/20)</string>
     <string name="create_vision_submit_btn">Начать видение</string>
@@ -438,6 +444,7 @@
     <string name="goal_detail_cancel">Отмена</string>
     <string name="goal_detail_ai_cover">🤖 Обложка ИИ</string>
     <string name="goal_detail_pixabay">🖼️ Pixabay</string>
+    <string name="goal_detail_visibility_description">Изменить видимость</string>
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d Мана</string>
     <string name="goal_detail_progress">Прогресс</string>
@@ -554,7 +561,9 @@
     <string name="goal_detail_msg_mana_transferred">Мана отправлена видению! (Осталось маны: %1$s)</string>
     <string name="goal_detail_msg_mana_reaction_removed">Реакция маны удалена</string>
     <string name="goal_detail_error_status_update_failed">Не удалось обновить статус</string>
+    <string name="goal_detail_error_visibility_update_failed">Не удалось обновить видимость</string>
     <string name="goal_detail_msg_status_updated">Статус видения обновлён</string>
+    <string name="goal_detail_msg_visibility_updated">Видимость обновлена</string>
     <string name="goal_detail_error_resolved_immutable">Завершённую или отменённую цель нельзя изменить</string>
     <string name="goal_detail_msg_ai_cover_created">Обложка создана с помощью ИИ</string>
     <string name="goal_detail_error_cover_generate_failed">Не удалось создать обложку</string>
