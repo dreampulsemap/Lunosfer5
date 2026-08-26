@@ -38,8 +38,11 @@ object NetworkModule {
         .readTimeout(15, TimeUnit.SECONDS)
         .build()
 
+    private val rawUrl = if (BuildConfig.APP_URL.isNotBlank()) BuildConfig.APP_URL else "https://www.lunosfer.com/"
+    private val normalizedUrl = if (rawUrl.endsWith("/")) rawUrl else "$rawUrl/"
+
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.APP_URL.replace("https://lunosfer.com", "https://www.lunosfer.com"))
+        .baseUrl(normalizedUrl.replace("https://lunosfer.com", "https://www.lunosfer.com"))
         .client(okHttpClient)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()

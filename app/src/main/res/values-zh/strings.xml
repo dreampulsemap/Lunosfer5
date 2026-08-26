@@ -207,10 +207,10 @@
     <string name="profile_title">个人资料与设置</string>
     <string name="profile_language_label">应用语言</string>
     <string name="profile_premium_badge">高级会员</string>
-    <string name="profile_premium_desc">所有分析和高级功能均已启用。</string>
+    <string name="profile_premium_desc">每月 10 张 AI 图像与 10 次深度梦境分析已启用。</string>
     <string name="profile_free_badge">免费会员</string>
-    <string name="profile_free_video_wait">免费视频权益将于 %1$s 解锁</string>
-    <string name="profile_free_video_ready">你的免费视频分析权益已可使用。</string>
+    <string name="profile_free_video_wait">视频与日记功能随时可用。</string>
+    <string name="profile_free_video_ready">无限视频上传及核心基础功能均免费开放。</string>
     <string name="profile_edit_btn">编辑个人资料</string>
     <string name="profile_notifications_off">通知已关闭</string>
     <string name="profile_notifications_desc">前往设置以接收消息和互动通知。</string>
@@ -427,7 +427,11 @@
     <string name="delete_account_dialog_cancel">取消</string>
     <string name="billing_aura_sheet_title">购买灵气</string>
     <string name="billing_premium_sheet_title">Lunosfer 高级版</string>
-    <string name="billing_premium_sheet_subtitle">解锁无限分析和高级功能</string>
+    <string name="billing_premium_sheet_subtitle">每月 10 张 AI 图像与 10 次深度分析</string>
+    <string name="billing_perk_deep_analysis">每月 10 次深度梦境分析</string>
+    <string name="billing_perk_ai_images">每月 10 次 AI 图像生成</string>
+    <string name="billing_perk_freemium_videos">完全免费且无限的视频上传</string>
+    <string name="billing_perk_badge">尊贵金色高级会员徽章</string>
     <string name="billing_plan_monthly">月付</string>
     <string name="billing_plan_quarterly">3个月</string>
     <string name="billing_plan_yearly">年付</string>

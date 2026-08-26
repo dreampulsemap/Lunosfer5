@@ -198,7 +198,7 @@
     <string name="dream_detail_boost_btn">✦ تعزيز (3 أورا)</string>
     <string name="main_menu_spiritual_tools">أدوات روحية</string>
     <string name="public_profile_load_more">تحميل المزيد</string>
-    <string name="profile_free_video_wait">حق الفيديو المجاني: سيتم إلغاء قفل %1$s</string>
+    <string name="profile_free_video_wait">ميزات الفيديو واليومية متاحة للاستخدام.</string>
     <string name="main_menu_buy_aura">شراء أورا</string>
     <string name="public_profile_follows_you">يتابعك</string>
     <string name="dream_detail_edit_visibility_label">عرض في الخلاصة</string>
@@ -278,9 +278,9 @@
     <string name="diary_journal_today">اليوم</string>
     <string name="diary_journal_yesterday">أمس</string>
     <string name="profile_language_label">لغة التطبيق</string>
-    <string name="profile_premium_desc">جميع التحليلات والميزات المتقدمة مفعّلة.</string>
+    <string name="profile_premium_desc">10 صور بالذكاء الاصطناعي و 10 تحليلات عميقة للأحلام شهرياً مفعلة.</string>
     <string name="profile_free_badge">عضوية مجانية</string>
-    <string name="profile_free_video_ready">حق التحليل المرئي المجاني متاح الآن.</string>
+    <string name="profile_free_video_ready">رفع مقاطع الفيديو غير المحدود والميزات الأساسية مجانية بالكامل.</string>
     <string name="profile_retry_btn">إعادة المحاولة</string>
     <string name="profile_find_friends_btn">البحث عن أصدقاء ومتابعتهم</string>
     <string name="profile_logout_btn">تسجيل الخروج</string>
@@ -427,7 +427,11 @@
     <string name="delete_account_dialog_cancel">إلغاء</string>
     <string name="billing_aura_sheet_title">شراء أورا</string>
     <string name="billing_premium_sheet_title">لونوسفر المميز</string>
-    <string name="billing_premium_sheet_subtitle">افتح تحليلات غير محدودة وميزات مميزة</string>
+    <string name="billing_premium_sheet_subtitle">10 صور بالذكاء الاصطناعي و 10 تحليلات عميقة شهرياً</string>
+    <string name="billing_perk_deep_analysis">10 تحليلات عميقة للأحلام شهرياً</string>
+    <string name="billing_perk_ai_images">10 عمليات إنشاء صور بالذكاء الاصطناعي شهرياً</string>
+    <string name="billing_perk_freemium_videos">رفع مقاطع فيديو مجاني وغير محدود للجميع</string>
+    <string name="billing_perk_badge">شارة العضوية المميزة الذهبية ومزايا خاصة</string>
     <string name="billing_plan_monthly">شهري</string>
     <string name="billing_plan_quarterly">كل 3 أشهر</string>
     <string name="billing_plan_yearly">سنوي</string>

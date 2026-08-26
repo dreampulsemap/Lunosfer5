@@ -1,6 +1,10 @@
 package io.lunosfer.dreamap.ui.screens
 
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import io.lunosfer.dreamap.R
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -126,6 +130,7 @@ fun GoalDetailScreen(
                         onGenerateCover = viewModel::generateCover,
                         onAddPixabayImage = viewModel::addPixabayImage,
                         onAddMultiplePixabayMedias = viewModel::addMultiplePixabayMedias,
+                        onAddDeviceImage = { uri -> viewModel.addDeviceImage(context, uri) },
                         onAddUrlImage = viewModel::addUrlImage,
                         onRemoveImage = viewModel::removeImage,
                         onTranslateText = viewModel::translate,
@@ -157,6 +162,7 @@ private fun GoalDetailContent(
     onGenerateCover: () -> Unit = {},
     onAddPixabayImage: (Long, String, String, String) -> Unit = { _, _, _, _ -> },
     onAddMultiplePixabayMedias: (List<PixabaySelectedMedia>) -> Unit = {},
+    onAddDeviceImage: (Uri) -> Unit = {},
     onAddUrlImage: (String) -> Unit = {},
     onRemoveImage: (String) -> Unit = {},
     onTranslateText: (String, (String) -> Unit) -> Unit = { _, _ -> },
@@ -173,6 +179,15 @@ private fun GoalDetailContent(
     var urlInputText by remember { mutableStateOf("") }
     var translatedDesc by remember { mutableStateOf<String?>(null) }
     var isTranslatingDesc by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            onAddDeviceImage(uri)
+        }
+    }
 
     // Kullanıcının profil gizliliği — gizlilik düzenleme dialogundaki seçenekler
     // buna göre kısıtlanır (bkz. util/VisibilityPolicy.kt).
@@ -385,6 +400,15 @@ private fun GoalDetailContent(
                         AssistChip(
                             onClick = { showPixabayDialog = true },
                             label = { Text(stringResource(R.string.goal_detail_pixabay), fontSize = 10.sp, color = Color.White) },
+                            colors = AssistChipDefaults.assistChipColors(containerColor = Void800)
+                        )
+                        AssistChip(
+                            onClick = {
+                                galleryLauncher.launch(
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                )
+                            },
+                            label = { Text(stringResource(R.string.editor_gallery_button), fontSize = 10.sp, color = Color.White) },
                             colors = AssistChipDefaults.assistChipColors(containerColor = Void800)
                         )
                         AssistChip(

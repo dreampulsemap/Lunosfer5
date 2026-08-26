@@ -349,6 +349,32 @@ class GoalDetailViewModel(
         }
     }
 
+    fun addDeviceImage(context: android.content.Context, uri: android.net.Uri) {
+        val current = _state.value as? GoalDetailUiState.Success ?: return
+        viewModelScope.launch {
+            try {
+                val bytes = context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+                if (bytes == null || bytes.isEmpty()) {
+                    setActionError("Görsel okunamadı")
+                    return@launch
+                }
+                val fileName = "goal_${goalId}_${System.currentTimeMillis()}.jpg"
+                repository.uploadSlideImage(bytes, fileName).onSuccess { permanentUrl ->
+                    repository.addGoalImage(goalId, permanentUrl)
+                    repository.setGoalCover(goalId, permanentUrl)
+                    _state.value = current.copy(
+                        goal = current.goal.copy(coverImageUrl = permanentUrl),
+                        actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_image_added)
+                    )
+                }.onFailure { err ->
+                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_add_failed))
+                }
+            } catch (e: Exception) {
+                setActionError(e.message ?: "Hata oluştu")
+            }
+        }
+    }
+
     fun setCover(imageUrl: String) {
         val current = _state.value as? GoalDetailUiState.Success ?: return
         viewModelScope.launch {

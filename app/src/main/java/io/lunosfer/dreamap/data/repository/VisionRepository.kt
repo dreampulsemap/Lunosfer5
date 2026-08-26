@@ -96,6 +96,30 @@ class VisionRepository {
         Unit
     }
 
+    private val imageDownloadClient = okhttp3.OkHttpClient.Builder()
+        .connectTimeout(20, java.util.concurrent.TimeUnit.SECONDS)
+        .readTimeout(20, java.util.concurrent.TimeUnit.SECONDS)
+        .build()
+
+    suspend fun persistImageToStorage(imageUrl: String, suggestedName: String = "vision_image"): Result<String> = runCatching {
+        if (imageUrl.isBlank()) return@runCatching imageUrl
+        if (imageUrl.contains("supabase.co/storage/v1/object/public/")) {
+            return@runCatching imageUrl
+        }
+        val req = okhttp3.Request.Builder()
+            .url(imageUrl)
+            .header("User-Agent", "Mozilla/5.0 (Android; Mobile)")
+            .build()
+        val bytes = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            val response = imageDownloadClient.newCall(req).execute()
+            if (!response.isSuccessful) throw Exception("Image download HTTP ${response.code}")
+            response.body?.bytes() ?: throw Exception("Empty image body")
+        }
+        val ext = if (imageUrl.contains(".png", ignoreCase = true)) "png" else "jpg"
+        val fileName = "${suggestedName}_${System.currentTimeMillis()}.$ext"
+        uploadSlideImage(bytes, fileName).getOrThrow()
+    }
+
     suspend fun uploadSlideImage(byteArray: ByteArray, fileName: String): Result<String> = runCatching {
         val uniquePath = "${java.util.UUID.randomUUID()}_$fileName"
         val mimeType = if (fileName.endsWith(".mp4", ignoreCase = true))
@@ -114,7 +138,10 @@ class VisionRepository {
     }
 
     suspend fun createGoalSlide(goalId: String, imageUrl: String, caption: String? = null, durationSeconds: Int? = null): Result<GoalSlide> = runCatching {
-        val res = api.createGoalSlide(CreateSlideRequest(goalId, imageUrl, caption, durationSeconds))
+        val targetUrl = if (!imageUrl.contains("supabase.co/storage/v1/object/public/")) {
+            persistImageToStorage(imageUrl, "slide").getOrElse { imageUrl }
+        } else imageUrl
+        val res = api.createGoalSlide(CreateSlideRequest(goalId, targetUrl, caption, durationSeconds))
         res.slide ?: throw Exception(res.error ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_create_slide))
     }
 
@@ -179,7 +206,10 @@ class VisionRepository {
         if (res.ok == false && res.error != null) {
             throw Exception(res.error)
         }
-        res.coverImageUrl ?: res.url ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_cover_image_generate_failed))
+        val url = res.coverImageUrl ?: res.url ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_cover_image_generate_failed))
+        if (goalId != null) {
+            persistImageToStorage(url, "goal_${goalId}_ai_cover").getOrElse { url }
+        } else url
     }
 
     suspend fun addGoalImageFromPixabay(
@@ -195,29 +225,41 @@ class VisionRepository {
             val res = api.addGoalImageFromPixabay(
                 GoalPixabayImageRequest(goalId, pixabayId, imageUrl, tags, pixabayUser, width, height)
             )
-            if (res.ok == false && res.error != null) {
-                return addGoalImage(goalId, imageUrl)
+            val serverUrl = res.imageUrl
+            if (serverUrl != null && serverUrl.isNotBlank() && !serverUrl.contains("pixabay.com")) {
+                return@runCatching serverUrl
             }
-            res.imageUrl ?: imageUrl
-        } catch (e: Exception) {
-            addGoalImage(goalId, imageUrl).getOrThrow()
-        }
+        } catch (_: Exception) {}
+
+        val permanentUrl = persistImageToStorage(imageUrl, "goal_${goalId}_media").getOrElse { imageUrl }
+        addGoalImage(goalId, permanentUrl).getOrNull()
+        permanentUrl
     }
 
     suspend fun addGoalImage(goalId: String, imageUrl: String): Result<String> = runCatching {
-        val res = api.addGoalImage(GoalAddImageRequest(goalId, imageUrl))
+        val targetUrl = if (!imageUrl.contains("supabase.co/storage/v1/object/public/")) {
+            persistImageToStorage(imageUrl, "goal_${goalId}_image").getOrElse { imageUrl }
+        } else {
+            imageUrl
+        }
+        val res = api.addGoalImage(GoalAddImageRequest(goalId, targetUrl))
         if (res.ok == false && res.error != null) {
             throw Exception(res.error)
         }
-        res.imageUrl ?: imageUrl
+        res.imageUrl ?: targetUrl
     }
 
     suspend fun setGoalCover(goalId: String, imageUrl: String): Result<String> = runCatching {
-        val res = api.setGoalCover(GoalSetCoverRequest(goalId, imageUrl))
+        val targetUrl = if (!imageUrl.contains("supabase.co/storage/v1/object/public/")) {
+            persistImageToStorage(imageUrl, "goal_${goalId}_cover").getOrElse { imageUrl }
+        } else {
+            imageUrl
+        }
+        val res = api.setGoalCover(GoalSetCoverRequest(goalId, targetUrl))
         if (res.ok == false && res.error != null) {
             throw Exception(res.error)
         }
-        res.coverImageUrl ?: imageUrl
+        res.coverImageUrl ?: targetUrl
     }
 
     suspend fun removeGoalImage(goalId: String, imageUrl: String): Result<Unit> = runCatching {

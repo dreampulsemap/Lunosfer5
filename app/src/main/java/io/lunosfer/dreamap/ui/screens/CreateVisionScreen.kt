@@ -1,7 +1,11 @@
 package io.lunosfer.dreamap.ui.screens
 
 import android.app.DatePickerDialog
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import io.lunosfer.dreamap.R
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -95,13 +99,41 @@ fun CreateVisionScreen(
     val visibilityLockedPrivateNote = stringResource(R.string.visibility_locked_private_note)
     val visibilityRestrictedFriendsNote = stringResource(R.string.visibility_restricted_to_friends_note)
     var coverImageUrl by remember { mutableStateOf<String?>(null) }
-    // Pixabay attribution — kapak görselini goal oluşturulduktan SONRA
-    // /api/goals/add-image-from-pixabay ile gerçekten kalıcı hale getirmek için gerekli.
-    // Sadece CreateGoalRequest.coverImageUrl göndermek görselin DB'ye yazılmasını garanti etmiyor.
+    var isUploadingCover by remember { mutableStateOf(false) }
+    // Pixabay attribution
     var coverImagePixabayId by remember { mutableStateOf<Long?>(null) }
     var coverImageTags by remember { mutableStateOf("") }
     var coverImagePixabayUser by remember { mutableStateOf("") }
     var showPixabayDialog by remember { mutableStateOf(false) }
+
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            coroutineScope.launch {
+                try {
+                    isUploadingCover = true
+                    val bytes = context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+                    if (bytes != null && bytes.isNotEmpty()) {
+                        val fileName = "vision_cover_${System.currentTimeMillis()}.jpg"
+                        val uploadResult = repository.uploadSlideImage(bytes, fileName)
+                        uploadResult.onSuccess { uploadedUrl ->
+                            coverImageUrl = uploadedUrl
+                            coverImagePixabayId = null
+                            coverImageTags = ""
+                            coverImagePixabayUser = ""
+                        }.onFailure { err ->
+                            Toast.makeText(context, err.message ?: "Görsel yüklenemedi", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(context, e.message ?: "Hata", Toast.LENGTH_SHORT).show()
+                } finally {
+                    isUploadingCover = false
+                }
+            }
+        }
+    }
 
     var roadmapInput by remember { mutableStateOf("") }
     var roadmapItems by remember { mutableStateOf<List<String>>(emptyList()) }
@@ -251,14 +283,32 @@ fun CreateVisionScreen(
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(stringResource(R.string.create_vision_cover_label), color = AstralGold, fontSize = 13.sp, fontWeight = FontWeight.Bold)
                 if (coverImageUrl.isNullOrBlank()) {
-                    OutlinedButton(
-                        onClick = { showPixabayDialog = true },
+                    Row(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.outlinedButtonColors(contentColor = AstralGold),
-                        border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.5f)),
-                        shape = RoundedCornerShape(12.dp)
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(stringResource(R.string.create_vision_cover_pixabay_btn))
+                        OutlinedButton(
+                            onClick = { showPixabayDialog = true },
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = AstralGold),
+                            border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.5f)),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text(stringResource(R.string.create_vision_cover_pixabay_btn))
+                        }
+                        OutlinedButton(
+                            onClick = {
+                                galleryLauncher.launch(
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                )
+                            },
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = AstralGold),
+                            border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.5f)),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text(stringResource(R.string.editor_gallery_button))
+                        }
                     }
                 } else {
                     Box(
@@ -273,6 +323,16 @@ fun CreateVisionScreen(
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
                         )
+                        if (isUploadingCover) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Void950.copy(alpha = 0.6f)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator(color = AstralGold, modifier = Modifier.size(32.dp))
+                            }
+                        }
                         IconButton(
                             onClick = {
                                 coverImageUrl = null
@@ -477,11 +537,16 @@ fun CreateVisionScreen(
 
                     coroutineScope.launch {
                         val roadmapList = roadmapItems.map { RoadmapItemInput(title = it) }
+                        val rawCover = coverImageUrl
+                        val finalCoverUrl = if (!rawCover.isNullOrBlank()) {
+                            repository.persistImageToStorage(rawCover, "goal_cover").getOrDefault(rawCover)
+                        } else null
+
                         val req = CreateGoalRequest(
                             title = title.trim(),
                             description = description.trim().ifEmpty { null },
-                            coverImageUrl = coverImageUrl,
-                            coverImageSource = if (coverImageUrl != null) "pixabay" else "ai_generated",
+                            coverImageUrl = finalCoverUrl,
+                            coverImageSource = if (finalCoverUrl != null) "pixabay" else "ai_generated",
                             targetDate = targetDate,
                             visibility = VisibilityPolicy.clamp(visibility, profileVisibility),
                             roadmap = if (roadmapList.isNotEmpty()) roadmapList else null
@@ -490,24 +555,19 @@ fun CreateVisionScreen(
                         val createResult = repository.createGoal(req)
                         val newGoal = createResult.getOrNull()
                         if (newGoal != null) {
-                            // Kapak görseli Pixabay'den seçildiyse, CreateGoalRequest'teki
-                            // cover_image_url alanı tek başına DB'ye kalıcı yazılmayı garanti
-                            // etmiyor (galeri/kapak tablosu ayrı bir endpoint bekliyor —
-                            // GoalDetailScreen'deki "görsel ekle" akışıyla aynı desen). Goal
-                            // artık var olduğuna göre, görseli burada gerçekten kaydediyoruz —
-                            // ve ekrandan ayrılmadan ÖNCE, tamamlanmasını bekliyoruz.
-                            val pixabayId = coverImagePixabayId
-                            val imageUrl = coverImageUrl
-                            if (!imageUrl.isNullOrBlank() && pixabayId != null) {
-                                val addResult = repository.addGoalImageFromPixabay(
-                                    goalId = newGoal.id,
-                                    pixabayId = pixabayId,
-                                    imageUrl = imageUrl,
-                                    tags = coverImageTags,
-                                    pixabayUser = coverImagePixabayUser
-                                )
-                                if (addResult.isSuccess) {
-                                    repository.setGoalCover(newGoal.id, imageUrl)
+                            if (!finalCoverUrl.isNullOrBlank()) {
+                                repository.setGoalCover(newGoal.id, finalCoverUrl)
+                                val pixabayId = coverImagePixabayId
+                                if (pixabayId != null) {
+                                    repository.addGoalImageFromPixabay(
+                                        goalId = newGoal.id,
+                                        pixabayId = pixabayId,
+                                        imageUrl = finalCoverUrl,
+                                        tags = coverImageTags,
+                                        pixabayUser = coverImagePixabayUser
+                                    )
+                                } else {
+                                    repository.addGoalImage(newGoal.id, finalCoverUrl)
                                 }
                             }
 

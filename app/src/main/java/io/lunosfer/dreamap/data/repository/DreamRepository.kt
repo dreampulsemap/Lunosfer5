@@ -1,10 +1,52 @@
 package io.lunosfer.dreamap.data.repository
 
+import io.github.jan.supabase.storage.storage
 import io.lunosfer.dreamap.data.model.*
 import io.lunosfer.dreamap.data.network.NetworkModule
+import io.lunosfer.dreamap.supabase.supabaseClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.util.UUID
+import java.util.concurrent.TimeUnit
 
 class DreamRepository {
     private val api = NetworkModule.api
+
+    private val imageDownloadClient = OkHttpClient.Builder()
+        .connectTimeout(20, TimeUnit.SECONDS)
+        .readTimeout(20, TimeUnit.SECONDS)
+        .build()
+
+    suspend fun uploadDreamImage(byteArray: ByteArray, fileName: String): Result<String> = runCatching {
+        val uniquePath = "${UUID.randomUUID()}_$fileName"
+        val bucketName = "dreams"
+        val bucket = supabaseClient.storage.from(bucketName)
+        bucket.upload(uniquePath, byteArray) {
+            upsert = true
+        }
+        bucket.publicUrl(uniquePath)
+    }
+
+    suspend fun persistImageToStorage(imageUrl: String, suggestedName: String = "dream_image"): Result<String> = runCatching {
+        if (imageUrl.isBlank()) return@runCatching imageUrl
+        if (imageUrl.contains("supabase.co/storage/v1/object/public/")) {
+            return@runCatching imageUrl
+        }
+        val req = Request.Builder()
+            .url(imageUrl)
+            .header("User-Agent", "Mozilla/5.0 (Android; Mobile)")
+            .build()
+        val bytes = withContext(Dispatchers.IO) {
+            val response = imageDownloadClient.newCall(req).execute()
+            if (!response.isSuccessful) throw Exception("Image download HTTP ${response.code}")
+            response.body?.bytes() ?: throw Exception("Empty image body")
+        }
+        val ext = if (imageUrl.contains(".png", ignoreCase = true)) "png" else "jpg"
+        val fileName = "${suggestedName}_${System.currentTimeMillis()}.$ext"
+        uploadDreamImage(bytes, fileName).getOrThrow()
+    }
 
     suspend fun getDream(id: Long): Result<DreamDetail> = runCatching {
         api.getDream(id).dream

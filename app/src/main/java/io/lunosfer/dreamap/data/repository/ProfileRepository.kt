@@ -1,20 +1,68 @@
 package io.lunosfer.dreamap.data.repository
 
 import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.storage.storage
 import io.lunosfer.dreamap.data.model.FullUserProfile
 import io.lunosfer.dreamap.data.model.PremiumStatusResponse
 import io.lunosfer.dreamap.data.model.UpdateProfileRequest
 import io.lunosfer.dreamap.data.model.UpdateProfileResponse
 import io.lunosfer.dreamap.data.network.NetworkModule
 import io.lunosfer.dreamap.supabase.supabaseClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import retrofit2.HttpException
+import java.util.UUID
+import java.util.concurrent.TimeUnit
 
 class ProfileRepository {
     private val api = NetworkModule.api
     private val json = Json { ignoreUnknownKeys = true }
+
+    private val imageDownloadClient = OkHttpClient.Builder()
+        .connectTimeout(20, TimeUnit.SECONDS)
+        .readTimeout(20, TimeUnit.SECONDS)
+        .build()
+
+    suspend fun uploadAvatar(byteArray: ByteArray, fileName: String): Result<String> = runCatching {
+        val uniquePath = "${UUID.randomUUID()}_$fileName"
+        try {
+            val bucket = supabaseClient.storage.from("avatars")
+            bucket.upload(uniquePath, byteArray) { upsert = true }
+            bucket.publicUrl(uniquePath)
+        } catch (e: Exception) {
+            try {
+                val bucket = supabaseClient.storage.from("dreams")
+                bucket.upload(uniquePath, byteArray) { upsert = true }
+                bucket.publicUrl(uniquePath)
+            } catch (_: Exception) {
+                throw e
+            }
+        }
+    }
+
+    suspend fun persistAvatarToStorage(avatarUrl: String): Result<String> = runCatching {
+        if (avatarUrl.isBlank()) return@runCatching avatarUrl
+        if (avatarUrl.contains("supabase.co/storage/v1/object/public/")) {
+            return@runCatching avatarUrl
+        }
+        val req = Request.Builder()
+            .url(avatarUrl)
+            .header("User-Agent", "Mozilla/5.0 (Android; Mobile)")
+            .build()
+        val bytes = withContext(Dispatchers.IO) {
+            val response = imageDownloadClient.newCall(req).execute()
+            if (!response.isSuccessful) throw Exception("Avatar download HTTP ${response.code}")
+            response.body?.bytes() ?: throw Exception("Empty image body")
+        }
+        val ext = if (avatarUrl.contains(".png", ignoreCase = true)) "png" else "jpg"
+        val fileName = "avatar_${System.currentTimeMillis()}.$ext"
+        uploadAvatar(bytes, fileName).getOrThrow()
+    }
 
     suspend fun getUserProfile(userId: String): Result<FullUserProfile> = runCatching {
         try {

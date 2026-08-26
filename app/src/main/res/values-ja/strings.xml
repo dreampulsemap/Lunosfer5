@@ -226,7 +226,7 @@
     <string name="create_vision_title_placeholder">例: 2026年末までにスペイン語をマスターする</string>
     <string name="dream_detail_no_comments">コメントはまだありません。最初のコメントを書きましょう！</string>
     <string name="diary_composer_no_vision">リンク（なし）</string>
-    <string name="profile_free_video_wait">無料動画の権利: %1$s にロックが解除されます</string>
+    <string name="profile_free_video_wait">動画および日記機能をご利用いただけます。</string>
     <string name="diary_composer_share_btn">ジャーナルを共有</string>
     <string name="profile_edit_private_desc">あなたが承認した人のみがあなたの夢を見ることができます</string>
     <string name="profile_visibility_public_desc">誰でもプロフィールと投稿を見ることができます</string>
@@ -237,7 +237,7 @@
     <string name="profile_edit_cancel">キャンセル</string>
     <string name="public_profile_follow_pending">フォローリクエスト送信済み（保留中）</string>
     <string name="profile_edit_save">保存</string>
-    <string name="profile_premium_desc">すべての分析と高度な機能が有効になっています。</string>
+    <string name="profile_premium_desc">毎月10枚のAI画像と10回の夢の深層分析が有効です。</string>
     <string name="public_profile_dreams_tab">夢 (%1$d)</string>
     <string name="dream_detail_edit_visibility_label">フィードに表示</string>
     <string name="error_share_failed">共有に失敗しました</string>
@@ -294,7 +294,7 @@
     <string name="dream_detail_comments_count">コメント (%1$d)</string>
     <string name="dream_detail_sentiment_label">感情: %1$s</string>
     <string name="profile_edit_avatar_url_label">プロフィール画像URL</string>
-    <string name="profile_free_video_ready">無料の動画分析権を利用できます。</string>
+    <string name="profile_free_video_ready">無制限の動画アップロードと基本機能はすべて無料です。</string>
     <string name="profile_edit_username_label">ユーザー名（3〜32文字）</string>
     <string name="profile_find_friends_btn">友達を探してフォロー</string>
     <string name="dream_detail_add_btn">追加</string>
@@ -425,7 +425,11 @@
     <string name="delete_account_dialog_cancel">キャンセル</string>
     <string name="billing_aura_sheet_title">オーラを購入</string>
     <string name="billing_premium_sheet_title">Lunosfer プレミアム</string>
-    <string name="billing_premium_sheet_subtitle">無制限の分析とプレミアム機能をアンロック</string>
+    <string name="billing_premium_sheet_subtitle">毎月10枚のAI画像と10回の深層分析</string>
+    <string name="billing_perk_deep_analysis">毎月10回の夢の深層分析</string>
+    <string name="billing_perk_ai_images">毎月10枚のAI画像生成</string>
+    <string name="billing_perk_freemium_videos">完全無料かつ無制限の動画アップロード</string>
+    <string name="billing_perk_badge">特別な黄金のプレミアムメンバーバッジ</string>
     <string name="billing_plan_monthly">月額</string>
     <string name="billing_plan_quarterly">3ヶ月</string>
     <string name="billing_plan_yearly">年額</string>

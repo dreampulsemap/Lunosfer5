@@ -199,7 +199,7 @@
     <string name="home_feed_archetypes_label">आर्केटाइप्स</string>
     <string name="profile_logout_btn">लॉग आउट</string>
     <string name="explore_failed">एक्सप्लोर लोड करने में विफल</string>
-    <string name="profile_free_video_ready">आपका मुफ़्त वीडियो विश्लेषण अधिकार उपलब्ध है।</string>
+    <string name="profile_free_video_ready">असीमित वीडियो अपलोड और मुख्य सुविधाएं पूरी तरह से मुफ़्त हैं।</string>
     <string name="home_feed_empty_desc">इसे यहाँ देखने के लिए एक सपना रिकॉर्ड करें या एक विज़न बनाएं।</string>
     <string name="profile_retry_btn">पुनः प्रयास करें</string>
     <string name="goal_detail_comments_count">टिप्पणियाँ (%1$d)</string>
@@ -246,7 +246,7 @@
     <string name="create_vision_visibility_label">दृश्यता</string>
     <string name="visibility_locked_private_note">आपकी प्रोफ़ाइल पूरी तरह निजी है, इसलिए यह पोस्ट भी अपने आप निजी हो जाएगी।</string>
     <string name="visibility_restricted_to_friends_note">आपकी प्रोफ़ाइल केवल मित्रों के लिए है, इसलिए आप इस पोस्ट को सार्वजनिक नहीं बना सकते।</string>
-    <string name="profile_premium_desc">सभी विश्लेषण और उन्नत सुविधाएं सक्रिय हैं।</string>
+    <string name="profile_premium_desc">प्रति माह 10 एआई छवियां और 10 गहन स्वप्न विश्लेषण सक्रिय हैं।</string>
     <string name="home_welcome_title">स्वागत है</string>
     <string name="vision_start_btn">विजन शुरू करें</string>
     <string name="home_feed_detail_btn">विवरण →</string>
@@ -275,7 +275,7 @@
     <string name="diary_journal_today">आज</string>
     <string name="diary_journal_yesterday">कल</string>
     <string name="profile_title">प्रोफ़ाइल और सेटिंग्स</string>
-    <string name="profile_free_video_wait">मुफ़्त वीडियो अधिकार: %1$s को अनलॉक होगा</string>
+    <string name="profile_free_video_wait">वीडियो और डायरी सुविधाएं उपयोग के लिए उपलब्ध हैं।</string>
     <string name="profile_notifications_off">सूचनाएं बंद हैं</string>
     <string name="profile_edit_private_title">निजी प्रोफ़ाइल</string>
     <string name="profile_edit_private_desc">केवल वे लोग जिन्हें आपने स्वीकृत किया है, आपके सपने देख सकते हैं</string>
@@ -427,7 +427,11 @@
     <string name="delete_account_dialog_cancel">रद्द करें</string>
     <string name="billing_aura_sheet_title">आभा (Aura) खरीदें</string>
     <string name="billing_premium_sheet_title">Lunosfer प्रीमियम</string>
-    <string name="billing_premium_sheet_subtitle">असीमित विश्लेषण और प्रीमियम सुविधाएं अनलॉक करें</string>
+    <string name="billing_premium_sheet_subtitle">प्रति माह 10 एआई छवियां और 10 गहन विश्लेषण</string>
+    <string name="billing_perk_deep_analysis">प्रति माह 10 गहन स्वप्न विश्लेषण</string>
+    <string name="billing_perk_ai_images">प्रति माह 10 एआई छवि निर्माण</string>
+    <string name="billing_perk_freemium_videos">सभी के लिए पूरी तरह से मुफ़्त और असीमित वीडियो अपलोड</string>
+    <string name="billing_perk_badge">विशेष गोल्डन प्रीमियम सदस्य बैज</string>
     <string name="billing_plan_monthly">मासिक</string>
     <string name="billing_plan_quarterly">3 माह</string>
     <string name="billing_plan_yearly">वार्षिक</string>

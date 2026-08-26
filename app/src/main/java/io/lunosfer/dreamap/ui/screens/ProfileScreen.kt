@@ -7,6 +7,9 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatDelegate
@@ -566,7 +569,7 @@ private fun PremiumStatusCard(status: PremiumStatusResponse, onUpgradeClick: () 
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = if (status.isPremium) Icons.Default.Star else Icons.Default.Videocam,
+                    imageVector = if (status.isPremium) Icons.Default.Star else Icons.Default.AutoAwesome,
                     contentDescription = null,
                     tint = if (status.isPremium) AstralGold else Color.Gray,
                     modifier = Modifier.size(24.dp)
@@ -593,21 +596,11 @@ private fun PremiumStatusCard(status: PremiumStatusResponse, onUpgradeClick: () 
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    if (!status.canPickVideo) {
-                        val formattedDate = formatNextAvailableDate(status.nextAvailableAt, stringResource(R.string.profile_date_soon))
-                        Text(
-                            text = stringResource(R.string.profile_free_video_wait, formattedDate),
-                            color = SemanticDanger400,
-                            fontSize = 12.sp,
-                            lineHeight = 16.sp
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(R.string.profile_free_video_ready),
-                            color = SemanticSuccess400,
-                            fontSize = 12.sp
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.profile_free_video_ready),
+                        color = SemanticSuccess400,
+                        fontSize = 12.sp
+                    )
                 }
             }
         }
@@ -709,6 +702,35 @@ private fun EditProfileDialog(
         "unspecified" to stringResource(R.string.profile_gender_unspecified)
     )
 
+    var isUploadingAvatar by remember { mutableStateOf(false) }
+    val profileRepo = remember { io.lunosfer.dreamap.data.repository.ProfileRepository() }
+    val dialogCoroutineScope = rememberCoroutineScope()
+    val dialogContext = LocalContext.current
+    val avatarGalleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            dialogCoroutineScope.launch {
+                try {
+                    isUploadingAvatar = true
+                    val bytes = dialogContext.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+                    if (bytes != null && bytes.isNotEmpty()) {
+                        val fileName = "avatar_${System.currentTimeMillis()}.jpg"
+                        profileRepo.uploadAvatar(bytes, fileName).onSuccess { uploadedUrl ->
+                            avatarUrl = uploadedUrl
+                        }.onFailure { err ->
+                            Toast.makeText(dialogContext, err.message ?: "Upload failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(dialogContext, e.message ?: "Error", Toast.LENGTH_SHORT).show()
+                } finally {
+                    isUploadingAvatar = false
+                }
+            }
+        }
+    }
+
     Dialog(onDismissRequest = onDismiss) {
         Card(
             modifier = Modifier
@@ -732,6 +754,58 @@ private fun EditProfileDialog(
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
                 )
+
+                // Avatar Section: Preview & Upload
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(54.dp)
+                            .clip(CircleShape)
+                            .background(Void800)
+                            .border(1.5.dp, AstralGold, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (avatarUrl.isNotBlank()) {
+                            AsyncImage(
+                                model = avatarUrl,
+                                contentDescription = "Avatar Preview",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Icon(Icons.Default.Person, contentDescription = null, tint = AstralGold, modifier = Modifier.size(28.dp))
+                        }
+                        if (isUploadingAvatar) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Void950.copy(alpha = 0.6f)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator(color = AstralGold, modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                            }
+                        }
+                    }
+
+                    OutlinedButton(
+                        onClick = {
+                            avatarGalleryLauncher.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        },
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = AstralGold),
+                        border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.5f)),
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Icon(Icons.Default.Image, contentDescription = null, modifier = Modifier.size(16.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text(stringResource(R.string.editor_gallery_button), fontSize = 12.sp)
+                    }
+                }
 
                 // Username
                 OutlinedTextField(

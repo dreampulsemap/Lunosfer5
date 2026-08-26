@@ -15,7 +15,7 @@ import io.lunosfer.dreamap.BuildConfig
  */
 object LegalLinks {
     private val baseUrl: String
-        get() = BuildConfig.APP_URL.trimEnd('/')
+        get() = (if (BuildConfig.APP_URL.isNotBlank()) BuildConfig.APP_URL else "https://www.lunosfer.com").trimEnd('/')
 
     val privacyPolicyUrl: String
         get() = "$baseUrl/privacy"

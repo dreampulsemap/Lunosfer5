@@ -154,16 +154,21 @@ class DiaryComposerViewModel(
 
         _state.value = current.copy(isSubmitting = true, error = null)
 
-        val input = CreateDiaryInput(
-            mediaType = current.mediaType,
-            mediaUrl = current.mediaUrl.takeIf { it.isNotBlank() },
-            posterUrl = current.mediaUrl.takeIf { current.mediaType == "video" && it.isNotBlank() },
-            caption = current.caption.takeIf { it.isNotBlank() },
-            visibility = VisibilityPolicy.clamp(current.visibility, current.profileVisibility),
-            goalId = current.selectedGoalId
-        )
-
         viewModelScope.launch {
+            val rawMediaUrl = current.mediaUrl
+            val persistedMediaUrl = if (rawMediaUrl.isNotBlank() && current.mediaType != "text") {
+                repository.persistMediaToStorage(rawMediaUrl).getOrDefault(rawMediaUrl)
+            } else rawMediaUrl
+
+            val input = CreateDiaryInput(
+                mediaType = current.mediaType,
+                mediaUrl = persistedMediaUrl.takeIf { it.isNotBlank() },
+                posterUrl = persistedMediaUrl.takeIf { current.mediaType == "video" && it.isNotBlank() },
+                caption = current.caption.takeIf { it.isNotBlank() },
+                visibility = VisibilityPolicy.clamp(current.visibility, current.profileVisibility),
+                goalId = current.selectedGoalId
+            )
+
             repository.createEntry(input).onSuccess {
                 val latest = _state.value as? DiaryComposerUiState.Content ?: return@onSuccess
                 _state.value = latest.copy(isSubmitting = false, isSuccess = true)

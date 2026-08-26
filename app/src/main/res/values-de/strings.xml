@@ -208,10 +208,10 @@
     <string name="profile_title">Profil &amp; Einstellungen</string>
     <string name="profile_language_label">App-Sprache</string>
     <string name="profile_premium_badge">Premium-Mitglied</string>
-    <string name="profile_premium_desc">Alle Analysen und erweiterten Funktionen sind aktiv.</string>
+    <string name="profile_premium_desc">Monatlich 10 KI-Bilder &amp; 10 tiefe Traumanalysen aktiv.</string>
     <string name="profile_free_badge">Kostenlose Mitgliedschaft</string>
-    <string name="profile_free_video_wait">Kostenloses Video-Recht: %1$s wird freigeschaltet</string>
-    <string name="profile_free_video_ready">Dein kostenloses Video-Analyserecht ist verfügbar.</string>
+    <string name="profile_free_video_wait">Video- und Tagebuchfunktionen stehen bereit.</string>
+    <string name="profile_free_video_ready">Unbegrenzte Video-Uploads &amp; Basisfunktionen sind kostenlos.</string>
     <string name="profile_edit_btn">Profil bearbeiten</string>
     <string name="profile_notifications_off">Benachrichtigungen aus</string>
     <string name="profile_notifications_desc">Gehe zu den Einstellungen, um Nachrichten- und Interaktionsbenachrichtigungen zu erhalten.</string>
@@ -428,7 +428,11 @@
     <string name="delete_account_dialog_cancel">Abbrechen</string>
     <string name="billing_aura_sheet_title">Aura kaufen</string>
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
-    <string name="billing_premium_sheet_subtitle">Schalte unbegrenzte Analysen und Premium-Funktionen frei</string>
+    <string name="billing_premium_sheet_subtitle">Monatlich 10 KI-Bilder &amp; 10 tiefe Analysen</string>
+    <string name="billing_perk_deep_analysis">Monatlich 10 tiefe Traumanalysen</string>
+    <string name="billing_perk_ai_images">Monatlich 10 KI-Bildgenerierungen</string>
+    <string name="billing_perk_freemium_videos">Vollständig kostenlose &amp; unbegrenzte Video-Uploads</string>
+    <string name="billing_perk_badge">Goldenes Premium-Mitgliedsabzeichen</string>
     <string name="billing_plan_monthly">Monatlich</string>
     <string name="billing_plan_quarterly">3 Monate</string>
     <string name="billing_plan_yearly">Jährlich</string>

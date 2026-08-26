@@ -226,7 +226,7 @@
     <string name="create_vision_title_placeholder">Ex. : Apprendre l\'espagnol d\'ici fin 2026</string>
     <string name="dream_detail_no_comments">Aucun commentaire pour le moment. Soyez le premier à en écrire un !</string>
     <string name="diary_composer_no_vision">Lier (Aucune)</string>
-    <string name="profile_free_video_wait">Droits vidéo gratuits : %1$s seront débloqués</string>
+    <string name="profile_free_video_wait">Les fonctionnalités vidéo et de journal sont disponibles.</string>
     <string name="diary_composer_share_btn">Partager le journal</string>
     <string name="profile_edit_private_desc">Seules les personnes que vous approuvez peuvent voir vos rêves</string>
     <string name="profile_visibility_public_desc">Tout le monde peut voir ton profil et tes publications</string>
@@ -237,7 +237,7 @@
     <string name="profile_edit_cancel">Annuler</string>
     <string name="public_profile_follow_pending">Demande de suivi envoyée (en attente)</string>
     <string name="profile_edit_save">Enregistrer</string>
-    <string name="profile_premium_desc">Toutes les analyses et fonctionnalités avancées sont actives.</string>
+    <string name="profile_premium_desc">10 images IA et 10 analyses approfondies des rêves par mois actives.</string>
     <string name="public_profile_dreams_tab">Rêves (%1$d)</string>
     <string name="dream_detail_edit_visibility_label">Afficher dans le fil</string>
     <string name="error_share_failed">Échec du partage</string>
@@ -294,7 +294,7 @@
     <string name="dream_detail_comments_count">Commentaires (%1$d)</string>
     <string name="dream_detail_sentiment_label">Émotion : %1$s</string>
     <string name="profile_edit_avatar_url_label">URL de la photo de profil</string>
-    <string name="profile_free_video_ready">Votre droit d\'analyse vidéo gratuit est disponible.</string>
+    <string name="profile_free_video_ready">Les ajouts de vidéos illimités et les fonctionnalités de base sont gratuits.</string>
     <string name="profile_edit_username_label">Nom d\'utilisateur (3-32 caractères)</string>
     <string name="profile_find_friends_btn">Trouver et suivre des amis</string>
     <string name="dream_detail_add_btn">Ajouter</string>
@@ -425,7 +425,11 @@
     <string name="delete_account_dialog_cancel">Annuler</string>
     <string name="billing_aura_sheet_title">Acheter de l\'Aura</string>
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
-    <string name="billing_premium_sheet_subtitle">Débloquez des analyses illimitées et des fonctionnalités premium</string>
+    <string name="billing_premium_sheet_subtitle">10 images IA et 10 analyses approfondies par mois</string>
+    <string name="billing_perk_deep_analysis">10 analyses approfondies des rêves / mois</string>
+    <string name="billing_perk_ai_images">10 générations d\'images par IA / mois</string>
+    <string name="billing_perk_freemium_videos">Ajouts de vidéos totalement gratuits et illimités</string>
+    <string name="billing_perk_badge">Badge doré de Membre Premium</string>
     <string name="billing_plan_monthly">Mensuel</string>
     <string name="billing_plan_quarterly">3 Mois</string>
     <string name="billing_plan_yearly">Annuel</string>

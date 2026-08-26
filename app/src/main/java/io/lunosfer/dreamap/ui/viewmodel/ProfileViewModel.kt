@@ -122,18 +122,23 @@ class ProfileViewModel(
 
         _state.value = current.copy(isSavingProfile = true)
 
-        val req = UpdateProfileRequest(
-            userId = uid,
-            username = username.trim().takeIf { it.isNotBlank() },
-            displayName = displayName.trim().takeIf { it.isNotBlank() },
-            avatarUrl = avatarUrl.trim().takeIf { it.isNotBlank() },
-            isPrivate = resolvedIsPrivate,
-            profileVisibility = resolvedVisibility,
-            language = language.takeIf { it.isNotBlank() },
-            gender = gender.takeIf { it.isNotBlank() }
-        )
-
         viewModelScope.launch {
+            val rawAvatar = avatarUrl.trim()
+            val finalAvatarUrl = if (rawAvatar.isNotBlank()) {
+                repository.persistAvatarToStorage(rawAvatar).getOrDefault(rawAvatar)
+            } else null
+
+            val req = UpdateProfileRequest(
+                userId = uid,
+                username = username.trim().takeIf { it.isNotBlank() },
+                displayName = displayName.trim().takeIf { it.isNotBlank() },
+                avatarUrl = finalAvatarUrl,
+                isPrivate = resolvedIsPrivate,
+                profileVisibility = resolvedVisibility,
+                language = language.takeIf { it.isNotBlank() },
+                gender = gender.takeIf { it.isNotBlank() }
+            )
+
             repository.updateProfile(req).onSuccess { updatedProfile ->
                 val latest = _state.value as? ProfileUiState.Content ?: return@onSuccess
                 _state.value = latest.copy(
@@ -148,6 +153,29 @@ class ProfileViewModel(
                     isSavingProfile = false,
                     actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_update_failed)
                 )
+            }
+        }
+    }
+
+    fun uploadAvatarFromUri(context: android.content.Context, uri: android.net.Uri, onUploaded: (String) -> Unit) {
+        viewModelScope.launch {
+            val current = _state.value as? ProfileUiState.Content
+            try {
+                val bytes = context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+                if (bytes == null || bytes.isEmpty()) {
+                    if (current != null) _state.value = current.copy(actionError = "Fotoğraf okunamadı")
+                    return@launch
+                }
+                val fileName = "avatar_${System.currentTimeMillis()}.jpg"
+                repository.uploadAvatar(bytes, fileName).onSuccess { url ->
+                    onUploaded(url)
+                }.onFailure { err ->
+                    val latest = _state.value as? ProfileUiState.Content ?: return@onFailure
+                    _state.value = latest.copy(actionError = err.message ?: "Avatar yüklenemedi")
+                }
+            } catch (e: Exception) {
+                val latest = _state.value as? ProfileUiState.Content ?: return@launch
+                _state.value = latest.copy(actionError = e.message ?: "Hata oluştu")
             }
         }
     }

@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
@@ -213,16 +214,29 @@ private fun AuraPackList(offers: List<AuraPackOffer>, onBuy: (String) -> Unit) {
 @Composable
 private fun PremiumPlanList(offers: List<PremiumPlanOffer>, onBuy: (String) -> Unit) {
     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Filled.AutoAwesome, contentDescription = null, tint = AstralGold)
-            Spacer(Modifier.width(8.dp))
-            Text(
-                text = stringResource(R.string.billing_premium_sheet_subtitle),
-                color = Color.LightGray,
-                fontSize = 13.sp
-            )
+        Surface(
+            color = Void800.copy(alpha = 0.7f),
+            shape = RoundedCornerShape(16.dp),
+            border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.35f)),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
+        ) {
+            Column(modifier = Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Filled.AutoAwesome, contentDescription = null, tint = AstralGold, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(R.string.billing_premium_sheet_subtitle),
+                        color = AstralGold,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                PerkItem(stringResource(R.string.billing_perk_deep_analysis))
+                PerkItem(stringResource(R.string.billing_perk_ai_images))
+                PerkItem(stringResource(R.string.billing_perk_freemium_videos))
+                PerkItem(stringResource(R.string.billing_perk_badge))
+            }
         }
-        Spacer(Modifier.height(14.dp))
 
         if (offers.isEmpty()) {
             LoadingRow()
@@ -271,6 +285,24 @@ private fun planLabelRes(basePlanId: String) = when (basePlanId) {
     "quarterly" -> R.string.billing_plan_quarterly
     "yearly" -> R.string.billing_plan_yearly
     else -> R.string.billing_plan_monthly
+}
+
+@Composable
+private fun PerkItem(text: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            imageVector = Icons.Default.Check,
+            contentDescription = null,
+            tint = AstralAmber,
+            modifier = Modifier.size(16.dp)
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(
+            text = text,
+            color = Color.LightGray,
+            fontSize = 12.5.sp
+        )
+    }
 }
 
 @Composable

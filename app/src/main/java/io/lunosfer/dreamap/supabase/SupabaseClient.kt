@@ -8,8 +8,8 @@ import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.storage.Storage
 
 val supabaseClient = createSupabaseClient(
-    supabaseUrl = BuildConfig.SUPABASE_URL,
-    supabaseKey = BuildConfig.SUPABASE_ANON_KEY
+    supabaseUrl = if (BuildConfig.SUPABASE_URL.isNotBlank()) BuildConfig.SUPABASE_URL else "https://placeholder.supabase.co",
+    supabaseKey = if (BuildConfig.SUPABASE_ANON_KEY.isNotBlank()) BuildConfig.SUPABASE_ANON_KEY else "placeholder-anon-key"
 ) {
     install(Auth) {
         scheme = "io.lunosfer.dreamap"

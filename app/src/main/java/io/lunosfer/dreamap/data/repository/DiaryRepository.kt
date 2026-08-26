@@ -9,10 +9,39 @@ import io.lunosfer.dreamap.data.model.DeleteDiaryInput
 import io.lunosfer.dreamap.data.model.MarkDiarySeenInput
 import io.lunosfer.dreamap.data.network.NetworkModule
 import io.lunosfer.dreamap.supabase.supabaseClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.util.UUID
+import java.util.concurrent.TimeUnit
 
 class DiaryRepository {
     private val api = NetworkModule.api
+
+    private val imageDownloadClient = OkHttpClient.Builder()
+        .connectTimeout(20, TimeUnit.SECONDS)
+        .readTimeout(20, TimeUnit.SECONDS)
+        .build()
+
+    suspend fun persistMediaToStorage(mediaUrl: String): Result<String> = runCatching {
+        if (mediaUrl.isBlank()) return@runCatching mediaUrl
+        if (mediaUrl.contains("supabase.co/storage/v1/object/public/")) {
+            return@runCatching mediaUrl
+        }
+        val req = Request.Builder()
+            .url(mediaUrl)
+            .header("User-Agent", "Mozilla/5.0 (Android; Mobile)")
+            .build()
+        val bytes = withContext(Dispatchers.IO) {
+            val response = imageDownloadClient.newCall(req).execute()
+            if (!response.isSuccessful) throw Exception("Media download HTTP ${response.code}")
+            response.body?.bytes() ?: throw Exception("Empty media body")
+        }
+        val ext = if (mediaUrl.contains(".mp4", ignoreCase = true)) "mp4" else "jpg"
+        val fileName = "diary_${System.currentTimeMillis()}.$ext"
+        uploadMediaToStorage(bytes, fileName).getOrThrow()
+    }
 
     suspend fun getFeed(): Result<List<DiaryRing>> = runCatching {
         api.getDiaryFeed().rings

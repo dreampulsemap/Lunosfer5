@@ -106,6 +106,37 @@ fun CreateDreamScreen(navController: NavController) {
     var imageSource by remember { mutableStateOf<String?>(null) }
     var imageWidth by remember { mutableStateOf<Int?>(null) }
     var imageHeight by remember { mutableStateOf<Int?>(null) }
+    var isUploadingImage by remember { mutableStateOf(false) }
+    val dreamRepository = remember { io.lunosfer.dreamap.data.repository.DreamRepository() }
+
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri: android.net.Uri? ->
+        if (uri != null) {
+            coroutineScope.launch {
+                try {
+                    isUploadingImage = true
+                    val bytes = context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+                    if (bytes != null && bytes.isNotEmpty()) {
+                        val fileName = "dream_user_${System.currentTimeMillis()}.jpg"
+                        val uploadResult = dreamRepository.uploadDreamImage(bytes, fileName)
+                        uploadResult.onSuccess { uploadedUrl ->
+                            aiImageUrl = uploadedUrl
+                            imageSource = "upload"
+                            imageWidth = null
+                            imageHeight = null
+                        }.onFailure { err ->
+                            Toast.makeText(context, err.message ?: "Upload failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(context, e.message ?: "Error", Toast.LENGTH_SHORT).show()
+                } finally {
+                    isUploadingImage = false
+                }
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         val uid = supabaseClient.auth.currentUserOrNull()?.id ?: return@LaunchedEffect
@@ -332,16 +363,9 @@ fun CreateDreamScreen(navController: NavController) {
                                         .clickable {
                                             coroutineScope.launch {
                                                 try {
-                                                    val req = PixabayImageRequest(
-                                                        pixabayId = hit.id,
-                                                        imageUrl = hit.webformatURL,
-                                                        tags = hit.tags.joinToString(", "),
-                                                        pixabayUser = hit.user,
-                                                        width = hit.width,
-                                                        height = hit.height
-                                                    )
-                                                    val res = NetworkModule.api.savePixabayImage(req)
-                                                    aiImageUrl = res.url
+                                                    val rawUrl = hit.webformatURL
+                                                    val permanentUrl = dreamRepository.persistImageToStorage(rawUrl, "dream_pixabay").getOrDefault(rawUrl)
+                                                    aiImageUrl = permanentUrl
                                                     imageSource = "pixabay"
                                                     imageWidth = hit.width
                                                     imageHeight = hit.height
@@ -452,6 +476,16 @@ fun CreateDreamScreen(navController: NavController) {
                         modifier = Modifier.fillMaxSize(),
                         contentScale = androidx.compose.ui.layout.ContentScale.Crop
                     )
+                    if (isUploadingImage) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Void950.copy(alpha = 0.6f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(color = AstralGold, modifier = Modifier.size(32.dp))
+                        }
+                    }
                     IconButton(
                         onClick = { aiImageUrl = null; imageSource = null; imageWidth = null; imageHeight = null },
                         modifier = Modifier.align(Alignment.TopEnd).padding(8.dp).background(Color.Black.copy(alpha=0.5f), RoundedCornerShape(50))
@@ -461,14 +495,32 @@ fun CreateDreamScreen(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             } else {
-                Button(
-                    onClick = { showPixabayDialog = true },
-                    colors = ButtonDefaults.buttonColors(containerColor = Void800),
-                    modifier = Modifier.fillMaxWidth()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Icon(Icons.Filled.Image, contentDescription = null, tint = AstralGold)
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.create_dream_pixabay_btn), color = AstralGold)
+                    Button(
+                        onClick = { showPixabayDialog = true },
+                        colors = ButtonDefaults.buttonColors(containerColor = Void800),
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Icon(Icons.Filled.Image, contentDescription = null, tint = AstralGold)
+                        Spacer(Modifier.width(8.dp))
+                        Text(stringResource(R.string.create_dream_pixabay_btn), color = AstralGold)
+                    }
+                    Button(
+                        onClick = {
+                            galleryLauncher.launch(
+                                androidx.activity.result.PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Void800),
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Icon(Icons.Filled.Image, contentDescription = null, tint = AstralGold)
+                        Spacer(Modifier.width(8.dp))
+                        Text(stringResource(R.string.editor_gallery_button), color = AstralGold)
+                    }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }
@@ -692,6 +744,9 @@ val charCount = content.length
                             val dreamDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
                             val sentiments = selectedEmotions.joinToString(", ")
                             val finalLocation = location.trim().ifEmpty { unknownLocationStr }
+                            val finalImageUrl = if (!aiImageUrl.isNullOrBlank()) {
+                                dreamRepository.persistImageToStorage(aiImageUrl!!, "dream_image").getOrDefault(aiImageUrl!!)
+                            } else null
                             
                             val insertData = DreamInsertPayload(
                                 userId = user.id,
@@ -703,7 +758,7 @@ val charCount = content.length
                                 dreamDate = dreamDate,
                                 originalLanguage = currentLang,
                                 tags = tags,
-                                aiImageUrl = aiImageUrl,
+                                aiImageUrl = finalImageUrl,
                                 imageSource = imageSource,
                                 imageWidth = imageWidth,
                                 imageHeight = imageHeight

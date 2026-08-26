@@ -217,10 +217,10 @@
     <string name="profile_title">Profile &amp; Settings</string>
     <string name="profile_language_label">App Language</string>
     <string name="profile_premium_badge">Premium Member</string>
-    <string name="profile_premium_desc">All analysis and advanced features are active.</string>
+    <string name="profile_premium_desc">10 AI images &amp; 10 deep dream analyses per month active.</string>
     <string name="profile_free_badge">Free Membership</string>
-    <string name="profile_free_video_wait">Free video right: %1$s will be unlocked</string>
-    <string name="profile_free_video_ready">Your free video analysis right is available.</string>
+    <string name="profile_free_video_wait">Free video and journal features are available.</string>
+    <string name="profile_free_video_ready">Unlimited video uploads &amp; core features are free.</string>
     <string name="profile_edit_btn">Edit Profile</string>
     <string name="profile_notifications_off">Notifications Off</string>
     <string name="profile_notifications_desc">Go to Settings to receive message and interaction notifications.</string>
@@ -264,7 +264,11 @@
     <string name="main_menu_buy_aura">Buy Aura</string>
     <string name="billing_aura_sheet_title">Buy Aura</string>
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
-    <string name="billing_premium_sheet_subtitle">Unlock unlimited analysis and premium features</string>
+    <string name="billing_premium_sheet_subtitle">Monthly 10 AI Images &amp; 10 Deep Analyses</string>
+    <string name="billing_perk_deep_analysis">10 Deep Dream Analyses / month</string>
+    <string name="billing_perk_ai_images">10 AI Image Generations / month</string>
+    <string name="billing_perk_freemium_videos">Completely free video uploads for all</string>
+    <string name="billing_perk_badge">Golden Premium Member badge &amp; perks</string>
     <string name="billing_plan_monthly">Monthly</string>
     <string name="billing_plan_quarterly">3 Months</string>
     <string name="billing_plan_yearly">Yearly</string>
@@ -287,7 +291,7 @@
     <string name="create_vision_date_label">Target Date (Optional)</string>
     <string name="create_vision_visibility_label">Visibility</string>
     <string name="visibility_locked_private_note">Your profile is fully private, so this post will automatically be private too.</string>
-    <string name="visibility_restricted_to_friends_note">Your profile is friends-only, so this post can't be made public.</string>
+    <string name="visibility_restricted_to_friends_note">Your profile is friends-only, so this post can\'t be made public.</string>
     <string name="create_vision_roadmap_placeholder">Add a step (e.g., Basic A1 words)</string>
     <string name="create_vision_roadmap_label">Roadmap (Micro Goals) (%1$d/20)</string>
     <string name="create_vision_submit_btn">Start Vision</string>

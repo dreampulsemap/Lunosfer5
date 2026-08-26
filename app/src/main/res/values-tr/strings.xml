@@ -205,10 +205,10 @@
     <string name="profile_title">Profil &amp; Ayarlar</string>
     <string name="profile_language_label">Uygulama Dili</string>
     <string name="profile_premium_badge">Premium Üye</string>
-    <string name="profile_premium_desc">Tüm analizler ve gelişmiş özellikler aktif.</string>
+    <string name="profile_premium_desc">Aylık 10 yapay zeka görseli ve 10 derin rüya analizi aktif.</string>
     <string name="profile_free_badge">Ücretsiz Üyelik</string>
-    <string name="profile_free_video_wait">Ücretsiz video hakkı: %1$s tekrar açılacak</string>
-    <string name="profile_free_video_ready">Ücretsiz video analizi hakkınız kullanılabilir.</string>
+    <string name="profile_free_video_wait">Video ekleme ve günlük özellikleri kullanıma hazırdır.</string>
+    <string name="profile_free_video_ready">Sınırsız video ekleme ve tüm temel özellikler ücretsizdir.</string>
     <string name="profile_edit_btn">Profili Düzenle</string>
     <string name="profile_notifications_off">Bildirimler Kapalı</string>
     <string name="profile_notifications_desc">Mesaj ve etkileşim bildirimlerini almak için Ayarlar\'a git.</string>
@@ -445,7 +445,11 @@
     <string name="delete_account_dialog_cancel">İptal</string>
     <string name="billing_aura_sheet_title">Aura Satın Al</string>
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
-    <string name="billing_premium_sheet_subtitle">Sınırsız analiz ve premium özelliklerin kilidini aç</string>
+    <string name="billing_premium_sheet_subtitle">Ayda 10 AI Görseli &amp; 10 Derin Analiz</string>
+    <string name="billing_perk_deep_analysis">Ayda 10 Derin Rüya Analizi</string>
+    <string name="billing_perk_ai_images">Ayda 10 Yapay Zeka Görseli Üretimi</string>
+    <string name="billing_perk_freemium_videos">Tamamen ücretsiz ve sınırsız video ekleme</string>
+    <string name="billing_perk_badge">Özel Altın Premium Profil Rozeti</string>
     <string name="billing_plan_monthly">Aylık</string>
     <string name="billing_plan_quarterly">3 Aylık</string>
     <string name="billing_plan_yearly">Yıllık</string>

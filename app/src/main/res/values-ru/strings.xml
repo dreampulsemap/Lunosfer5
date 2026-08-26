@@ -206,10 +206,10 @@
     <string name="profile_title">Профиль и настройки</string>
     <string name="profile_language_label">Язык приложения</string>
     <string name="profile_premium_badge">Премиум-участник</string>
-    <string name="profile_premium_desc">Все анализы и расширенные функции активны.</string>
+    <string name="profile_premium_desc">10 ИИ-изображений и 10 глубоких анализов снов в месяц активны.</string>
     <string name="profile_free_badge">Бесплатное членство</string>
-    <string name="profile_free_video_wait">Бесплатное видео станет доступно: %1$s</string>
-    <string name="profile_free_video_ready">Ваш бесплатный видеоанализ доступен.</string>
+    <string name="profile_free_video_wait">Функции видео и дневника доступны для использования.</string>
+    <string name="profile_free_video_ready">Неограниченная загрузка видео и основные функции бесплатны.</string>
     <string name="profile_edit_btn">Редактировать профиль</string>
     <string name="profile_notifications_off">Уведомления выключены</string>
     <string name="profile_notifications_desc">Перейдите в настройки, чтобы получать уведомления о сообщениях и взаимодействиях.</string>
@@ -426,7 +426,11 @@
     <string name="delete_account_dialog_cancel">Отмена</string>
     <string name="billing_aura_sheet_title">Купить Ауру</string>
     <string name="billing_premium_sheet_title">Lunosfer Премиум</string>
-    <string name="billing_premium_sheet_subtitle">Откройте неограниченный анализ и премиум-функции</string>
+    <string name="billing_premium_sheet_subtitle">10 ИИ-изображений и 10 глубоких анализов в месяц</string>
+    <string name="billing_perk_deep_analysis">10 глубоких анализов снов / месяц</string>
+    <string name="billing_perk_ai_images">10 генераций изображений с ИИ / месяц</string>
+    <string name="billing_perk_freemium_videos">Полностью бесплатная и безлимитная загрузка видео</string>
+    <string name="billing_perk_badge">Золотой значок Премиум-участника</string>
     <string name="billing_plan_monthly">Ежемесячно</string>
     <string name="billing_plan_quarterly">3 месяца</string>
     <string name="billing_plan_yearly">Ежегодно</string>
