@@ -38,6 +38,14 @@ class VisionRepository {
         res.goal ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_status_update_failed))
     }
 
+    suspend fun updateGoalVisibility(goalId: String, visibility: String): Result<Goal> = runCatching {
+        val res = api.updateGoalVisibility(UpdateGoalVisibilityRequest(goalId, visibility))
+        if (res.goal == null && res.error != null) {
+            throw Exception(res.error)
+        }
+        res.goal ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_visibility_update_failed))
+    }
+
     suspend fun deleteGoal(goalId: String): Result<Unit> = runCatching {
         val res = api.deleteGoal(DeleteGoalRequest(goalId))
         if (!res.success && !res.ok && res.error != null) {
