@@ -218,12 +218,16 @@
     <string name="profile_find_friends_btn">查找并关注好友</string>
     <string name="profile_logout_btn">退出登录</string>
     <string name="profile_private_badge">私密账户</string>
+    <string name="profile_friends_badge">仅好友可见账户</string>
     <string name="profile_edit_action">编辑</string>
     <string name="profile_edit_username_label">用户名（3-32 个字符）</string>
     <string name="profile_edit_display_name_label">显示名称（最多 60 个字符）</string>
     <string name="profile_edit_avatar_url_label">头像图片链接</string>
     <string name="profile_edit_private_title">私密资料</string>
     <string name="profile_edit_private_desc">只有你批准的人才能看到你的梦境</string>
+    <string name="profile_visibility_public_desc">任何人都可以看到你的资料和帖子</string>
+    <string name="profile_visibility_friends_desc">只有你的好友可以看到你的资料和帖子</string>
+    <string name="profile_visibility_private_desc">只有你自己可以看到你的资料；你的所有帖子也会自动变为私密</string>
     <string name="profile_edit_gender_label">性别</string>
     <string name="profile_edit_cancel">取消</string>
     <string name="profile_edit_save">保存</string>
@@ -247,6 +251,8 @@
     <string name="create_vision_cover_pixabay_btn">🖼️ 从 Pixabay 素材库选择</string>
     <string name="create_vision_date_label">目标日期（可选）</string>
     <string name="create_vision_visibility_label">可见范围</string>
+    <string name="visibility_locked_private_note">你的资料完全私密，因此这条帖子也会自动设为私密。</string>
+    <string name="visibility_restricted_to_friends_note">你的资料仅好友可见，因此无法将此帖子设为公开。</string>
     <string name="create_vision_roadmap_placeholder">添加一个步骤（例如：基础 A1 词汇）</string>
     <string name="create_vision_roadmap_label">路线图（小目标）(%1$d/20)</string>
     <string name="create_vision_submit_btn">开始愿景</string>
@@ -439,6 +445,7 @@
     <string name="goal_detail_cancel">取消</string>
     <string name="goal_detail_ai_cover">🤖 AI 封面</string>
     <string name="goal_detail_pixabay">🖼️ Pixabay</string>
+    <string name="goal_detail_visibility_description">编辑可见范围</string>
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d 法力值</string>
     <string name="goal_detail_progress">进度</string>
@@ -555,7 +562,9 @@
     <string name="goal_detail_msg_mana_transferred">灵力已发送至愿景!(剩余灵力:%1$s)</string>
     <string name="goal_detail_msg_mana_reaction_removed">灵力反应已移除</string>
     <string name="goal_detail_error_status_update_failed">无法更新状态</string>
+    <string name="goal_detail_error_visibility_update_failed">无法更新可见范围</string>
     <string name="goal_detail_msg_status_updated">愿景状态已更新</string>
+    <string name="goal_detail_msg_visibility_updated">可见范围已更新</string>
     <string name="goal_detail_error_resolved_immutable">已完成或已放弃的目标无法更改</string>
     <string name="goal_detail_msg_ai_cover_created">AI封面图片已生成</string>
     <string name="goal_detail_error_cover_generate_failed">无法生成封面</string>
