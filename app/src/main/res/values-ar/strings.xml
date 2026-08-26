@@ -223,6 +223,7 @@
     <string name="notifications_empty">ليس لديك أي إشعارات حتى الآن.</string>
     <string name="goal_detail_title">تفاصيل الرؤية</string>
     <string name="profile_private_badge">حساب خاص</string>
+    <string name="profile_friends_badge">حساب للأصدقاء فقط</string>
     <string name="profile_stat_engagement">التفاعل</string>
     <string name="profile_stat_engagement_empty">شارك حلمًا لتلفت الأنظار</string>
     <string name="profile_stat_comments">التعليقات</string>
@@ -256,6 +257,9 @@
     <string name="diary_composer_no_vision">بدون ربط</string>
     <string name="diary_composer_share_btn">مشاركة اليوميات</string>
     <string name="profile_edit_private_desc">فقط الأشخاص الذين توافق عليهم يمكنهم رؤية أحلامك</string>
+    <string name="profile_visibility_public_desc">يمكن للجميع رؤية ملفك الشخصي ومنشوراتك</string>
+    <string name="profile_visibility_friends_desc">يمكن لأصدقائك فقط رؤية ملفك الشخصي ومنشوراتك</string>
+    <string name="profile_visibility_private_desc">أنت فقط من يمكنه رؤية ملفك الشخصي؛ وستكون جميع منشوراتك خاصة تلقائيًا</string>
     <string name="dream_detail_image_cd">صورة الحلم</string>
     <string name="profile_edit_cancel">إلغاء</string>
     <string name="public_profile_follow_pending">تم إرسال طلب المتابعة (قيد الانتظار)</string>
@@ -295,6 +299,8 @@
     <string name="create_vision_title_label">عنوان الرؤية *</string>
     <string name="create_vision_desc_label">الوصف (اختياري)</string>
     <string name="create_vision_visibility_label">مستوى الظهور</string>
+    <string name="visibility_locked_private_note">ملفك الشخصي خاص تمامًا، لذا سيكون هذا المنشور خاصًا تلقائيًا أيضًا.</string>
+    <string name="visibility_restricted_to_friends_note">ملفك الشخصي مخصص للأصدقاء فقط، لذا لا يمكنك جعل هذا المنشور عامًا.</string>
     <string name="create_vision_roadmap_placeholder">أضف خطوة (مثال: كلمات أساسية A1)</string>
     <string name="public_profile_dreams_tab">الأحلام (%1$d)</string>
     <string name="public_profile_retry_btn">إعادة المحاولة</string>
@@ -439,6 +445,7 @@
     <string name="goal_detail_cancel">إلغاء</string>
     <string name="goal_detail_ai_cover">🤖 غلاف ذكاء اصطناعي</string>
     <string name="goal_detail_pixabay">🖼️ Pixabay</string>
+    <string name="goal_detail_visibility_description">تعديل الظهور</string>
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d مانا</string>
     <string name="goal_detail_progress">التقدم</string>
@@ -555,7 +562,9 @@
     <string name="goal_detail_msg_mana_transferred">تم إرسال المانا إلى الرؤية! (المانا المتبقية: %1$s)</string>
     <string name="goal_detail_msg_mana_reaction_removed">تمت إزالة تفاعل المانا</string>
     <string name="goal_detail_error_status_update_failed">تعذّر تحديث الحالة</string>
+    <string name="goal_detail_error_visibility_update_failed">تعذّر تحديث الظهور</string>
     <string name="goal_detail_msg_status_updated">تم تحديث حالة الرؤية</string>
+    <string name="goal_detail_msg_visibility_updated">تم تحديث الظهور</string>
     <string name="goal_detail_error_resolved_immutable">لا يمكن تغيير هدف مكتمل أو متروك</string>
     <string name="goal_detail_msg_ai_cover_created">تم إنشاء صورة الغلاف بالذكاء الاصطناعي</string>
     <string name="goal_detail_error_cover_generate_failed">تعذّر إنشاء الغلاف</string>
