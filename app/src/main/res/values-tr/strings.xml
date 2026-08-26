@@ -216,6 +216,7 @@
     <string name="profile_find_friends_btn">Arkadaş Ara &amp; Takip Et</string>
     <string name="profile_logout_btn">Çıkış Yap</string>
     <string name="profile_private_badge">Gizli Hesap</string>
+    <string name="profile_friends_badge">Arkadaşlara Özel Hesap</string>
     <string name="profile_edit_action">Düzenle</string>
     <string name="profile_stat_engagement">Etkileşim</string>
     <string name="profile_stat_engagement_empty">İlk rüyanı paylaş, fark edil</string>
@@ -228,6 +229,9 @@
     <string name="profile_edit_avatar_url_label">Profil Resmi URL</string>
     <string name="profile_edit_private_title">Gizli Profil</string>
     <string name="profile_edit_private_desc">Sadece onayladığın kişiler rüyalarını görebilir</string>
+    <string name="profile_visibility_public_desc">Profilini ve paylaşımlarını herkes görebilir</string>
+    <string name="profile_visibility_friends_desc">Profilini ve paylaşımlarını sadece arkadaşların görebilir</string>
+    <string name="profile_visibility_private_desc">Profilini sadece sen görebilirsin; tüm paylaşımların da otomatik olarak gizli olur</string>
     <string name="profile_edit_gender_label">Cinsiyet</string>
     <string name="profile_edit_cancel">İptal</string>
     <string name="profile_edit_save">Kaydet</string>
@@ -244,6 +248,8 @@
     <string name="create_vision_cover_pixabay_btn">🖼️ Pixabay Medya Galerisinden Seç</string>
     <string name="create_vision_date_label">Hedef Tarih (Opsiyonel)</string>
     <string name="create_vision_visibility_label">Görünürlük</string>
+    <string name="visibility_locked_private_note">Profilin tamamen gizli olduğu için bu paylaşım da otomatik olarak gizli olacak.</string>
+    <string name="visibility_restricted_to_friends_note">Profilin sadece arkadaşlara açık olduğu için bu paylaşımı herkese açık yapamazsın.</string>
     <string name="create_vision_roadmap_placeholder">Adım ekle (ör: Temel A1 kelimeleri)</string>
     <string name="create_vision_roadmap_label">Yol Haritası (Mikro Hedefler) (%1$d/20)</string>
     <string name="create_vision_submit_btn">Vizyonu Başlat</string>
@@ -457,6 +463,7 @@
     <string name="goal_detail_cancel">İptal</string>
     <string name="goal_detail_ai_cover">🤖 AI Kapak</string>
     <string name="goal_detail_pixabay">🖼️ Pixabay</string>
+    <string name="goal_detail_visibility_description">Gizliliği düzenle</string>
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d Mana</string>
     <string name="goal_detail_progress">İlerleme</string>
@@ -572,7 +579,9 @@
     <string name="goal_detail_msg_mana_transferred">Vizyona Mana aktarıldı! (Kalan Mana: %1$s)</string>
     <string name="goal_detail_msg_mana_reaction_removed">Mana reaksiyonu kaldırıldı</string>
     <string name="goal_detail_error_status_update_failed">Durum güncellenemedi</string>
+    <string name="goal_detail_error_visibility_update_failed">Gizlilik güncellenemedi</string>
     <string name="goal_detail_msg_status_updated">Vizyon durumu güncellendi</string>
+    <string name="goal_detail_msg_visibility_updated">Gizlilik güncellendi</string>
     <string name="goal_detail_error_resolved_immutable">Tamamlanmış veya bırakılmış bir hedef değiştirilemez</string>
     <string name="goal_detail_msg_ai_cover_created">Yapay zeka kapak görseli oluşturuldu</string>
     <string name="goal_detail_error_cover_generate_failed">Kapak üretilemedi</string>
