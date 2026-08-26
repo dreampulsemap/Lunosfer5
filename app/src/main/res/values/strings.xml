@@ -234,6 +234,7 @@
     <string name="delete_account_dialog_confirm">Delete Permanently</string>
     <string name="delete_account_dialog_cancel">Cancel</string>
     <string name="profile_private_badge">Private Account</string>
+    <string name="profile_friends_badge">Friends-only account</string>
     <string name="profile_edit_action">Edit</string>
     <string name="profile_stat_engagement">Engagement</string>
     <string name="profile_stat_engagement_empty">Share a dream to get noticed</string>
@@ -246,6 +247,9 @@
     <string name="profile_edit_avatar_url_label">Profile Picture URL</string>
     <string name="profile_edit_private_title">Private Profile</string>
     <string name="profile_edit_private_desc">Only people you approve can see your dreams</string>
+    <string name="profile_visibility_public_desc">Anyone can see your profile and posts</string>
+    <string name="profile_visibility_friends_desc">Only your friends can see your profile and posts</string>
+    <string name="profile_visibility_private_desc">Only you can see your profile; all your posts become private too</string>
     <string name="profile_edit_gender_label">Gender</string>
     <string name="profile_edit_cancel">Cancel</string>
     <string name="profile_edit_save">Save</string>
@@ -282,6 +286,8 @@
     <string name="create_vision_cover_pixabay_btn">🖼️ Select from Pixabay Media Gallery</string>
     <string name="create_vision_date_label">Target Date (Optional)</string>
     <string name="create_vision_visibility_label">Visibility</string>
+    <string name="visibility_locked_private_note">Your profile is fully private, so this post will automatically be private too.</string>
+    <string name="visibility_restricted_to_friends_note">Your profile is friends-only, so this post can't be made public.</string>
     <string name="create_vision_roadmap_placeholder">Add a step (e.g., Basic A1 words)</string>
     <string name="create_vision_roadmap_label">Roadmap (Micro Goals) (%1$d/20)</string>
     <string name="create_vision_submit_btn">Start Vision</string>
@@ -387,6 +393,7 @@
     <string name="goal_detail_cancel">İptal</string>
     <string name="goal_detail_ai_cover">🤖 AI Kapak</string>
     <string name="goal_detail_pixabay">🖼️ Pixabay</string>
+    <string name="goal_detail_visibility_description">Edit visibility</string>
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d Mana</string>
     <string name="goal_detail_progress">İlerleme</string>
@@ -590,7 +597,9 @@
     <string name="goal_detail_msg_mana_transferred">Mana sent to the vision! (Remaining Mana: %1$s)</string>
     <string name="goal_detail_msg_mana_reaction_removed">Mana reaction removed</string>
     <string name="goal_detail_error_status_update_failed">Status couldn\'t be updated</string>
+    <string name="goal_detail_error_visibility_update_failed">Visibility couldn\'t be updated</string>
     <string name="goal_detail_msg_status_updated">Vision status updated</string>
+    <string name="goal_detail_msg_visibility_updated">Visibility updated</string>
     <string name="goal_detail_error_resolved_immutable">A completed or abandoned goal cannot be changed</string>
     <string name="goal_detail_msg_ai_cover_created">AI cover image created</string>
     <string name="goal_detail_error_cover_generate_failed">Cover couldn\'t be generated</string>
