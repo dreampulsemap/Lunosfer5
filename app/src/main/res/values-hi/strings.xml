@@ -230,6 +230,7 @@
     <string name="profile_edit_avatar_url_label">प्रोफ़ाइल चित्र का URL</string>
     <string name="dream_detail_slide_title_detail">विवरण</string>
     <string name="profile_private_badge">निजी खाता</string>
+    <string name="profile_friends_badge">केवल मित्रों के लिए खाता</string>
     <string name="dream_detail_add_bounty_btn">🏆 इनाम जोड़ें</string>
     <string name="diary_composer_link_vision_label">एक विजन से लिंक करें (वैकल्पिक)</string>
     <string name="create_vision_cover_pixabay_btn">🖼️ Pixabay मीडिया गैलरी से चुनें</string>
@@ -243,6 +244,8 @@
     <string name="dream_detail_comments_cd">टिप्पणियाँ</string>
     <string name="dream_detail_deep_analysis_loading">गहन विश्लेषण तैयार किया जा रहा है...</string>
     <string name="create_vision_visibility_label">दृश्यता</string>
+    <string name="visibility_locked_private_note">आपकी प्रोफ़ाइल पूरी तरह निजी है, इसलिए यह पोस्ट भी अपने आप निजी हो जाएगी।</string>
+    <string name="visibility_restricted_to_friends_note">आपकी प्रोफ़ाइल केवल मित्रों के लिए है, इसलिए आप इस पोस्ट को सार्वजनिक नहीं बना सकते।</string>
     <string name="profile_premium_desc">सभी विश्लेषण और उन्नत सुविधाएं सक्रिय हैं।</string>
     <string name="home_welcome_title">स्वागत है</string>
     <string name="vision_start_btn">विजन शुरू करें</string>
@@ -276,6 +279,9 @@
     <string name="profile_notifications_off">सूचनाएं बंद हैं</string>
     <string name="profile_edit_private_title">निजी प्रोफ़ाइल</string>
     <string name="profile_edit_private_desc">केवल वे लोग जिन्हें आपने स्वीकृत किया है, आपके सपने देख सकते हैं</string>
+    <string name="profile_visibility_public_desc">कोई भी आपकी प्रोफ़ाइल और पोस्ट देख सकता है</string>
+    <string name="profile_visibility_friends_desc">केवल आपके मित्र आपकी प्रोफ़ाइल और पोस्ट देख सकते हैं</string>
+    <string name="profile_visibility_private_desc">केवल आप अपनी प्रोफ़ाइल देख सकते हैं; आपकी सभी पोस्ट भी अपने आप निजी हो जाएंगी</string>
     <string name="profile_edit_gender_label">लिंग</string>
     <string name="profile_edit_cancel">रद्द करें</string>
     <string name="profile_tab_visions">विज़न बोर्ड</string>
@@ -439,6 +445,7 @@
     <string name="goal_detail_cancel">रद्द करें</string>
     <string name="goal_detail_ai_cover">🤖 AI कवर</string>
     <string name="goal_detail_pixabay">🖼️ Pixabay</string>
+    <string name="goal_detail_visibility_description">दृश्यता संपादित करें</string>
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d माना</string>
     <string name="goal_detail_progress">प्रगति</string>
@@ -555,7 +562,9 @@
     <string name="goal_detail_msg_mana_transferred">विज़न को मान भेजा गया! (शेष मान: %1$s)</string>
     <string name="goal_detail_msg_mana_reaction_removed">मान प्रतिक्रिया हटाई गई</string>
     <string name="goal_detail_error_status_update_failed">स्थिति अपडेट नहीं हो सकी</string>
+    <string name="goal_detail_error_visibility_update_failed">दृश्यता अपडेट नहीं हो सकी</string>
     <string name="goal_detail_msg_status_updated">विज़न की स्थिति अपडेट हुई</string>
+    <string name="goal_detail_msg_visibility_updated">दृश्यता अपडेट हुई</string>
     <string name="goal_detail_error_resolved_immutable">पूर्ण या छोड़े गए लक्ष्य को बदला नहीं जा सकता</string>
     <string name="goal_detail_msg_ai_cover_created">AI कवर छवि बनाई गई</string>
     <string name="goal_detail_error_cover_generate_failed">कवर नहीं बनाया जा सका</string>
