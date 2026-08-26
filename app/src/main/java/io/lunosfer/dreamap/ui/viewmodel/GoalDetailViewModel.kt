@@ -239,6 +239,30 @@ class GoalDetailViewModel(
         }
     }
 
+    /** Bir vizyonun gizliliğini (public/friends/private) sonradan değiştirir.
+     * Çağıran taraf (UI), profil gizliliğine göre izin verilen seçenekleri
+     * VisibilityPolicy ile önceden kısıtlamalı. */
+    fun changeVisibility(visibility: String) {
+        viewModelScope.launch {
+            repository.updateGoalVisibility(goalId, visibility).onSuccess { updatedGoal ->
+                val current = _state.value as? GoalDetailUiState.Success
+                if (current != null) {
+                    _state.value = current.copy(
+                        goal = updatedGoal,
+                        actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_visibility_updated)
+                    )
+                }
+            }.onFailure { err ->
+                val msg = err.message ?: ""
+                val errText = when {
+                    msg.contains("not_owner", ignoreCase = true) || msg.contains("403") -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_not_authorized)
+                    else -> err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_visibility_update_failed)
+                }
+                setActionError(errText)
+            }
+        }
+    }
+
     fun deleteGoal(onSuccess: () -> Unit) {
         viewModelScope.launch {
             repository.deleteGoal(goalId).onSuccess {

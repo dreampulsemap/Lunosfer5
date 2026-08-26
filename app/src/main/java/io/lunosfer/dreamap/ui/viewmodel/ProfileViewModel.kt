@@ -97,8 +97,7 @@ class ProfileViewModel(
         username: String,
         displayName: String,
         avatarUrl: String,
-        isPrivate: Boolean,
-        profileVisibility: String = if (isPrivate) "private" else "public",
+        profileVisibility: String,
         language: String,
         gender: String
     ) {
@@ -114,10 +113,11 @@ class ProfileViewModel(
             return
         }
 
-        // Profil tamamen gizliyse (private) tüm paylaşımlar otomatik tamamen gizli
-        // olmalı; bu iş kuralı sunucu tarafında da uygulanmalı ancak istemcide de
-        // tutarlılık için isPrivate bayrağını profileVisibility ile senkron tutuyoruz.
-        val resolvedVisibility = profileVisibility.ifBlank { if (isPrivate) "private" else "public" }
+        val resolvedVisibility = profileVisibility.ifBlank { "public" }
+        // isPrivate alanı geriye dönük uyumluluk için sunucuya hâlâ gönderiliyor;
+        // asıl kaynak artık profileVisibility (public/friends/private). Backend
+        // (update-profile.js) is_private'ı zaten profile_visibility'den türetiyor,
+        // ama eski istemciler için burada da tutarlı gönderiyoruz.
         val resolvedIsPrivate = resolvedVisibility == "private"
 
         _state.value = current.copy(isSavingProfile = true)

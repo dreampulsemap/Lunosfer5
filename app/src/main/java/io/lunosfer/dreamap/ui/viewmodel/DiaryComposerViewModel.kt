@@ -8,6 +8,10 @@ import io.lunosfer.dreamap.data.model.CreateDiaryInput
 import io.lunosfer.dreamap.data.model.Goal
 import io.lunosfer.dreamap.data.network.NetworkModule
 import io.lunosfer.dreamap.data.repository.DiaryRepository
+import io.lunosfer.dreamap.data.repository.ProfileRepository
+import io.lunosfer.dreamap.supabase.supabaseClient
+import io.github.jan.supabase.auth.auth
+import io.lunosfer.dreamap.util.VisibilityPolicy
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +23,9 @@ sealed class DiaryComposerUiState {
         val caption: String = "",
         val mediaUrl: String = "",
         val visibility: String = "private", // "public", "friends", "private"
+        // Kullanıcının profil gizliliği; paylaşım gizliliği seçenekleri buna göre
+        // kısıtlanır (bkz. util/VisibilityPolicy.kt).
+        val profileVisibility: String? = null,
         val selectedGoalId: String? = null,
         val availableGoals: List<Goal> = emptyList(),
         val selectedImageUri: Uri? = null,
@@ -30,7 +37,8 @@ sealed class DiaryComposerUiState {
 }
 
 class DiaryComposerViewModel(
-    private val repository: DiaryRepository = DiaryRepository()
+    private val repository: DiaryRepository = DiaryRepository(),
+    private val profileRepository: ProfileRepository = ProfileRepository()
 ) : ViewModel() {
 
     private val api = NetworkModule.api
@@ -42,6 +50,7 @@ class DiaryComposerViewModel(
 
     init {
         loadOwnGoals()
+        loadProfileVisibility()
     }
 
     private fun loadOwnGoals() {
@@ -51,6 +60,20 @@ class DiaryComposerViewModel(
                 val current = _state.value as? DiaryComposerUiState.Content ?: return@launch
                 _state.value = current.copy(availableGoals = res.goals)
             } catch (_: Exception) {}
+        }
+    }
+
+    private fun loadProfileVisibility() {
+        val uid = supabaseClient.auth.currentUserOrNull()?.id ?: return
+        viewModelScope.launch {
+            profileRepository.getUserProfile(uid).onSuccess { profile ->
+                val current = _state.value as? DiaryComposerUiState.Content ?: return@onSuccess
+                val allowed = VisibilityPolicy.allowedOptions(profile.profileVisibility)
+                _state.value = current.copy(
+                    profileVisibility = profile.profileVisibility,
+                    visibility = if (current.visibility in allowed) current.visibility else allowed.first()
+                )
+            }
         }
     }
 
@@ -73,7 +96,10 @@ class DiaryComposerViewModel(
 
     fun setVisibility(vis: String) {
         val current = _state.value as? DiaryComposerUiState.Content ?: return
-        _state.value = current.copy(visibility = vis)
+        val allowed = VisibilityPolicy.allowedOptions(current.profileVisibility)
+        if (vis in allowed) {
+            _state.value = current.copy(visibility = vis)
+        }
     }
 
     fun setSelectedGoalId(goalId: String?) {
@@ -133,7 +159,7 @@ class DiaryComposerViewModel(
             mediaUrl = current.mediaUrl.takeIf { it.isNotBlank() },
             posterUrl = current.mediaUrl.takeIf { current.mediaType == "video" && it.isNotBlank() },
             caption = current.caption.takeIf { it.isNotBlank() },
-            visibility = current.visibility,
+            visibility = VisibilityPolicy.clamp(current.visibility, current.profileVisibility),
             goalId = current.selectedGoalId
         )
 
