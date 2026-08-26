@@ -153,6 +153,10 @@ interface LunosferApi {
     @POST("api/goals/update-status")
     suspend fun updateGoalStatus(@Body request: io.lunosfer.dreamap.data.model.UpdateGoalStatusRequest): io.lunosfer.dreamap.data.model.UpdateGoalStatusResponse
 
+    // Backend'de doğrulandı: pages/api/goals/update-visibility.js
+    @POST("api/goals/update-visibility")
+    suspend fun updateGoalVisibility(@Body request: io.lunosfer.dreamap.data.model.UpdateGoalVisibilityRequest): io.lunosfer.dreamap.data.model.UpdateGoalVisibilityResponse
+
     @HTTP(method = "DELETE", path = "api/goals/delete", hasBody = true)
     suspend fun deleteGoal(@Body request: io.lunosfer.dreamap.data.model.DeleteGoalRequest): io.lunosfer.dreamap.data.model.GenericSuccessResponse
 
