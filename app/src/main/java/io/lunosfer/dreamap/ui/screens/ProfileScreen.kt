@@ -312,14 +312,14 @@ fun ProfileScreen(
                         profile = s.profile,
                         isSaving = s.isSavingProfile,
                         onDismiss = { viewModel.closeEditModal() },
-                        onSave = { username, displayName, avatarUrl, isPrivate, language, gender ->
+                        onSave = { username, displayName, avatarUrl, profileVisibility, language, gender ->
                             val localeList = LocaleListCompat.forLanguageTags(language)
                             AppCompatDelegate.setApplicationLocales(localeList)
                             viewModel.updateProfile(
                                 username = username,
                                 displayName = displayName,
                                 avatarUrl = avatarUrl,
-                                isPrivate = isPrivate,
+                                profileVisibility = profileVisibility,
                                 language = language,
                                 gender = gender
                             )
@@ -428,12 +428,21 @@ private fun ProfileSummaryCard(
                         )
                     }
 
-                    if (profile.isPrivate) {
+                    if (profile.profileVisibility == "private" || profile.profileVisibility == "friends") {
                         Spacer(Modifier.height(4.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Default.Lock, contentDescription = null, tint = AstralGold, modifier = Modifier.size(12.dp))
+                            Icon(
+                                if (profile.profileVisibility == "private") Icons.Default.Lock else Icons.Default.Group,
+                                contentDescription = null,
+                                tint = AstralGold,
+                                modifier = Modifier.size(12.dp)
+                            )
                             Spacer(Modifier.width(4.dp))
-                            Text(stringResource(R.string.profile_private_badge), color = AstralGold, fontSize = 11.sp)
+                            Text(
+                                text = if (profile.profileVisibility == "private") stringResource(R.string.profile_private_badge) else stringResource(R.string.profile_friends_badge),
+                                color = AstralGold,
+                                fontSize = 11.sp
+                            )
                         }
                     }
                 }
@@ -671,12 +680,12 @@ private fun EditProfileDialog(
     profile: FullUserProfile,
     isSaving: Boolean,
     onDismiss: () -> Unit,
-    onSave: (username: String, displayName: String, avatarUrl: String, isPrivate: Boolean, language: String, gender: String) -> Unit
+    onSave: (username: String, displayName: String, avatarUrl: String, profileVisibility: String, language: String, gender: String) -> Unit
 ) {
     var username by remember { mutableStateOf(profile.username ?: "") }
     var displayName by remember { mutableStateOf(profile.displayName ?: "") }
     var avatarUrl by remember { mutableStateOf(profile.avatarUrl ?: "") }
-    var isPrivate by remember { mutableStateOf(profile.isPrivate) }
+    var profileVisibility by remember { mutableStateOf(profile.profileVisibility) }
     var language by remember { mutableStateOf(profile.language ?: "tr") }
     var gender by remember { mutableStateOf(profile.gender ?: "unspecified") }
 
@@ -769,24 +778,50 @@ private fun EditProfileDialog(
                     )
                 )
 
-                // Privacy Switch
-                Row(
+                // Profile Visibility: herkese açık / sadece arkadaşlar / tamamen gizli.
+                // Bu seçim, paylaşım ekranlarında sunulan gizlilik seçeneklerini
+                // VisibilityPolicy üzerinden kısıtlar (bkz. util/VisibilityPolicy.kt).
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(10.dp))
                         .background(Void800)
                         .padding(horizontal = 12.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
-                    Column {
-                        Text(stringResource(R.string.profile_edit_private_title), color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                        Text(stringResource(R.string.profile_edit_private_desc), color = Color.Gray, fontSize = 11.sp)
+                    Text(stringResource(R.string.create_vision_visibility_label), color = AstralGold, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    val profileVisibilityOptions = listOf(
+                        "public" to stringResource(R.string.dream_public),
+                        "friends" to stringResource(R.string.dream_friends),
+                        "private" to stringResource(R.string.dream_private)
+                    )
+                    profileVisibilityOptions.forEach { (key, label) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(8.dp))
+                                .clickable { profileVisibility = key }
+                                .padding(vertical = 2.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = profileVisibility == key,
+                                onClick = { profileVisibility = key },
+                                colors = RadioButtonDefaults.colors(selectedColor = AstralGold)
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            Text(label, color = Color.White, fontSize = 13.sp)
+                        }
                     }
-                    Switch(
-                        checked = isPrivate,
-                        onCheckedChange = { isPrivate = it },
-                        colors = SwitchDefaults.colors(checkedThumbColor = Void950, checkedTrackColor = AstralGold)
+                    Text(
+                        text = when (profileVisibility) {
+                            "private" -> stringResource(R.string.profile_visibility_private_desc)
+                            "friends" -> stringResource(R.string.profile_visibility_friends_desc)
+                            else -> stringResource(R.string.profile_visibility_public_desc)
+                        },
+                        color = Color.Gray,
+                        fontSize = 11.sp,
+                        modifier = Modifier.padding(top = 2.dp)
                     )
                 }
 
@@ -831,7 +866,7 @@ private fun EditProfileDialog(
 
                     Button(
                         onClick = {
-                            onSave(username, displayName, avatarUrl, isPrivate, language, gender)
+                            onSave(username, displayName, avatarUrl, profileVisibility, language, gender)
                         },
                         enabled = !isSaving,
                         modifier = Modifier.weight(1f),

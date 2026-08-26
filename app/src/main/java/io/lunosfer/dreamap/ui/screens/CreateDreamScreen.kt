@@ -39,8 +39,10 @@ import io.lunosfer.dreamap.R
 import io.lunosfer.dreamap.data.model.AnalyzeDreamRequest
 import io.lunosfer.dreamap.data.model.DreamInsertPayload
 import io.lunosfer.dreamap.data.network.NetworkModule
+import io.lunosfer.dreamap.data.repository.ProfileRepository
 import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.theme.*
+import io.lunosfer.dreamap.util.VisibilityPolicy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -86,6 +88,11 @@ fun CreateDreamScreen(navController: NavController) {
     var content by remember { mutableStateOf("") }
     var location by remember { mutableStateOf("") }
     var visibility by remember { mutableStateOf("public") }
+    // Kullanıcının profil gizliliği — paylaşım gizliliği seçenekleri buna göre
+    // kısıtlanır (bkz. util/VisibilityPolicy.kt). Yüklenene kadar en kısıtlayıcı
+    // varsayımla (private) başlıyoruz.
+    var profileVisibility by remember { mutableStateOf<String?>("private") }
+    val profileRepository = remember { ProfileRepository() }
     var inFeed by remember { mutableStateOf(true) }
     var tagInput by remember { mutableStateOf("") }
     var tags by remember { mutableStateOf(listOf<String>()) }
@@ -99,6 +106,19 @@ fun CreateDreamScreen(navController: NavController) {
     var imageSource by remember { mutableStateOf<String?>(null) }
     var imageWidth by remember { mutableStateOf<Int?>(null) }
     var imageHeight by remember { mutableStateOf<Int?>(null) }
+
+    LaunchedEffect(Unit) {
+        val uid = supabaseClient.auth.currentUserOrNull()?.id ?: return@LaunchedEffect
+        profileRepository.getUserProfile(uid).onSuccess { profile ->
+            profileVisibility = profile.profileVisibility
+        }
+    }
+    val allowedVisibilityOptions = remember(profileVisibility) { VisibilityPolicy.allowedOptions(profileVisibility) }
+    LaunchedEffect(allowedVisibilityOptions) {
+        if (visibility !in allowedVisibilityOptions) {
+            visibility = allowedVisibilityOptions.first()
+        }
+    }
     
     val speechRecognizer = remember { SpeechRecognizer.createSpeechRecognizer(context) }
     
@@ -600,19 +620,32 @@ val charCount = content.length
                     onDismissRequest = { visibilityExpanded = false },
                     modifier = Modifier.background(Void800)
                 ) {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.dream_public), color = Color.White) },
-                        onClick = { visibility = "public"; visibilityExpanded = false }
-                    )
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.dream_friends), color = Color.White) },
-                        onClick = { visibility = "friends"; visibilityExpanded = false }
-                    )
+                    if ("public" in allowedVisibilityOptions) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.dream_public), color = Color.White) },
+                            onClick = { visibility = "public"; visibilityExpanded = false }
+                        )
+                    }
+                    if ("friends" in allowedVisibilityOptions) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.dream_friends), color = Color.White) },
+                            onClick = { visibility = "friends"; visibilityExpanded = false }
+                        )
+                    }
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.dream_private), color = Color.White) },
                         onClick = { visibility = "private"; visibilityExpanded = false }
                     )
                 }
+            }
+            val dreamVisibilityNote = when {
+                profileVisibility == "private" -> stringResource(R.string.visibility_locked_private_note)
+                profileVisibility == "friends" -> stringResource(R.string.visibility_restricted_to_friends_note)
+                else -> null
+            }
+            if (dreamVisibilityNote != null) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(dreamVisibilityNote, color = Color.Gray, fontSize = 11.sp)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -665,7 +698,7 @@ val charCount = content.length
                                 content = content.trim(),
                                 locationName = finalLocation,
                                 inFeed = inFeed,
-                                visibility = visibility,
+                                visibility = VisibilityPolicy.clamp(visibility, profileVisibility),
                                 userSelectedSentiment = sentiments,
                                 dreamDate = dreamDate,
                                 originalLanguage = currentLang,

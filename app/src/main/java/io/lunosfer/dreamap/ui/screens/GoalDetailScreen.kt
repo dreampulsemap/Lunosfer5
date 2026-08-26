@@ -38,11 +38,13 @@ import io.lunosfer.dreamap.data.model.Goal
 import io.lunosfer.dreamap.data.model.GoalComment
 import io.lunosfer.dreamap.data.model.MicroGoal
 import io.lunosfer.dreamap.data.model.PixabaySelectedMedia
+import io.lunosfer.dreamap.data.repository.ProfileRepository
 import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.components.PixabayMediaPickerDialog
 import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.GoalDetailUiState
 import io.lunosfer.dreamap.ui.viewmodel.GoalDetailViewModel
+import io.lunosfer.dreamap.util.VisibilityPolicy
 
 @Composable
 fun GoalDetailScreen(
@@ -119,6 +121,7 @@ fun GoalDetailScreen(
                         onUpdateStatus = { status, story, onComplete ->
                             viewModel.updateStatus(status, story, onComplete)
                         },
+                        onChangeVisibility = viewModel::changeVisibility,
                         onDeleteGoal = { viewModel.deleteGoal(onSuccess = onBack) },
                         onGenerateCover = viewModel::generateCover,
                         onAddPixabayImage = viewModel::addPixabayImage,
@@ -149,6 +152,7 @@ private fun GoalDetailContent(
     onAddComment: (String) -> Unit,
     onDeleteComment: (String) -> Unit,
     onUpdateStatus: (String, String?, () -> Unit) -> Unit,
+    onChangeVisibility: (String) -> Unit,
     onDeleteGoal: () -> Unit,
     onGenerateCover: () -> Unit = {},
     onAddPixabayImage: (Long, String, String, String) -> Unit = { _, _, _, _ -> },
@@ -162,12 +166,37 @@ private fun GoalDetailContent(
     val isOwner = currentUserId != null && currentUserId == goal.userId
     var showStatusDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showVisibilityDialog by remember { mutableStateOf(false) }
     var showCommentsSection by remember { mutableStateOf(true) }
     var showPixabayDialog by remember { mutableStateOf(false) }
     var showUrlDialog by remember { mutableStateOf(false) }
     var urlInputText by remember { mutableStateOf("") }
     var translatedDesc by remember { mutableStateOf<String?>(null) }
     var isTranslatingDesc by remember { mutableStateOf(false) }
+
+    // Kullanıcının profil gizliliği — gizlilik düzenleme dialogundaki seçenekler
+    // buna göre kısıtlanır (bkz. util/VisibilityPolicy.kt).
+    val profileRepository = remember { ProfileRepository() }
+    var profileVisibility by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(isOwner, currentUserId) {
+        if (isOwner && currentUserId != null) {
+            profileRepository.getUserProfile(currentUserId).onSuccess { profile ->
+                profileVisibility = profile.profileVisibility
+            }
+        }
+    }
+
+    if (showVisibilityDialog) {
+        VisibilityEditDialog(
+            currentVisibility = goal.visibility,
+            profileVisibility = profileVisibility,
+            onDismiss = { showVisibilityDialog = false },
+            onConfirm = { newVisibility ->
+                onChangeVisibility(newVisibility)
+                showVisibilityDialog = false
+            }
+        )
+    }
 
     if (showPixabayDialog) {
         PixabayMediaPickerDialog(
@@ -275,6 +304,17 @@ private fun GoalDetailContent(
                     }
                 }
                 if (isOwner) {
+                    IconButton(onClick = { showVisibilityDialog = true }) {
+                        Icon(
+                            imageVector = when (goal.visibility) {
+                                "private" -> Icons.Filled.Lock
+                                "friends" -> Icons.Filled.Group
+                                else -> Icons.Filled.Public
+                            },
+                            contentDescription = stringResource(R.string.goal_detail_visibility_description),
+                            tint = AstralGold
+                        )
+                    }
                     IconButton(onClick = { showDeleteDialog = true }) {
                         Icon(Icons.Filled.Delete, contentDescription = null, tint = SemanticDanger400)
                     }
@@ -935,6 +975,82 @@ private fun UpdateGoalStatusDialog(
                 onClick = {
                     onConfirm(selectedStatus, storyText.trim().ifEmpty { null })
                 },
+                colors = ButtonDefaults.buttonColors(containerColor = AstralGold)
+            ) {
+                Text(stringResource(R.string.goal_detail_update_btn), color = Void950, fontWeight = FontWeight.Bold)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.goal_detail_cancel), color = Color.Gray)
+            }
+        }
+    )
+}
+
+/**
+ * Bir vizyonun (Goal) paylaşım gizliliğini sonradan değiştirmek için dialog.
+ * Seçenekler kullanıcının profil gizliliğine göre VisibilityPolicy ile kısıtlanır:
+ * profil "private" ise tek seçenek "private"tır, profil "friends" ise "public"
+ * seçeneği hiç sunulmaz.
+ */
+@Composable
+private fun VisibilityEditDialog(
+    currentVisibility: String,
+    profileVisibility: String?,
+    onDismiss: () -> Unit,
+    onConfirm: (String) -> Unit
+) {
+    val allowedOptions = remember(profileVisibility) { VisibilityPolicy.allowedOptions(profileVisibility) }
+    var selected by remember(currentVisibility, allowedOptions) {
+        mutableStateOf(if (currentVisibility in allowedOptions) currentVisibility else allowedOptions.first())
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Void900,
+        title = { Text(stringResource(R.string.create_vision_visibility_label), color = Color.White, fontWeight = FontWeight.Bold) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                val allOptions = listOf(
+                    "public" to stringResource(R.string.dream_public),
+                    "friends" to stringResource(R.string.dream_friends),
+                    "private" to stringResource(R.string.dream_private)
+                )
+                allOptions.filter { (key, _) -> key in allowedOptions }.forEach { (key, label) ->
+                    val isSelected = selected == key
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(if (isSelected) Void800 else Color.Transparent)
+                            .clickable { selected = key }
+                            .padding(horizontal = 4.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = isSelected,
+                            onClick = { selected = key },
+                            colors = RadioButtonDefaults.colors(selectedColor = AstralGold)
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(label, color = Color.White, fontSize = 13.sp)
+                    }
+                }
+                val note = when {
+                    profileVisibility == "private" -> stringResource(R.string.visibility_locked_private_note)
+                    profileVisibility == "friends" -> stringResource(R.string.visibility_restricted_to_friends_note)
+                    else -> null
+                }
+                if (note != null) {
+                    Spacer(Modifier.height(4.dp))
+                    Text(note, color = Color.Gray, fontSize = 11.sp)
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = { onConfirm(VisibilityPolicy.clamp(selected, profileVisibility)) },
                 colors = ButtonDefaults.buttonColors(containerColor = AstralGold)
             ) {
                 Text(stringResource(R.string.goal_detail_update_btn), color = Void950, fontWeight = FontWeight.Bold)

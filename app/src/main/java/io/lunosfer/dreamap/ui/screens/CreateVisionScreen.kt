@@ -30,11 +30,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
+import io.github.jan.supabase.auth.auth
 import io.lunosfer.dreamap.data.model.CreateGoalRequest
 import io.lunosfer.dreamap.data.model.RoadmapItemInput
+import io.lunosfer.dreamap.data.repository.ProfileRepository
 import io.lunosfer.dreamap.data.repository.VisionRepository
+import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.components.PixabayMediaPickerDialog
 import io.lunosfer.dreamap.ui.theme.*
+import io.lunosfer.dreamap.util.VisibilityPolicy
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -69,6 +73,27 @@ fun CreateVisionScreen(
     var description by remember { mutableStateOf("") }
     var targetDate by remember { mutableStateOf<String?>(null) }
     var visibility by remember { mutableStateOf("public") }
+    // Kullanıcının profil gizliliği (public/friends/private). Paylaşım gizliliği
+    // seçenekleri buna göre kısıtlanır — bkz. util/VisibilityPolicy.kt.
+    // Yüklenene kadar en kısıtlayıcı varsayımla (private) başlıyoruz.
+    var profileVisibility by remember { mutableStateOf<String?>("private") }
+    val profileRepository = remember { ProfileRepository() }
+
+    LaunchedEffect(Unit) {
+        val uid = supabaseClient.auth.currentUserOrNull()?.id ?: return@LaunchedEffect
+        profileRepository.getUserProfile(uid).onSuccess { profile ->
+            profileVisibility = profile.profileVisibility
+        }
+    }
+
+    val allowedVisibilityOptions = remember(profileVisibility) { VisibilityPolicy.allowedOptions(profileVisibility) }
+    LaunchedEffect(allowedVisibilityOptions) {
+        if (visibility !in allowedVisibilityOptions) {
+            visibility = allowedVisibilityOptions.first()
+        }
+    }
+    val visibilityLockedPrivateNote = stringResource(R.string.visibility_locked_private_note)
+    val visibilityRestrictedFriendsNote = stringResource(R.string.visibility_restricted_to_friends_note)
     var coverImageUrl by remember { mutableStateOf<String?>(null) }
     // Pixabay attribution — kapak görselini goal oluşturulduktan SONRA
     // /api/goals/add-image-from-pixabay ile gerçekten kalıcı hale getirmek için gerekli.
@@ -298,18 +323,19 @@ fun CreateVisionScreen(
                 }
             }
 
-            // Visibility Selection
+            // Visibility Selection — profil gizliliğine göre kısıtlı seçenekler
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(stringResource(R.string.create_vision_visibility_label), color = AstralGold, fontSize = 13.sp, fontWeight = FontWeight.Bold)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    val options = listOf(
+                    val allOptions = listOf(
                         "public" to visibilityPublicLabel,
                         "friends" to visibilityFriendsLabel,
                         "private" to visibilityPrivateLabel
                     )
+                    val options = allOptions.filter { (key, _) -> key in allowedVisibilityOptions }
                     options.forEach { (key, label) ->
                         val selected = visibility == key
                         FilterChip(
@@ -324,6 +350,14 @@ fun CreateVisionScreen(
                             )
                         )
                     }
+                }
+                val restrictionNote = when (profileVisibility) {
+                    "private" -> visibilityLockedPrivateNote
+                    "friends" -> visibilityRestrictedFriendsNote
+                    else -> null
+                }
+                if (restrictionNote != null) {
+                    Text(restrictionNote, color = Color.Gray, fontSize = 11.sp)
                 }
             }
 
@@ -449,7 +483,7 @@ fun CreateVisionScreen(
                             coverImageUrl = coverImageUrl,
                             coverImageSource = if (coverImageUrl != null) "pixabay" else "ai_generated",
                             targetDate = targetDate,
-                            visibility = visibility,
+                            visibility = VisibilityPolicy.clamp(visibility, profileVisibility),
                             roadmap = if (roadmapList.isNotEmpty()) roadmapList else null
                         )
 

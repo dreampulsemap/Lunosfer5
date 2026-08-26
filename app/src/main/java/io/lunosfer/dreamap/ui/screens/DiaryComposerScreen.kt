@@ -35,6 +35,7 @@ import coil.compose.AsyncImage
 import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.DiaryComposerUiState
 import io.lunosfer.dreamap.ui.viewmodel.DiaryComposerViewModel
+import io.lunosfer.dreamap.util.VisibilityPolicy
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -242,15 +243,19 @@ fun DiaryComposerScreen(
                 )
             }
 
-            // Visibility Selector
+            // Visibility Selector — profil gizliliğine göre kısıtlı seçenekler
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(stringResource(R.string.common_visibility_label), color = AstralGold, fontSize = 13.sp, fontWeight = FontWeight.Bold)
 
-                val visibilities = listOf(
+                val allowedVisibilityOptions = remember(contentState.profileVisibility) {
+                    VisibilityPolicy.allowedOptions(contentState.profileVisibility)
+                }
+                val allVisibilities = listOf(
                     "private" to stringResource(R.string.visibility_private),
                     "friends" to stringResource(R.string.visibility_friends),
                     "public" to stringResource(R.string.visibility_public)
                 )
+                val visibilities = allVisibilities.filter { (key, _) -> key in allowedVisibilityOptions }
 
                 visibilities.forEach { (visKey, visLabel) ->
                     val isSelected = contentState.visibility == visKey
@@ -271,6 +276,14 @@ fun DiaryComposerScreen(
                         Spacer(Modifier.width(8.dp))
                         Text(visLabel, color = Color.White, fontSize = 13.sp)
                     }
+                }
+                val diaryVisibilityNote = when {
+                    contentState.profileVisibility == "private" -> stringResource(R.string.visibility_locked_private_note)
+                    contentState.profileVisibility == "friends" -> stringResource(R.string.visibility_restricted_to_friends_note)
+                    else -> null
+                }
+                if (diaryVisibilityNote != null) {
+                    Text(diaryVisibilityNote, color = Color.Gray, fontSize = 11.sp)
                 }
             }
 

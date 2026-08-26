@@ -694,6 +694,21 @@ private fun EditDreamDialog(
     val errEmptyText = stringResource(R.string.dream_detail_err_empty_text)
     val errTooLongText = stringResource(R.string.dream_detail_err_too_long)
 
+    // Kullanıcının profil gizliliği — paylaşımın gizlilik seçenekleri buna göre
+    // kısıtlanır (bkz. util/VisibilityPolicy.kt).
+    val profileRepository = remember { io.lunosfer.dreamap.data.repository.ProfileRepository() }
+    var profileVisibility by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(currentUserId) {
+        profileRepository.getUserProfile(currentUserId).onSuccess { profile ->
+            profileVisibility = profile.profileVisibility
+            val allowed = io.lunosfer.dreamap.util.VisibilityPolicy.allowedOptions(profile.profileVisibility)
+            if (visibility !in allowed) visibility = allowed.first()
+        }
+    }
+    val allowedVisibilityOptions = remember(profileVisibility) {
+        io.lunosfer.dreamap.util.VisibilityPolicy.allowedOptions(profileVisibility)
+    }
+
     val maxTags = 10
 
     AlertDialog(
@@ -788,6 +803,44 @@ private fun EditDreamDialog(
                     )
                     Text(stringResource(R.string.dream_detail_edit_visibility_label), color = Color.White, fontSize = 13.sp)
                 }
+
+                // Gizlilik seçici — profil gizliliğine göre kısıtlı seçenekler
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(stringResource(R.string.create_vision_visibility_label), color = AstralGold, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                    val allOptions = listOf(
+                        "public" to stringResource(R.string.dream_public),
+                        "friends" to stringResource(R.string.dream_friends),
+                        "private" to stringResource(R.string.dream_private)
+                    )
+                    allOptions.filter { (key, _) -> key in allowedVisibilityOptions }.forEach { (key, label) ->
+                        val isSelected = visibility == key
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(if (isSelected) Void800 else Color.Transparent)
+                                .clickable { visibility = key }
+                                .padding(horizontal = 4.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = isSelected,
+                                onClick = { visibility = key },
+                                colors = RadioButtonDefaults.colors(selectedColor = AstralGold)
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            Text(label, color = Color.White, fontSize = 13.sp)
+                        }
+                    }
+                    val editVisibilityNote = when {
+                        profileVisibility == "private" -> stringResource(R.string.visibility_locked_private_note)
+                        profileVisibility == "friends" -> stringResource(R.string.visibility_restricted_to_friends_note)
+                        else -> null
+                    }
+                    if (editVisibilityNote != null) {
+                        Text(editVisibilityNote, color = Color.Gray, fontSize = 11.sp)
+                    }
+                }
             }
         },
         confirmButton = {
@@ -807,7 +860,7 @@ private fun EditDreamDialog(
                         userId = currentUserId,
                         content = content.trim(),
                         locationName = locationName.trim(),
-                        visibility = visibility,
+                        visibility = io.lunosfer.dreamap.util.VisibilityPolicy.clamp(visibility, profileVisibility),
                         inFeed = inFeed,
                         tags = processedTags
                     )
