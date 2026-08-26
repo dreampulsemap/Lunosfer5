@@ -197,6 +197,7 @@
     <string name="notifications_empty">Vous n\'avez pas encore de notifications.</string>
     <string name="goal_detail_title">Détail de la vision</string>
     <string name="profile_private_badge">Compte privé</string>
+    <string name="profile_friends_badge">Compte réservé aux amis</string>
     <string name="home_feed_archetypes_label">Archétypes</string>
     <string name="home_feed_vision_badge">VISION</string>
     <string name="error_diary_feed_load">Échec du chargement du journal</string>
@@ -228,6 +229,9 @@
     <string name="profile_free_video_wait">Droits vidéo gratuits : %1$s seront débloqués</string>
     <string name="diary_composer_share_btn">Partager le journal</string>
     <string name="profile_edit_private_desc">Seules les personnes que vous approuvez peuvent voir vos rêves</string>
+    <string name="profile_visibility_public_desc">Tout le monde peut voir ton profil et tes publications</string>
+    <string name="profile_visibility_friends_desc">Seuls tes amis peuvent voir ton profil et tes publications</string>
+    <string name="profile_visibility_private_desc">Toi seul peux voir ton profil ; toutes tes publications deviennent aussi privées automatiquement</string>
     <string name="main_menu_spiritual_tools">Outils spirituels</string>
     <string name="dream_detail_image_cd">Image du rêve</string>
     <string name="profile_edit_cancel">Annuler</string>
@@ -299,6 +303,8 @@
     <string name="error_profile_load">Échec du chargement du profil</string>
     <string name="create_vision_roadmap_placeholder">Ajouter une étape (ex. : Mots de base A1)</string>
     <string name="create_vision_visibility_label">Visibilité</string>
+    <string name="visibility_locked_private_note">Ton profil est entièrement privé, cette publication sera donc aussi automatiquement privée.</string>
+    <string name="visibility_restricted_to_friends_note">Ton profil est réservé aux amis, tu ne peux donc pas rendre cette publication publique.</string>
     <string name="error_delete_failed">Échec de la suppression</string>
     <string name="dream_detail_comment_placeholder">Écrire un commentaire...</string>
     <string name="diary_ring_self">Vous</string>
@@ -437,6 +443,7 @@
     <string name="goal_detail_cancel">Annuler</string>
     <string name="goal_detail_ai_cover">🤖 Couverture IA</string>
     <string name="goal_detail_pixabay">🖼️ Pixabay</string>
+    <string name="goal_detail_visibility_description">Modifier la visibilité</string>
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d Mana</string>
     <string name="goal_detail_progress">Progression</string>
@@ -553,7 +560,9 @@
     <string name="goal_detail_msg_mana_transferred">Mana envoyé à la vision ! (Mana restant : %1$s)</string>
     <string name="goal_detail_msg_mana_reaction_removed">Réaction de mana supprimée</string>
     <string name="goal_detail_error_status_update_failed">Le statut n\'a pas pu être mis à jour</string>
+    <string name="goal_detail_error_visibility_update_failed">La visibilité n\'a pas pu être mise à jour</string>
     <string name="goal_detail_msg_status_updated">Statut de la vision mis à jour</string>
+    <string name="goal_detail_msg_visibility_updated">Visibilité mise à jour</string>
     <string name="goal_detail_error_resolved_immutable">Un objectif terminé ou abandonné ne peut pas être modifié</string>
     <string name="goal_detail_msg_ai_cover_created">Image de couverture IA créée</string>
     <string name="goal_detail_error_cover_generate_failed">La couverture n\'a pas pu être générée</string>
