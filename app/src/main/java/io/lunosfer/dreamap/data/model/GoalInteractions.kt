@@ -43,6 +43,23 @@ data class UpdateGoalStatusResponse(
     val error: String? = null
 )
 
+// --- Update Visibility ---
+// Backend'de doğrulandı: pages/api/goals/update-visibility.js (update-status.js
+// ile birebir aynı desende) + 013_profile_visibility_and_post_clamp.sql
+// migration'ındaki DB trigger'ı nihai güvence.
+
+@Serializable
+data class UpdateGoalVisibilityRequest(
+    val goalId: String,
+    val visibility: String // "public" | "friends" | "private"
+)
+
+@Serializable
+data class UpdateGoalVisibilityResponse(
+    val goal: Goal? = null,
+    val error: String? = null
+)
+
 // --- Delete Goal ---
 
 @Serializable
