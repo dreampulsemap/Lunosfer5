@@ -10,6 +10,8 @@ import io.lunosfer.dreamap.BuildConfig
  *
  * Gerçek sayfalar dreamap-frontend'de (Next.js Pages Router) hazır:
  * pages/privacy.js -> /privacy
+ * pages/terms.js -> /terms (Kullanım Koşulları / EULA — Play Console UGC
+ * politikasının istediği nefret söylemi/müstehcenlik yasağı burada)
  * pages/delete-account.js -> /delete-account (Play Console "Account
  * deletion" alanına da bu URL girilecek)
  */
@@ -19,6 +21,9 @@ object LegalLinks {
 
     val privacyPolicyUrl: String
         get() = "$baseUrl/privacy"
+
+    val termsOfServiceUrl: String
+        get() = "$baseUrl/terms"
 
     val deleteAccountUrl: String
         get() = "$baseUrl/delete-account"
