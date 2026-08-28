@@ -37,4 +37,13 @@ class FriendsRepository {
         }
         res
     }
+
+    // Google Play UGC politikası: kullanıcı şikayeti. bkz. pages/api/reports/user.js
+    suspend fun reportUser(userId: String, reason: String, note: String?): Result<ContentReportResponse> = runCatching {
+        val res = api.reportUser(ReportUserRequest(userId = userId, reason = reason, note = note))
+        if (!res.success && res.error != null) {
+            throw Exception(res.error)
+        }
+        res
+    }
 }

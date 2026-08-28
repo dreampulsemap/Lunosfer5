@@ -92,5 +92,21 @@ class MessagesRepository {
     suspend fun reactMessage(messageId: String, reaction: String): Result<Unit> = runCatching {
         api.reactMessage(io.lunosfer.dreamap.data.model.ReactMessageRequest(messageId, reaction))
     }
+
+    // Google Play UGC politikası: mesaj şikayeti. bkz. pages/api/reports/message.js
+    // (yalnızca alıcı bildirebilir — backend zaten bunu doğruluyor).
+    suspend fun reportMessage(
+        messageId: String,
+        reason: String,
+        note: String?
+    ): Result<io.lunosfer.dreamap.data.model.ContentReportResponse> = runCatching {
+        val res = api.reportMessage(
+            io.lunosfer.dreamap.data.model.ReportMessageRequest(messageId = messageId, reason = reason, note = note)
+        )
+        if (!res.success && res.error != null) {
+            throw Exception(res.error)
+        }
+        res
+    }
 }
 

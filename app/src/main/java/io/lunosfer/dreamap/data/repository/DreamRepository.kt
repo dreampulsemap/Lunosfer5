@@ -131,4 +131,13 @@ class DreamRepository {
         }
         res
     }
+
+    // Google Play UGC politikası: rüya şikayeti. bkz. pages/api/reports/dream.js
+    suspend fun reportDream(dreamId: Long, reason: String, note: String?): Result<ContentReportResponse> = runCatching {
+        val res = api.reportDream(ReportDreamRequest(dreamId = dreamId, reason = reason, note = note))
+        if (!res.success && res.error != null) {
+            throw Exception(res.error)
+        }
+        res
+    }
 }
