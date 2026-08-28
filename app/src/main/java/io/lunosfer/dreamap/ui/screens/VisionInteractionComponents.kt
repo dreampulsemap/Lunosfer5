@@ -47,12 +47,20 @@ import io.lunosfer.dreamap.ui.theme.Void950
  * kalınarak seçildi (bkz. GoalReportModels.kt).
  */
 
-/** "..." menüsü — sahibi olmayan izleyiciler için "Bildir" seçeneği. */
+/**
+ * "..." menüsü — sahibi olmayan izleyiciler için "Bildir" seçeneği.
+ * extraItems: PublicProfileScreen gibi ekranların "Engelle/Engeli Kaldır"
+ * gibi ek seçenekler eklemesi için isteğe bağlı slot — verilmezse davranış
+ * eskisiyle birebir aynı kalır (SlidesViewerScreen, VisionVideoPlayerScreen
+ * değişmeden çalışmaya devam eder). extraItems içindeki her öğe kendi
+ * onClick'inde expanded'ı kapatmaktan sorumludur (bkz. PublicProfileScreen).
+ */
 @Composable
 internal fun VisionMoreMenuButton(
     isOwner: Boolean,
     onReportClick: () -> Unit,
-    tint: Color = Color.White
+    tint: Color = Color.White,
+    extraItems: (@Composable ColumnScope.(closeMenu: () -> Unit) -> Unit)? = null
 ) {
     if (isOwner) return
     var expanded by remember { mutableStateOf(false) }
@@ -69,6 +77,9 @@ internal fun VisionMoreMenuButton(
                     onReportClick()
                 }
             )
+            if (extraItems != null) {
+                extraItems { expanded = false }
+            }
         }
     }
 }
@@ -264,7 +275,17 @@ private fun reportReasonLabel(reason: GoalReportReason): String = when (reason) 
 internal fun VisionReportSheet(
     isSubmitting: Boolean,
     onDismiss: () -> Unit,
-    onSubmit: (GoalReportReason, String?) -> Unit
+    onSubmit: (GoalReportReason, String?) -> Unit,
+    // Bu sheet aslen sadece vizyonlar için yazıldı, ama backend'deki 6
+    // sabit sebep (spam/inappropriate/harassment/misinformation/
+    // hate_speech/other) ve akış rüya/mesaj/kullanıcı şikayetleri için de
+    // BİREBİR aynı (bkz. pages/api/reports/*.js). Başlık/alt başlık dışında
+    // hiçbir şey içeriğe özgü değildi, o yüzden isteğe bağlı override
+    // parametreleriyle genelleştirildi — varsayılanlar eski (vizyon)
+    // davranışını birebir korur, mevcut çağrı noktaları (SlidesViewerScreen,
+    // VisionVideoPlayerScreen) hiç değişmeden çalışmaya devam eder.
+    titleRes: Int = R.string.vision_report_title,
+    subtitleRes: Int = R.string.vision_report_subtitle
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var selectedReason by remember { mutableStateOf<GoalReportReason?>(null) }
@@ -283,14 +304,14 @@ internal fun VisionReportSheet(
                 .navigationBarsPadding()
         ) {
             Text(
-                text = stringResource(R.string.vision_report_title),
+                text = stringResource(titleRes),
                 color = Color.White,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
             Text(
-                text = stringResource(R.string.vision_report_subtitle),
+                text = stringResource(subtitleRes),
                 color = Color.Gray,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 16.dp)

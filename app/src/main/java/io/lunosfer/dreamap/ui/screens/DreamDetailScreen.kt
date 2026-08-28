@@ -132,7 +132,10 @@ fun DreamDetailScreen(
                             }
                         },
                         onBoostDream = { viewModel.boostDream(dreamId) },
-                        onAddBounty = { amount -> viewModel.addBounty(dreamId, amount) }
+                        onAddBounty = { amount -> viewModel.addBounty(dreamId, amount) },
+                        onOpenReportSheet = { viewModel.openReportSheet() },
+                        onCloseReportSheet = { viewModel.closeReportSheet() },
+                        onSubmitReport = { reason, note -> viewModel.submitReport(dreamId, reason, note) }
                     )
                 }
             }
@@ -166,7 +169,10 @@ fun DreamDetailContent(
     onUpdateDream: (UpdateDreamRequest) -> Unit,
     onDeleteDream: (softDelete: Boolean) -> Unit,
     onBoostDream: () -> Unit,
-    onAddBounty: (Int) -> Unit
+    onAddBounty: (Int) -> Unit,
+    onOpenReportSheet: () -> Unit = {},
+    onCloseReportSheet: () -> Unit = {},
+    onSubmitReport: (GoalReportReason, String?) -> Unit = { _, _ -> }
 ) {
     val dream = state.dream
     val isOwner = currentUserId != null && currentUserId == dream.userId
@@ -272,6 +278,13 @@ fun DreamDetailContent(
                     IconButton(onClick = { showDeleteDialog = true }, modifier = Modifier.size(32.dp)) {
                         Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.dream_detail_delete_btn), tint = SemanticDanger400, modifier = Modifier.size(18.dp))
                     }
+                } else {
+                    // Google Play UGC politikası: başkasının rüyasını şikayet edebilme.
+                    VisionMoreMenuButton(
+                        isOwner = false,
+                        onReportClick = onOpenReportSheet,
+                        tint = MoonSilver
+                    )
                 }
             }
         }
@@ -484,6 +497,17 @@ fun DreamDetailContent(
                 onAddBounty(amount)
                 showBountyDialog = false
             }
+        )
+    }
+
+    // Rüya Şikayeti — Google Play UGC politikası.
+    if (state.showReportSheet) {
+        VisionReportSheet(
+            isSubmitting = state.isSubmittingReport,
+            onDismiss = onCloseReportSheet,
+            onSubmit = onSubmitReport,
+            titleRes = R.string.report_dream_title,
+            subtitleRes = R.string.report_dream_subtitle
         )
     }
 }

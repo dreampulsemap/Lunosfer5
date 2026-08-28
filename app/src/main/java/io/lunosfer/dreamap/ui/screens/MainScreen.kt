@@ -273,8 +273,14 @@ fun MainScreen(
                         billingSheetTab = BillingTab.PREMIUM
                         showBillingSheet = true
                     },
-                    onOpenReels = openReels
+                    onOpenReels = openReels,
+                    onBlockedUsersClick = {
+                        navController.navigate(Screen.BlockedUsers.route)
+                    }
                 )
+            }
+            composable(Screen.BlockedUsers.route) {
+                BlockedUsersScreen(onBack = { navController.popBackStack() })
             }
             composable(Screen.AddFriend.route) {
                 AddFriendScreen(

@@ -30,6 +30,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Article
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -70,6 +71,7 @@ fun ProfileScreen(
     onDiaryJournalClick: () -> Unit = {},
     onUpgradeClick: () -> Unit = {},
     onOpenReels: (List<io.lunosfer.dreamap.data.model.Goal>, Int) -> Unit = { _, _ -> },
+    onBlockedUsersClick: () -> Unit = {},
     viewModel: ProfileViewModel = viewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -209,6 +211,35 @@ fun ProfileScreen(
                                 Icon(Icons.Default.PrivacyTip, contentDescription = null, tint = MoonSilver)
                                 Spacer(Modifier.width(8.dp))
                                 Text(stringResource(R.string.profile_privacy_policy_btn), color = MoonSilver)
+                            }
+
+                            // Kullanım Koşulları — Play Console UGC politikasının istediği
+                            // nefret söylemi/müstehcenlik yasağı EULA metni.
+                            TextButton(
+                                onClick = {
+                                    val intent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(io.lunosfer.dreamap.util.LegalLinks.termsOfServiceUrl)
+                                    )
+                                    context.startActivity(intent)
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(Icons.AutoMirrored.Filled.Article, contentDescription = null, tint = MoonSilver)
+                                Spacer(Modifier.width(8.dp))
+                                Text(stringResource(R.string.profile_terms_of_service_btn), color = MoonSilver)
+                            }
+
+                            // Engellenen Kullanıcılar — Google Play UGC politikası:
+                            // kullanıcının engellediği kişileri görebilmesi/engeli
+                            // kaldırabilmesi gerekiyor.
+                            TextButton(
+                                onClick = onBlockedUsersClick,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(Icons.Default.Block, contentDescription = null, tint = MoonSilver)
+                                Spacer(Modifier.width(8.dp))
+                                Text(stringResource(R.string.blocked_users_menu_item), color = MoonSilver)
                             }
 
                             // Hesabı Sil — Google Play "Hesap Silme" politikası (2023)

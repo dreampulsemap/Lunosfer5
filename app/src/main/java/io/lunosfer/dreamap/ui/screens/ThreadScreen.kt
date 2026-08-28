@@ -20,9 +20,11 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.AttachFile
+import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -60,6 +62,15 @@ fun ThreadScreen(otherUserId: String, navController: androidx.navigation.NavCont
         factory = ThreadViewModel.Factory(otherUserId, currentUserId)
     )
     val state by viewModel.state.collectAsState()
+    val context = LocalContext.current
+    var showBlockConfirmDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(state.infoMessage) {
+        state.infoMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            viewModel.dismissInfoMessage()
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -71,6 +82,35 @@ fun ThreadScreen(otherUserId: String, navController: androidx.navigation.NavCont
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back_button_desc), tint = Color.White)
                     }
+                },
+                actions = {
+                    // Google Play UGC politikası: sohbet partnerini şikayet/engelleme.
+                    VisionMoreMenuButton(
+                        isOwner = false,
+                        onReportClick = { viewModel.openReportSheet() },
+                        extraItems = { closeMenu ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        stringResource(
+                                            if (state.blockedByMe) R.string.unblock_user_action else R.string.block_user_action
+                                        )
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        if (state.blockedByMe) Icons.Default.LockOpen else Icons.Default.Block,
+                                        contentDescription = null,
+                                        tint = SemanticDanger400
+                                    )
+                                },
+                                onClick = {
+                                    closeMenu()
+                                    showBlockConfirmDialog = true
+                                }
+                            )
+                        }
+                    )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Void950)
             )
@@ -130,6 +170,59 @@ fun ThreadScreen(otherUserId: String, navController: androidx.navigation.NavCont
                 }
             }
         }
+    }
+
+    // Sohbet Partnerini Şikayet Etme — Google Play UGC politikası.
+    if (state.showReportSheet) {
+        VisionReportSheet(
+            isSubmitting = state.isSubmittingReport,
+            onDismiss = { viewModel.closeReportSheet() },
+            onSubmit = { reason, note -> viewModel.submitReport(reason, note) },
+            titleRes = R.string.report_user_title,
+            subtitleRes = R.string.report_user_subtitle
+        )
+    }
+
+    // Kullanıcı Engelleme onay diyaloğu.
+    if (showBlockConfirmDialog) {
+        AlertDialog(
+            onDismissRequest = { showBlockConfirmDialog = false },
+            title = {
+                Text(
+                    stringResource(
+                        if (state.blockedByMe) R.string.unblock_user_confirm_title else R.string.block_user_confirm_title
+                    )
+                )
+            },
+            text = {
+                Text(
+                    stringResource(
+                        if (state.blockedByMe) R.string.unblock_user_confirm_desc else R.string.block_user_confirm_desc
+                    )
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showBlockConfirmDialog = false
+                    viewModel.toggleBlock()
+                }) {
+                    Text(
+                        stringResource(
+                            if (state.blockedByMe) R.string.unblock_user_action else R.string.block_user_action
+                        ),
+                        color = SemanticDanger400
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showBlockConfirmDialog = false }) {
+                    Text(stringResource(R.string.delete_account_dialog_cancel))
+                }
+            },
+            containerColor = Void900,
+            titleContentColor = Color.White,
+            textContentColor = Color.Gray
+        )
     }
 }
 

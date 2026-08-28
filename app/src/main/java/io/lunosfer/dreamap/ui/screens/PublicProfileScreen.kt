@@ -15,8 +15,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.ModeComment
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.MenuBook
@@ -53,6 +55,7 @@ fun PublicProfileScreen(
     val viewModel: PublicProfileViewModel = viewModel(factory = factory)
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
+    var showBlockConfirmDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(state) {
         val s = state as? PublicProfileUiState.Success
@@ -79,6 +82,38 @@ fun PublicProfileScreen(
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back_cd), tint = Color.White)
+                    }
+                },
+                actions = {
+                    val s = state as? PublicProfileUiState.Success
+                    // Kendi profilinde "..." menüsü gösterilmez.
+                    if (s != null && !s.isSelf) {
+                        VisionMoreMenuButton(
+                            isOwner = false,
+                            onReportClick = { viewModel.openReportSheet() },
+                            extraItems = { closeMenu ->
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            stringResource(
+                                                if (s.blockedByMe) R.string.unblock_user_action else R.string.block_user_action
+                                            )
+                                        )
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            if (s.blockedByMe) Icons.Default.LockOpen else Icons.Default.Block,
+                                            contentDescription = null,
+                                            tint = SemanticDanger400
+                                        )
+                                    },
+                                    onClick = {
+                                        closeMenu()
+                                        showBlockConfirmDialog = true
+                                    }
+                                )
+                            }
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Void950)
@@ -209,6 +244,60 @@ fun PublicProfileScreen(
                 }
             }
         }
+    }
+
+    // Kullanıcı Şikayeti — Google Play UGC politikası.
+    val successState = state as? PublicProfileUiState.Success
+    if (successState?.showReportSheet == true) {
+        VisionReportSheet(
+            isSubmitting = successState.isSubmittingReport,
+            onDismiss = { viewModel.closeReportSheet() },
+            onSubmit = { reason, note -> viewModel.submitReport(reason, note) },
+            titleRes = R.string.report_user_title,
+            subtitleRes = R.string.report_user_subtitle
+        )
+    }
+
+    // Kullanıcı Engelleme onay diyaloğu.
+    if (showBlockConfirmDialog && successState != null) {
+        AlertDialog(
+            onDismissRequest = { showBlockConfirmDialog = false },
+            title = {
+                Text(
+                    stringResource(
+                        if (successState.blockedByMe) R.string.unblock_user_confirm_title else R.string.block_user_confirm_title
+                    )
+                )
+            },
+            text = {
+                Text(
+                    stringResource(
+                        if (successState.blockedByMe) R.string.unblock_user_confirm_desc else R.string.block_user_confirm_desc
+                    )
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showBlockConfirmDialog = false
+                    viewModel.toggleBlock()
+                }) {
+                    Text(
+                        stringResource(
+                            if (successState.blockedByMe) R.string.unblock_user_action else R.string.block_user_action
+                        ),
+                        color = SemanticDanger400
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showBlockConfirmDialog = false }) {
+                    Text(stringResource(R.string.delete_account_dialog_cancel))
+                }
+            },
+            containerColor = Void900,
+            titleContentColor = Color.White,
+            textContentColor = Color.Gray
+        )
     }
 }
 

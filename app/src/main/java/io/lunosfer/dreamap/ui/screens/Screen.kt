@@ -24,6 +24,8 @@ sealed class Screen(val route: String) {
         fun createRoute(goalId: String) = "goal/$goalId"
     }
     object AddFriend : Screen("add_friend")
+    // Google Play UGC politikası: Profil > Engellenen Kullanıcılar.
+    object BlockedUsers : Screen("blocked_users")
     object Notifications : Screen("notifications")
     object PublicProfile : Screen("public_profile/{userId}") {
         fun createRoute(userId: String) = "public_profile/$userId"
