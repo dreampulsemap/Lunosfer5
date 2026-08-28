@@ -23,7 +23,10 @@ sealed class DreamDetailUiState {
         val actionError: String? = null,
         val actionMessage: String? = null,
         val isGeneratingDeepAnalysis: Boolean = false,
-        val deepAnalysisResult: String? = null
+        val deepAnalysisResult: String? = null,
+        // Google Play UGC politikası: rüya şikayeti.
+        val showReportSheet: Boolean = false,
+        val isSubmittingReport: Boolean = false
     ) : DreamDetailUiState()
     data class Error(val message: String) : DreamDetailUiState()
 }
@@ -289,6 +292,41 @@ class DreamDetailViewModel : ViewModel() {
     fun clearActionMessage() {
         val current = _state.value as? DreamDetailUiState.Success ?: return
         _state.value = current.copy(actionMessage = null)
+    }
+
+    // --- Rüya Şikayeti (Google Play UGC politikası) ---
+
+    fun openReportSheet() {
+        val current = _state.value as? DreamDetailUiState.Success ?: return
+        _state.value = current.copy(showReportSheet = true)
+    }
+
+    fun closeReportSheet() {
+        val current = _state.value as? DreamDetailUiState.Success ?: return
+        _state.value = current.copy(showReportSheet = false)
+    }
+
+    fun submitReport(dreamId: Long, reason: GoalReportReason, note: String?) {
+        val current = _state.value as? DreamDetailUiState.Success ?: return
+        if (current.isSubmittingReport) return
+
+        _state.value = current.copy(isSubmittingReport = true)
+        viewModelScope.launch {
+            repository.reportDream(dreamId = dreamId, reason = reason.apiValue, note = note).onSuccess {
+                val latest = _state.value as? DreamDetailUiState.Success ?: return@onSuccess
+                _state.value = latest.copy(
+                    isSubmittingReport = false,
+                    showReportSheet = false,
+                    actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_success)
+                )
+            }.onFailure { err ->
+                val latest = _state.value as? DreamDetailUiState.Success ?: return@onFailure
+                _state.value = latest.copy(
+                    isSubmittingReport = false,
+                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error)
+                )
+            }
+        }
     }
 }
 

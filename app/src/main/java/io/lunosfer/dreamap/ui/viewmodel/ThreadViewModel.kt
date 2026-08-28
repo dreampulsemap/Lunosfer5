@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import io.lunosfer.dreamap.data.model.Message
 import io.lunosfer.dreamap.data.model.UserProfile
+import io.lunosfer.dreamap.data.repository.BlockRepository
 import io.lunosfer.dreamap.data.repository.MessagesRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,13 +31,21 @@ data class ThreadUiState(
     val isLoadingOlder: Boolean = false,
     val isSending: Boolean = false,
     val isUploadingAttachment: Boolean = false,
-    val sendError: String? = null
+    val sendError: String? = null,
+    // Google Play UGC politikası: sohbet partnerini engelleme/şikayet etme.
+    val blockedByMe: Boolean = false,
+    val isTogglingBlock: Boolean = false,
+    val showReportSheet: Boolean = false,
+    val isSubmittingReport: Boolean = false,
+    val infoMessage: String? = null
 )
 
 class ThreadViewModel(
     private val otherUserId: String,
     private val currentUserId: String?,
-    private val repository: MessagesRepository = MessagesRepository()
+    private val repository: MessagesRepository = MessagesRepository(),
+    private val blockRepository: BlockRepository = BlockRepository(),
+    private val friendsRepository: io.lunosfer.dreamap.data.repository.FriendsRepository = io.lunosfer.dreamap.data.repository.FriendsRepository()
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ThreadUiState())
@@ -45,6 +54,7 @@ class ThreadViewModel(
     init {
         loadInitial()
         startPolling()
+        loadBlockStatus()
     }
 
     fun retry() = loadInitial()
@@ -185,6 +195,79 @@ class ThreadViewModel(
 
     fun dismissSendError() {
         _state.value = _state.value.copy(sendError = null)
+    }
+
+    fun dismissInfoMessage() {
+        _state.value = _state.value.copy(infoMessage = null)
+    }
+
+    // --- Sohbet Partnerini Engelleme (Google Play UGC politikası) ---
+
+    private fun loadBlockStatus() {
+        viewModelScope.launch {
+            blockRepository.getBlockStatus(otherUserId).onSuccess { status ->
+                _state.value = _state.value.copy(blockedByMe = status.blockedByMe)
+            }
+            // Hata sessizce yutulur — engelleme durumu bilinmiyorsa buton
+            // "Engelle" varsayılanında kalır, thread'i açmayı engellemez.
+        }
+    }
+
+    fun toggleBlock() {
+        val current = _state.value
+        if (current.isTogglingBlock) return
+        val willBlock = !current.blockedByMe
+
+        _state.value = current.copy(isTogglingBlock = true)
+        viewModelScope.launch {
+            val result = if (willBlock) blockRepository.blockUser(otherUserId) else blockRepository.unblockUser(otherUserId)
+            result.onSuccess {
+                val msg = if (willBlock) {
+                    io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.block_user_success)
+                } else {
+                    io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.unblock_user_success)
+                }
+                _state.value = _state.value.copy(isTogglingBlock = false, blockedByMe = willBlock, infoMessage = msg)
+            }.onFailure { err ->
+                val fallback = if (willBlock) {
+                    io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.block_user_error)
+                } else {
+                    io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.unblock_user_error)
+                }
+                _state.value = _state.value.copy(isTogglingBlock = false, infoMessage = err.message ?: fallback)
+            }
+        }
+    }
+
+    // --- Sohbet Partnerini Şikayet Etme (Google Play UGC politikası) ---
+
+    fun openReportSheet() {
+        _state.value = _state.value.copy(showReportSheet = true)
+    }
+
+    fun closeReportSheet() {
+        _state.value = _state.value.copy(showReportSheet = false)
+    }
+
+    fun submitReport(reason: io.lunosfer.dreamap.data.model.GoalReportReason, note: String?) {
+        if (_state.value.isSubmittingReport) return
+        _state.value = _state.value.copy(isSubmittingReport = true)
+        viewModelScope.launch {
+            friendsRepository.reportUser(userId = otherUserId, reason = reason.apiValue, note = note)
+                .onSuccess {
+                    _state.value = _state.value.copy(
+                        isSubmittingReport = false,
+                        showReportSheet = false,
+                        infoMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_success)
+                    )
+                }
+                .onFailure { err ->
+                    _state.value = _state.value.copy(
+                        isSubmittingReport = false,
+                        infoMessage = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error)
+                    )
+                }
+        }
     }
 
     fun isOwnMessage(message: Message): Boolean = message.senderId == currentUserId
