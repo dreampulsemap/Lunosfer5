@@ -248,6 +248,46 @@ interface LunosferApi {
         @Query("page") page: Int
     ): io.lunosfer.dreamap.data.model.PublicProfileResponse
 
+    // --- Blocks (Google Play UGC politikası: kullanıcı engelleme zorunlu) ---
+    // bkz. pages/api/blocks/*.js (dreamap-frontend)
+
+    @POST("api/blocks/block")
+    suspend fun blockUser(
+        @Body request: io.lunosfer.dreamap.data.model.BlockUserRequest
+    ): io.lunosfer.dreamap.data.model.GenericSuccessResponse
+
+    @POST("api/blocks/unblock")
+    suspend fun unblockUser(
+        @Body request: io.lunosfer.dreamap.data.model.BlockUserRequest
+    ): io.lunosfer.dreamap.data.model.GenericSuccessResponse
+
+    @GET("api/blocks/status")
+    suspend fun getBlockStatus(
+        @Query("targetUserId") targetUserId: String
+    ): io.lunosfer.dreamap.data.model.BlockStatusResponse
+
+    @GET("api/blocks/list")
+    suspend fun getBlockedUsers(): io.lunosfer.dreamap.data.model.BlockedUsersResponse
+
+    // --- Content Reports (Google Play UGC politikası: şikayet zorunlu) ---
+    // bkz. pages/api/reports/*.js (dreamap-frontend). goals/vizyonlar için
+    // zaten var olan reportGoal ile aynı VALID_REASONS setini kullanır.
+
+    @POST("api/reports/user")
+    suspend fun reportUser(
+        @Body request: io.lunosfer.dreamap.data.model.ReportUserRequest
+    ): io.lunosfer.dreamap.data.model.ContentReportResponse
+
+    @POST("api/reports/dream")
+    suspend fun reportDream(
+        @Body request: io.lunosfer.dreamap.data.model.ReportDreamRequest
+    ): io.lunosfer.dreamap.data.model.ContentReportResponse
+
+    @POST("api/reports/message")
+    suspend fun reportMessage(
+        @Body request: io.lunosfer.dreamap.data.model.ReportMessageRequest
+    ): io.lunosfer.dreamap.data.model.ContentReportResponse
+
     // --- Profile & Premium ---
 
     @PUT("api/update-profile")
