@@ -682,4 +682,30 @@
     <string name="common_close_action">Kapat</string>
     <string name="dream_detail_generic_error_prefix">Hata: %1$s</string>
     <string name="common_back_cd">Geri</string>
+
+    <!-- Google Play UGC Politikası: Engelleme / Şikayet (Play Store başvurusu için eklendi) -->
+    <string name="report_user_title">Kullanıcıyı Şikayet Et</string>
+    <string name="report_user_subtitle">Bu kullanıcıyı neden şikayet ettiğinizin sebebini seçin.</string>
+    <string name="report_dream_title">Rüyayı Şikayet Et</string>
+    <string name="report_dream_subtitle">Bu rüyayı neden şikayet ettiğinizin sebebini seçin.</string>
+    <string name="report_submitted_success">Şikayetiniz alındı. Lunosfer\'i güvenli tutmamıza yardımcı olduğunuz için teşekkürler.</string>
+    <string name="report_submitted_error">Şikayet gönderilemedi. Lütfen tekrar deneyin.</string>
+
+    <string name="block_user_action">Kullanıcıyı Engelle</string>
+    <string name="unblock_user_action">Engeli Kaldır</string>
+    <string name="block_user_confirm_title">Bu kullanıcıyı engellemek istiyor musunuz?</string>
+    <string name="block_user_confirm_desc">Bu kullanıcı size mesaj gönderemez ve paylaşımlarınızı göremez, siz de onunkileri göremezsiniz. Dilediğiniz zaman profilinizden engeli kaldırabilirsiniz.</string>
+    <string name="unblock_user_confirm_title">Bu kullanıcının engelini kaldırmak istiyor musunuz?</string>
+    <string name="unblock_user_confirm_desc">Birbirinizin paylaşımlarını ve mesajlarını tekrar görebileceksiniz.</string>
+    <string name="block_user_success">Kullanıcı engellendi.</string>
+    <string name="block_user_error">Kullanıcı engellenemedi. Lütfen tekrar deneyin.</string>
+    <string name="unblock_user_success">Kullanıcının engeli kaldırıldı.</string>
+    <string name="unblock_user_error">Engel kaldırılamadı. Lütfen tekrar deneyin.</string>
+
+    <string name="blocked_users_menu_item">Engellenen Kullanıcılar</string>
+    <string name="blocked_users_title">Engellenen Kullanıcılar</string>
+    <string name="blocked_users_empty">Henüz kimseyi engellemediniz.</string>
+    <string name="blocked_users_load_error">Engellenen kullanıcılar yüklenemedi.</string>
+
+    <string name="profile_terms_of_service_btn">Kullanım Koşulları</string>
 </resources>
