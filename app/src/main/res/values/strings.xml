@@ -544,6 +544,32 @@
     <string name="vision_report_submit">Submit Report</string>
     <string name="common_user_fallback">User</string>
     <string name="common_someone_fallback">Someone</string>
+
+    <!-- Google Play UGC Policy: Block / Report (added for Play Store submission) -->
+    <string name="report_user_title">Report User</string>
+    <string name="report_user_subtitle">Select a reason why you are reporting this user.</string>
+    <string name="report_dream_title">Report Dream</string>
+    <string name="report_dream_subtitle">Select a reason why you are reporting this dream.</string>
+    <string name="report_submitted_success">Report submitted. Thank you for helping keep Lunosfer safe.</string>
+    <string name="report_submitted_error">Couldn\'t submit report. Please try again.</string>
+
+    <string name="block_user_action">Block User</string>
+    <string name="unblock_user_action">Unblock</string>
+    <string name="block_user_confirm_title">Block this user?</string>
+    <string name="block_user_confirm_desc">They won\'t be able to message you or see your public content, and you won\'t see theirs. You can unblock them anytime from your profile.</string>
+    <string name="unblock_user_confirm_title">Unblock this user?</string>
+    <string name="unblock_user_confirm_desc">You\'ll be able to see each other\'s public content and messages again.</string>
+    <string name="block_user_success">User blocked.</string>
+    <string name="block_user_error">Couldn\'t block user. Please try again.</string>
+    <string name="unblock_user_success">User unblocked.</string>
+    <string name="unblock_user_error">Couldn\'t unblock user. Please try again.</string>
+
+    <string name="blocked_users_menu_item">Blocked Users</string>
+    <string name="blocked_users_title">Blocked Users</string>
+    <string name="blocked_users_empty">You haven\'t blocked anyone.</string>
+    <string name="blocked_users_load_error">Couldn\'t load blocked users.</string>
+
+    <string name="profile_terms_of_service_btn">Terms of Service</string>
     <string name="common_go_back">Go Back</string>
     <string name="common_preview_cd">Preview</string>
     <string name="common_remove_cd">Remove</string>
