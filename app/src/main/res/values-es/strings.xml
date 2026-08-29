@@ -667,4 +667,27 @@
     <string name="common_close_action">Cerrar</string>
     <string name="dream_detail_generic_error_prefix">Error: %1$s</string>
     <string name="common_back_cd">Atrás</string>
+
+    <!-- Google Play UGC Policy: Block / Report (added for Play Store submission) -->
+    <string name="report_user_title">Reportar usuario</string>
+    <string name="report_user_subtitle">Selecciona el motivo por el que reportas a este usuario.</string>
+    <string name="report_dream_title">Reportar sueño</string>
+    <string name="report_dream_subtitle">Selecciona el motivo por el que reportas este sueño.</string>
+    <string name="report_submitted_success">Reporte enviado. Gracias por ayudarnos a mantener Lunosfer seguro.</string>
+    <string name="report_submitted_error">No se pudo enviar el reporte. Inténtalo de nuevo.</string>
+    <string name="block_user_action">Bloquear usuario</string>
+    <string name="unblock_user_action">Desbloquear</string>
+    <string name="block_user_confirm_title">¿Bloquear a este usuario?</string>
+    <string name="block_user_confirm_desc">No podrá enviarte mensajes ni ver tu contenido público, y tú tampoco verás el suyo. Puedes desbloquearlo cuando quieras desde tu perfil.</string>
+    <string name="unblock_user_confirm_title">¿Desbloquear a este usuario?</string>
+    <string name="unblock_user_confirm_desc">Ambos podrán volver a ver el contenido público y los mensajes del otro.</string>
+    <string name="block_user_success">Usuario bloqueado.</string>
+    <string name="block_user_error">No se pudo bloquear al usuario. Inténtalo de nuevo.</string>
+    <string name="unblock_user_success">Usuario desbloqueado.</string>
+    <string name="unblock_user_error">No se pudo desbloquear. Inténtalo de nuevo.</string>
+    <string name="blocked_users_menu_item">Usuarios bloqueados</string>
+    <string name="blocked_users_title">Usuarios bloqueados</string>
+    <string name="blocked_users_empty">Aún no has bloqueado a nadie.</string>
+    <string name="blocked_users_load_error">No se pudieron cargar los usuarios bloqueados.</string>
+    <string name="profile_terms_of_service_btn">Términos de Servicio</string>
 </resources>
