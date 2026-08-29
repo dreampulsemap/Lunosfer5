@@ -667,4 +667,27 @@
     <string name="common_close_action">Fechar</string>
     <string name="dream_detail_generic_error_prefix">Erro: %1$s</string>
     <string name="common_back_cd">Voltar</string>
+
+    <!-- Google Play UGC Policy: Block / Report (added for Play Store submission) -->
+    <string name="report_user_title">Denunciar usuário</string>
+    <string name="report_user_subtitle">Selecione o motivo da denúncia deste usuário.</string>
+    <string name="report_dream_title">Denunciar sonho</string>
+    <string name="report_dream_subtitle">Selecione o motivo da denúncia deste sonho.</string>
+    <string name="report_submitted_success">Denúncia enviada. Obrigado por ajudar a manter o Lunosfer seguro.</string>
+    <string name="report_submitted_error">Não foi possível enviar a denúncia. Tente novamente.</string>
+    <string name="block_user_action">Bloquear usuário</string>
+    <string name="unblock_user_action">Desbloquear</string>
+    <string name="block_user_confirm_title">Bloquear este usuário?</string>
+    <string name="block_user_confirm_desc">Ele não poderá enviar mensagens nem ver seu conteúdo público, e você também não verá o dele. Você pode desbloquear a qualquer momento pelo seu perfil.</string>
+    <string name="unblock_user_confirm_title">Desbloquear este usuário?</string>
+    <string name="unblock_user_confirm_desc">Vocês poderão ver novamente o conteúdo público e as mensagens um do outro.</string>
+    <string name="block_user_success">Usuário bloqueado.</string>
+    <string name="block_user_error">Não foi possível bloquear o usuário. Tente novamente.</string>
+    <string name="unblock_user_success">Usuário desbloqueado.</string>
+    <string name="unblock_user_error">Não foi possível desbloquear. Tente novamente.</string>
+    <string name="blocked_users_menu_item">Usuários bloqueados</string>
+    <string name="blocked_users_title">Usuários bloqueados</string>
+    <string name="blocked_users_empty">Você ainda não bloqueou ninguém.</string>
+    <string name="blocked_users_load_error">Não foi possível carregar os usuários bloqueados.</string>
+    <string name="profile_terms_of_service_btn">Termos de Serviço</string>
 </resources>
