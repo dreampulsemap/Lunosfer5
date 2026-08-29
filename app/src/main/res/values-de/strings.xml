@@ -669,4 +669,27 @@
     <string name="common_close_action">Schließen</string>
     <string name="dream_detail_generic_error_prefix">Fehler: %1$s</string>
     <string name="common_back_cd">Zurück</string>
+
+    <!-- Google Play UGC Policy: Block / Report (added for Play Store submission) -->
+    <string name="report_user_title">Nutzer melden</string>
+    <string name="report_user_subtitle">Wähle den Grund, warum du diesen Nutzer meldest.</string>
+    <string name="report_dream_title">Traum melden</string>
+    <string name="report_dream_subtitle">Wähle den Grund, warum du diesen Traum meldest.</string>
+    <string name="report_submitted_success">Meldung gesendet. Danke, dass du hilfst, Lunosfer sicher zu halten.</string>
+    <string name="report_submitted_error">Meldung konnte nicht gesendet werden. Bitte versuche es erneut.</string>
+    <string name="block_user_action">Nutzer blockieren</string>
+    <string name="unblock_user_action">Blockierung aufheben</string>
+    <string name="block_user_confirm_title">Diesen Nutzer blockieren?</string>
+    <string name="block_user_confirm_desc">Er kann dir dann keine Nachrichten mehr schicken und deine öffentlichen Inhalte nicht sehen – und du seine ebenfalls nicht. Du kannst die Blockierung jederzeit in deinem Profil aufheben.</string>
+    <string name="unblock_user_confirm_title">Blockierung dieses Nutzers aufheben?</string>
+    <string name="unblock_user_confirm_desc">Ihr könnt eure öffentlichen Inhalte und Nachrichten wieder gegenseitig sehen.</string>
+    <string name="block_user_success">Nutzer blockiert.</string>
+    <string name="block_user_error">Nutzer konnte nicht blockiert werden. Bitte versuche es erneut.</string>
+    <string name="unblock_user_success">Blockierung aufgehoben.</string>
+    <string name="unblock_user_error">Blockierung konnte nicht aufgehoben werden. Bitte versuche es erneut.</string>
+    <string name="blocked_users_menu_item">Blockierte Nutzer</string>
+    <string name="blocked_users_title">Blockierte Nutzer</string>
+    <string name="blocked_users_empty">Du hast noch niemanden blockiert.</string>
+    <string name="blocked_users_load_error">Blockierte Nutzer konnten nicht geladen werden.</string>
+    <string name="profile_terms_of_service_btn">Nutzungsbedingungen</string>
 </resources>
