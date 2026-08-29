@@ -666,4 +666,27 @@
     <string name="common_close_action">閉じる</string>
     <string name="dream_detail_generic_error_prefix">エラー: %1$s</string>
     <string name="common_back_cd">戻る</string>
+
+    <!-- Google Play UGC Policy: Block / Report (added for Play Store submission) -->
+    <string name="report_user_title">ユーザーを報告</string>
+    <string name="report_user_subtitle">このユーザーを報告する理由を選択してください。</string>
+    <string name="report_dream_title">夢を報告</string>
+    <string name="report_dream_subtitle">この夢を報告する理由を選択してください。</string>
+    <string name="report_submitted_success">報告を送信しました。Lunosferの安全を守るためのご協力ありがとうございます。</string>
+    <string name="report_submitted_error">報告を送信できませんでした。もう一度お試しください。</string>
+    <string name="block_user_action">ユーザーをブロック</string>
+    <string name="unblock_user_action">ブロック解除</string>
+    <string name="block_user_confirm_title">このユーザーをブロックしますか？</string>
+    <string name="block_user_confirm_desc">相手はあなたにメッセージを送ったり、公開コンテンツを見たりできなくなります。あなたも相手のコンテンツを見られなくなります。プロフィールからいつでもブロックを解除できます。</string>
+    <string name="unblock_user_confirm_title">このユーザーのブロックを解除しますか？</string>
+    <string name="unblock_user_confirm_desc">再びお互いの公開コンテンツとメッセージを見られるようになります。</string>
+    <string name="block_user_success">ユーザーをブロックしました。</string>
+    <string name="block_user_error">ユーザーをブロックできませんでした。もう一度お試しください。</string>
+    <string name="unblock_user_success">ブロックを解除しました。</string>
+    <string name="unblock_user_error">ブロックを解除できませんでした。もう一度お試しください。</string>
+    <string name="blocked_users_menu_item">ブロックしたユーザー</string>
+    <string name="blocked_users_title">ブロックしたユーザー</string>
+    <string name="blocked_users_empty">まだ誰もブロックしていません。</string>
+    <string name="blocked_users_load_error">ブロックしたユーザーを読み込めませんでした。</string>
+    <string name="profile_terms_of_service_btn">利用規約</string>
 </resources>
