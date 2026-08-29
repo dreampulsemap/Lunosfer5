@@ -668,4 +668,27 @@
     <string name="common_close_action">关闭</string>
     <string name="dream_detail_generic_error_prefix">错误:%1$s</string>
     <string name="common_back_cd">返回</string>
+
+    <!-- Google Play UGC Policy: Block / Report (added for Play Store submission) -->
+    <string name="report_user_title">举报用户</string>
+    <string name="report_user_subtitle">请选择举报该用户的原因。</string>
+    <string name="report_dream_title">举报梦境</string>
+    <string name="report_dream_subtitle">请选择举报该梦境的原因。</string>
+    <string name="report_submitted_success">举报已提交。感谢你帮助 Lunosfer 保持安全。</string>
+    <string name="report_submitted_error">举报提交失败，请重试。</string>
+    <string name="block_user_action">屏蔽用户</string>
+    <string name="unblock_user_action">取消屏蔽</string>
+    <string name="block_user_confirm_title">要屏蔽此用户吗？</string>
+    <string name="block_user_confirm_desc">对方将无法向你发送消息或查看你的公开内容，你也无法查看对方的内容。你可以随时在个人资料中取消屏蔽。</string>
+    <string name="unblock_user_confirm_title">要取消屏蔽此用户吗？</string>
+    <string name="unblock_user_confirm_desc">你们将可以重新查看彼此的公开内容和消息。</string>
+    <string name="block_user_success">已屏蔽该用户。</string>
+    <string name="block_user_error">屏蔽用户失败，请重试。</string>
+    <string name="unblock_user_success">已取消屏蔽。</string>
+    <string name="unblock_user_error">取消屏蔽失败，请重试。</string>
+    <string name="blocked_users_menu_item">已屏蔽的用户</string>
+    <string name="blocked_users_title">已屏蔽的用户</string>
+    <string name="blocked_users_empty">你还没有屏蔽任何人。</string>
+    <string name="blocked_users_load_error">无法加载已屏蔽用户列表。</string>
+    <string name="profile_terms_of_service_btn">服务条款</string>
 </resources>
