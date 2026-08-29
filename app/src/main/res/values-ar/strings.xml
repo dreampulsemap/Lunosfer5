@@ -668,4 +668,27 @@
     <string name="common_close_action">إغلاق</string>
     <string name="dream_detail_generic_error_prefix">خطأ: %1$s</string>
     <string name="common_back_cd">رجوع</string>
+
+    <!-- Google Play UGC Policy: Block / Report (added for Play Store submission) -->
+    <string name="report_user_title">الإبلاغ عن المستخدم</string>
+    <string name="report_user_subtitle">اختر سبب الإبلاغ عن هذا المستخدم.</string>
+    <string name="report_dream_title">الإبلاغ عن الحلم</string>
+    <string name="report_dream_subtitle">اختر سبب الإبلاغ عن هذا الحلم.</string>
+    <string name="report_submitted_success">تم إرسال البلاغ. شكرًا لمساعدتك في الحفاظ على أمان Lunosfer.</string>
+    <string name="report_submitted_error">تعذّر إرسال البلاغ. حاول مرة أخرى.</string>
+    <string name="block_user_action">حظر المستخدم</string>
+    <string name="unblock_user_action">إلغاء الحظر</string>
+    <string name="block_user_confirm_title">هل تريد حظر هذا المستخدم؟</string>
+    <string name="block_user_confirm_desc">لن يتمكن من مراسلتك أو رؤية محتواك العام، ولن تتمكن من رؤية محتواه. يمكنك إلغاء الحظر في أي وقت من ملفك الشخصي.</string>
+    <string name="unblock_user_confirm_title">هل تريد إلغاء حظر هذا المستخدم؟</string>
+    <string name="unblock_user_confirm_desc">ستتمكنان من رؤية المحتوى العام والرسائل الخاصة بكل منكما مجددًا.</string>
+    <string name="block_user_success">تم حظر المستخدم.</string>
+    <string name="block_user_error">تعذّر حظر المستخدم. حاول مرة أخرى.</string>
+    <string name="unblock_user_success">تم إلغاء حظر المستخدم.</string>
+    <string name="unblock_user_error">تعذّر إلغاء الحظر. حاول مرة أخرى.</string>
+    <string name="blocked_users_menu_item">المستخدمون المحظورون</string>
+    <string name="blocked_users_title">المستخدمون المحظورون</string>
+    <string name="blocked_users_empty">لم تحظر أي شخص بعد.</string>
+    <string name="blocked_users_load_error">تعذّر تحميل قائمة المستخدمين المحظورين.</string>
+    <string name="profile_terms_of_service_btn">شروط الخدمة</string>
 </resources>
