@@ -668,4 +668,27 @@
     <string name="common_close_action">बंद करें</string>
     <string name="dream_detail_generic_error_prefix">त्रुटि: %1$s</string>
     <string name="common_back_cd">वापस</string>
+
+    <!-- Google Play UGC Policy: Block / Report (added for Play Store submission) -->
+    <string name="report_user_title">उपयोगकर्ता की रिपोर्ट करें</string>
+    <string name="report_user_subtitle">इस उपयोगकर्ता की रिपोर्ट करने का कारण चुनें।</string>
+    <string name="report_dream_title">सपने की रिपोर्ट करें</string>
+    <string name="report_dream_subtitle">इस सपने की रिपोर्ट करने का कारण चुनें।</string>
+    <string name="report_submitted_success">रिपोर्ट भेज दी गई है। Lunosfer को सुरक्षित रखने में मदद के लिए धन्यवाद।</string>
+    <string name="report_submitted_error">रिपोर्ट नहीं भेजी जा सकी। कृपया फिर से कोशिश करें।</string>
+    <string name="block_user_action">उपयोगकर्ता को ब्लॉक करें</string>
+    <string name="unblock_user_action">अनब्लॉक करें</string>
+    <string name="block_user_confirm_title">क्या आप इस उपयोगकर्ता को ब्लॉक करना चाहते हैं?</string>
+    <string name="block_user_confirm_desc">वे आपको संदेश नहीं भेज पाएंगे और आपकी सार्वजनिक सामग्री नहीं देख पाएंगे, और आप भी उनकी सामग्री नहीं देख पाएंगे। आप कभी भी अपनी प्रोफ़ाइल से अनब्लॉक कर सकते हैं।</string>
+    <string name="unblock_user_confirm_title">क्या आप इस उपयोगकर्ता को अनब्लॉक करना चाहते हैं?</string>
+    <string name="unblock_user_confirm_desc">आप एक-दूसरे की सार्वजनिक सामग्री और संदेश फिर से देख पाएंगे।</string>
+    <string name="block_user_success">उपयोगकर्ता को ब्लॉक कर दिया गया।</string>
+    <string name="block_user_error">उपयोगकर्ता को ब्लॉक नहीं किया जा सका। कृपया फिर से कोशिश करें।</string>
+    <string name="unblock_user_success">उपयोगकर्ता को अनब्लॉक कर दिया गया।</string>
+    <string name="unblock_user_error">अनब्लॉक नहीं किया जा सका। कृपया फिर से कोशिश करें।</string>
+    <string name="blocked_users_menu_item">ब्लॉक किए गए उपयोगकर्ता</string>
+    <string name="blocked_users_title">ब्लॉक किए गए उपयोगकर्ता</string>
+    <string name="blocked_users_empty">आपने अभी तक किसी को ब्लॉक नहीं किया है।</string>
+    <string name="blocked_users_load_error">ब्लॉक किए गए उपयोगकर्ताओं को लोड नहीं किया जा सका।</string>
+    <string name="profile_terms_of_service_btn">सेवा की शर्तें</string>
 </resources>
