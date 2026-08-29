@@ -666,4 +666,27 @@
     <string name="common_close_action">Fermer</string>
     <string name="dream_detail_generic_error_prefix">Erreur : %1$s</string>
     <string name="common_back_cd">Retour</string>
+
+    <!-- Google Play UGC Policy: Block / Report (added for Play Store submission) -->
+    <string name="report_user_title">Signaler l\'utilisateur</string>
+    <string name="report_user_subtitle">Sélectionnez la raison pour laquelle vous signalez cet utilisateur.</string>
+    <string name="report_dream_title">Signaler le rêve</string>
+    <string name="report_dream_subtitle">Sélectionnez la raison pour laquelle vous signalez ce rêve.</string>
+    <string name="report_submitted_success">Signalement envoyé. Merci de nous aider à assurer la sécurité de Lunosfer.</string>
+    <string name="report_submitted_error">Impossible d\'envoyer le signalement. Veuillez réessayer.</string>
+    <string name="block_user_action">Bloquer l\'utilisateur</string>
+    <string name="unblock_user_action">Débloquer</string>
+    <string name="block_user_confirm_title">Bloquer cet utilisateur ?</string>
+    <string name="block_user_confirm_desc">Il ne pourra plus vous envoyer de messages ni voir votre contenu public, et vous ne verrez plus le sien. Vous pouvez le débloquer à tout moment depuis votre profil.</string>
+    <string name="unblock_user_confirm_title">Débloquer cet utilisateur ?</string>
+    <string name="unblock_user_confirm_desc">Vous pourrez à nouveau voir mutuellement vos contenus publics et vos messages.</string>
+    <string name="block_user_success">Utilisateur bloqué.</string>
+    <string name="block_user_error">Impossible de bloquer l\'utilisateur. Veuillez réessayer.</string>
+    <string name="unblock_user_success">Utilisateur débloqué.</string>
+    <string name="unblock_user_error">Impossible de débloquer. Veuillez réessayer.</string>
+    <string name="blocked_users_menu_item">Utilisateurs bloqués</string>
+    <string name="blocked_users_title">Utilisateurs bloqués</string>
+    <string name="blocked_users_empty">Vous n\'avez bloqué personne.</string>
+    <string name="blocked_users_load_error">Impossible de charger les utilisateurs bloqués.</string>
+    <string name="profile_terms_of_service_btn">Conditions d\'utilisation</string>
 </resources>
