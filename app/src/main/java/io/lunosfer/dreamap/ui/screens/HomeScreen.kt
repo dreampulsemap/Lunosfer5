@@ -67,6 +67,7 @@ fun HomeScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val compassState by compassViewModel.state.collectAsState()
+    val streak by viewModel.streak.collectAsState()
     val likedDreamIds by viewModel.likedDreamIds.collectAsState()
     val likeCountOverrides by viewModel.likeCountOverrides.collectAsState()
     val actionError by viewModel.actionError.collectAsState()
@@ -94,7 +95,8 @@ fun HomeScreen(
                 onOpenViewer = onOpenViewer,
                 onOpenReels = onOpenReels,
                 compassState = compassState,
-                onDrawCompass = compassViewModel::draw
+                onDrawCompass = compassViewModel::draw,
+                streak = streak
             )
         }
     }
@@ -150,13 +152,26 @@ private fun HomeFeedList(
     onOpenViewer: (String) -> Unit,
     onOpenReels: (List<Goal>, Int) -> Unit = { _, _ -> },
     compassState: io.lunosfer.dreamap.ui.viewmodel.CompassUiState,
-    onDrawCompass: () -> Unit
+    onDrawCompass: () -> Unit,
+    streak: io.lunosfer.dreamap.ui.viewmodel.StreakInfo
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 20.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
+        // Karsilama + gunluk seri basligi. HomeViewModel bu bilgiyi (computeStreak)
+        // zaten hesaplayip StateFlow olarak yayinliyordu ve home_welcome_* /
+        // home_streak_* string'leri de tanimliydi — ama hicbir ekran okumuyordu,
+        // yani ozellik yazilmis ama hic baglanmamisti.
+        item {
+            WelcomeStreakHeader(
+                streak = streak,
+                dreamCount = items.count { it is FeedItem.DreamItem },
+                visionCount = items.count { it is FeedItem.VisionItem }
+            )
+        }
+
         item {
             DiaryRingsBar(
                 onOpenComposer = onOpenComposer,
@@ -224,6 +239,48 @@ private fun HomeFeedList(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun WelcomeStreakHeader(
+    streak: io.lunosfer.dreamap.ui.viewmodel.StreakInfo,
+    dreamCount: Int,
+    visionCount: Int
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.home_welcome_title),
+            color = AstralGold,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Bold,
+            letterSpacing = 3.sp
+        )
+
+        Text(
+            text = stringResource(R.string.home_welcome_summary, dreamCount, visionCount),
+            color = Color.White,
+            fontSize = 15.sp,
+            style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
+        )
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("🔥", fontSize = 13.sp)
+            Spacer(Modifier.width(6.dp))
+            Text(
+                text = if (streak.streakDays > 0) {
+                    stringResource(R.string.home_streak_days, streak.streakDays)
+                } else {
+                    stringResource(R.string.home_streak_start)
+                },
+                color = if (streak.streakDays > 0) AstralGold else Color.Gray,
+                fontSize = 12.sp,
+                fontWeight = if (streak.streakDays > 0) FontWeight.Bold else FontWeight.Normal
+            )
         }
     }
 }

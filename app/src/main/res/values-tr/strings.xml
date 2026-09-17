@@ -257,6 +257,15 @@
     <string name="profile_edit_gender_label">Cinsiyet</string>
     <string name="profile_edit_cancel">İptal</string>
     <string name="profile_edit_save">Kaydet</string>
+    <string name="auth_forgot_password">Şifremi unuttum</string>
+    <string name="auth_reset_needs_email">Sıfırlama bağlantısı için önce e-posta adresini yaz.</string>
+    <string name="auth_reset_sent">Bu adres kayıtlıysa sıfırlama bağlantısı gönderildi. E-postanı kontrol et.</string>
+    <string name="profile_change_password">Şifre Değiştir</string>
+    <string name="profile_change_password_new">Yeni şifre</string>
+    <string name="profile_change_password_confirm">Yeni şifre (tekrar)</string>
+    <string name="profile_change_password_too_short">Şifre en az 6 karakter olmalı.</string>
+    <string name="profile_change_password_mismatch">Şifreler eşleşmiyor.</string>
+    <string name="profile_change_password_success">Şifren güncellendi.</string>
     <string name="main_menu_auras">Your Auras: 0</string>
     <string name="main_menu_buy_aura">Buy Aura</string>
     <string name="main_menu_spiritual_tools">Ruhsal Araçlar</string>

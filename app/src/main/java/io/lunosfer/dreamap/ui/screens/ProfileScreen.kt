@@ -45,6 +45,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -81,6 +83,7 @@ fun ProfileScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var showSettingsSheet by remember { mutableStateOf(initialShowSettings) }
+    var showChangePasswordDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(initialShowSettings) {
         if (initialShowSettings) showSettingsSheet = true
@@ -321,12 +324,20 @@ fun ProfileScreen(
                             showSettingsSheet = false
                             onBlockedUsersClick()
                         },
+                        onChangePasswordClick = {
+                            showSettingsSheet = false
+                            showChangePasswordDialog = true
+                        },
                         onDeleteAccountClick = {
                             showSettingsSheet = false
                             viewModel.openDeleteAccountDialog()
                         },
                         onDismiss = { showSettingsSheet = false }
                     )
+                }
+
+                if (showChangePasswordDialog) {
+                    ChangePasswordDialog(onDismiss = { showChangePasswordDialog = false })
                 }
 
                 // Hesap Silme Onay Diyaloğu — Google Play "Hesap Silme" politikası
@@ -548,6 +559,7 @@ private fun ProfileSettingsSheet(
     status: PremiumStatusResponse,
     onUpgradeClick: () -> Unit,
     onBlockedUsersClick: () -> Unit,
+    onChangePasswordClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -591,6 +603,19 @@ private fun ProfileSettingsSheet(
                     .background(Void900)
                     .padding(vertical = 8.dp)
             ) {
+                // E-posta/şifre ile giren kullanıcının şifresini değiştirmesinin
+                // hiçbir yolu yoktu. Anonim (misafir) oturumda şifre kavramı
+                // olmadığı için gizleniyor.
+                if (supabaseClient.auth.currentUserOrNull()?.email.isNullOrBlank().not()) {
+                    SettingsActionItem(
+                        icon = Icons.Default.Lock,
+                        label = stringResource(R.string.profile_change_password),
+                        onClick = onChangePasswordClick
+                    )
+
+                    HorizontalDivider(color = Color.White.copy(alpha = 0.05f), modifier = Modifier.padding(horizontal = 16.dp))
+                }
+
                 SettingsActionItem(
                     icon = Icons.Default.Block,
                     label = stringResource(R.string.blocked_users_menu_item),
@@ -784,6 +809,132 @@ private fun DeleteAccountConfirmDialog(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ChangePasswordDialog(onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    var newPassword by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var showPassword by remember { mutableStateOf(false) }
+    var isSaving by remember { mutableStateOf(false) }
+    var errorText by remember { mutableStateOf<String?>(null) }
+
+    val tooShort = stringResource(R.string.profile_change_password_too_short)
+    val mismatch = stringResource(R.string.profile_change_password_mismatch)
+    val success = stringResource(R.string.profile_change_password_success)
+
+    Dialog(onDismissRequest = { if (!isSaving) onDismiss() }) {
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(containerColor = Void900),
+            border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.5f))
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.profile_change_password),
+                    color = AstralGold,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
+                )
+
+                OutlinedTextField(
+                    value = newPassword,
+                    onValueChange = { newPassword = it; errorText = null },
+                    label = { Text(stringResource(R.string.profile_change_password_new), color = Color.Gray) },
+                    singleLine = true,
+                    visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        IconButton(onClick = { showPassword = !showPassword }) {
+                            Icon(
+                                if (showPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                contentDescription = null,
+                                tint = AstralGold
+                            )
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = AstralGold,
+                        unfocusedBorderColor = Void800,
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
+                )
+
+                OutlinedTextField(
+                    value = confirmPassword,
+                    onValueChange = { confirmPassword = it; errorText = null },
+                    label = { Text(stringResource(R.string.profile_change_password_confirm), color = Color.Gray) },
+                    singleLine = true,
+                    visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = AstralGold,
+                        unfocusedBorderColor = Void800,
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
+                )
+
+                errorText?.let {
+                    Text(it, color = SemanticDanger400, fontSize = 12.sp)
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = onDismiss,
+                        enabled = !isSaving,
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Gray),
+                        border = BorderStroke(1.dp, Void800)
+                    ) { Text(stringResource(R.string.profile_edit_cancel)) }
+
+                    Button(
+                        onClick = {
+                            when {
+                                newPassword.length < 6 -> errorText = tooShort
+                                newPassword != confirmPassword -> errorText = mismatch
+                                else -> {
+                                    isSaving = true
+                                    scope.launch {
+                                        try {
+                                            supabaseClient.auth.updateUser { password = newPassword }
+                                            Toast.makeText(context, success, Toast.LENGTH_LONG).show()
+                                            onDismiss()
+                                        } catch (e: Exception) {
+                                            errorText = e.message
+                                        } finally {
+                                            isSaving = false
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        enabled = !isSaving,
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(containerColor = AstralGold)
+                    ) {
+                        if (isSaving) {
+                            CircularProgressIndicator(modifier = Modifier.size(16.dp), color = Void950)
+                        } else {
+                            Text(stringResource(R.string.profile_edit_save), color = Void950, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 // user_profiles.language sütunundaki CHECK kısıtıyla ve app'in res/values-*
 // dizinleriyle birebir aynı liste — listede olmayan bir kod kaydedilmeye
 // çalışılırsa Postgres kısıt hatası döner.

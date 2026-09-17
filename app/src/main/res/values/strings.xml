@@ -296,6 +296,15 @@
     <string name="profile_edit_gender_label">Gender</string>
     <string name="profile_edit_cancel">Cancel</string>
     <string name="profile_edit_save">Save</string>
+    <string name="auth_forgot_password">Forgot password?</string>
+    <string name="auth_reset_needs_email">Enter your email first to get a reset link.</string>
+    <string name="auth_reset_sent">If that address is registered, a reset link has been sent. Check your email.</string>
+    <string name="profile_change_password">Change Password</string>
+    <string name="profile_change_password_new">New password</string>
+    <string name="profile_change_password_confirm">New password (again)</string>
+    <string name="profile_change_password_too_short">Password must be at least 6 characters.</string>
+    <string name="profile_change_password_mismatch">Passwords do not match.</string>
+    <string name="profile_change_password_success">Your password has been updated.</string>
     <string name="profile_tab_visions">Vision Board</string>
     <string name="profile_tab_dreams">Dreams</string>
     <string name="profile_tab_journal">Diary</string>

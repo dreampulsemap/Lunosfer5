@@ -243,6 +243,44 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                     Text(if (isLoading) stringResource(R.string.auth_loading) else if (isLogin) stringResource(R.string.auth_login) else stringResource(R.string.auth_register))
                 }
 
+                // Sifresini unutan kullanicinin uygulamaya girmesinin hicbir yolu
+                // yoktu — ne burada ne web'de sifirlama akisi vardi. Supabase
+                // sifirlama e-postasi gonderiyor; e-postadaki link web'deki
+                // /auth/reset sayfasina dusup yeni sifre belirlemeyi sagliyor.
+                if (isLogin) {
+                    TextButton(
+                        onClick = {
+                            if (email.isBlank()) {
+                                Toast.makeText(context, context.getString(R.string.auth_reset_needs_email), Toast.LENGTH_SHORT).show()
+                                return@TextButton
+                            }
+                            isLoading = true
+                            coroutineScope.launch {
+                                try {
+                                    supabaseClient.auth.resetPasswordForEmail(
+                                        email = email.trim(),
+                                        redirectUrl = "https://www.lunosfer.com/auth/reset"
+                                    )
+                                } catch (e: Exception) {
+                                    // Hatayi da yutuyoruz: farkli mesajlar hangi
+                                    // e-postanin kayitli oldugunu sizdirir.
+                                } finally {
+                                    isLoading = false
+                                    Toast.makeText(context, context.getString(R.string.auth_reset_sent), Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        },
+                        enabled = !isLoading,
+                        modifier = Modifier.align(Alignment.End)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.auth_forgot_password),
+                            color = AstralGold,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
+
                 Spacer(Modifier.height(16.dp))
 
                 Text(
