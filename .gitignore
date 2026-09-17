@@ -1,0 +1,44 @@
+*.iml
+.gradle
+.kotlin
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.env
+debug.keystore
+
+# Imza anahtarlari — ASLA depoya girmemeli. my-upload-key.jks Google Play
+# yukleme anahtari: sizarsa uygulamanin kimligi baskasi tarafindan
+# kullanilabilir ve Play tarafinda geri alinmasi zahmetli. Dosyalar diskte
+# kaliyor, sadece takip edilmiyor; baska bir makineye gecerken elle kopyala.
+*.jks
+*.keystore
+
+# Modul build cikislari (kok /build zaten yukarida; app/build ayri tutuluyor)
+build/
+
+# Firebase yapilandirmasi: APK icinde zaten dagitiliyor ama proje kimligi ve
+# API anahtarlarini icerdigi icin depo disinda tutuluyor — yeni bir klonda
+# Firebase konsolundan yeniden indirmek gerekir (yoksa build sadece uyarir,
+# bkz. app/build.gradle.kts -> missingGoogleServicesStrategy = WARN).
+app/google-services.json
+
+# IDE'ye ozel, makineye bagli durum
+/.idea/deploymentTargetSelector.xml
+/.idea/appInsightsSettings.xml
+/.idea/AndroidProjectSystem.xml
+/.idea/deviceManager.xml
+/.idea/misc.xml
+/.idea/gradle.xml
+/.idea/compiler.xml
+/.idea/.name

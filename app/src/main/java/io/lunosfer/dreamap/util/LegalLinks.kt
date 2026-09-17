@@ -1,0 +1,33 @@
+package io.lunosfer.dreamap.util
+
+import io.lunosfer.dreamap.BuildConfig
+
+/**
+ * Google Play Console "App content" formunun zorunlu kıldığı Gizlilik
+ * Politikası URL'i buradan tek bir yerden yönetilir. BuildConfig.APP_URL
+ * (.env üzerinden enjekte edilir) hangi ortama build alındığına göre
+ * otomatik doğru domain'i verir.
+ *
+ * Gerçek sayfalar dreamap-frontend'de (Next.js Pages Router) hazır:
+ * pages/privacy.js -> /privacy
+ * pages/terms.js -> /terms (Kullanım Koşulları / EULA — Play Console UGC
+ * politikasının istediği nefret söylemi/müstehcenlik yasağı burada)
+ * pages/delete-account.js -> /delete-account (Play Console "Account
+ * deletion" alanına da bu URL girilecek)
+ */
+object LegalLinks {
+    private val baseUrl: String
+        get() = (if (BuildConfig.APP_URL.isNotBlank()) BuildConfig.APP_URL else "https://www.lunosfer.com").trimEnd('/')
+
+    val privacyPolicyUrl: String
+        get() = "$baseUrl/privacy"
+
+    val termsOfServiceUrl: String
+        get() = "$baseUrl/terms"
+
+    val deleteAccountUrl: String
+        get() = "$baseUrl/delete-account"
+
+    val helpSupportUrl: String
+        get() = "https://www.lunosfer.com/support" // Or a contact form
+}

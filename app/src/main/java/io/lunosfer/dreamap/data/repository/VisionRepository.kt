@@ -1,0 +1,393 @@
+package io.lunosfer.dreamap.data.repository
+
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.query.Columns
+import io.github.jan.supabase.storage.storage
+import io.lunosfer.dreamap.data.model.*
+import io.lunosfer.dreamap.data.network.NetworkModule
+import io.lunosfer.dreamap.supabase.supabaseClient
+
+/** "Vizyon" sekmesi: genel keşfet akışı ve vizyon etkileşimleri. */
+class VisionRepository {
+    private val api = NetworkModule.api
+
+    suspend fun loadFirstPage(): Result<List<Goal>> = runCatching {
+        api.getGoalsFeed(mode = "feed", page = 0, status = null).goals
+    }
+
+    suspend fun loadHubGoals(status: String): Result<List<Goal>> = runCatching {
+        api.getGoalsFeed(mode = "feed", page = 0, status = status).goals
+    }
+
+    /** Sadece giriş yapmış kullanıcının KENDİ vizyonları — "Bugün Yapman Gerekenler"
+     * (günlük tohum) bölümü bunu kullanmalı, herkese açık feed'i değil. */
+    suspend fun loadOwnGoals(): Result<List<Goal>> = runCatching {
+        api.getGoalsFeed(mode = "own", page = 0, status = null).goals
+    }
+
+    /** Başka bir kullanıcının profilindeki "Vizyon Panosu" sekmesi için — herkese
+     * açık (+ karşılıklı arkadaşsa 'friends' görünürlüğündeki) vizyonları döner. */
+    suspend fun loadUserGoals(userId: String): Result<List<Goal>> = runCatching {
+        api.getGoalsFeed(mode = "user", page = 0, status = null, userId = userId).goals
+    }
+
+    suspend fun createGoal(request: CreateGoalRequest): Result<Goal> = runCatching {
+        val res = api.createGoal(request)
+        if (res.goal == null && res.error != null) {
+            throw Exception(res.error)
+        }
+        res.goal ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_create_failed))
+    }
+
+    suspend fun updateGoalStatus(goalId: String, status: String, story: String? = null): Result<Goal> = runCatching {
+        val res = api.updateGoalStatus(UpdateGoalStatusRequest(goalId, status, story))
+        if (res.goal == null && res.error != null) {
+            throw Exception(res.error)
+        }
+        res.goal ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_status_update_failed))
+    }
+
+    suspend fun updateGoalVisibility(goalId: String, visibility: String): Result<Goal> = runCatching {
+        val res = api.updateGoalVisibility(UpdateGoalVisibilityRequest(goalId, visibility))
+        if (res.goal == null && res.error != null) {
+            throw Exception(res.error)
+        }
+        res.goal ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_visibility_update_failed))
+    }
+
+    suspend fun deleteGoal(goalId: String): Result<Unit> = runCatching {
+        val res = api.deleteGoal(DeleteGoalRequest(goalId))
+        if (!res.success && !res.ok && res.error != null) {
+            throw Exception(res.error)
+        }
+        Unit
+    }
+
+    suspend fun saveGoal(goalId: String): Result<Boolean> = runCatching {
+        val res = api.saveGoal(SaveGoalRequest(goalId))
+        if (res.error != null) {
+            throw Exception(res.error)
+        }
+        res.saved
+    }
+
+    suspend fun giveMana(goalId: String, amount: Int = 1): Result<GiveManaResponse> = runCatching {
+        val res = api.giveMana(GiveManaRequest(goalId, amount))
+        if (res.error != null) {
+            throw Exception(res.error)
+        }
+        res
+    }
+
+    suspend fun removeMana(goalId: String): Result<Unit> = runCatching {
+        val res = api.removeMana(DeleteGoalRequest(goalId))
+        if (!res.success && !res.ok && res.error != null) {
+            throw Exception(res.error)
+        }
+        Unit
+    }
+
+    // --- Vizyon Slaytları ---
+
+    suspend fun loadGoalSlides(goalId: String): Result<GoalSlidesResponse> = runCatching {
+        api.getGoalSlides(goalId)
+    }
+
+    suspend fun deleteGoalSlide(slideId: String): Result<Unit> = runCatching {
+        val res = api.deleteGoalSlide(DeleteSlideRequest(slideId))
+        if (!res.success && !res.ok && res.error != null) { throw Exception(res.error) }
+        Unit
+    }
+
+    suspend fun toggleSlideSave(slideId: String): Result<Unit> = runCatching {
+        val res = api.toggleSlideSave(SaveSlideRequest(slideId))
+        if (!res.success && !res.ok && res.error != null) { throw Exception(res.error) }
+        Unit
+    }
+
+    private val imageDownloadClient = okhttp3.OkHttpClient.Builder()
+        .connectTimeout(20, java.util.concurrent.TimeUnit.SECONDS)
+        .readTimeout(20, java.util.concurrent.TimeUnit.SECONDS)
+        .build()
+
+    suspend fun persistImageToStorage(imageUrl: String, suggestedName: String = "vision_image"): Result<String> = runCatching {
+        if (imageUrl.isBlank()) return@runCatching imageUrl
+        if (imageUrl.contains("supabase.co/storage/v1/object/public/")) {
+            return@runCatching imageUrl
+        }
+        val req = okhttp3.Request.Builder()
+            .url(imageUrl)
+            .header("User-Agent", "Mozilla/5.0 (Android; Mobile)")
+            .build()
+        val bytes = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            val response = imageDownloadClient.newCall(req).execute()
+            if (!response.isSuccessful) throw Exception("Image download HTTP ${response.code}")
+            response.body?.bytes() ?: throw Exception("Empty image body")
+        }
+        val ext = if (imageUrl.contains(".png", ignoreCase = true)) "png" else "jpg"
+        val fileName = "${suggestedName}_${System.currentTimeMillis()}.$ext"
+        uploadSlideImage(bytes, fileName).getOrThrow()
+    }
+
+    suspend fun uploadSlideImage(byteArray: ByteArray, fileName: String): Result<String> = runCatching {
+        val uniquePath = "${java.util.UUID.randomUUID()}_$fileName"
+        val mimeType = if (fileName.endsWith(".mp4", ignoreCase = true))
+            io.ktor.http.ContentType.Video.MP4 else io.ktor.http.ContentType.Image.JPEG
+        try {
+            val bucket = io.lunosfer.dreamap.supabase.supabaseClient.storage.from("goal-images")
+            bucket.upload(uniquePath, byteArray) { upsert = true; contentType = mimeType }
+            bucket.publicUrl(uniquePath)
+        } catch (e: Exception) {
+            try {
+                val bucket = io.lunosfer.dreamap.supabase.supabaseClient.storage.from("dreams")
+                bucket.upload(uniquePath, byteArray) { upsert = true; contentType = mimeType }
+                bucket.publicUrl(uniquePath)
+            } catch (_: Exception) { throw e }
+        }
+    }
+
+    suspend fun createGoalSlide(goalId: String, imageUrl: String, caption: String? = null, durationSeconds: Int? = null): Result<GoalSlide> = runCatching {
+        val targetUrl = if (!imageUrl.contains("supabase.co/storage/v1/object/public/")) {
+            persistImageToStorage(imageUrl, "slide").getOrElse { imageUrl }
+        } else imageUrl
+        val res = api.createGoalSlide(CreateSlideRequest(goalId, targetUrl, caption, durationSeconds))
+        res.slide ?: throw Exception(res.error ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_create_slide))
+    }
+
+    suspend fun updateGoalSlide(request: UpdateSlideRequest): Result<GoalSlide> = runCatching {
+        val res = api.updateGoalSlide(request)
+        res.slide ?: throw Exception(res.error ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_slide_update_failed))
+    }
+
+    suspend fun reorderGoalSlides(goalId: String, orderedSlideIds: List<String>): Result<Unit> = runCatching {
+        val res = api.reorderGoalSlides(ReorderSlidesRequest(goalId, orderedSlideIds))
+        if (!res.success && !res.ok && res.error != null) { throw Exception(res.error) }
+        Unit
+    }
+
+    suspend fun getGoalComments(goalId: String): Result<List<GoalComment>> = runCatching {
+        api.getGoalComments(goalId).comments
+    }
+
+    suspend fun createGoalComment(goalId: String, content: String): Result<GoalComment> = runCatching {
+        val res = api.createGoalComment(CreateGoalCommentRequest(goalId, content))
+        if (res.comment == null && res.error != null) {
+            throw Exception(res.error)
+        }
+        res.comment ?: throw Exception("Yorum eklenemedi")
+    }
+
+    suspend fun deleteGoalComment(commentId: String): Result<Unit> = runCatching {
+        val res = api.deleteGoalComment(DeleteGoalCommentRequest(commentId))
+        if (!res.success && !res.ok && res.error != null) {
+            throw Exception(res.error)
+        }
+        Unit
+    }
+
+    /** @return true ise zaten daha önce bildirilmişti (backend "already_reported"), false ise yeni bildirim. */
+    suspend fun reportGoal(goalId: String, reason: GoalReportReason, note: String? = null): Result<Boolean> = runCatching {
+        val res = api.reportGoal(ReportGoalRequest(goalId = goalId, reason = reason.apiValue, note = note))
+        if (!res.success && res.error != null) {
+            throw Exception(res.error)
+        }
+        res.alreadyReported
+    }
+
+    /**
+     * Başkasına ait bir vizyonu ("Kendi Vizyonlarıma Ekle") tek tıkla klonlar.
+     * reportGoal ile aynı "zaten yapılmış" deseni: alreadyCloned=true dönerse
+     * bu bir hata değildir, sadece bilgilendirici bir durumdur (UI ayrı bir
+     * mesajla gösterebilir).
+     */
+    suspend fun cloneGoal(goalId: String): Result<CloneGoalResponse> = runCatching {
+        val res = api.cloneGoal(CloneGoalRequest(goalId))
+        if (!res.success && !res.alreadyCloned && res.error != null) {
+            throw Exception(res.error)
+        }
+        res
+    }
+
+    // --- Goal Cover & Gallery Media ---
+
+    suspend fun generateGoalCover(goalId: String?, title: String?, description: String?): Result<String> = runCatching {
+        val res = api.generateGoalCover(GenerateGoalCoverRequest(goalId, title, description))
+        if (res.ok == false && res.error != null) {
+            throw Exception(res.error)
+        }
+        val url = res.coverImageUrl ?: res.url ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_cover_image_generate_failed))
+        if (goalId != null) {
+            persistImageToStorage(url, "goal_${goalId}_ai_cover").getOrElse { url }
+        } else url
+    }
+
+    suspend fun addGoalImageFromPixabay(
+        goalId: String,
+        pixabayId: Long,
+        imageUrl: String,
+        tags: String = "",
+        pixabayUser: String = "",
+        width: Int = 1920,
+        height: Int = 1080
+    ): Result<String> = runCatching {
+        try {
+            val res = api.addGoalImageFromPixabay(
+                GoalPixabayImageRequest(goalId, pixabayId, imageUrl, tags, pixabayUser, width, height)
+            )
+            val serverUrl = res.imageUrl
+            if (serverUrl != null && serverUrl.isNotBlank() && !serverUrl.contains("pixabay.com")) {
+                return@runCatching serverUrl
+            }
+        } catch (_: Exception) {}
+
+        val permanentUrl = persistImageToStorage(imageUrl, "goal_${goalId}_media").getOrElse { imageUrl }
+        addGoalImage(goalId, permanentUrl).getOrNull()
+        permanentUrl
+    }
+
+    suspend fun addGoalImage(goalId: String, imageUrl: String): Result<String> = runCatching {
+        val targetUrl = if (!imageUrl.contains("supabase.co/storage/v1/object/public/")) {
+            persistImageToStorage(imageUrl, "goal_${goalId}_image").getOrElse { imageUrl }
+        } else {
+            imageUrl
+        }
+        val res = api.addGoalImage(GoalAddImageRequest(goalId, targetUrl))
+        if (res.ok == false && res.error != null) {
+            throw Exception(res.error)
+        }
+        res.imageUrl ?: targetUrl
+    }
+
+    suspend fun setGoalCover(goalId: String, imageUrl: String): Result<String> = runCatching {
+        val targetUrl = if (!imageUrl.contains("supabase.co/storage/v1/object/public/")) {
+            persistImageToStorage(imageUrl, "goal_${goalId}_cover").getOrElse { imageUrl }
+        } else {
+            imageUrl
+        }
+        val res = api.setGoalCover(GoalSetCoverRequest(goalId, targetUrl))
+        if (res.ok == false && res.error != null) {
+            throw Exception(res.error)
+        }
+        res.coverImageUrl ?: targetUrl
+    }
+
+    suspend fun removeGoalImage(goalId: String, imageUrl: String): Result<Unit> = runCatching {
+        val res = api.removeGoalImage(GoalRemoveImageRequest(goalId, imageUrl))
+        if (res.ok == false && res.error != null) {
+            throw Exception(res.error)
+        }
+        Unit
+    }
+
+
+    // --- Daily Compass ---
+    suspend fun getDailyCompass(lang: String = "tr"): Result<DailyCompassResponse> = runCatching {
+        try {
+            api.getDailyCompass(DailyCompassRequest(lang))
+        } catch (e: retrofit2.HttpException) {
+            if (e.code() == 429) {
+                DailyCompassResponse(ok = false, error = "already_used_today")
+            } else {
+                throw e
+            }
+        }
+    }
+
+    // --- Daily Seeds ---
+    suspend fun getDailySeeds(): Result<List<DailySeedItem>> = runCatching {
+        api.getDailySeeds().seeds ?: emptyList()
+    }
+
+    suspend fun generateDailySeed(goalId: String, lang: String = "tr"): Result<DailySeedItem?> = runCatching {
+        val res = api.generateDailySeed(GenerateSeedRequest(goalId, lang))
+        if (res.ok == false) {
+            throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_error_seed_generate_failed))
+        }
+        res.seed
+    }
+
+    suspend fun completeDailySeed(seedId: String): Result<DailySeedItem?> = runCatching {
+        val res = api.completeDailySeed(CompleteSeedRequest(seedId))
+        res.seed
+    }
+
+    // --- Ortak Vizyon (Goal Collaborators) ---
+    // Backend'de (dreamap-frontend) buna karşılık gelen bir API rotası yok;
+    // goal_collaborators tablosuna ve RLS politikalarına doğrudan Supabase
+    // postgrest ile yazıyor/okuyoruz (AuthScreen'deki gibi aynı desen).
+
+    private val collaboratorColumns = Columns.raw(
+        "*, user_profiles!goal_collaborators_user_id_fkey(id,username,display_name,avatar_url)"
+    )
+
+    suspend fun getCollaborators(goalId: String): Result<List<GoalCollaborator>> = runCatching {
+        supabaseClient.postgrest["goal_collaborators"]
+            .select(collaboratorColumns) { filter { eq("goal_id", goalId) } }
+            .decodeList<GoalCollaborator>()
+    }
+
+    suspend fun inviteCollaborator(goalId: String, friendUserId: String): Result<GoalCollaborator> = runCatching {
+        val myId = supabaseClient.auth.currentUserOrNull()?.id
+            ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_not_authorized))
+        supabaseClient.postgrest["goal_collaborators"]
+            .insert(
+                mapOf(
+                    "goal_id" to goalId,
+                    "user_id" to friendUserId,
+                    "invited_by" to myId
+                )
+            ) { select(collaboratorColumns) }
+            .decodeSingle<GoalCollaborator>()
+    }
+
+    suspend fun removeCollaborator(collaboratorId: Long): Result<Unit> = runCatching {
+        supabaseClient.postgrest["goal_collaborators"]
+            .delete { filter { eq("id", collaboratorId) } }
+        Unit
+    }
+
+    /** Davet edilen kullanıcının kendi daveti üzerinde kabul/red yanıtı. */
+    suspend fun respondToCollaboratorInvite(collaboratorId: Long, accept: Boolean): Result<Unit> = runCatching {
+        supabaseClient.postgrest["goal_collaborators"]
+            .update(
+                mapOf(
+                    "status" to if (accept) "accepted" else "declined",
+                    "responded_at" to java.text.SimpleDateFormat(
+                        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                        java.util.Locale.US
+                    ).apply { timeZone = java.util.TimeZone.getTimeZone("UTC") }.format(java.util.Date())
+                )
+            ) { filter { eq("id", collaboratorId) } }
+        Unit
+    }
+
+    /** Giriş yapmış kullanıcının, sahibi olmadığı ama işbirlikçi olarak kabul edildiği vizyonlar. */
+    suspend fun getMyAcceptedCollaborations(): Result<List<GoalCollaborator>> = runCatching {
+        val myId = supabaseClient.auth.currentUserOrNull()?.id
+            ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_not_authorized))
+        supabaseClient.postgrest["goal_collaborators"]
+            .select(Columns.raw("*, goals(*)")) {
+                filter {
+                    eq("user_id", myId)
+                    eq("status", "accepted")
+                }
+            }
+            .decodeList<GoalCollaborator>()
+    }
+
+    /** Giriş yapmış kullanıcıya bekleyen ortak-vizyon davetleri. */
+    suspend fun getMyPendingCollaboratorInvites(): Result<List<GoalCollaborator>> = runCatching {
+        val myId = supabaseClient.auth.currentUserOrNull()?.id
+            ?: throw Exception(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_not_authorized))
+        supabaseClient.postgrest["goal_collaborators"]
+            .select(Columns.raw("*, goals(*)")) {
+                filter {
+                    eq("user_id", myId)
+                    eq("status", "pending")
+                }
+            }
+            .decodeList<GoalCollaborator>()
+    }
+}
+

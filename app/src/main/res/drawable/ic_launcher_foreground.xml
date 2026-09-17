@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Lunosfer app ikonu - foreground katmanı.
+
+    Sembol: dikey olarak üst üste binen iki halka. Üst halka rüya
+    günlüğünü (gece, geçmişe bakış), alt halka hedef/vizyon takibini
+    (gündüz, geleceğe bakış) temsil eder; kesişim bölgesi ikisinin
+    buluştuğu "an"ı simgeler (badem/göz formu - bilinçaltına açılan
+    bir pencere çağrışımı). Motif, "rüya günlüğü + hedef günlüğü"nün
+    birbirini tamamlayan iki sütun olduğu davranışsal anlatıyı taşır.
+
+    Geometri wkhtmltoimage (gerçek WebKit render motoru) ile piksel
+    piksel doğrulandı - kağıt üstü hesap değil, gerçek render sonucu.
+    Glow hissi gerçek bir blur filtresi olmadan (Android Vector
+    Drawable filter desteklemiyor) iki katman tekniğiyle simüle
+    edildi: aynı path, arkada daha kalın + düşük opaklıkta bir kez,
+    önde ince + tam opak bir kez daha çizilir.
+
+    monochrome (Android 13+ themed icon) için de bu dosya kullanılır -
+    bu yüzden background'a bağımlı olmayan, kendi başına anlamlı bir
+    siluet olacak şekilde tasarlandı.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Glow katmanı: aynı iki halka, kalın + soluk, arkada -->
+    <path
+        android:pathData="M54,32 A16.5,16.5 0 1,0 54,65 A16.5,16.5 0 1,0 54,32"
+        android:fillColor="#00000000"
+        android:strokeColor="#E6C687"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.25" />
+    <path
+        android:pathData="M54,43 A16.5,16.5 0 1,0 54,76 A16.5,16.5 0 1,0 54,43"
+        android:fillColor="#00000000"
+        android:strokeColor="#E6C687"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.25" />
+
+    <!-- Keskin katman: gerçek gradient stroke, önde -->
+    <path android:pathData="M54,32 A16.5,16.5 0 1,0 54,65 A16.5,16.5 0 1,0 54,32"
+        android:fillColor="#00000000"
+        android:strokeWidth="4.2"
+        android:strokeLineCap="round">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:type="linear"
+                android:startX="32"
+                android:startY="32"
+                android:endX="76"
+                android:endY="76">
+                <item android:color="#F2DDA8" android:offset="0.0" />
+                <item android:color="#D9B166" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path android:pathData="M54,43 A16.5,16.5 0 1,0 54,76 A16.5,16.5 0 1,0 54,43"
+        android:fillColor="#00000000"
+        android:strokeWidth="4.2"
+        android:strokeLineCap="round">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:type="linear"
+                android:startX="32"
+                android:startY="32"
+                android:endX="76"
+                android:endY="76">
+                <item android:color="#F2DDA8" android:offset="0.0" />
+                <item android:color="#D9B166" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Gözbebeği: kesişim bölgesindeki badem formunu kasıtlı bir "göz/iç
+         görü" sembolüne dönüştürür. Bu nokta olmadan kesişim sadece boşluk
+         (arka plan) olarak kalır ve izleyici anlamı kendiliğinden okumak
+         zorunda kalır - nokta bu okumayı garanti eder. -->
+    <path android:pathData="M54,50.8 a3.2,3.2 0 1,0 0,6.4 a3.2,3.2 0 1,0 0,-6.4">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="32"
+                android:startY="32"
+                android:endX="76"
+                android:endY="76">
+                <item android:color="#F2DDA8" android:offset="0.0" />
+                <item android:color="#D9B166" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>
