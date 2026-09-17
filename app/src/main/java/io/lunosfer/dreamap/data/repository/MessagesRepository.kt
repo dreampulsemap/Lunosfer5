@@ -74,7 +74,8 @@ class MessagesRepository {
         attachmentMime: String? = null,
         attachmentSize: Long? = null
     ): Result<Message> = runCatching {
-        val lang = Locale.getDefault().language
+        // Ceviri hedef dili: cihaz dili degil kullanicinin sectigi uygulama dili.
+        val lang = io.lunosfer.dreamap.util.AppLanguage.code()
         api.sendMessage(
             SendMessageRequest(
                 recipientId = recipientId,

@@ -172,7 +172,7 @@
     <string name="spiritual_mental_wall_header">Zihin Duvarı (Mental Wall)</string>
     <string name="spiritual_mental_wall_desc">Rüya bilinçaltının sembollerini, arketip motiflerini ve duygu haritanı tek bir soyut kolaj ve anlatıda birleştirir.</string>
     <string name="spiritual_synthesizing">Sentezleniyor...</string>
-    <string name="spiritual_synthesize_btn">Zihin Duvarını Sentezle</string>
+    <string name="spiritual_synthesize_btn">Zihin Duvarını Sentezle (5 Aura)</string>
     <string name="spiritual_mental_wall_idle">Zihin duvarını ilk kez oluşturmak için yukarıdaki butona dokun.</string>
     <string name="spiritual_mental_wall_loading_status">Bilinçaltı sembolleri haritalandırılıyor...</string>
     <string name="refresh_button_desc">Yenile</string>
@@ -794,4 +794,66 @@
     <string name="permission_denied_camera">Fotoğraf veya video çekmek için kamera izni gereklidir.</string>
     <string name="diary_composer_source_gallery">Galeriden Seç</string>
     <string name="diary_composer_source_camera">Fotoğraf/Video Çek</string>
+
+    <!-- Giris: anlasilir hata mesajlari (onceden ham Supabase hata metni gosteriliyordu) -->
+    <string name="auth_error_fields_required">Lütfen e-posta ve şifreni gir.</string>
+    <string name="auth_error_invalid_email">Lütfen geçerli bir e-posta adresi gir.</string>
+    <string name="auth_error_password_too_short">Şifren en az 6 karakter olmalı.</string>
+    <string name="auth_error_invalid_credentials">E-posta veya şifre hatalı.</string>
+    <string name="auth_error_email_not_confirmed">Önce e-posta adresini doğrulaman gerekiyor — gelen kutunu kontrol et.</string>
+    <string name="auth_error_email_in_use">Bu e-posta zaten kayıtlı. Giriş yapmayı dene.</string>
+    <string name="auth_error_rate_limited">Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.</string>
+    <string name="auth_error_guest_disabled">Misafir girişi şu anda kapalı. Lütfen kayıt ol veya giriş yap.</string>
+    <string name="auth_error_network">Bağlantı yok. İnternetini kontrol edip tekrar dene.</string>
+    <string name="auth_error_login_failed">Giriş yapılamadı. Lütfen tekrar dene.</string>
+    <string name="auth_error_register_failed">Hesabın oluşturulamadı. Lütfen tekrar dene.</string>
+
+    <!-- Erisilebilirlik etiketleri (onceden sabit metindi) -->
+    <string name="cd_notifications">Bildirimler</string>
+    <string name="cd_more_menu">Diğer seçenekler</string>
+    <string name="cd_profile">Profil</string>
+    <string name="cd_create_new">Yeni oluştur</string>
+    <string name="cd_settings">Ayarlar</string>
+    <string name="cd_dictate">Sesle yaz</string>
+    <string name="cd_cover_image">Kapak görseli</string>
+    <string name="cd_remove_cover">Kapak görselini kaldır</string>
+    <string name="cd_remove_tag">Etiketi kaldır</string>
+    <string name="cd_avatar_preview">Profil fotoğrafı önizlemesi</string>
+    <string name="cd_add_story">Hikaye ekle</string>
+    <string name="cd_clear">Temizle</string>
+
+    <!-- Goreli zaman -->
+    <string name="time_just_now">Az önce</string>
+    <string name="time_minutes_ago">%1$d dk önce</string>
+    <string name="time_hours_ago">%1$d sa önce</string>
+    <string name="time_days_ago">%1$d gün önce</string>
+    <!-- Onceden hepsi genel "Yeni bildirim" metnine dusen bildirim turleri -->
+    <string name="notif_friend_accepted_title">İstek Kabul Edildi</string>
+    <string name="notif_friend_accepted_body">%1$s takip isteğini kabul etti.</string>
+    <string name="notif_goal_comment_title">Yeni Yorum</string>
+    <string name="notif_goal_comment_body">%1$s vizyonuna yorum yaptı.</string>
+    <string name="notif_mana_received_title">Mana Geldi</string>
+    <string name="notif_mana_received_body">%1$s vizyonuna mana gönderdi.</string>
+    <string name="notif_diary_comment_title">Yeni Yorum</string>
+    <string name="notif_diary_comment_body">%1$s günlük paylaşımına yorum yaptı.</string>
+    <string name="notif_dream_image_gift_title">Rüya Görseli Hazır</string>
+    <string name="notif_dream_image_gift_body">Senin için bir rüya görseli oluşturuldu.</string>
+    <string name="notif_request_no_longer_available">Bu takip isteği artık geçerli değil.</string>
+
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="other">🌙 %1$d Rüya Analiz Edildi</item>
+    </plurals>
+
+    <string name="profile_logout_confirm_title">Çıkış yapılsın mı?</string>
+    <string name="profile_logout_confirm_desc">Tekrar girmek için e-posta ve şifreni yeniden girmen gerekecek.</string>
+
+    <string name="profile_edit_bio_label">Hakkımda</string>
+    <string name="profile_error_bio_length">Hakkımda en fazla 300 karakter olabilir</string>
+
+    <string name="error_no_connection">İnternet bağlantısı yok. Bağlantını kontrol edip tekrar dene.</string>
+    <string name="error_timeout">Sunucu yanıt vermedi. Lütfen tekrar dene.</string>
+    <string name="error_server">Bizim tarafta bir sorun oluştu. Kısa süre sonra tekrar dene.</string>
+    <string name="error_session_expired">Oturumun sona erdi. Lütfen tekrar giriş yap.</string>
+
+    <string name="cd_use_my_location">Konumumu kullan</string>
 </resources>

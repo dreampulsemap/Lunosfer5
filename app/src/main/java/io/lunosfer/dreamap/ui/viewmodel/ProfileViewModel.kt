@@ -97,6 +97,7 @@ class ProfileViewModel(
         username: String,
         displayName: String,
         avatarUrl: String,
+        bio: String,
         profileVisibility: String,
         language: String,
         gender: String
@@ -110,6 +111,10 @@ class ProfileViewModel(
         }
         if (displayName.length > 60) {
             _state.value = current.copy(actionError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_display_name_length))
+            return
+        }
+        if (bio.length > 300) {
+            _state.value = current.copy(actionError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_bio_length))
             return
         }
 
@@ -133,6 +138,7 @@ class ProfileViewModel(
                 username = username.trim().takeIf { it.isNotBlank() },
                 displayName = displayName.trim().takeIf { it.isNotBlank() },
                 avatarUrl = finalAvatarUrl,
+                bio = bio.trim(),
                 isPrivate = resolvedIsPrivate,
                 profileVisibility = resolvedVisibility,
                 language = language.takeIf { it.isNotBlank() },

@@ -20,6 +20,11 @@ class VisionRepository {
         api.getGoalsFeed(mode = "feed", page = 0, status = status).goals
     }
 
+    /** Kesfet sekmelerinde "daha fazla yukle" icin sayfali surum (hasMore ile birlikte). */
+    suspend fun loadHubGoalsPage(status: String, page: Int): Result<io.lunosfer.dreamap.data.model.GoalsListResponse> = runCatching {
+        api.getGoalsFeed(mode = "feed", page = page, status = status)
+    }
+
     /** Sadece giriş yapmış kullanıcının KENDİ vizyonları — "Bugün Yapman Gerekenler"
      * (günlük tohum) bölümü bunu kullanmalı, herkese açık feed'i değil. */
     suspend fun loadOwnGoals(): Result<List<Goal>> = runCatching {

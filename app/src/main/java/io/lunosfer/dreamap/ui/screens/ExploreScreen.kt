@@ -5,8 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
@@ -18,8 +20,10 @@ import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -53,6 +57,7 @@ fun ExploreScreen(
     val activeTab by viewModel.activeTab.collectAsState()
 
     val dreamsState by viewModel.state.collectAsState()
+    val loadingMore by viewModel.loadingMore.collectAsState()
     val visionState by viewModel.visionState.collectAsState()
     val victoryState by viewModel.victoryState.collectAsState()
     val phoenixState by viewModel.phoenixState.collectAsState()
@@ -115,7 +120,12 @@ fun ExploreScreen(
                             CircularProgressIndicator(color = AetherCyan)
                         }
                         is UiState.Error -> ExploreError(message = current.message, onRetry = { viewModel.retry(ExploreTab.DREAMSCAPE) })
-                        is UiState.Success -> ExploreGrid(dreams = current.data, onDreamClick = onOpenDreamReels)
+                        is UiState.Success -> ExploreGrid(
+                            dreams = current.data,
+                            onDreamClick = onOpenDreamReels,
+                            isLoadingMore = ExploreTab.DREAMSCAPE in loadingMore,
+                            onLoadMore = { viewModel.loadMore(ExploreTab.DREAMSCAPE) }
+                        )
                     }
                 }
                 ExploreTab.VISION -> {
@@ -127,7 +137,9 @@ fun ExploreScreen(
                         is UiState.Success -> GoalsGrid(
                             goals = current.data,
                             emptyMessage = stringResource(R.string.empty_vision),
-                            onOpenReels = onOpenReels
+                            onOpenReels = onOpenReels,
+                            isLoadingMore = ExploreTab.VISION in loadingMore,
+                            onLoadMore = { viewModel.loadMore(ExploreTab.VISION) }
                         )
                     }
                 }
@@ -140,7 +152,9 @@ fun ExploreScreen(
                         is UiState.Success -> GoalsGrid(
                             goals = current.data,
                             emptyMessage = stringResource(R.string.empty_victory),
-                            onOpenReels = onOpenReels
+                            onOpenReels = onOpenReels,
+                            isLoadingMore = ExploreTab.VICTORY in loadingMore,
+                            onLoadMore = { viewModel.loadMore(ExploreTab.VICTORY) }
                         )
                     }
                 }
@@ -153,7 +167,9 @@ fun ExploreScreen(
                         is UiState.Success -> GoalsGrid(
                             goals = current.data,
                             emptyMessage = stringResource(R.string.empty_phoenix),
-                            onOpenReels = onOpenReels
+                            onOpenReels = onOpenReels,
+                            isLoadingMore = ExploreTab.PHOENIX in loadingMore,
+                            onLoadMore = { viewModel.loadMore(ExploreTab.PHOENIX) }
                         )
                     }
                 }
@@ -186,7 +202,12 @@ private fun ExploreError(message: String, onRetry: () -> Unit) {
 }
 
 @Composable
-private fun ExploreGrid(dreams: List<Dream>, onDreamClick: (List<Dream>, Int) -> Unit) {
+private fun ExploreGrid(
+    dreams: List<Dream>,
+    onDreamClick: (List<Dream>, Int) -> Unit,
+    isLoadingMore: Boolean = false,
+    onLoadMore: () -> Unit = {}
+) {
     if (dreams.isEmpty()) {
         Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
             Text(
@@ -199,9 +220,18 @@ private fun ExploreGrid(dreams: List<Dream>, onDreamClick: (List<Dream>, Int) ->
         return
     }
 
+    val gridState = rememberLazyGridState()
+    LaunchedEffect(gridState, dreams.size) {
+        snapshotFlow {
+            (gridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0) >= dreams.size - 6
+        }.collect { nearEnd -> if (nearEnd) onLoadMore() }
+    }
+
     LazyVerticalGrid(
+        state = gridState,
         columns = GridCells.Fixed(3),
-        contentPadding = PaddingValues(2.dp),
+        // Alt gezinme cubugu ve "+" butonu son satiri kapatiyordu.
+        contentPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 2.dp, bottom = 96.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp),
         verticalArrangement = Arrangement.spacedBy(2.dp),
         modifier = Modifier.fillMaxSize()
@@ -209,6 +239,13 @@ private fun ExploreGrid(dreams: List<Dream>, onDreamClick: (List<Dream>, Int) ->
         items(dreams, key = { it.id }) { dream ->
             val index = dreams.indexOf(dream)
             ExploreTile(dream, onClick = { onDreamClick(dreams, index) })
+        }
+        if (isLoadingMore) {
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Box(Modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = AetherCyan, modifier = Modifier.size(22.dp), strokeWidth = 2.dp)
+                }
+            }
         }
     }
 }
@@ -245,7 +282,9 @@ private fun ExploreTile(dream: Dream, onClick: () -> Unit) {
 private fun GoalsGrid(
     goals: List<Goal>,
     emptyMessage: String,
-    onOpenReels: (List<Goal>, Int) -> Unit
+    onOpenReels: (List<Goal>, Int) -> Unit,
+    isLoadingMore: Boolean = false,
+    onLoadMore: () -> Unit = {}
 ) {
     if (goals.isEmpty()) {
         Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
@@ -259,9 +298,17 @@ private fun GoalsGrid(
         return
     }
 
+    val gridState = rememberLazyGridState()
+    LaunchedEffect(gridState, goals.size) {
+        snapshotFlow {
+            (gridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0) >= goals.size - 4
+        }.collect { nearEnd -> if (nearEnd) onLoadMore() }
+    }
+
     LazyVerticalGrid(
+        state = gridState,
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 96.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier.fillMaxSize()
@@ -274,6 +321,13 @@ private fun GoalsGrid(
                     onOpenReels(goals, index)
                 }
             )
+        }
+        if (isLoadingMore) {
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Box(Modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = AstralGold, modifier = Modifier.size(22.dp), strokeWidth = 2.dp)
+                }
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.lunosfer.dreamap.DreamapApp
 import io.lunosfer.dreamap.R
+import io.github.jan.supabase.auth.auth
 import io.lunosfer.dreamap.data.repository.VisionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,26 +38,34 @@ class DailyCompassViewModel(
     private fun today(): String =
         SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
 
-    private fun currentLanguage(): String =
-        androidx.appcompat.app.AppCompatDelegate.getApplicationLocales()[0]?.language
-            ?: Locale.getDefault().language
+    private fun currentLanguage(): String = io.lunosfer.dreamap.util.AppLanguage.code()
+
+    /**
+     * Kayitli okuma KULLANICIYA ozel saklanmali: anahtarlar kullanici kimligi
+     * icermeyince ayni cihazda hesap degistiren kisi bir onceki kullanicinin
+     * o gunku okumasini goruyordu.
+     */
+    private fun userScopedKey(key: String): String {
+        val uid = io.lunosfer.dreamap.supabase.supabaseClient.auth.currentUserOrNull()?.id ?: "anon"
+        return "$uid:$key"
+    }
 
     private fun restoreTodaysReading() {
-        if (prefs.getString(KEY_DATE, null) != today()) return
-        val reading = prefs.getString(KEY_READING, null) ?: return
+        if (prefs.getString(userScopedKey(KEY_DATE), null) != today()) return
+        val reading = prefs.getString(userScopedKey(KEY_READING), null) ?: return
         _state.value = CompassUiState.Success(
             reading = reading,
-            archetype = prefs.getString(KEY_ARCHETYPE, null),
-            color = prefs.getString(KEY_COLOR, null)
+            archetype = prefs.getString(userScopedKey(KEY_ARCHETYPE), null),
+            color = prefs.getString(userScopedKey(KEY_COLOR), null)
         )
     }
 
     private fun persist(reading: String, archetype: String?, color: String?) {
         prefs.edit()
-            .putString(KEY_DATE, today())
-            .putString(KEY_READING, reading)
-            .putString(KEY_ARCHETYPE, archetype)
-            .putString(KEY_COLOR, color)
+            .putString(userScopedKey(KEY_DATE), today())
+            .putString(userScopedKey(KEY_READING), reading)
+            .putString(userScopedKey(KEY_ARCHETYPE), archetype)
+            .putString(userScopedKey(KEY_COLOR), color)
             .apply()
     }
 

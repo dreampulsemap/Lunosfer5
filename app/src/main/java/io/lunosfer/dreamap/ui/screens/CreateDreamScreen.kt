@@ -67,6 +67,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.*
 import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.outlined.MicNone
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Search
@@ -99,7 +100,7 @@ private fun resolveSpeechRecognitionLocaleTag(): String {
     return SPEECH_LOCALE_REGION_FALLBACK[tag] ?: tag
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 fun CreateDreamScreen(navController: NavController) {
     val context = LocalContext.current
@@ -289,16 +290,12 @@ fun CreateDreamScreen(navController: NavController) {
         }
     }
 
+    var pendingLocationFill by remember { mutableStateOf(false) }
     val locationPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
-    ) { _ ->
-        coroutineScope.launch(Dispatchers.IO) {
-            val sysLoc = getSystemLocationName(context)
-            if (sysLoc.isNotBlank()) {
-                withContext(Dispatchers.Main) {
-                    if (location.isEmpty()) location = sysLoc
-                }
-            }
+    ) { grants ->
+        if (grants.values.any { it }) {
+            pendingLocationFill = true
         }
     }
     
@@ -340,43 +337,48 @@ fun CreateDreamScreen(navController: NavController) {
         stringResource(R.string.dream_emotion_relief)
     )
 
-    LaunchedEffect(Unit) {
+    // ONCEDEN: ekran acilir acilmaz KONUM IZNI isteniyordu ve izin verilmezse
+    // kullaniciya sorulmadan ipinfo.io'ya istek atilip IP'den sehir tahmin
+    // ediliyordu. Kullanici "ruya yaz" dedigi anda gerekcesiz bir konum
+    // diyalogu goruyordu (canli goruldu) ve IP'si ucuncu bir servise gidiyordu.
+    // Artik konum YALNIZCA kullanici alandaki konum butonuna basinca aliniyor.
+    fun fillLocationFromDevice() {
+        coroutineScope.launch(Dispatchers.IO) {
+            val sysLoc = getSystemLocationName(context)
+            if (sysLoc.isNotBlank()) {
+                withContext(Dispatchers.Main) { location = sysLoc }
+                return@launch
+            }
+            try {
+                val url = URL("https://ipinfo.io/json")
+                val connection = url.openConnection() as java.net.HttpURLConnection
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0")
+                connection.connectTimeout = 3000
+                connection.readTimeout = 3000
+                val response = connection.inputStream.bufferedReader().use { it.readText() }
+                val json = JSONObject(response)
+                val city = json.optString("city")
+                val countryCode = json.optString("country")
+                val country = if (countryCode.isNotBlank()) Locale("", countryCode).displayCountry else ""
+                val loc = listOf(city, country).filter { it.isNotBlank() }.joinToString(", ")
+                withContext(Dispatchers.Main) {
+                    if (loc.isNotBlank()) location = loc
+                }
+            } catch (e: Exception) {
+                android.util.Log.e("CreateDreamScreen", "Failed to fetch location", e)
+            }
+        }
+    }
+
+    fun requestLocation() {
         val hasFine = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val hasCoarse = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        if (!hasFine && !hasCoarse) {
+        if (hasFine || hasCoarse) {
+            fillLocationFromDevice()
+        } else {
             locationPermissionLauncher.launch(
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
             )
-        }
-
-        withContext(Dispatchers.IO) {
-            val sysLoc = getSystemLocationName(context)
-            if (sysLoc.isNotBlank()) {
-                withContext(Dispatchers.Main) {
-                    if (location.isEmpty()) location = sysLoc
-                }
-            } else {
-                try {
-                    val url = URL("https://ipinfo.io/json")
-                    val connection = url.openConnection() as java.net.HttpURLConnection
-                    connection.setRequestProperty("User-Agent", "Mozilla/5.0")
-                    connection.connectTimeout = 3000
-                    connection.readTimeout = 3000
-                    val response = connection.inputStream.bufferedReader().use { it.readText() }
-                    val json = JSONObject(response)
-                    val city = json.optString("city")
-                    val countryCode = json.optString("country")
-                    val country = if (countryCode.isNotBlank()) Locale("", countryCode).displayCountry else ""
-                    val loc = listOf(city, country).filter { it.isNotBlank() }.joinToString(", ")
-                    withContext(Dispatchers.Main) {
-                        if (loc.isNotBlank() && location.isEmpty()) {
-                            location = loc
-                        }
-                    }
-                } catch (e: Exception) {
-                    android.util.Log.e("CreateDreamScreen", "Failed to fetch location", e)
-                }
-            }
         }
     }
 
@@ -406,7 +408,7 @@ fun CreateDreamScreen(navController: NavController) {
                 Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         IconButton(onClick = { showPixabayDialog = false }) {
-                            Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
+                            Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(R.string.common_back_cd), tint = Color.White)
                         }
                         OutlinedTextField(
                             value = query,
@@ -473,7 +475,7 @@ fun CreateDreamScreen(navController: NavController) {
                 title = {},
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.common_back_cd), tint = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Void950)
@@ -536,7 +538,7 @@ fun CreateDreamScreen(navController: NavController) {
                     IconButton(onClick = { toggleListening() }) {
                         Icon(
                             imageVector = if (isListening) Icons.Filled.Mic else Icons.Outlined.MicNone,
-                            contentDescription = "Dictate",
+                            contentDescription = stringResource(R.string.cd_dictate),
                             tint = if (isListening) Color.Red.copy(alpha = pulseAlpha) else Color.White
                         )
                     }
@@ -555,7 +557,7 @@ fun CreateDreamScreen(navController: NavController) {
                 Box(modifier = Modifier.fillMaxWidth().height(200.dp).clip(RoundedCornerShape(12.dp))) {
                     AsyncImage(
                         model = aiImageUrl,
-                        contentDescription = "Cover Image",
+                        contentDescription = stringResource(R.string.cd_cover_image),
                         modifier = Modifier.fillMaxSize(),
                         contentScale = androidx.compose.ui.layout.ContentScale.Crop
                     )
@@ -573,7 +575,7 @@ fun CreateDreamScreen(navController: NavController) {
                         onClick = { aiImageUrl = null; imageSource = null; imageWidth = null; imageHeight = null },
                         modifier = Modifier.align(Alignment.TopEnd).padding(8.dp).background(Color.Black.copy(alpha=0.5f), RoundedCornerShape(50))
                     ) {
-                        Icon(Icons.Filled.Close, contentDescription = "Remove Cover", tint = Color.White)
+                        Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.cd_remove_cover), tint = Color.White)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -692,12 +694,17 @@ val charCount = content.length
 
             if (tags.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                // Duz Row idi: 3-4 etiketten sonrasi ekrandan tasip goruntulenmiyor
+                // ve silinemiyordu (10 etikete kadar izin var).
+                androidx.compose.foundation.layout.FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     tags.forEach { tag ->
                         AssistChip(
                             onClick = { tags = tags - tag },
                             label = { Text(tag) },
-                            trailingIcon = { Icon(Icons.Default.Close, contentDescription = "Remove tag", modifier = Modifier.size(16.dp)) },
+                            trailingIcon = { Icon(Icons.Default.Close, contentDescription = stringResource(R.string.cd_remove_tag), modifier = Modifier.size(16.dp)) },
                             colors = AssistChipDefaults.assistChipColors(containerColor = Void800, labelColor = Color.White, trailingIconContentColor = Color.White)
                         )
                     }
@@ -706,11 +713,27 @@ val charCount = content.length
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            LaunchedEffect(pendingLocationFill) {
+                if (pendingLocationFill) {
+                    pendingLocationFill = false
+                    fillLocationFromDevice()
+                }
+            }
+
             OutlinedTextField(
                 value = location,
                 onValueChange = { location = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(stringResource(R.string.dream_location)) },
+                trailingIcon = {
+                    IconButton(onClick = { requestLocation() }) {
+                        Icon(
+                            imageVector = Icons.Filled.MyLocation,
+                            contentDescription = stringResource(R.string.cd_use_my_location),
+                            tint = AstralGold
+                        )
+                    }
+                },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = AstralGold,
                     unfocusedBorderColor = Void800,
@@ -796,7 +819,9 @@ val charCount = content.length
                 Text(errorMessage!!, color = ShadowWorkRose, modifier = Modifier.padding(bottom = 16.dp))
             }
 
-            val currentLang = Locale.getDefault().language
+            // Ruyanin dili ve AI analizinin dili: cihaz dili degil, kullanicinin
+            // uygulamada sectigi dil (bkz. util/AppLanguage).
+            val currentLang = io.lunosfer.dreamap.util.AppLanguage.code()
 
             Button(
                 onClick = {

@@ -159,6 +159,13 @@ fun DreamDetailContent(
     state: DreamDetailUiState.Success,
     currentUserId: String?,
     onBack: () -> Unit,
+    /**
+     * Reels goruntuleyicide bu icerik, kendi "kapat" (X) butonu olan tam ekran
+     * bir sayfanin icinde cizildigi icin ikinci bir geri oku sol ustte X'in
+     * uzerine biniyordu (canli ekran goruntusunde ust uste iki buton). Orada
+     * false geciliyor.
+     */
+    showBackButton: Boolean = true,
     onUserClick: ((String) -> Unit)?,
     onRefresh: () -> Unit,
     onAnalyze: () -> Unit,
@@ -201,13 +208,19 @@ fun DreamDetailContent(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                IconButton(onClick = onBack, modifier = Modifier.size(36.dp)) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.common_back_cd),
-                        tint = Color.White,
-                        modifier = Modifier.size(20.dp)
-                    )
+                if (showBackButton) {
+                    IconButton(onClick = onBack, modifier = Modifier.size(36.dp)) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.common_back_cd),
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                } else {
+                    // Reels'te X butonunun yeri: metinlerin altina kaymamasi icin
+                    // ayni genislikte bosluk birak.
+                    Spacer(Modifier.size(36.dp))
                 }
 
                 Column {
@@ -262,7 +275,7 @@ fun DreamDetailContent(
                         .padding(horizontal = 10.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = dream.visibility.uppercase(),
+                        text = visibilityLabel(dream.visibility).uppercase(io.lunosfer.dreamap.util.AppLanguage.locale()),
                         color = Color.White.copy(alpha = 0.85f),
                         fontSize = 9.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -673,12 +686,20 @@ private fun CommentItemRow(
         }
 
         Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = comment.userProfile?.nameOrFallback ?: stringResource(R.string.common_user_fallback),
-                color = AstralGold,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(
+                    text = comment.userProfile?.nameOrFallback ?: stringResource(R.string.common_user_fallback),
+                    color = AstralGold,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                // Yorumlarda tarih/saat hic gosterilmiyordu.
+                Text(
+                    text = io.lunosfer.dreamap.util.RelativeTime.format(comment.createdAt),
+                    color = Color(0xFF64748B),
+                    fontSize = 10.sp
+                )
+            }
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = comment.content,
@@ -965,7 +986,7 @@ private fun AddBountyDialog(
 private fun DreamImageCardPage(
     dream: DreamDetail
 ) {
-    val locale = Locale.getDefault().language
+    val locale = io.lunosfer.dreamap.util.AppLanguage.code()
     val titleMap = dream.aiJungianAnalysis?.title
     val titleText = titleMap?.get(locale)
         ?: titleMap?.get("en")
@@ -1148,7 +1169,7 @@ private fun DreamAnalysisCardPage(
     onAnalyze: () -> Unit,
     onRequestDeepAnalysis: () -> Unit
 ) {
-    val locale = Locale.getDefault().language
+    val locale = io.lunosfer.dreamap.util.AppLanguage.code()
     val titleLabel = getDetailSlideTitle(2)
 
     Card(

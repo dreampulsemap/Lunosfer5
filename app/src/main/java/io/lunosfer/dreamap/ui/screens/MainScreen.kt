@@ -15,6 +15,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.navArgument
 import io.lunosfer.dreamap.R
 import io.lunosfer.dreamap.supabase.supabaseClient
@@ -67,12 +70,36 @@ fun MainScreen(
     val currentRoute = navBackStackEntry?.destination?.route
 
     var unreadCount by remember { mutableStateOf(0) }
+    var unreadMessages by remember { mutableStateOf(0) }
 
+    // ONCEDEN: LaunchedEffect(isLoggedIn, currentRoute) — her ekran gecisinde
+    // /api/notifications yeniden cagriliyordu (canli logda 2 saniyede iki kez,
+    // her biri ~5 sn). Artik yalnizca ilk acilista ve Bildirimler ekranindan
+    // donuldugunde (okundu sayisi degismis olabilir) yenileniyor.
+    var previousRoute by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(isLoggedIn, currentRoute) {
-        if (isLoggedIn) {
-            io.lunosfer.dreamap.data.repository.NotificationsRepository().getNotifications().onSuccess { res ->
-                unreadCount = res.unreadCount
-            }
+        if (!isLoggedIn) {
+            previousRoute = null
+            unreadCount = 0
+            unreadMessages = 0
+            return@LaunchedEffect
+        }
+        val cameFrom = previousRoute
+        previousRoute = currentRoute
+        val shouldRefresh = cameFrom == null ||
+            cameFrom == Screen.Notifications.route ||
+            cameFrom == Screen.Thread.route ||
+            currentRoute == Screen.Messages.route
+        if (!shouldRefresh) return@LaunchedEffect
+
+        io.lunosfer.dreamap.data.repository.NotificationsRepository().getNotifications().onSuccess { res ->
+            unreadCount = res.unreadCount
+        }
+        // Alt menudeki mesaj rozeti hicbir zaman guncellenmiyordu (sabit 0 ile
+        // olusturulan lokal bir degiskene bagliydi) — okunmamis mesaj sayisi
+        // kullaniciya hic gosterilmiyordu.
+        io.lunosfer.dreamap.data.repository.MessagesRepository().loadConversations().onSuccess { conversations ->
+            unreadMessages = conversations.sumOf { it.unreadCount }
         }
     }
 
@@ -80,11 +107,16 @@ fun MainScreen(
     // olduğu için burada doğrudan onun StateFlow'unu dinliyoruz, ayrı bir
     // ViewModel'e gerek yok.
     val auraBalance by io.lunosfer.dreamap.data.repository.BillingRepository.auraBalance.collectAsState()
+    val manaBalance by io.lunosfer.dreamap.data.repository.UserWallet.mana.collectAsState()
     var showBillingSheet by remember { mutableStateOf(false) }
     var billingSheetTab by remember { mutableStateOf(BillingTab.AURA) }
 
     LaunchedEffect(isLoggedIn) {
+        if (!isLoggedIn) {
+            io.lunosfer.dreamap.data.repository.UserWallet.clear()
+        }
         if (isLoggedIn) {
+            io.lunosfer.dreamap.data.repository.UserWallet.refresh()
             io.lunosfer.dreamap.data.repository.BillingRepository.connectAndLoadProducts()
             // MainActivity.onCreate() FCM token'ını login OLMADAN önce de
             // kaydetmeyi dener (auth interceptor'da token yok, 401 alıp
@@ -110,7 +142,19 @@ fun MainScreen(
         Screen.DreamReels.route,
         Screen.Globe.route,
         Screen.SharedVisions.route,
-        Screen.SpiritualTools.route
+        Screen.SpiritualTools.route,
+        // Tam ekran hikaye goruntuleyici: ust bar + alt menu hikayenin uzerine
+        // biniyordu (dokunmatik alanlari da caliyordu).
+        Screen.DiaryStoryViewer.route,
+        // Asagidakilerin HEPSININ kendi basligi ve geri butonu var; uygulamanin
+        // ust bariyla birlikte cift baslik olusturuyordu (kucuk ekranda dikey
+        // alanin ~%15'i iki baslik cubuguna gidiyordu).
+        Screen.GoalDetail.route,
+        Screen.CreateDream.route,
+        Screen.CreateVision.route,
+        Screen.DiaryComposer.route,
+        Screen.DiaryJournal.route,
+        Screen.BlockedUsers.route
     )
     val showTopBottomBars = currentRoute != Screen.Auth.route && currentRoute !in fullScreenRoutes
 
@@ -133,9 +177,14 @@ fun MainScreen(
                     isLoggedIn = isLoggedIn,
                     unreadCount = unreadCount,
                     auraBalance = auraBalance,
+                    manaBalance = manaBalance,
                     onLoginClick = { navController.navigate(Screen.Auth.route) },
-                    onProfileClick = { navController.navigate(Screen.Profile.createRoute(false)) },
-                    onSettingsClick = { navController.navigate(Screen.Profile.createRoute(true)) },
+                    // Profil ust bardan aciliyor: Ana Sayfa'nin USTUNE itilirse
+                    // sekme gecislerinde Ana Sayfa'nin kaydedilmis yiginina
+                    // giriyor ve "Ana Sayfa"ya basildiginda akis yerine yine
+                    // Profil aciliyordu. Bu yuzden o da sekme gibi degistiriliyor.
+                    onProfileClick = { navController.navigateToTab(Screen.Profile.createRoute(false)) },
+                    onSettingsClick = { navController.navigateToTab(Screen.Profile.createRoute(true)) },
                     onHelpClick = {
                         val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(io.lunosfer.dreamap.util.LegalLinks.helpSupportUrl))
                         localContext.startActivity(intent)
@@ -153,7 +202,7 @@ fun MainScreen(
         },
         bottomBar = {
             if (showTopBottomBars && isLoggedIn) {
-                BottomNavBar(navController)
+                BottomNavBar(navController, unreadMessages = unreadMessages)
             }
         },
         containerColor = Void950
@@ -338,7 +387,9 @@ fun MainScreen(
                 NotificationsScreen(
                     onBack = { navController.popBackStack() },
                     onDreamClick = { dreamId -> navController.navigate(Screen.DreamDetail.createRoute(dreamId)) },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
+                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) },
+                    onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) },
+                    onDiaryClick = { userId -> navController.navigate(Screen.DiaryJournal.routeFor(userId)) }
                 )
             }
             composable(
@@ -398,6 +449,7 @@ fun TopBar(
     isLoggedIn: Boolean,
     unreadCount: Int = 0,
     auraBalance: Int = 0,
+    manaBalance: Int = 0,
     onLoginClick: () -> Unit,
     onProfileClick: (() -> Unit)? = null,
     onSettingsClick: (() -> Unit)? = null,
@@ -448,7 +500,9 @@ fun TopBar(
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
                             Icon(Icons.Filled.WaterDrop, contentDescription = null, tint = AetherCyan, modifier = Modifier.size(14.dp))
                             Spacer(Modifier.width(4.dp))
-                            Text("0", color = AetherCyan, style = MaterialTheme.typography.labelMedium)
+                            // Sabit "0" yaziyordu: gercek bakiye (user_profiles.mana_balance)
+                            // hicbir zaman okunmuyordu — bkz. UserWallet.
+                            Text("$manaBalance", color = AetherCyan, style = MaterialTheme.typography.labelMedium)
                         }
                     }
                     // Aura pill
@@ -495,16 +549,18 @@ fun TopBar(
                             }
                         }
                     ) {
-                        Icon(Icons.Filled.Notifications, contentDescription = "Bildirimler", tint = Color.White)
+                        Icon(Icons.Filled.Notifications, contentDescription = stringResource(R.string.cd_notifications), tint = Color.White)
                     }
                 }
+                val profileCd = stringResource(R.string.cd_profile)
                 Box(
                     modifier = Modifier
                         .padding(end = 8.dp)
                         .size(32.dp)
                         .clip(CircleShape)
                         .background(Void800)
-                        .clickable { onProfileClick?.invoke() },
+                        .clickable(onClickLabel = profileCd) { onProfileClick?.invoke() }
+                        .semantics { contentDescription = profileCd },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(Icons.Filled.Person, contentDescription = null, tint = AstralGold, modifier = Modifier.size(20.dp))
@@ -512,7 +568,7 @@ fun TopBar(
                 var showMoreMenu by remember { mutableStateOf(false) }
                 Box {
                     IconButton(onClick = { showMoreMenu = true }) {
-                        Icon(Icons.Filled.MoreVert, contentDescription = "More", tint = Color.White)
+                        Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.cd_more_menu), tint = Color.White)
                     }
                     DropdownMenu(expanded = showMoreMenu, onDismissRequest = { showMoreMenu = false }) {
                         DropdownMenuItem(
@@ -563,12 +619,28 @@ fun TopBar(
     )
 }
 
+/**
+ * Alt menude sekme degistirirken kullanilan standart desen.
+ *
+ * ONCEDEN: duz `navigate(route)` cagriliyordu — her dokunusta geri yigina yeni
+ * bir kayit ekleniyordu. Canli testte dogrulandi: Ana Sayfa > Kesfet > Vizyon >
+ * Mesajlar gezindikten sonra uygulamadan cikmak icin 4 kez geri basmak
+ * gerekiyordu ve her donusde ekran sifirdan yeniden yukleniyordu (kaydirma
+ * konumu ve yuklenmis veri kayboluyordu).
+ */
+fun NavHostController.navigateToTab(route: String) {
+    navigate(route) {
+        popUpTo(graph.findStartDestination().id) { saveState = true }
+        launchSingleTop = true
+        restoreState = true
+    }
+}
+
 @Composable
-fun BottomNavBar(navController: NavController) {
+fun BottomNavBar(navController: NavHostController, unreadMessages: Int = 0) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     var showCreateMenu by remember { mutableStateOf(false) }
-    var unreadCount by remember { mutableIntStateOf(0) }
 
     val navItemColors = NavigationBarItemDefaults.colors(
         selectedIconColor = AstralGold,
@@ -587,14 +659,14 @@ fun BottomNavBar(navController: NavController) {
         ) {
             NavigationBarItem(
                 selected = currentRoute == Screen.Home.route,
-                onClick = { navController.navigate(Screen.Home.route) },
+                onClick = { navController.navigateToTab(Screen.Home.route) },
                 icon = { Icon(Icons.Filled.Home, contentDescription = null) },
                 label = { Text(stringResource(R.string.nav_home), style = MaterialTheme.typography.labelSmall) },
                 colors = navItemColors
             )
             NavigationBarItem(
                 selected = currentRoute == Screen.Explore.route,
-                onClick = { navController.navigate(Screen.Explore.route) },
+                onClick = { navController.navigateToTab(Screen.Explore.route) },
                 icon = { Icon(Icons.Filled.Explore, contentDescription = null) },
                 label = { Text(stringResource(R.string.nav_explore), style = MaterialTheme.typography.labelSmall) },
                 colors = navItemColors
@@ -610,19 +682,19 @@ fun BottomNavBar(navController: NavController) {
             )
             NavigationBarItem(
                 selected = currentRoute == Screen.Vision.route,
-                onClick = { navController.navigate(Screen.Vision.route) },
+                onClick = { navController.navigateToTab(Screen.Vision.route) },
                 icon = { Icon(Icons.Filled.TrackChanges, contentDescription = null) },
                 label = { Text(stringResource(R.string.nav_vision), style = MaterialTheme.typography.labelSmall) },
                 colors = navItemColors
             )
             NavigationBarItem(
                 selected = currentRoute == Screen.Messages.route,
-                onClick = { navController.navigate(Screen.Messages.route) },
+                onClick = { navController.navigateToTab(Screen.Messages.route) },
                 icon = {
                     BadgedBox(badge = {
-                        if (unreadCount > 0) {
+                        if (unreadMessages > 0) {
                             Badge(containerColor = ShadowWorkRose) {
-                                Text(unreadCount.toString())
+                                Text(if (unreadMessages > 99) "99+" else unreadMessages.toString())
                             }
                         }
                     }) {
@@ -640,12 +712,14 @@ fun BottomNavBar(navController: NavController) {
                 .align(Alignment.TopCenter)
                 .offset(y = (-28).dp)
         ) {
+            val createCd = stringResource(R.string.cd_create_new)
             Box(
                 modifier = Modifier
                     .size(56.dp)
                     .clip(CircleShape)
                     .background(Brush.linearGradient(listOf(AstralGold, AetherCyan)))
-                    .clickable { showCreateMenu = true },
+                    .clickable(onClickLabel = createCd) { showCreateMenu = true }
+                    .semantics { contentDescription = createCd },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(Icons.Filled.Add, contentDescription = null, tint = Color.White, modifier = Modifier.size(32.dp))

@@ -223,7 +223,7 @@ fun PixabayMediaPickerDialog(
                                 ) {
                                     Icon(
                                         Icons.Default.Close,
-                                        contentDescription = "Clear",
+                                        contentDescription = stringResource(R.string.cd_clear),
                                         tint = Color.Gray,
                                         modifier = Modifier.size(16.dp)
                                     )

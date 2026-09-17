@@ -28,7 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import io.github.jan.supabase.auth.auth
 import io.lunosfer.dreamap.data.model.AppNotification
+import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.NotificationsUiState
 import io.lunosfer.dreamap.ui.viewmodel.NotificationsViewModel
@@ -39,6 +41,8 @@ fun NotificationsScreen(
     onBack: () -> Unit,
     onDreamClick: (Long) -> Unit,
     onUserClick: (String) -> Unit,
+    onGoalClick: (String) -> Unit = {},
+    onDiaryClick: (String) -> Unit = {},
     viewModel: NotificationsViewModel = viewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -128,14 +132,22 @@ fun NotificationsScreen(
                             items(s.notifications, key = { it.id }) { notification ->
                                 NotificationRow(
                                     notification = notification,
+                                    canRespond = notification.referenceId != null &&
+                                        notification.referenceId in s.actionableFriendshipIds,
                                     onClick = {
                                         if (!notification.isRead) {
                                             viewModel.markAsRead(notification.id)
                                         }
-                                        if (notification.dreamId != null) {
-                                            onDreamClick(notification.dreamId)
-                                        } else if (!notification.actorId.isNullOrBlank()) {
-                                            onUserClick(notification.actorId)
+                                        // Vizyon yorumu/mana bildirimleri ilgili vizyona,
+                                        // gunluk yorumu gunluge gitmeliydi; onceden hepsi
+                                        // sadece profile yonlendiriyordu.
+                                        when {
+                                            notification.dreamId != null -> onDreamClick(notification.dreamId)
+                                            notification.referenceType == "goal" && !notification.referenceId.isNullOrBlank() ->
+                                                onGoalClick(notification.referenceId)
+                                            notification.referenceType == "diary_entry" ->
+                                                supabaseClient.auth.currentUserOrNull()?.id?.let { onDiaryClick(it) }
+                                            !notification.actorId.isNullOrBlank() -> onUserClick(notification.actorId)
                                         }
                                     },
                                     onAccept = { viewModel.respondToFriendRequest(notification, "accepted") },
@@ -153,6 +165,7 @@ fun NotificationsScreen(
 @Composable
 private fun NotificationRow(
     notification: AppNotification,
+    canRespond: Boolean,
     onClick: () -> Unit,
     onAccept: () -> Unit = {},
     onReject: () -> Unit = {}
@@ -181,6 +194,35 @@ private fun NotificationRow(
             stringResource(R.string.notif_dream_analysis_failed_title),
             stringResource(R.string.notif_dream_analysis_failed_body)
         )
+        // Asagidaki turlerin hepsi sunucuda uretiliyor ama uygulamada karsiligi
+        // yoktu: kullaniciya "Yeni Bildirim / Yeni bir bildiriminiz var" gibi
+        // bos bir metin gosteriliyordu (uretimdeki bildirimlerin cogunlugu
+        // mana_received ve goal_comment).
+        "friend_accepted", "follow_accepted" -> Triple(
+            Icons.Default.HowToReg,
+            stringResource(R.string.notif_friend_accepted_title),
+            stringResource(R.string.notif_friend_accepted_body).format(actor?.nameOrFallback ?: stringResource(R.string.common_someone_fallback))
+        )
+        "goal_comment" -> Triple(
+            Icons.Default.ChatBubbleOutline,
+            stringResource(R.string.notif_goal_comment_title),
+            stringResource(R.string.notif_goal_comment_body).format(actor?.nameOrFallback ?: stringResource(R.string.common_someone_fallback))
+        )
+        "mana_received" -> Triple(
+            Icons.Default.WaterDrop,
+            stringResource(R.string.notif_mana_received_title),
+            stringResource(R.string.notif_mana_received_body).format(actor?.nameOrFallback ?: stringResource(R.string.common_someone_fallback))
+        )
+        "diary_comment" -> Triple(
+            Icons.Default.ChatBubbleOutline,
+            stringResource(R.string.notif_diary_comment_title),
+            stringResource(R.string.notif_diary_comment_body).format(actor?.nameOrFallback ?: stringResource(R.string.common_someone_fallback))
+        )
+        "dream_image_gift" -> Triple(
+            Icons.Default.Image,
+            stringResource(R.string.notif_dream_image_gift_title),
+            stringResource(R.string.notif_dream_image_gift_body)
+        )
         else -> Triple(
             Icons.Default.Notifications,
             stringResource(R.string.notif_generic_title),
@@ -194,7 +236,7 @@ private fun NotificationRow(
     // butonlar gizlenir. Bu yüzden Card'ın tamamı artık tıklanabilir değil —
     // asıl navigasyon, buton alanıyla çakışmaması için içerik satırına taşındı
     // (bkz. AddFriendScreen'deki PendingRequestRow ile aynı desen).
-    val showFriendRequestActions = notification.type == "friend_request" && notification.referenceId != null
+    val showFriendRequestActions = notification.type == "friend_request" && canRespond
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -264,7 +306,7 @@ private fun NotificationRow(
 
                         if (!notification.createdAt.isNullOrBlank()) {
                             Text(
-                                text = notification.createdAt.take(10),
+                                text = io.lunosfer.dreamap.util.RelativeTime.format(notification.createdAt),
                                 color = Color.Gray,
                                 fontSize = 11.sp
                             )

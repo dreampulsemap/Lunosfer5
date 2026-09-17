@@ -61,33 +61,35 @@ fun MessagesScreen(
     val state by viewModel.state.collectAsState()
     var showNewMessagePicker by remember { mutableStateOf(false) }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        stringResource(R.string.nav_messages),
-                        color = Color.White,
-                        style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
-                    )
-                },
-                actions = {
-                    if (isLoggedIn) {
-                        IconButton(onClick = { showNewMessagePicker = true }) {
-                            Icon(
-                                Icons.Filled.Edit,
-                                contentDescription = stringResource(R.string.msg_new_message_cd),
-                                tint = AstralGold
-                            )
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Void950)
+    // ONCEDEN burada ikinci bir TopAppBar vardi: uygulamanin kendi ust
+    // barinin (LUNOSFER + mana/aura/bildirim) hemen altinda ikinci bir baslik
+    // cubugu olusuyor, kucuk ekranlarda dikey alanin buyuk kismini yiyordu.
+    // Artik satir ici, ince bir baslik.
+    Column(modifier = Modifier.fillMaxSize().background(Void950)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 8.dp, top = 8.dp, bottom = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                stringResource(R.string.nav_messages),
+                color = Color.White,
+                style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily),
+                modifier = Modifier.weight(1f)
             )
-        },
-        containerColor = Void950
-    ) { padding ->
-        Box(modifier = Modifier.fillMaxSize().padding(padding).background(Void950)) {
+            if (isLoggedIn) {
+                IconButton(onClick = { showNewMessagePicker = true }) {
+                    Icon(
+                        Icons.Filled.Edit,
+                        contentDescription = stringResource(R.string.msg_new_message_cd),
+                        tint = AstralGold
+                    )
+                }
+            }
+        }
+
+        Box(modifier = Modifier.fillMaxSize().background(Void950)) {
             if (!isLoggedIn) {
                 MessagesNotLoggedIn(onLoginClick = onLoginClick)
             } else {
@@ -386,12 +388,21 @@ private fun ConversationRow(conversation: Conversation, currentUserId: String?, 
         }
 
         Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(
-                text = conversation.otherUser.nameOrFallback,
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = if (hasUnread) FontWeight.Bold else FontWeight.SemiBold
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = conversation.otherUser.nameOrFallback,
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    fontWeight = if (hasUnread) FontWeight.Bold else FontWeight.SemiBold,
+                    modifier = Modifier.weight(1f)
+                )
+                // Son mesaj zamani hic gosterilmiyordu.
+                Text(
+                    text = io.lunosfer.dreamap.util.RelativeTime.format(conversation.lastMessage.createdAt),
+                    color = Color(0xFF64748B),
+                    fontSize = 11.sp
+                )
+            }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (isLastMessageMine) {
                     Icon(

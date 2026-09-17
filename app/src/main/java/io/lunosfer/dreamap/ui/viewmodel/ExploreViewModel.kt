@@ -38,6 +38,18 @@ class ExploreViewModel(
     private val _phoenixState = MutableStateFlow<UiState<List<Goal>>>(UiState.Loading)
     val phoenixState: StateFlow<UiState<List<Goal>>> = _phoenixState.asStateFlow()
 
+    // Sayfalama durumu (her sekme kendi sayfasini takip eder). Onceden sadece
+    // ilk sayfa cekiliyordu: Kesfet 15 ruyada, vizyon sekmeleri de bir sayfada
+    // bitiyordu ve devamina ulasmanin yolu yoktu.
+    private val _loadingMore = MutableStateFlow<Set<ExploreTab>>(emptySet())
+    val loadingMore: StateFlow<Set<ExploreTab>> = _loadingMore.asStateFlow()
+
+    private val pageOf = mutableMapOf<ExploreTab, Int>()
+    private val hasMoreOf = mutableMapOf<ExploreTab, Boolean>()
+    private var dreamsRankToken: String? = null
+
+    fun hasMore(tab: ExploreTab): Boolean = hasMoreOf[tab] == true
+
     init {
         loadDreams()
     }
@@ -83,11 +95,69 @@ class ExploreViewModel(
 
     private fun loadDreams() {
         _state.value = UiState.Loading
+        pageOf[ExploreTab.DREAMSCAPE] = 0
+        dreamsRankToken = null
         viewModelScope.launch {
-            repository.loadFirstPage()
-                .onSuccess { _state.value = UiState.Success(it) }
-                .onFailure { _state.value = UiState.Error(it.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_unknown)) }
+            repository.loadPage(page = 0, rankToken = null)
+                .onSuccess { res ->
+                    _state.value = UiState.Success(res.dreams)
+                    dreamsRankToken = res.rankToken
+                    hasMoreOf[ExploreTab.DREAMSCAPE] = res.hasMore
+                }
+                .onFailure { _state.value = UiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(it)) }
         }
+    }
+
+    /** Grid'in sonuna gelindiginde bir sonraki sayfa. */
+    fun loadMore(tab: ExploreTab) {
+        if (tab in _loadingMore.value || hasMoreOf[tab] != true) return
+        _loadingMore.value = _loadingMore.value + tab
+        val nextPage = (pageOf[tab] ?: 0) + 1
+
+        viewModelScope.launch {
+            when (tab) {
+                ExploreTab.DREAMSCAPE -> {
+                    val current = (_state.value as? UiState.Success)?.data.orEmpty()
+                    repository.loadPage(page = nextPage, rankToken = dreamsRankToken)
+                        .onSuccess { res ->
+                            if (res.dreams.isNotEmpty()) {
+                                _state.value = UiState.Success((current + res.dreams).distinctBy { it.id })
+                            }
+                            pageOf[tab] = nextPage
+                            hasMoreOf[tab] = res.hasMore
+                            if (res.rankToken != null) dreamsRankToken = res.rankToken
+                        }
+                }
+                else -> {
+                    val stateFlow = goalStateFlow(tab) ?: return@launch
+                    val status = goalStatus(tab) ?: return@launch
+                    val current = (stateFlow.value as? UiState.Success)?.data.orEmpty()
+                    visionRepository.loadHubGoalsPage(status, nextPage)
+                        .onSuccess { res ->
+                            if (res.goals.isNotEmpty()) {
+                                stateFlow.value = UiState.Success((current + res.goals).distinctBy { it.id })
+                            }
+                            pageOf[tab] = nextPage
+                            hasMoreOf[tab] = res.hasMore
+                        }
+                }
+            }
+            _loadingMore.value = _loadingMore.value - tab
+        }
+    }
+
+    private fun goalStateFlow(tab: ExploreTab) = when (tab) {
+        ExploreTab.VISION -> _visionState
+        ExploreTab.VICTORY -> _victoryState
+        ExploreTab.PHOENIX -> _phoenixState
+        else -> null
+    }
+
+    private fun goalStatus(tab: ExploreTab) = when (tab) {
+        ExploreTab.VISION -> "active"
+        ExploreTab.VICTORY -> "completed"
+        ExploreTab.PHOENIX -> "abandoned"
+        else -> null
     }
 
     private fun loadGoals(tab: ExploreTab, status: String) {
@@ -98,10 +168,14 @@ class ExploreViewModel(
             else -> return
         }
         stateFlow.value = UiState.Loading
+        pageOf[tab] = 0
         viewModelScope.launch {
-            visionRepository.loadHubGoals(status)
-                .onSuccess { stateFlow.value = UiState.Success(it) }
-                .onFailure { stateFlow.value = UiState.Error(it.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_unknown)) }
+            visionRepository.loadHubGoalsPage(status, 0)
+                .onSuccess {
+                    stateFlow.value = UiState.Success(it.goals)
+                    hasMoreOf[tab] = it.hasMore
+                }
+                .onFailure { stateFlow.value = UiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(it)) }
         }
     }
 }

@@ -84,6 +84,9 @@ fun ProfileScreen(
     val coroutineScope = rememberCoroutineScope()
     var showSettingsSheet by remember { mutableStateOf(initialShowSettings) }
     var showChangePasswordDialog by remember { mutableStateOf(false) }
+    // "Çıkış Yap" tek dokunusla, onaysiz calisiyordu ve "Arkadas Bul"un hemen
+    // yanindaydi — yanlislikla basip oturumu kapatmak cok kolaydi.
+    var showLogoutConfirm by remember { mutableStateOf(false) }
 
     LaunchedEffect(initialShowSettings) {
         if (initialShowSettings) showSettingsSheet = true
@@ -137,7 +140,8 @@ fun ProfileScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(3),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(bottom = 20.dp)
+                    // Alt gezinme cubugu + "+" butonu son satiri kapatiyordu.
+                    contentPadding = PaddingValues(bottom = 96.dp)
                 ) {
                     item(span = { GridItemSpan(maxLineSpan) }) {
                         Column(
@@ -158,7 +162,7 @@ fun ProfileScreen(
                                     onClick = { showSettingsSheet = true },
                                     modifier = Modifier.align(Alignment.CenterEnd)
                                 ) {
-                                    Icon(Icons.Default.Settings, contentDescription = "Settings", tint = Color.White)
+                                    Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.cd_settings), tint = Color.White)
                                 }
                             }
 
@@ -188,12 +192,7 @@ fun ProfileScreen(
                                 }
 
                                 Button(
-                                    onClick = {
-                                        coroutineScope.launch {
-                                            supabaseClient.auth.signOut()
-                                            onLogout()
-                                        }
-                                    },
+                                    onClick = { showLogoutConfirm = true },
                                     modifier = Modifier.weight(1f),
                                     colors = ButtonDefaults.buttonColors(containerColor = Void900),
                                     border = BorderStroke(1.dp, ShadowWorkRose.copy(alpha = 0.5f)),
@@ -297,13 +296,14 @@ fun ProfileScreen(
                         profile = s.profile,
                         isSaving = s.isSavingProfile,
                         onDismiss = { viewModel.closeEditModal() },
-                        onSave = { username, displayName, avatarUrl, profileVisibility, language, gender ->
+                        onSave = { username, displayName, avatarUrl, bio, profileVisibility, language, gender ->
                             val localeList = LocaleListCompat.forLanguageTags(language)
                             AppCompatDelegate.setApplicationLocales(localeList)
                             viewModel.updateProfile(
                                 username = username,
                                 displayName = displayName,
                                 avatarUrl = avatarUrl,
+                                bio = bio,
                                 profileVisibility = profileVisibility,
                                 language = language,
                                 gender = gender
@@ -338,6 +338,36 @@ fun ProfileScreen(
 
                 if (showChangePasswordDialog) {
                     ChangePasswordDialog(onDismiss = { showChangePasswordDialog = false })
+                }
+
+                if (showLogoutConfirm) {
+                    AlertDialog(
+                        onDismissRequest = { showLogoutConfirm = false },
+                        containerColor = Void900,
+                        icon = { Icon(Icons.Default.Logout, contentDescription = null, tint = ShadowWorkRose) },
+                        title = { Text(stringResource(R.string.profile_logout_confirm_title), color = Color.White, fontWeight = FontWeight.Bold) },
+                        text = { Text(stringResource(R.string.profile_logout_confirm_desc), color = MoonSilver) },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                showLogoutConfirm = false
+                                coroutineScope.launch {
+                                    // Cikista kullaniciya bagli onbellekler de temizlenmeli
+                                    // (mana rozeti ve gunluk pusula okumasi bir sonraki
+                                    // hesaba sizmasin).
+                                    io.lunosfer.dreamap.data.repository.UserWallet.clear()
+                                    supabaseClient.auth.signOut()
+                                    onLogout()
+                                }
+                            }) {
+                                Text(stringResource(R.string.profile_logout_btn), color = ShadowWorkRose, fontWeight = FontWeight.Bold)
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showLogoutConfirm = false }) {
+                                Text(stringResource(R.string.profile_edit_cancel), color = MoonSilver)
+                            }
+                        }
+                    )
                 }
 
                 // Hesap Silme Onay Diyaloğu — Google Play "Hesap Silme" politikası
@@ -952,11 +982,14 @@ private fun EditProfileDialog(
     profile: FullUserProfile,
     isSaving: Boolean,
     onDismiss: () -> Unit,
-    onSave: (username: String, displayName: String, avatarUrl: String, profileVisibility: String, language: String, gender: String) -> Unit
+    onSave: (username: String, displayName: String, avatarUrl: String, bio: String, profileVisibility: String, language: String, gender: String) -> Unit
 ) {
     var username by remember { mutableStateOf(profile.username ?: "") }
     var displayName by remember { mutableStateOf(profile.displayName ?: "") }
     var avatarUrl by remember { mutableStateOf(profile.avatarUrl ?: "") }
+    // Profil ekrani bio'yu GOSTERIYORDU ama duzenlemenin hicbir yolu yoktu
+    // (ne uygulamada ne web'de) — alan hep bos kaliyordu.
+    var bio by remember { mutableStateOf(profile.bio ?: "") }
     var profileVisibility by remember { mutableStateOf(profile.profileVisibility) }
     var language by remember { mutableStateOf(profile.language ?: "tr") }
     var gender by remember { mutableStateOf(profile.gender ?: "unspecified") }
@@ -1051,7 +1084,7 @@ private fun EditProfileDialog(
                         if (avatarUrl.isNotBlank()) {
                             AsyncImage(
                                 model = avatarUrl,
-                                contentDescription = "Avatar Preview",
+                                contentDescription = stringResource(R.string.cd_avatar_preview),
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.Crop
                             )
@@ -1107,6 +1140,23 @@ private fun EditProfileDialog(
                     label = { Text(stringResource(R.string.profile_edit_display_name_label), color = Color.Gray) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = AstralGold,
+                        unfocusedBorderColor = Void800,
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
+                )
+
+                // Bio
+                OutlinedTextField(
+                    value = bio,
+                    onValueChange = { if (it.length <= 300) bio = it },
+                    label = { Text(stringResource(R.string.profile_edit_bio_label), color = Color.Gray) },
+                    supportingText = { Text("${bio.length}/300", color = Color.Gray, fontSize = 11.sp) },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 2,
+                    maxLines = 4,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = AstralGold,
                         unfocusedBorderColor = Void800,
@@ -1261,7 +1311,7 @@ private fun EditProfileDialog(
 
                     Button(
                         onClick = {
-                            onSave(username, displayName, avatarUrl, profileVisibility, language, gender)
+                            onSave(username, displayName, avatarUrl, bio, profileVisibility, language, gender)
                         },
                         enabled = !isSaving,
                         modifier = Modifier.weight(1f),

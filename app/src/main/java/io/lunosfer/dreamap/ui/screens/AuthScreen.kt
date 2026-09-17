@@ -1,10 +1,13 @@
 package io.lunosfer.dreamap.ui.screens
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -32,6 +35,11 @@ import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.put
+import java.util.Locale
 
 @Serializable
 data class UserProfile(
@@ -40,6 +48,13 @@ data class UserProfile(
     val username: String,
     val updated_at: String,
     val created_at: String? = null
+)
+
+/** ensureUserProfile icin: sadece kimlik alanlarini okuyan hafif satir. */
+@Serializable
+private data class ProfileIdentityRow(
+    val id: String,
+    val username: String? = null
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,6 +81,11 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(Void950)
+            // Kucuk ekranlarda (ve klavye acikken) kart ekrana sigmiyordu:
+            // "Kayit ol" modunda ekstra alan eklendiginde alttaki butonlara
+            // ulasmanin hicbir yolu yoktu. Artik icerik kaydirilabiliyor.
+            .verticalScroll(rememberScrollState())
+            .imePadding()
             .padding(24.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -164,64 +184,58 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
 
                 Button(
                     onClick = {
-                        if (email.isBlank() || password.isBlank()) return@Button
+                        val emailInput = email.trim()
+                        val passwordInput = password
+                        // Onceden bos alanda butona basinca HICBIR sey olmuyordu
+                        // (sessiz return) — kullanici butonun bozuk oldugunu
+                        // saniyordu.
+                        if (emailInput.isBlank() || passwordInput.isBlank()) {
+                            Toast.makeText(context, context.getString(R.string.auth_error_fields_required), Toast.LENGTH_SHORT).show()
+                            return@Button
+                        }
+                        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+                            Toast.makeText(context, context.getString(R.string.auth_error_invalid_email), Toast.LENGTH_SHORT).show()
+                            return@Button
+                        }
                         if (!isLogin && username.isBlank()) {
                             Toast.makeText(context, context.getString(R.string.auth_username_required), Toast.LENGTH_SHORT).show()
                             return@Button
                         }
-                        
+                        if (!isLogin && passwordInput.length < 6) {
+                            Toast.makeText(context, context.getString(R.string.auth_error_password_too_short), Toast.LENGTH_SHORT).show()
+                            return@Button
+                        }
+
                         isLoading = true
                         coroutineScope.launch {
                             try {
                                 if (isLogin) {
                                     supabaseClient.auth.signInWith(Email) {
-                                        this.email = email@email
-                                        this.password = password@password
+                                        this.email = emailInput
+                                        this.password = passwordInput
                                     }
                                 } else {
                                     supabaseClient.auth.signUpWith(Email) {
-                                        this.email = email@email
-                                        this.password = password@password
+                                        this.email = emailInput
+                                        this.password = passwordInput
+                                        // E-posta onayi aciksa kayit aninda oturum
+                                        // olusmuyor; secilen kullanici adi kaybolmasin
+                                        // diye metadata'da tasiniyor (ilk giriste
+                                        // ensureUserProfile uyguluyor).
+                                        this.data = buildJsonObject { put("username", username.trim()) }
                                     }
                                 }
-                                
+
                                 val user = supabaseClient.auth.currentUserOrNull()
                                 if (user != null) {
-                                    val now = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", java.util.Locale.US).apply {
-                                        timeZone = java.util.TimeZone.getTimeZone("UTC")
-                                    }.format(java.util.Date())
-                                    val profileData = mutableMapOf(
-                                        "id" to user.id,
-                                        "email" to (user.email ?: email),
-                                        "username" to username.ifEmpty { user.email?.substringBefore("@") ?: "user" },
-                                        "updated_at" to now
+                                    ensureUserProfile(
+                                        userId = user.id,
+                                        email = user.email ?: emailInput,
+                                        desiredUsername = if (!isLogin) username.trim() else pendingUsernameFromMetadata(user)
                                     )
-                                    if (!isLogin) {
-                                        profileData["created_at"] = now
-                                    }
-                                    
-                                    supabaseClient.postgrest["user_profiles"].upsert(profileData) {
-                                        onConflict = "id"
-                                    }
-                                    
-                                    if (isLogin) {
-                                        try {
-                                            val result = supabaseClient.postgrest["user_profiles"]
-                                                .select(columns = Columns.list("language")) {
-                                                    filter { eq("id", user.id) }
-                                                }.decodeList<Map<String, String>>()
-                                                
-                                            val lang = result.firstOrNull()?.get("language")
-                                            if (lang != null && lang.isNotEmpty()) {
-                                                val localeList = androidx.core.os.LocaleListCompat.forLanguageTags(lang)
-                                                androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(localeList)
-                                            }
-                                        } catch (e: Exception) {
-                                            // Ignore
-                                        }
-                                    }
+                                    applySavedLanguage(user.id)
                                 }
-                                
+
                                 if (!isLogin) {
                                     Toast.makeText(context, context.getString(R.string.auth_success), Toast.LENGTH_LONG).show()
                                     isLogin = true
@@ -230,7 +244,9 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                                     onLoginSuccess()
                                 }
                             } catch (e: Exception) {
-                                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                                // Ham Supabase hatasi (URL + header dokumu iceren
+                                // teknik metin) yerine anlasilir mesaj.
+                                Toast.makeText(context, friendlyAuthError(context, e, isLogin), Toast.LENGTH_LONG).show()
                             } finally {
                                 isLoading = false
                             }
@@ -299,7 +315,7 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                                 LunosferMessagingService.registerCurrentFcmToken()
                                 onLoginSuccess()
                             } catch (e: Exception) {
-                                Toast.makeText(context, e.message ?: context.getString(R.string.auth_guest_error), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, friendlyAuthError(context, e, isLogin = true), Toast.LENGTH_LONG).show()
                             } finally {
                                 isLoading = false
                             }
@@ -321,7 +337,7 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                                 val url = supabaseClient.auth.getOAuthUrl(provider = Google, redirectUrl = "io.lunosfer.dreamap://auth-callback")
                                 context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url)))
                             } catch (e: Exception) {
-                                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, friendlyAuthError(context, e, isLogin = true), Toast.LENGTH_LONG).show()
                             }
                         }
                     },
@@ -340,7 +356,7 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                                 val url = supabaseClient.auth.getOAuthUrl(provider = Github, redirectUrl = "io.lunosfer.dreamap://auth-callback")
                                 context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url)))
                             } catch (e: Exception) {
-                                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, friendlyAuthError(context, e, isLogin = true), Toast.LENGTH_LONG).show()
                             }
                         }
                     },
@@ -360,5 +376,114 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                 }
             }
         }
+    }
+}
+
+/** Veritabanindaki sanitize_username() trigger'inin urettigi varsayilan adin istemci tarafi karsiligi. */
+private fun sanitizedDefaultUsername(email: String?): String {
+    val base = email
+        ?.substringBefore("@")
+        ?.lowercase(Locale.US)
+        ?.replace(Regex("""\s+"""), "_")
+        ?.replace(Regex("[^a-z0-9_]"), "")
+        ?.take(24)
+    return if (base.isNullOrBlank()) "dreamer" else base
+}
+
+/** Kayit sirasinda metadata'ya yazilan, henuz profile uygulanmamis kullanici adi. */
+private fun pendingUsernameFromMetadata(user: io.github.jan.supabase.auth.user.UserInfo): String? =
+    (user.userMetadata?.get("username") as? JsonPrimitive)
+        ?.contentOrNull
+        ?.trim()
+        ?.takeIf { it.isNotBlank() }
+
+/**
+ * Profil satirinin var oldugundan emin olur.
+ *
+ * ONEMLI: Var olan bir profilin username'ini ARTIK EZMIYOR. Onceden her
+ * giriste `upsert(username = e-postanin @ oncesi)` calisiyordu; kullanicinin
+ * Profil > Duzenle'den verdigi kullanici adi her girisinde geri aliniyordu
+ * (user_profiles.sanitize_username trigger'i da bunu kucultup benzersizlestiriyordu).
+ * Yeni kullanici adi yalnizca (a) profil satiri hic yoksa, veya (b) satirdaki ad
+ * hala e-postadan turetilmis varsayilan ad ise ve kayitta bir ad secilmisse yazilir.
+ */
+private suspend fun ensureUserProfile(userId: String, email: String?, desiredUsername: String?) {
+    val now = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).apply {
+        timeZone = java.util.TimeZone.getTimeZone("UTC")
+    }.format(java.util.Date())
+
+    val existing = runCatching {
+        supabaseClient.postgrest["user_profiles"]
+            .select(columns = Columns.list("id", "username")) { filter { eq("id", userId) } }
+            .decodeList<ProfileIdentityRow>()
+            .firstOrNull()
+    }.getOrNull()
+
+    if (existing == null) {
+        val payload = mutableMapOf(
+            "id" to userId,
+            "username" to (desiredUsername?.takeIf { it.isNotBlank() } ?: sanitizedDefaultUsername(email)),
+            "updated_at" to now
+        )
+        if (!email.isNullOrBlank()) payload["email"] = email
+        runCatching { supabaseClient.postgrest["user_profiles"].upsert(payload) { onConflict = "id" } }
+        return
+    }
+
+    val stillDefaultName = existing.username.isNullOrBlank() || existing.username == sanitizedDefaultUsername(email)
+    if (!desiredUsername.isNullOrBlank() && desiredUsername != existing.username && stillDefaultName) {
+        // Kullanici adi baskasinda olabilir (UNIQUE) — basarisiz olursa sessizce
+        // varsayilanda kaliyoruz, kullanici Profil > Duzenle'den degistirebilir.
+        runCatching {
+            supabaseClient.postgrest["user_profiles"]
+                .update(mapOf("username" to desiredUsername, "updated_at" to now)) { filter { eq("id", userId) } }
+        }
+    }
+
+    if (!email.isNullOrBlank() ) {
+        runCatching {
+            supabaseClient.postgrest["user_profiles"]
+                .update(mapOf("email" to email, "updated_at" to now)) { filter { eq("id", userId) } }
+        }
+    }
+}
+
+/** Profildeki dil tercihini uygulama diline uygular (giris/kayit sonrasi). */
+private suspend fun applySavedLanguage(userId: String) {
+    runCatching {
+        val result = supabaseClient.postgrest["user_profiles"]
+            .select(columns = Columns.list("language")) { filter { eq("id", userId) } }
+            .decodeList<Map<String, String>>()
+        val lang = result.firstOrNull()?.get("language")
+        if (!lang.isNullOrBlank()) {
+            androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(
+                androidx.core.os.LocaleListCompat.forLanguageTags(lang)
+            )
+        }
+    }
+}
+
+/**
+ * Supabase'in ham hata metni ("Invalid login credentials" + URL + header dokumu)
+ * kullaniciya dogrudan gosteriliyordu. Bilinen durumlari uygulama diline cevirir.
+ */
+private fun friendlyAuthError(context: Context, e: Throwable, isLogin: Boolean): String {
+    val raw = (e.message ?: "").lowercase(Locale.US)
+    return when {
+        raw.contains("invalid login credentials") || raw.contains("invalid_credentials") ->
+            context.getString(R.string.auth_error_invalid_credentials)
+        raw.contains("email not confirmed") || raw.contains("email_not_confirmed") ->
+            context.getString(R.string.auth_error_email_not_confirmed)
+        raw.contains("already registered") || raw.contains("user_already_exists") ->
+            context.getString(R.string.auth_error_email_in_use)
+        raw.contains("password should be at least") || raw.contains("weak password") || raw.contains("weak_password") ->
+            context.getString(R.string.auth_error_password_too_short)
+        raw.contains("anonymous sign-ins are disabled") || raw.contains("anonymous_provider_disabled") ->
+            context.getString(R.string.auth_error_guest_disabled)
+        raw.contains("rate limit") || raw.contains("too many requests") || raw.contains("over_request_rate_limit") ->
+            context.getString(R.string.auth_error_rate_limited)
+        raw.contains("unable to resolve host") || raw.contains("timeout") || raw.contains("failed to connect") || raw.contains("network") ->
+            context.getString(R.string.auth_error_network)
+        else -> context.getString(if (isLogin) R.string.auth_error_login_failed else R.string.auth_error_register_failed)
     }
 }

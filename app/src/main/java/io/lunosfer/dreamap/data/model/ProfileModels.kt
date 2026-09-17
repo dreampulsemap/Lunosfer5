@@ -9,6 +9,7 @@ data class UpdateProfileRequest(
     val username: String? = null,
     @SerialName("display_name") val displayName: String? = null,
     @SerialName("avatar_url") val avatarUrl: String? = null,
+    val bio: String? = null,
     @SerialName("is_private") val isPrivate: Boolean? = null,
     @SerialName("profile_visibility") val profileVisibility: String? = null,
     val language: String? = null,

@@ -161,6 +161,7 @@ fun GoalDetailScreen(
         )
     }
 }
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 private fun GoalDetailContent(
     state: GoalDetailUiState.Success,
@@ -427,9 +428,13 @@ private fun GoalDetailContent(
 
                 // Cover & Gallery Management Bar (Owner)
                 if (isOwner) {
-                    Row(
+                    // Duz Row idi: 5-7 chip telefon genisligine sigmayinca son
+                    // chip'ler daracik dikey seritlere eziliyor, satir ~500px
+                    // yuksekliginde bos bir alana donusuyordu (canli goruldu).
+                    androidx.compose.foundation.layout.FlowRow(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         AssistChip(
                             onClick = onGenerateCover,
@@ -718,6 +723,10 @@ private fun GoalDetailContent(
                             AsyncImage(
                                 model = owner.avatarUrl,
                                 contentDescription = owner.nameOrFallback,
+                                // contentScale yoktu: kare olmayan bir profil
+                                // fotografi dairenin icine "sigdiriliyor" ve
+                                // ezik bir serit gibi gorunuyordu (canli goruldu).
+                                contentScale = ContentScale.Crop,
                                 modifier = Modifier
                                     .size(28.dp)
                                     .clip(CircleShape)
@@ -1180,12 +1189,20 @@ private fun GoalCommentRow(
             }
         }
         Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = comment.userProfile?.nameOrFallback ?: stringResource(R.string.goal_detail_default_user),
-                color = AstralGold,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(
+                    text = comment.userProfile?.nameOrFallback ?: stringResource(R.string.goal_detail_default_user),
+                    color = AstralGold,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                // Yorumlarda tarih/saat hic gosterilmiyordu.
+                Text(
+                    text = io.lunosfer.dreamap.util.RelativeTime.format(comment.createdAt),
+                    color = Color(0xFF64748B),
+                    fontSize = 10.sp
+                )
+            }
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = comment.content,

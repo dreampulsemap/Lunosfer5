@@ -186,7 +186,7 @@ private fun RingItem(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = "Ekle",
+                        contentDescription = stringResource(R.string.cd_add_story),
                         tint = Void950,
                         modifier = Modifier.size(14.dp)
                     )

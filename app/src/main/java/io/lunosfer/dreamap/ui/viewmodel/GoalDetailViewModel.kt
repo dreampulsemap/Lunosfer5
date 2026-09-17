@@ -217,6 +217,8 @@ class GoalDetailViewModel(
         viewModelScope.launch {
             repository.giveMana(goalId, amount).onSuccess { res ->
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onSuccess
+                // Ust bardaki mana rozeti sunucudan donen guncel bakiyeyi yansitsin.
+                io.lunosfer.dreamap.data.repository.UserWallet.set(res.manaBalance)
                 val msg = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_mana_transferred).format(res.manaBalance ?: "—")
                 _state.value = latest.copy(actionMessage = msg)
             }.onFailure { err ->
@@ -251,6 +253,7 @@ class GoalDetailViewModel(
         viewModelScope.launch {
             repository.removeMana(goalId).onSuccess {
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onSuccess
+                io.lunosfer.dreamap.data.repository.UserWallet.refresh()
                 _state.value = latest.copy(actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_mana_reaction_removed))
             }.onFailure { err ->
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure

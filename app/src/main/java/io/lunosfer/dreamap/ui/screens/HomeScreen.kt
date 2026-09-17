@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.TrackChanges
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,11 +53,13 @@ import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.HomeViewModel
 import io.lunosfer.dreamap.ui.viewmodel.UiState
+import io.lunosfer.dreamap.util.AppLanguage
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 import io.lunosfer.dreamap.ui.components.DiaryRingsBar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
@@ -68,6 +72,10 @@ fun HomeScreen(
     val state by viewModel.state.collectAsState()
     val compassState by compassViewModel.state.collectAsState()
     val streak by viewModel.streak.collectAsState()
+    val headerCounts by viewModel.headerCounts.collectAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+    val isLoadingMore by viewModel.isLoadingMore.collectAsState()
+    val canLoadMore by viewModel.canLoadMore.collectAsState()
     val likedDreamIds by viewModel.likedDreamIds.collectAsState()
     val likeCountOverrides by viewModel.likeCountOverrides.collectAsState()
     val actionError by viewModel.actionError.collectAsState()
@@ -81,7 +89,13 @@ fun HomeScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize().background(Void950)) {
+    // Akisi yenilemenin hicbir yolu yoktu: yeni bir ruya/vizyon paylasildiginda
+    // kullanici uygulamayi kapatip acmadan goremiyordu.
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = viewModel::refresh,
+        modifier = Modifier.fillMaxSize().background(Void950)
+    ) {
         when (val current = state) {
             is UiState.Loading -> HomeLoading()
             is UiState.Error -> HomeError(message = current.message, onRetry = viewModel::retry)
@@ -96,7 +110,11 @@ fun HomeScreen(
                 onOpenReels = onOpenReels,
                 compassState = compassState,
                 onDrawCompass = compassViewModel::draw,
-                streak = streak
+                streak = streak,
+                headerCounts = headerCounts,
+                isLoadingMore = isLoadingMore,
+                canLoadMore = canLoadMore,
+                onLoadMore = viewModel::loadMore
             )
         }
     }
@@ -131,7 +149,10 @@ private fun HomeError(message: String, onRetry: () -> Unit) {
         Spacer(Modifier.height(16.dp))
         OutlinedButton(
             onClick = onRetry,
-            colors = ButtonDefaults.buttonColors(contentColor = AstralGold),
+            // buttonColors() (dolu buton renkleri) bir OutlinedButton'a verilince
+            // zemin de altin, yazi da altin oluyordu: "Tekrar Dene" yazisi
+            // gorunmuyordu (canli ekran goruntusunde bos bir altin hap).
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = AstralGold),
             border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.4f))
         ) {
             Icon(Icons.Filled.Refresh, contentDescription = null, modifier = Modifier.size(16.dp))
@@ -153,11 +174,29 @@ private fun HomeFeedList(
     onOpenReels: (List<Goal>, Int) -> Unit = { _, _ -> },
     compassState: io.lunosfer.dreamap.ui.viewmodel.CompassUiState,
     onDrawCompass: () -> Unit,
-    streak: io.lunosfer.dreamap.ui.viewmodel.StreakInfo
+    streak: io.lunosfer.dreamap.ui.viewmodel.StreakInfo,
+    headerCounts: io.lunosfer.dreamap.ui.viewmodel.HomeHeaderCounts,
+    isLoadingMore: Boolean = false,
+    canLoadMore: Boolean = false,
+    onLoadMore: () -> Unit = {}
 ) {
+    val listState = rememberLazyListState()
+
+    // Sonsuz kaydirma: son karta yaklasinca sonraki sayfayi iste.
+    LaunchedEffect(listState, canLoadMore, items.size) {
+        snapshotFlow {
+            val lastVisible = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+            lastVisible >= listState.layoutInfo.totalItemsCount - 3
+        }.collect { nearEnd ->
+            if (nearEnd && canLoadMore) onLoadMore()
+        }
+    }
+
     LazyColumn(
+        state = listState,
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 20.dp),
+        // Alttaki "+" butonu ve gezinme cubugu son karti kapatiyordu.
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 20.dp, bottom = 96.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         // Karsilama + gunluk seri basligi. HomeViewModel bu bilgiyi (computeStreak)
@@ -167,8 +206,8 @@ private fun HomeFeedList(
         item {
             WelcomeStreakHeader(
                 streak = streak,
-                dreamCount = items.count { it is FeedItem.DreamItem },
-                visionCount = items.count { it is FeedItem.VisionItem }
+                dreamCount = headerCounts.todayDreams,
+                visionCount = headerCounts.activeVisions
             )
         }
 
@@ -215,7 +254,18 @@ private fun HomeFeedList(
         val visionGoals = items.filterIsInstance<FeedItem.VisionItem>().map { it.goal }
         val dreamsList = items.filterIsInstance<FeedItem.DreamItem>().map { it.dream }
 
-        items(items, key = { it.createdAt + it.hashCode() }) { feedItem ->
+        items(
+            items,
+            // Onceki anahtar (createdAt + hashCode) ayni ogenin iki kez gelmesi
+            // durumunda cakisiyor ve LazyColumn "Key was already used" ile
+            // cokuyordu; tur + kimlik her zaman benzersiz.
+            key = { item ->
+                when (item) {
+                    is FeedItem.DreamItem -> "dream-${item.dream.id}"
+                    is FeedItem.VisionItem -> "vision-${item.goal.id}"
+                }
+            }
+        ) { feedItem ->
             when (feedItem) {
                 is FeedItem.DreamItem -> {
                     DreamFeedCard(
@@ -237,6 +287,17 @@ private fun HomeFeedList(
                             onOpenReels(visionGoals, index)
                         }
                     )
+                }
+            }
+        }
+
+        if (isLoadingMore) {
+            item {
+                Box(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = AstralGold, modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
                 }
             }
         }
@@ -283,6 +344,18 @@ private fun WelcomeStreakHeader(
             )
         }
     }
+}
+
+/**
+ * Gorunurluk rozeti ham veritabani degerini buyuk harfe cevirip basiyordu:
+ * uygulama Turkce'yken bile "PUBLIC/FRIENDS/PRIVATE" goruluyordu.
+ */
+@Composable
+fun visibilityLabel(visibility: String): String = when (visibility.lowercase(Locale.US)) {
+    "public" -> stringResource(R.string.dream_public)
+    "friends" -> stringResource(R.string.dream_friends)
+    "private" -> stringResource(R.string.dream_private)
+    else -> visibility
 }
 
 @Composable
@@ -332,10 +405,10 @@ private fun FeedCardOwnerHeader(
                     fontWeight = FontWeight.SemiBold
                 )
                 if (!dreamDate.isNullOrBlank()) {
-                    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
                     val dateDisplay = try {
-                        val date = sdf.parse(dreamDate)
-                        SimpleDateFormat("d MMMM yyyy", Locale.getDefault()).format(date ?: java.util.Date())
+                        val date = sdf.parse(dreamDate.take(19))
+                        SimpleDateFormat("d MMMM yyyy", AppLanguage.locale()).format(date ?: java.util.Date())
                     } catch (e: Exception) {
                         dreamDate.take(10)
                     }
@@ -357,7 +430,7 @@ private fun FeedCardOwnerHeader(
                     .padding(horizontal = 10.dp, vertical = 4.dp)
             ) {
                 Text(
-                    text = visibility.uppercase(),
+                    text = visibilityLabel(visibility).uppercase(AppLanguage.locale()),
                     color = Color.White.copy(alpha = 0.85f),
                     fontSize = 9.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -391,7 +464,6 @@ private fun DreamFeedCard(
     onDreamClick: (Long) -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { 3 })
-    val currentLocale = Locale.getDefault().language
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -447,7 +519,12 @@ private fun DreamFeedCard(
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.clickable(onClick = onToggleLike)
+                        // Dokunma hedefi ~20dp idi; kucuk ekranlarda kalbe isabet
+                        // ettirmek zordu (min. 48dp onerilir).
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable(onClick = onToggleLike)
+                            .padding(horizontal = 8.dp, vertical = 10.dp)
                     ) {
                         Icon(
                             imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
@@ -460,7 +537,10 @@ private fun DreamFeedCard(
                     }
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.clickable { onDreamClick(dream.id) }
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable { onDreamClick(dream.id) }
+                            .padding(horizontal = 8.dp, vertical = 10.dp)
                     ) {
                         Icon(
                             Icons.Filled.Message,
@@ -648,7 +728,8 @@ private fun DreamTextPage(dream: Dream) {
 private fun DreamAnalysisPage(dream: Dream) {
     val titleLabel = getHomeSlideTitle(2)
     val analysis = dream.aiJungianAnalysis
-    val locale = Locale.getDefault().language
+    // Cok dilli analiz metni, cihaz dili degil kullanicinin sectigi UYGULAMA dili.
+    val locale = AppLanguage.code()
 
     Card(
         modifier = Modifier.fillMaxSize(),

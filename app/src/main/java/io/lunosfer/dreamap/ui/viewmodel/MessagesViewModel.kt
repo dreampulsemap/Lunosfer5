@@ -27,7 +27,7 @@ class MessagesViewModel(
         viewModelScope.launch {
             repository.loadConversations()
                 .onSuccess { _state.value = UiState.Success(it) }
-                .onFailure { _state.value = UiState.Error(it.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_unknown)) }
+                .onFailure { _state.value = UiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(it)) }
         }
     }
 }

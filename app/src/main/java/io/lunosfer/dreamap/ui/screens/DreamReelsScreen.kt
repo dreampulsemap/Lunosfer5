@@ -107,6 +107,7 @@ private fun DreamReelPage(
                     state = s,
                     currentUserId = currentUserId,
                     onBack = onBack,
+                    showBackButton = false,
                     onUserClick = onUserClick,
                     onRefresh = { viewModel.loadDream(dream.id) },
                     onAnalyze = { viewModel.analyzeDream(dream.id, s.dream.content, s.dream.originalLanguage ?: "en") },

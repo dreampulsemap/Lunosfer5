@@ -172,7 +172,7 @@
     <string name="spiritual_mental_wall_header">Mental Wall</string>
     <string name="spiritual_mental_wall_desc">Combines symbols of the dream subconscious, archetypal motifs, and your emotion map into a single abstract collage and narrative.</string>
     <string name="spiritual_synthesizing">Synthesizing…</string>
-    <string name="spiritual_synthesize_btn">Synthesize Mental Wall</string>
+    <string name="spiritual_synthesize_btn">Synthesize Mental Wall (5 Aura)</string>
     <string name="spiritual_mental_wall_idle">Tap the button above to create your mental wall for the first time.</string>
     <string name="spiritual_mental_wall_loading_status">Mapping subconscious symbols…</string>
     <string name="refresh_button_desc">Refresh</string>
@@ -465,7 +465,7 @@
     <string name="goal_detail_url_label">🔗 URL</string>
     <string name="goal_detail_mana_count">%1$d Mana</string>
     <string name="goal_detail_progress">Progress</string>
-    <string name="goal_detail_percentage">%%%1$d</string>
+    <string name="goal_detail_percentage">%1$d%%</string>
     <string name="goal_detail_roadmap">Roadmap (%1$d/%2$d)</string>
     <string name="goal_detail_owner">Vision Owner: %1$s</string>
     <string name="goal_detail_update_status_btn">Update Goal Status</string>
@@ -590,7 +590,7 @@
     <string name="home_brand_watermark">LUNOSFER</string>
     <string name="spiritual_psyche_map_title">Psyche Map</string>
     <string name="spiritual_score_suffix">/100</string>
-    <string name="spiritual_percentage_format">%%%1$d</string>
+    <string name="spiritual_percentage_format">%1$d%%</string>
     <string name="mental_wall_image_desc">Mental Wall Image</string>
     <string name="globe_title">Globe</string>
     <string name="globe_refresh_cd">Refresh Globe</string>
@@ -795,4 +795,68 @@
     <string name="permission_denied_camera">Camera permission is required to take a photo or video.</string>
     <string name="diary_composer_source_gallery">Choose from Gallery</string>
     <string name="diary_composer_source_camera">Take a Photo/Video</string>
+
+    <!-- Auth: friendly error messages (previously raw Supabase exception text) -->
+    <string name="auth_error_fields_required">Please enter your email and password.</string>
+    <string name="auth_error_invalid_email">Please enter a valid email address.</string>
+    <string name="auth_error_password_too_short">Your password must be at least 6 characters.</string>
+    <string name="auth_error_invalid_credentials">Email or password is incorrect.</string>
+    <string name="auth_error_email_not_confirmed">Please confirm your email address first — check your inbox.</string>
+    <string name="auth_error_email_in_use">This email is already registered. Try logging in instead.</string>
+    <string name="auth_error_rate_limited">Too many attempts. Please wait a moment and try again.</string>
+    <string name="auth_error_guest_disabled">Guest access is currently unavailable. Please sign up or log in.</string>
+    <string name="auth_error_network">No connection. Check your internet and try again.</string>
+    <string name="auth_error_login_failed">Could not log in. Please try again.</string>
+    <string name="auth_error_register_failed">Could not create your account. Please try again.</string>
+
+    <!-- Accessibility labels (previously hardcoded literals) -->
+    <string name="cd_notifications">Notifications</string>
+    <string name="cd_more_menu">More options</string>
+    <string name="cd_profile">Profile</string>
+    <string name="cd_create_new">Create new</string>
+    <string name="cd_settings">Settings</string>
+    <string name="cd_dictate">Dictate</string>
+    <string name="cd_cover_image">Cover image</string>
+    <string name="cd_remove_cover">Remove cover image</string>
+    <string name="cd_remove_tag">Remove tag</string>
+    <string name="cd_avatar_preview">Profile photo preview</string>
+    <string name="cd_add_story">Add story</string>
+    <string name="cd_clear">Clear</string>
+
+    <!-- Relative timestamps -->
+    <string name="time_just_now">Just now</string>
+    <string name="time_minutes_ago">%1$d min ago</string>
+    <string name="time_hours_ago">%1$d h ago</string>
+    <string name="time_days_ago">%1$d d ago</string>
+    <!-- Notification types that previously all fell back to the generic text -->
+    <string name="notif_friend_accepted_title">Request Accepted</string>
+    <string name="notif_friend_accepted_body">%1$s accepted your follow request.</string>
+    <string name="notif_goal_comment_title">New Comment</string>
+    <string name="notif_goal_comment_body">%1$s commented on your vision.</string>
+    <string name="notif_mana_received_title">Mana Received</string>
+    <string name="notif_mana_received_body">%1$s sent mana to your vision.</string>
+    <string name="notif_diary_comment_title">New Comment</string>
+    <string name="notif_diary_comment_body">%1$s commented on your journal entry.</string>
+    <string name="notif_dream_image_gift_title">Dream Image Ready</string>
+    <string name="notif_dream_image_gift_body">A dream image was created for you.</string>
+    <string name="notif_request_no_longer_available">This follow request is no longer available.</string>
+
+    <!-- "1 Dreams Analyzed" grammar fix -->
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="one">🌙 %1$d Dream Analyzed</item>
+        <item quantity="other">🌙 %1$d Dreams Analyzed</item>
+    </plurals>
+
+    <string name="profile_logout_confirm_title">Log out?</string>
+    <string name="profile_logout_confirm_desc">You will need to enter your email and password again to get back in.</string>
+
+    <string name="profile_edit_bio_label">Bio</string>
+    <string name="profile_error_bio_length">Bio can be at most 300 characters</string>
+
+    <string name="error_no_connection">No internet connection. Check your network and try again.</string>
+    <string name="error_timeout">The server took too long to respond. Please try again.</string>
+    <string name="error_server">Something went wrong on our side. Please try again shortly.</string>
+    <string name="error_session_expired">Your session has expired. Please log in again.</string>
+
+    <string name="cd_use_my_location">Use my location</string>
 </resources>

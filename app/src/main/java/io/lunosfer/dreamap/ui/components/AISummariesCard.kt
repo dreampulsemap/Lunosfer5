@@ -209,7 +209,7 @@ private fun SummaryContentView(
                         .padding(horizontal = 10.dp, vertical = 3.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.summary_dreams_analyzed, summary.dreamCount),
+                        text = androidx.compose.ui.res.pluralStringResource(R.plurals.summary_dreams_analyzed_plural, summary.dreamCount, summary.dreamCount),
                         color = AstralGold,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.SemiBold

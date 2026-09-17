@@ -6,6 +6,7 @@ import io.lunosfer.dreamap.data.model.Dream
 import io.lunosfer.dreamap.data.model.FeedItem
 import io.lunosfer.dreamap.data.repository.DreamRepository
 import io.lunosfer.dreamap.data.repository.HomeRepository
+import io.lunosfer.dreamap.util.AppLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,6 +28,19 @@ data class StreakInfo(
     val hasDreamToday: Boolean = false
 )
 
+/**
+ * Karsilama basligindaki sayilar.
+ * todayDreams: BUGUN akista paylasilmis ruya sayisi.
+ * activeVisions: kullanicinin KENDI aktif vizyon sayisi.
+ *
+ * Onceden ikisi de "ilk sayfada kac ogeler var" demekti; API sayfa basina 6+6
+ * getirdigi icin metin herkese hep "6 ruya, 6 aktif vizyon" diyordu.
+ */
+data class HomeHeaderCounts(
+    val todayDreams: Int = 0,
+    val activeVisions: Int = 0
+)
+
 class HomeViewModel(
     private val repository: HomeRepository = HomeRepository(),
     private val dreamRepository: DreamRepository = DreamRepository()
@@ -37,6 +51,23 @@ class HomeViewModel(
 
     private val _streak = MutableStateFlow(StreakInfo())
     val streak: StateFlow<StreakInfo> = _streak.asStateFlow()
+
+    private val _headerCounts = MutableStateFlow(HomeHeaderCounts())
+    val headerCounts: StateFlow<HomeHeaderCounts> = _headerCounts.asStateFlow()
+
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
+    private val _isLoadingMore = MutableStateFlow(false)
+    val isLoadingMore: StateFlow<Boolean> = _isLoadingMore.asStateFlow()
+
+    private val _canLoadMore = MutableStateFlow(false)
+    val canLoadMore: StateFlow<Boolean> = _canLoadMore.asStateFlow()
+
+    private var nextDreamsBefore: String? = null
+    private var nextVisionsBefore: String? = null
+    private var hasMoreDreams = false
+    private var hasMoreVisions = false
 
     // Ana akış kartındaki kalp ikonuna dokunarak beğenme durumu — sadece bu oturum
     // için lokal tutulur, çünkü /api/home-feed liste yanıtı is_liked döndürmüyor
@@ -105,28 +136,94 @@ class HomeViewModel(
 
     fun retry() = load()
 
+    /** Aşağı çekip yenileme — akışı sıfırdan yükler ama ekranı boşaltmaz. */
+    fun refresh() {
+        if (_isRefreshing.value) return
+        _isRefreshing.value = true
+        viewModelScope.launch {
+            repository.loadFirstPage()
+                .onSuccess { page ->
+                    applyFirstPage(page)
+                }
+                .onFailure {
+                    if (_state.value !is UiState.Success) {
+                        _state.value = UiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(it))
+                    }
+                }
+            _isRefreshing.value = false
+        }
+    }
+
+    /** Sonsuz kaydırma: listenin sonuna gelindiğinde bir sonraki sayfa. */
+    fun loadMore() {
+        if (_isLoadingMore.value || _isRefreshing.value) return
+        if (!hasMoreDreams && !hasMoreVisions) return
+        val current = (_state.value as? UiState.Success)?.data ?: return
+
+        _isLoadingMore.value = true
+        viewModelScope.launch {
+            repository.loadPage(
+                dreamsBefore = nextDreamsBefore,
+                visionsBefore = nextVisionsBefore,
+                includeDreams = hasMoreDreams && nextDreamsBefore != null,
+                includeVisions = hasMoreVisions && nextVisionsBefore != null
+            ).onSuccess { page ->
+                if (page.items.isNotEmpty()) {
+                    val merged = (current + page.items)
+                        .distinctBy { feedItemKey(it) }
+                        .sortedByDescending { it.createdAt }
+                    _state.value = UiState.Success(merged)
+                }
+                if (page.nextDreamsBefore != null) nextDreamsBefore = page.nextDreamsBefore
+                if (page.nextVisionsBefore != null) nextVisionsBefore = page.nextVisionsBefore
+                hasMoreDreams = page.hasMoreDreams && page.nextDreamsBefore != null
+                hasMoreVisions = page.hasMoreVisions && page.nextVisionsBefore != null
+                _canLoadMore.value = hasMoreDreams || hasMoreVisions
+            }
+            _isLoadingMore.value = false
+        }
+    }
+
     private fun load() {
         _state.value = UiState.Loading
         viewModelScope.launch {
             repository.loadFirstPage()
-                .onSuccess {
-                    _state.value = UiState.Success(it)
-                    _streak.value = computeStreak(it)
-                }
-                .onFailure { _state.value = UiState.Error(it.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_unknown)) }
+                .onSuccess { page -> applyFirstPage(page) }
+                .onFailure { _state.value = UiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(it)) }
         }
     }
 
+    private suspend fun applyFirstPage(page: HomeRepository.HomePage) {
+        _state.value = UiState.Success(page.items)
+        nextDreamsBefore = page.nextDreamsBefore
+        nextVisionsBefore = page.nextVisionsBefore
+        hasMoreDreams = page.hasMoreDreams && page.nextDreamsBefore != null
+        hasMoreVisions = page.hasMoreVisions && page.nextVisionsBefore != null
+        _canLoadMore.value = hasMoreDreams || hasMoreVisions
+
+        val ownDreamDates = repository.loadOwnDreamDates().getOrDefault(emptyList())
+        _streak.value = computeStreak(ownDreamDates)
+
+        val todayKey = dayKeyFor(Calendar.getInstance())
+        _headerCounts.value = HomeHeaderCounts(
+            todayDreams = page.items.count { it is FeedItem.DreamItem && parseDayKey(it.createdAt) == todayKey },
+            activeVisions = repository.loadOwnActiveVisionCount().getOrDefault(0)
+        )
+    }
+
+    /** Aynı öğenin iki sayfada birden gelmesi durumunda listeyi tekilleştirmek için. */
+    private fun feedItemKey(item: FeedItem): String = when (item) {
+        is FeedItem.DreamItem -> "dream-${item.dream.id}"
+        is FeedItem.VisionItem -> "vision-${item.goal.id}"
+    }
+
     /**
-     * Kullanicinin kendi ruyalarindan (FeedItem.DreamItem) art arda kac gun
-     * ruya kaydettigini hesaplar. Feed listesi zaten createdAt'e gore
-     * azalan sirada geldigi icin (bkz. HomeRepository), gunleri gruplayip
-     * bugunden geriye dogru kesintisiz zinciri sayiyoruz.
+     * Kullanicinin KENDI ruyalarindan art arda kac gun kayit girdigini hesaplar.
+     * Liste created_at'e gore azalan sirada gelir (bkz. HomeRepository.loadOwnDreamDates).
      */
-    private fun computeStreak(items: List<FeedItem>): StreakInfo {
-        val dreamDates = items
-            .filterIsInstance<FeedItem.DreamItem>()
-            .mapNotNull { parseDayKey(it.dream.createdAt) }
+    private fun computeStreak(ownDreamDates: List<String>): StreakInfo {
+        val dreamDates = ownDreamDates
+            .mapNotNull { parseDayKey(it) }
             .distinct()
             .sortedDescending()
 
@@ -145,7 +242,7 @@ class HomeViewModel(
         }
 
         var streak = 1
-        var cursor = Calendar.getInstance().apply {
+        val cursor = Calendar.getInstance().apply {
             timeInMillis = startingKey
         }
         for (i in 1 until dreamDates.size) {
@@ -162,7 +259,7 @@ class HomeViewModel(
             timeInMillis = startingKey
             add(Calendar.DAY_OF_YEAR, -(streak - 1))
         }
-        val displayFormat = SimpleDateFormat("d MMMM", Locale.getDefault())
+        val displayFormat = SimpleDateFormat("d MMMM", AppLanguage.locale())
         val startDateDisplay = displayFormat.format(streakStartCal.time)
 
         return StreakInfo(
@@ -172,10 +269,16 @@ class HomeViewModel(
         )
     }
 
-    /** ISO tarih string'ini gun bazinda karsilastirilabilir bir zaman damgasina cevirir (saat/dakika/saniye sifirlanir). */
+    /**
+     * ISO tarih string'ini gun bazinda karsilastirilabilir bir zaman damgasina cevirir.
+     * Sunucu tarihleri UTC; cihazin yerel gunune gore gruplayabilmek icin once UTC
+     * olarak cozumleniyor (aksi halde gece yarisina yakin kayitlar bir gun kayabiliyordu).
+     */
     private fun parseDayKey(isoDate: String): Long? {
         return try {
-            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).apply {
+                timeZone = TimeZone.getTimeZone("UTC")
+            }
             val date = sdf.parse(isoDate.take(19)) ?: return null
             val cal = Calendar.getInstance()
             cal.time = date

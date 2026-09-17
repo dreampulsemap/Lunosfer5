@@ -41,11 +41,16 @@ import io.lunosfer.dreamap.ui.viewmodel.VisionViewModel
 fun VisionScreen(
     onGoalClick: (String) -> Unit = {},
     onOpenReels: (List<Goal>, Int) -> Unit = { _, _ -> },
-    viewModel: VisionViewModel = viewModel()
+    viewModel: VisionViewModel = viewModel(),
+    // Gunluk Pusula iki ekranda birden var (Ana Sayfa'da basili-tut karti,
+    // burada buton). Ayri ayri durum tutulunca Ana Sayfa'da cekilen okuma
+    // burada gorunmuyor, buton tekrar denenince sunucu "bugun zaten baktin"
+    // diyordu. Ikisi de ayni ViewModel'i (ve ayni gunluk onbellegi) kullaniyor.
+    compassViewModel: io.lunosfer.dreamap.ui.viewmodel.DailyCompassViewModel = viewModel()
 ) {
     val state by viewModel.state.collectAsState()
     val ownActiveGoals by viewModel.ownActiveGoals.collectAsState()
-    val compassState by viewModel.compassState.collectAsState()
+    val compassState by compassViewModel.state.collectAsState()
     val dailySeeds by viewModel.dailySeeds.collectAsState()
     val seedGeneratingMap by viewModel.seedGeneratingMap.collectAsState()
 
@@ -61,7 +66,7 @@ fun VisionScreen(
                 compassState = compassState,
                 dailySeeds = dailySeeds,
                 seedGeneratingMap = seedGeneratingMap,
-                onFetchCompass = viewModel::fetchDailyCompass,
+                onFetchCompass = compassViewModel::draw,
                 onGenerateSeed = viewModel::generateSeedForGoal,
                 onToggleSeed = viewModel::toggleSeedCompletion,
                 onGoalClick = onGoalClick,
@@ -109,7 +114,8 @@ private fun VisionContent(
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
+        // Alttaki "+" butonu son karti ortadan kesiyordu.
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 96.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         // 1) Günlük Pusula Kartı

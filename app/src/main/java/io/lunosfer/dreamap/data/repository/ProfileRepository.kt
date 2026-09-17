@@ -41,7 +41,11 @@ class ProfileRepository {
         // oluyordu.
         val uniquePath = "$userId/${UUID.randomUUID()}_$fileName"
         val bucket = supabaseClient.storage.from("avatars")
-        bucket.upload(uniquePath, byteArray) { upsert = true }
+        // Secilen gorsel oldugu gibi yukleniyordu (or. 1920x1200 ekran goruntusu):
+        // dairesel avatarda ortadan rastgele bir serit gorunuyor ve her ekranda
+        // gereksiz yere tam boy indiriliyordu. Ortadan kare kirpip kuculterek yukle.
+        val optimized = io.lunosfer.dreamap.util.ImageUtils.toSquareAvatarJpeg(byteArray)
+        bucket.upload(uniquePath, optimized) { upsert = true }
         bucket.publicUrl(uniquePath)
     }
 

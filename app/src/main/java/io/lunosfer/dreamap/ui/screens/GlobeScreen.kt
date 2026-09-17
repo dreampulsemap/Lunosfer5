@@ -54,7 +54,7 @@ fun GlobeScreen(onBack: () -> Unit) {
     var isLoading by remember { mutableStateOf(true) }
     var loadError by remember { mutableStateOf(false) }
 
-    val deviceLang = Locale.getDefault().language.lowercase()
+    val deviceLang = io.lunosfer.dreamap.util.AppLanguage.code().lowercase()
     val lang = if (deviceLang in SUPPORTED_GLOBE_LANGS) deviceLang else "en"
     val url = "$GLOBE_URL?lang=$lang"
 
