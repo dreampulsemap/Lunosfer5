@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        supabaseClient.handleDeeplinks(intent)
+        handleAuthDeeplink(intent)
         
         intent.getStringExtra("target_route")?.let { route ->
             if (route.isNotBlank()) {
@@ -52,11 +52,29 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        supabaseClient.handleDeeplinks(intent)
+        handleAuthDeeplink(intent)
 
         val route = intent.getStringExtra("target_route")
         if (!route.isNullOrBlank()) {
             pendingRouteState.value = route
+        }
+    }
+
+    /**
+     * Sadece gercek bir auth-callback deep link'i geldiginde Supabase'e
+     * iletir. islendikten sonra intent'in data'sini temizler (setIntent ile
+     * geri yazar): aksi halde surec dusup Android bu Activity'yi AYNI eski
+     * intent ile yeniden olusturdugunda (kullanici uygulamayi tekrar
+     * actiginda), suresi dolmus access/refresh token tekrar tekrar oturuma
+     * yazilmaya calisiliyor, refresh basarisiz oluyor ve kullanici surekli
+     * login ekranina dusuyordu ("uygulamadan atiyor").
+     */
+    private fun handleAuthDeeplink(intent: Intent) {
+        val data = intent.data
+        if (data != null && data.scheme == "io.lunosfer.dreamap" && data.host == "auth-callback") {
+            supabaseClient.handleDeeplinks(intent)
+            intent.data = null
+            setIntent(intent)
         }
     }
 
