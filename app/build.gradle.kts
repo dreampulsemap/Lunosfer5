@@ -47,7 +47,19 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("release")
     }
-    debug { signingConfig = signingConfigs.getByName("debugConfig") }
+    debug {
+      // debug.keystore .gitignore'da (bkz. oradaki not), yani temiz bir klonda
+      // YOK. Kosulsuz baglandiginda validateSigningDebug "Keystore file not
+      // found" ile patliyordu ve depoyu klonlayan hic kimse projeyi
+      // derleyemiyordu. Dosya varsa onu kullan (Firebase/Google OAuth'a kayitli
+      // SHA-1 bu anahtara ait), yoksa AGP'nin kendi varsayilan debug
+      // anahtarina dus.
+      signingConfig = if (rootProject.file("debug.keystore").exists()) {
+        signingConfigs.getByName("debugConfig")
+      } else {
+        signingConfigs.getByName("debug")
+      }
+    }
   }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
