@@ -154,6 +154,13 @@ dependencies {
   implementation(libs.supabase.storage)
   implementation(libs.ktor.client.android)
   implementation(libs.androidx.ui.text.google.fonts)
+  // OAuth (Google/GitHub) redirect akışı için: Supabase authorize URL'i düz
+  // Intent.ACTION_VIEW ile açılıyordu; çok adımlı OAuth redirect zincirinde
+  // (Google -> Supabase -> io.lunosfer.dreamap://auth-callback) Chrome bu
+  // yönlendirmeyi kullanıcı jesti olmadan bazen reddedip düz "Found" sayfasında
+  // kalıyordu. Custom Tabs, tam olarak bu auth-redirect senaryosu için
+  // tasarlanmış ve uygulamaya geri dönüşü güvenilir şekilde tetikliyor.
+  implementation(libs.androidx.browser)
   implementation("androidx.appcompat:appcompat:1.6.1")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 

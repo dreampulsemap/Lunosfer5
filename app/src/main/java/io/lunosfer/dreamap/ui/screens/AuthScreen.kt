@@ -2,6 +2,7 @@
 
 import android.content.Context
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -343,7 +344,12 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                         coroutineScope.launch {
                             try {
                                 val url = supabaseClient.auth.getOAuthUrl(provider = Google, redirectUrl = "io.lunosfer.dreamap://auth-callback")
-                                context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url)))
+                                // Duz ACTION_VIEW (ayri Chrome sekmesi) yerine Custom Tabs:
+                                // coklu-adimli OAuth redirect zincirinde (Google -> Supabase ->
+                                // custom scheme) Chrome'un uygulamaya donusu guvenilir sekilde
+                                // tetiklemesi icin bu akis gerekli, aksi halde duz "Found"
+                                // sayfasinda takili kaliyordu.
+                                CustomTabsIntent.Builder().build().launchUrl(context, android.net.Uri.parse(url))
                             } catch (e: Exception) {
                                 Toast.makeText(context, friendlyAuthError(context, e, isLogin = true), Toast.LENGTH_LONG).show()
                             }
@@ -362,7 +368,7 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                         coroutineScope.launch {
                             try {
                                 val url = supabaseClient.auth.getOAuthUrl(provider = Github, redirectUrl = "io.lunosfer.dreamap://auth-callback")
-                                context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url)))
+                                CustomTabsIntent.Builder().build().launchUrl(context, android.net.Uri.parse(url))
                             } catch (e: Exception) {
                                 Toast.makeText(context, friendlyAuthError(context, e, isLogin = true), Toast.LENGTH_LONG).show()
                             }
