@@ -830,4 +830,10 @@
         <item quantity="many">🌙 %1$d снов проанализировано</item>
         <item quantity="other">🌙 %1$d сна проанализировано</item>
     </plurals>
+
+    <string name="guest_sheet_title">Создайте бесплатный аккаунт</string>
+    <string name="guest_sheet_desc">Гостевые аккаунты доступны только для чтения. Зарегистрируйтесь бесплатно, чтобы подписываться, делиться снами, комментировать, ставить отметки «Нравится» и отправлять сообщения.</string>
+    <string name="guest_sheet_cta">Создать бесплатный аккаунт</string>
+    <string name="guest_sheet_dismiss">Не сейчас</string>
+    <string name="error_guest_read_only">Гостевые аккаунты доступны только для чтения.</string>
 </resources>

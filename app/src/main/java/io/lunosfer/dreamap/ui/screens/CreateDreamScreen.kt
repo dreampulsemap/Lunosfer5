@@ -1,4 +1,4 @@
-package io.lunosfer.dreamap.ui.screens
+﻿package io.lunosfer.dreamap.ui.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -76,16 +76,17 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import coil.compose.AsyncImage
 import kotlinx.coroutines.delay
+import io.lunosfer.dreamap.util.AppLanguage
 import io.lunosfer.dreamap.data.model.PixabayHit
 import io.lunosfer.dreamap.data.model.PixabayImageRequest
 import androidx.appcompat.app.AppCompatDelegate
 
-// Bug #16 düzeltmesi: sesle yazma her zaman İngilizce çalışıyordu çünkü
-// Locale.getDefault() burada CİHAZIN sistem dilini döndürüyordu, kullanıcının
-// Profil > Dil ayarından (AppCompatDelegate.setApplicationLocales) SEÇTİĞİ
-// uygulama içi dili değil. Önce uygulamanın kendi seçtiği dili kontrol
-// ediyoruz; ayrıca RecognizerIntent bölge kodu olmayan ("tr" gibi) etiketleri
-// bazı cihazlarda tanımadığı için yaygın diller için bölge kodu ekliyoruz.
+// Bug #16 dÃ¼zeltmesi: sesle yazma her zaman Ä°ngilizce Ã§alÄ±ÅŸÄ±yordu Ã§Ã¼nkÃ¼
+// Locale.getDefault() burada CÄ°HAZIN sistem dilini dÃ¶ndÃ¼rÃ¼yordu, kullanÄ±cÄ±nÄ±n
+// Profil > Dil ayarÄ±ndan (AppCompatDelegate.setApplicationLocales) SEÃ‡TÄ°ÄÄ°
+// uygulama iÃ§i dili deÄŸil. Ã–nce uygulamanÄ±n kendi seÃ§tiÄŸi dili kontrol
+// ediyoruz; ayrÄ±ca RecognizerIntent bÃ¶lge kodu olmayan ("tr" gibi) etiketleri
+// bazÄ± cihazlarda tanÄ±madÄ±ÄŸÄ± iÃ§in yaygÄ±n diller iÃ§in bÃ¶lge kodu ekliyoruz.
 private val SPEECH_LOCALE_REGION_FALLBACK = mapOf(
     "tr" to "tr-TR", "en" to "en-US", "es" to "es-ES", "fr" to "fr-FR",
     "de" to "de-DE", "pt" to "pt-PT", "ru" to "ru-RU", "ja" to "ja-JP",
@@ -116,9 +117,9 @@ fun CreateDreamScreen(navController: NavController) {
     var content by remember { mutableStateOf("") }
     var location by remember { mutableStateOf("") }
     var visibility by remember { mutableStateOf("public") }
-    // Kullanıcının profil gizliliği — paylaşım gizliliği seçenekleri buna göre
-    // kısıtlanır (bkz. util/VisibilityPolicy.kt). Yüklenene kadar en kısıtlayıcı
-    // varsayımla (private) başlıyoruz.
+    // KullanÄ±cÄ±nÄ±n profil gizliliÄŸi â€” paylaÅŸÄ±m gizliliÄŸi seÃ§enekleri buna gÃ¶re
+    // kÄ±sÄ±tlanÄ±r (bkz. util/VisibilityPolicy.kt). YÃ¼klenene kadar en kÄ±sÄ±tlayÄ±cÄ±
+    // varsayÄ±mla (private) baÅŸlÄ±yoruz.
     var profileVisibility by remember { mutableStateOf<String?>("private") }
     val profileRepository = remember { ProfileRepository() }
     var inFeed by remember { mutableStateOf(true) }
@@ -162,11 +163,11 @@ fun CreateDreamScreen(navController: NavController) {
         }
     }
 
-    // DiaryComposerScreen/ThreadScreen'de kanıtlanan aynı sorun: composable'a
-    // bağlı rememberLauncherForActivityResult(PickVisualMedia()) galeriden
-    // dönüşte hiç tetiklenmeyebiliyor. Activity'ye bağlı GlobalContentPicker
-    // singleton'ı kullanıp sonucu her (yeniden) compose girişinde kontrol
-    // ediyoruz — bkz. ThreadScreen.kt / util/GlobalContentPicker.kt.
+    // DiaryComposerScreen/ThreadScreen'de kanÄ±tlanan aynÄ± sorun: composable'a
+    // baÄŸlÄ± rememberLauncherForActivityResult(PickVisualMedia()) galeriden
+    // dÃ¶nÃ¼ÅŸte hiÃ§ tetiklenmeyebiliyor. Activity'ye baÄŸlÄ± GlobalContentPicker
+    // singleton'Ä± kullanÄ±p sonucu her (yeniden) compose giriÅŸinde kontrol
+    // ediyoruz â€” bkz. ThreadScreen.kt / util/GlobalContentPicker.kt.
     LaunchedEffect(Unit) {
         GlobalContentPicker.consumePendingUri()?.let { uri -> uploadPickedDreamImage(uri) }
     }
@@ -178,9 +179,9 @@ fun CreateDreamScreen(navController: NavController) {
         }
     }
     val allowedVisibilityOptions = remember(profileVisibility) { VisibilityPolicy.allowedOptions(profileVisibility) }
-    // Kullanıcı gizlilik seçimini elle değiştirene kadar, profil yüklendikçe
-    // en açık (varsayılan) seçeneğe otomatik senkronlanır — aksi halde profil
-    // henüz yüklenmeden atanan geçici "private" varsayımı kalıcı olarak takılı kalır.
+    // KullanÄ±cÄ± gizlilik seÃ§imini elle deÄŸiÅŸtirene kadar, profil yÃ¼klendikÃ§e
+    // en aÃ§Ä±k (varsayÄ±lan) seÃ§eneÄŸe otomatik senkronlanÄ±r â€” aksi halde profil
+    // henÃ¼z yÃ¼klenmeden atanan geÃ§ici "private" varsayÄ±mÄ± kalÄ±cÄ± olarak takÄ±lÄ± kalÄ±r.
     var visibilityUserSet by remember { mutableStateOf(false) }
     LaunchedEffect(allowedVisibilityOptions) {
         if (!visibilityUserSet) {
@@ -206,11 +207,11 @@ fun CreateDreamScreen(navController: NavController) {
             override fun onEndOfSpeech() { isListening = false }
             override fun onError(error: Int) {
                 isListening = false
-                // ÖNCEDEN: hata burada sessizce yutuluyordu — mikrofon
-                // "dinliyor" gösterip hiçbir sonuç gelmeden kapanıyordu ve
-                // kullanıcı için "sesle yazma çalışmıyor" gibi görünüyordu.
-                // Artık en azından NEDEN görünür oluyor (ör. eşleşme yok,
-                // zaman aşımı, ağ hatası) — sessiz sonlanma yerine.
+                // Ã–NCEDEN: hata burada sessizce yutuluyordu â€” mikrofon
+                // "dinliyor" gÃ¶sterip hiÃ§bir sonuÃ§ gelmeden kapanÄ±yordu ve
+                // kullanÄ±cÄ± iÃ§in "sesle yazma Ã§alÄ±ÅŸmÄ±yor" gibi gÃ¶rÃ¼nÃ¼yordu.
+                // ArtÄ±k en azÄ±ndan NEDEN gÃ¶rÃ¼nÃ¼r oluyor (Ã¶r. eÅŸleÅŸme yok,
+                // zaman aÅŸÄ±mÄ±, aÄŸ hatasÄ±) â€” sessiz sonlanma yerine.
                 val message = when (error) {
                     SpeechRecognizer.ERROR_NO_MATCH -> speechErrorNoMatchMsg
                     SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> speechErrorTimeoutMsg
@@ -242,14 +243,14 @@ fun CreateDreamScreen(navController: NavController) {
         }
     }
     
-    // Bazı cihazlarda (Google uygulaması devre dışı, GMS'siz cihazlar, bazı
-    // özel ROM'lar) SpeechRecognizer.isRecognitionAvailable() false dönüyor
-    // çünkü arka planda bağlanabilecek bir RecognitionService yok — ama yine
-    // de ACTION_RECOGNIZE_SPEECH'i AKTİVİTE olarak açabilen bir uygulama
-    // (üretici sesli arama vb.) kurulu olabiliyor. Önceden bu durumda
-    // kullanıcıya doğrudan "kullanılamıyor" gösterilip hiçbir şey
-    // denenmiyordu. Bu launcher, servis yolu başarısız olduğunda aynı intent'i
-    // aktivite olarak başlatan bir yedek yol sağlıyor.
+    // BazÄ± cihazlarda (Google uygulamasÄ± devre dÄ±ÅŸÄ±, GMS'siz cihazlar, bazÄ±
+    // Ã¶zel ROM'lar) SpeechRecognizer.isRecognitionAvailable() false dÃ¶nÃ¼yor
+    // Ã§Ã¼nkÃ¼ arka planda baÄŸlanabilecek bir RecognitionService yok â€” ama yine
+    // de ACTION_RECOGNIZE_SPEECH'i AKTÄ°VÄ°TE olarak aÃ§abilen bir uygulama
+    // (Ã¼retici sesli arama vb.) kurulu olabiliyor. Ã–nceden bu durumda
+    // kullanÄ±cÄ±ya doÄŸrudan "kullanÄ±lamÄ±yor" gÃ¶sterilip hiÃ§bir ÅŸey
+    // denenmiyordu. Bu launcher, servis yolu baÅŸarÄ±sÄ±z olduÄŸunda aynÄ± intent'i
+    // aktivite olarak baÅŸlatan bir yedek yol saÄŸlÄ±yor.
     val speechActivityFallbackLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -371,13 +372,14 @@ fun CreateDreamScreen(navController: NavController) {
     }
 
     fun requestLocation() {
-        val hasFine = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val hasCoarse = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        if (hasFine || hasCoarse) {
+        if (hasCoarse) {
             fillLocationFromDevice()
         } else {
+            // Yalnizca COARSE isteniyor: manifestte artik FINE yok, bildirilmemis
+            // bir izni istemek sistemde sessizce reddedilir.
             locationPermissionLauncher.launch(
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION)
             )
         }
     }
@@ -919,21 +921,26 @@ val charCount = content.length
 
 private fun getSystemLocationName(context: Context): String {
     try {
-        val hasFine = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val hasCoarse = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        if (!hasFine && !hasCoarse) return ""
+        if (!hasCoarse) return ""
 
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as? LocationManager ?: return ""
         val providers = locationManager.getProviders(true)
         var bestLocation: android.location.Location? = null
         for (provider in providers) {
-            val loc = locationManager.getLastKnownLocation(provider) ?: continue
+            // Her saglayici AYRI AYRI korunmali: yalnizca COARSE iznimiz
+            // oldugu icin GPS_PROVIDER SecurityException firlatiyor; tek bir
+            // dis try/catch olsaydi ilk saglayicida cikip NETWORK_PROVIDER'i
+            // hic denemeden bos donerdik.
+            val loc = runCatching { locationManager.getLastKnownLocation(provider) }.getOrNull() ?: continue
             if (bestLocation == null || loc.accuracy < bestLocation.accuracy) {
                 bestLocation = loc
             }
         }
         if (bestLocation != null) {
-            val geocoder = Geocoder(context, Locale.getDefault())
+            // Cihaz dili degil, kullanicinin uygulama icinde sectigi dil:
+            // sehir/ulke adi da arayuzun geri kalaniyla ayni dilde olmali.
+            val geocoder = Geocoder(context, AppLanguage.locale())
             @Suppress("DEPRECATION")
             val addresses = geocoder.getFromLocation(bestLocation.latitude, bestLocation.longitude, 1)
             val addr = addresses?.firstOrNull()

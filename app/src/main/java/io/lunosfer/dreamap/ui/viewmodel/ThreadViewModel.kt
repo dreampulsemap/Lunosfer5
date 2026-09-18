@@ -1,5 +1,7 @@
 package io.lunosfer.dreamap.ui.viewmodel
 
+import io.lunosfer.dreamap.util.GuestPrompt
+import io.lunosfer.dreamap.util.GuestMode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -127,6 +129,7 @@ class ThreadViewModel(
         attachmentSize: Long? = null,
         appContext: android.content.Context? = null
     ) {
+        if (GuestMode.isGuest()) { GuestPrompt.show(); return }
         val trimmed = content?.trim()
         if ((trimmed == null || trimmed.isEmpty()) && localUri == null && directUrl == null) return
         if (_state.value.isSending || _state.value.isUploadingAttachment) return

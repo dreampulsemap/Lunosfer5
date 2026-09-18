@@ -1,5 +1,7 @@
 package io.lunosfer.dreamap.ui.viewmodel
 
+import io.lunosfer.dreamap.util.GuestPrompt
+import io.lunosfer.dreamap.util.GuestMode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -176,6 +178,7 @@ class VisionVideoPlayerViewModel(
     }
 
     fun addComment(content: String) {
+        if (GuestMode.isGuest()) { GuestPrompt.show(); return }
         if (content.isBlank()) return
         val current = _state.value as? VisionVideoPlayerUiState.Content ?: return
         _state.value = current.copy(isSubmittingComment = true)

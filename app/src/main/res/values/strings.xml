@@ -859,4 +859,10 @@
     <string name="error_session_expired">Your session has expired. Please log in again.</string>
 
     <string name="cd_use_my_location">Use my location</string>
+
+    <string name="guest_sheet_title">Create a free account</string>
+    <string name="guest_sheet_desc">Guest accounts are read-only. Sign up free to follow people, share dreams, comment, like and send messages.</string>
+    <string name="guest_sheet_cta">Create free account</string>
+    <string name="guest_sheet_dismiss">Not now</string>
+    <string name="error_guest_read_only">Guest accounts are read-only.</string>
 </resources>

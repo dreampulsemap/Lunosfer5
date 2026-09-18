@@ -826,4 +826,10 @@
     <plurals name="summary_dreams_analyzed_plural">
         <item quantity="other">🌙 %1$d件の夢を分析しました</item>
     </plurals>
+
+    <string name="guest_sheet_title">無料アカウントを作成</string>
+    <string name="guest_sheet_desc">ゲストアカウントは閲覧のみです。フォロー、夢の共有、コメント、いいね、メッセージの送信には無料登録が必要です。</string>
+    <string name="guest_sheet_cta">無料アカウントを作成</string>
+    <string name="guest_sheet_dismiss">今はしない</string>
+    <string name="error_guest_read_only">ゲストアカウントは閲覧のみです。</string>
 </resources>

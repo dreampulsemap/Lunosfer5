@@ -828,4 +828,10 @@
         <item quantity="many">🌙 %1$d rêves analysés</item>
         <item quantity="other">🌙 %1$d rêves analysés</item>
     </plurals>
+
+    <string name="guest_sheet_title">Créez un compte gratuit</string>
+    <string name="guest_sheet_desc">Les comptes invités sont en lecture seule. Inscrivez-vous gratuitement pour suivre d\'autres personnes, partager des rêves, commenter, aimer et envoyer des messages.</string>
+    <string name="guest_sheet_cta">Créer un compte gratuit</string>
+    <string name="guest_sheet_dismiss">Pas maintenant</string>
+    <string name="error_guest_read_only">Les comptes invités sont en lecture seule.</string>
 </resources>

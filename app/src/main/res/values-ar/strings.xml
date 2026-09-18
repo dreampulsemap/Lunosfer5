@@ -833,4 +833,10 @@
         <item quantity="many">🌙 تم تحليل %1$d حلمًا</item>
         <item quantity="other">🌙 تم تحليل %1$d حلم</item>
     </plurals>
+
+    <string name="guest_sheet_title">أنشئ حسابًا مجانيًا</string>
+    <string name="guest_sheet_desc">حسابات الضيوف للقراءة فقط. سجّل مجانًا لتتابع الآخرين وتشارك أحلامك وتعلّق وتُعجب وترسل الرسائل.</string>
+    <string name="guest_sheet_cta">إنشاء حساب مجاني</string>
+    <string name="guest_sheet_dismiss">ليس الآن</string>
+    <string name="error_guest_read_only">حسابات الضيوف للقراءة فقط.</string>
 </resources>

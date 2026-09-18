@@ -1,5 +1,7 @@
 package io.lunosfer.dreamap.ui.viewmodel
 
+import io.lunosfer.dreamap.util.GuestPrompt
+import io.lunosfer.dreamap.util.GuestMode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.lunosfer.dreamap.data.model.*
@@ -73,6 +75,7 @@ class DreamDetailViewModel : ViewModel() {
     }
 
     fun toggleLike(dreamId: Long, userId: String?) {
+        if (GuestMode.isGuest()) { GuestPrompt.show(); return }
         if (userId.isNullOrBlank()) {
             setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_login_required_like))
             return
@@ -119,6 +122,7 @@ class DreamDetailViewModel : ViewModel() {
     }
 
     fun addComment(dreamId: Long, userId: String?, content: String) {
+        if (GuestMode.isGuest()) { GuestPrompt.show(); return }
         if (userId.isNullOrBlank()) {
             setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_login_required_comment))
             return

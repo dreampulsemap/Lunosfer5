@@ -1,7 +1,8 @@
-package io.lunosfer.dreamap.ui.screens
+﻿package io.lunosfer.dreamap.ui.screens
 
 import android.widget.Toast
 import io.lunosfer.dreamap.R
+import io.lunosfer.dreamap.util.requireAccount
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -89,7 +90,7 @@ fun PublicProfileScreen(
                 },
                 actions = {
                     val s = state as? PublicProfileUiState.Success
-                    // Kendi profilinde "..." menüsü gösterilmez.
+                    // Kendi profilinde "..." menÃ¼sÃ¼ gÃ¶sterilmez.
                     if (s != null && !s.isSelf) {
                         VisionMoreMenuButton(
                             isOwner = false,
@@ -275,7 +276,7 @@ fun PublicProfileScreen(
         }
     }
 
-    // Kullanıcı Şikayeti — Google Play UGC politikası.
+    // KullanÄ±cÄ± Åikayeti â€” Google Play UGC politikasÄ±.
     val successState = state as? PublicProfileUiState.Success
     if (successState?.showReportSheet == true) {
         VisionReportSheet(
@@ -287,7 +288,7 @@ fun PublicProfileScreen(
         )
     }
 
-    // Kullanıcı Engelleme onay diyaloğu.
+    // KullanÄ±cÄ± Engelleme onay diyaloÄŸu.
     if (showBlockConfirmDialog && successState != null) {
         AlertDialog(
             onDismissRequest = { showBlockConfirmDialog = false },
@@ -451,7 +452,10 @@ private fun ProfileHeaderCard(
                                 Text(stringResource(R.string.public_profile_following), fontSize = 13.sp)
                             }
                             Button(
-                                onClick = onMessageClick,
+                                // Misafir mesaj gonderemiyor (sunucu reddediyor);
+                                // sohbeti actirip orada duvara toslatmak yerine
+                                // burada kayit davetini gosteriyoruz.
+                                onClick = { requireAccount { onMessageClick() } },
                                 colors = ButtonDefaults.buttonColors(containerColor = AstralGold)
                             ) {
                                 Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null, tint = Void950, modifier = Modifier.size(14.dp))

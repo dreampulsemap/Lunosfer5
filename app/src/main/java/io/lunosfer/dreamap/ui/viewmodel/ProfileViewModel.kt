@@ -1,5 +1,7 @@
 package io.lunosfer.dreamap.ui.viewmodel
 
+import io.lunosfer.dreamap.util.GuestPrompt
+import io.lunosfer.dreamap.util.GuestMode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.jan.supabase.auth.auth
@@ -84,6 +86,7 @@ class ProfileViewModel(
     }
 
     fun openEditModal() {
+        if (GuestMode.isGuest()) { GuestPrompt.show(); return }
         val current = _state.value as? ProfileUiState.Content ?: return
         _state.value = current.copy(isEditModalOpen = true)
     }

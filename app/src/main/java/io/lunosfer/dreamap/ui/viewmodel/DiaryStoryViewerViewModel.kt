@@ -1,5 +1,7 @@
 package io.lunosfer.dreamap.ui.viewmodel
 
+import io.lunosfer.dreamap.util.GuestPrompt
+import io.lunosfer.dreamap.util.GuestMode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -180,6 +182,7 @@ class DiaryStoryViewerViewModel(
     // like/comment akışıyla aynı desen: iyimser (optimistic) güncelleme,
     // hata olursa geri al.
     fun toggleLike() {
+        if (GuestMode.isGuest()) { GuestPrompt.show(); return }
         val current = _state.value as? DiaryStoryViewerUiState.Content ?: return
         val entry = current.currentEntry ?: return
         val newLiked = !entry.isLiked
@@ -230,6 +233,7 @@ class DiaryStoryViewerViewModel(
     }
 
     fun addComment(content: String) {
+        if (GuestMode.isGuest()) { GuestPrompt.show(); return }
         val trimmed = content.trim()
         if (trimmed.isEmpty()) return
         val current = _state.value as? DiaryStoryViewerUiState.Content ?: return

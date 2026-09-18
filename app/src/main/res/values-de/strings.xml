@@ -830,4 +830,10 @@
         <item quantity="one">🌙 %1$d Traum analysiert</item>
         <item quantity="other">🌙 %1$d Träume analysiert</item>
     </plurals>
+
+    <string name="guest_sheet_title">Kostenloses Konto erstellen</string>
+    <string name="guest_sheet_desc">Gastkonten können nur lesen. Registriere dich kostenlos, um anderen zu folgen, Träume zu teilen, zu kommentieren, zu liken und Nachrichten zu senden.</string>
+    <string name="guest_sheet_cta">Kostenloses Konto erstellen</string>
+    <string name="guest_sheet_dismiss">Jetzt nicht</string>
+    <string name="error_guest_read_only">Gastkonten können nur lesen.</string>
 </resources>

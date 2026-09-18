@@ -857,4 +857,10 @@
         <item quantity="one">🌙 %1$d Rüya Analiz Edildi</item>
         <item quantity="other">🌙 %1$d Rüya Analiz Edildi</item>
     </plurals>
+
+    <string name="guest_sheet_title">Ücretsiz hesap oluştur</string>
+    <string name="guest_sheet_desc">Misafir hesaplar yalnızca okuyabilir. Takip etmek, rüya paylaşmak, yorum yapmak, beğenmek ve mesaj göndermek için ücretsiz kayıt ol.</string>
+    <string name="guest_sheet_cta">Ücretsiz hesap oluştur</string>
+    <string name="guest_sheet_dismiss">Şimdi değil</string>
+    <string name="error_guest_read_only">Misafir hesaplar yalnızca okuyabilir.</string>
 </resources>

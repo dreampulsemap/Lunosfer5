@@ -829,4 +829,10 @@
         <item quantity="one">🌙 %1$d सपना विश्लेषित</item>
         <item quantity="other">🌙 %1$d सपने विश्लेषित</item>
     </plurals>
+
+    <string name="guest_sheet_title">मुफ़्त खाता बनाएँ</string>
+    <string name="guest_sheet_desc">अतिथि खाते केवल पढ़ने के लिए हैं। लोगों को फ़ॉलो करने, सपने साझा करने, टिप्पणी करने, पसंद करने और संदेश भेजने के लिए मुफ़्त में साइन अप करें।</string>
+    <string name="guest_sheet_cta">मुफ़्त खाता बनाएँ</string>
+    <string name="guest_sheet_dismiss">अभी नहीं</string>
+    <string name="error_guest_read_only">अतिथि खाते केवल पढ़ने के लिए हैं।</string>
 </resources>

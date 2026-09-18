@@ -829,4 +829,10 @@
         <item quantity="many">🌙 %1$d sueños analizados</item>
         <item quantity="other">🌙 %1$d sueños analizados</item>
     </plurals>
+
+    <string name="guest_sheet_title">Crea una cuenta gratis</string>
+    <string name="guest_sheet_desc">Las cuentas de invitado son de solo lectura. Regístrate gratis para seguir a otras personas, compartir sueños, comentar, dar me gusta y enviar mensajes.</string>
+    <string name="guest_sheet_cta">Crear cuenta gratis</string>
+    <string name="guest_sheet_dismiss">Ahora no</string>
+    <string name="error_guest_read_only">Las cuentas de invitado son de solo lectura.</string>
 </resources>

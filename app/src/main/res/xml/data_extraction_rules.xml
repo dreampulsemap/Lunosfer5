@@ -1,19 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-   Sample data extraction rules file; uncomment and customize as necessary.
-   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
-   for details.
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 12+ (API 31 ve ustu) icin yedekleme/cihaz aktarimi kurallari.
+
+  NEDEN: supabase-kt oturumu duz SharedPreferences'ta tutuyor
+  ("<paket>_preferences.xml" icindeki "sb-<proje>-supabase-co-session"
+  anahtari) ve icinde access_token ile REFRESH TOKEN duz metin halinde
+  duruyor (emülatorde dogrulandi). Kurallar bostayken Auto Backup bu
+  dosyayi da kullanicinin Google Drive yedegine yolluyor ve yedek baska bir
+  cihaza geri yuklendiginde o cihaz sessizce ayni hesapla acilmis oluyor.
+  Kimlik bilgileri yedege ASLA girmemeli; sharedpref alani tamamen disarida
+  birakildi (icindeki diger degerler yalnizca yeniden uretilebilir onbellek
+  ve arayuz tercihleri).
 -->
 <data-extraction-rules>
     <cloud-backup>
-        <!-- TODO: Use <include> and <exclude> to control what is backed up.
-        <include .../>
-        <exclude .../>
-        -->
+        <exclude domain="sharedpref" path="." />
     </cloud-backup>
-    <!--
     <device-transfer>
-        <include .../>
-        <exclude .../>
+        <exclude domain="sharedpref" path="." />
     </device-transfer>
-    -->
 </data-extraction-rules>

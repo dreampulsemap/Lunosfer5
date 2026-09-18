@@ -16,7 +16,16 @@ import java.util.Locale
  */
 object ErrorText {
 
-    fun friendly(throwable: Throwable?): String = friendly(throwable?.message)
+    fun friendly(throwable: Throwable?): String {
+        // Guvenlik agi: proaktif kapatmayi atladigimiz bir yazma islemi
+        // sunucudan "misafir yazamaz" ile donerse, kullaniciya ham hata
+        // yerine kayit daveti gosterilsin (bkz. util/GuestMode.kt).
+        if (GuestMode.isGuestWriteBlocked(throwable)) {
+            GuestPrompt.show()
+            return DreamapApp.instance.getString(R.string.error_guest_read_only)
+        }
+        return friendly(throwable?.message)
+    }
 
     fun friendly(message: String?): String {
         val app = DreamapApp.instance

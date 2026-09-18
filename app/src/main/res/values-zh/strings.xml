@@ -828,4 +828,10 @@
     <plurals name="summary_dreams_analyzed_plural">
         <item quantity="other">🌙 已分析 %1$d 个梦境</item>
     </plurals>
+
+    <string name="guest_sheet_title">创建免费账号</string>
+    <string name="guest_sheet_desc">访客账号仅可浏览。免费注册后即可关注他人、分享梦境、评论、点赞和发送消息。</string>
+    <string name="guest_sheet_cta">创建免费账号</string>
+    <string name="guest_sheet_dismiss">暂不</string>
+    <string name="error_guest_read_only">访客账号仅可浏览。</string>
 </resources>

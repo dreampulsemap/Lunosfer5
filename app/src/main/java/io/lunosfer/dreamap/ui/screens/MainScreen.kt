@@ -33,6 +33,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.navArgument
 import io.lunosfer.dreamap.R
 import io.lunosfer.dreamap.supabase.supabaseClient
+import io.lunosfer.dreamap.ui.components.GuestSignUpSheet
+import io.lunosfer.dreamap.util.requireAccount
 import io.lunosfer.dreamap.ui.screens.videoeditor.VideoEditorScreen
 import io.lunosfer.dreamap.ui.theme.*
 import io.github.jan.supabase.auth.auth
@@ -443,6 +445,22 @@ fun MainScreen(
             onDismiss = { showBillingSheet = false }
         )
     }
+
+    // Misafir (anonim) oturumda bir yazma islemi denendiginde acilan kayit
+    // daveti. Burada BIR KEZ ciziliyor; tetikleyenler navController'a sahip
+    // olmadigi icin gorunurluk GuestPrompt singleton'i uzerinden yonetiliyor
+    // (bkz. util/GuestMode.kt). Misafirin kaybedecek verisi yok - sunucu
+    // zaten hicbir yazmasini kabul etmiyor - bu yuzden hesabi tasimak yerine
+    // dogrudan kayit ekranina goturuyoruz.
+    GuestSignUpSheet(
+        onSignUp = {
+            // Duz navigate: geri tusu kullaniciyi birakip geldigi yere
+            // dondursun. (popUpTo(0) ile tum yigini temizlemek burada ise
+            // yaramiyordu - misafir zaten "giris yapmis" sayildigi icin
+            // hedefe gidilmiyordu.)
+            navController.navigate(Screen.Auth.route)
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -720,7 +738,10 @@ fun BottomNavBar(navController: NavHostController, unreadMessages: Int = 0) {
                     .size(56.dp)
                     .clip(CircleShape)
                     .background(Brush.linearGradient(listOf(AstralGold, AetherCyan)))
-                    .clickable(onClickLabel = createCd) { showCreateMenu = true }
+                    // Olusturma menusu tamamen yazma islemlerinden olusuyor
+                    // (ruya, vizyon, gunluk); misafire menuyu hic acmadan
+                    // kayit davetini gosteriyoruz.
+                    .clickable(onClickLabel = createCd) { requireAccount { showCreateMenu = true } }
                     .semantics { contentDescription = createCd },
                 contentAlignment = Alignment.Center
             ) {

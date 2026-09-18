@@ -1,4 +1,4 @@
-package io.lunosfer.dreamap.ui.screens
+﻿package io.lunosfer.dreamap.ui.screens
 
 import android.content.Context
 import android.widget.Toast
@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import io.lunosfer.dreamap.R
+import io.lunosfer.dreamap.util.GuestMode
 import io.lunosfer.dreamap.service.LunosferMessagingService
 import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.theme.*
@@ -62,7 +63,14 @@ private data class ProfileIdentityRow(
 fun AuthScreen(onLoginSuccess: () -> Unit) {
     val sessionStatus by supabaseClient.auth.sessionStatus.collectAsState(initial = io.github.jan.supabase.auth.status.SessionStatus.Initializing)
     LaunchedEffect(sessionStatus) {
-        if (sessionStatus is io.github.jan.supabase.auth.status.SessionStatus.Authenticated) {
+        // Misafir oturumu da "Authenticated" sayiliyor. Bu kontrol misafiri
+        // dislamasaydi, kayit davetinden bu ekrana gelen misafir ayni karede
+        // geri Ana Sayfa'ya atiliyordu ve hesabini hic olusturamiyordu
+        // (emÃ¼latorde goruldu). Misafirin buraya gelmesinin TEK sebebi
+        // zaten anonim oturumdan cikip gercek hesap acmak.
+        if (sessionStatus is io.github.jan.supabase.auth.status.SessionStatus.Authenticated &&
+            !GuestMode.isGuest()
+        ) {
             onLoginSuccess()
         }
     }
@@ -187,7 +195,7 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                         val emailInput = email.trim()
                         val passwordInput = password
                         // Onceden bos alanda butona basinca HICBIR sey olmuyordu
-                        // (sessiz return) — kullanici butonun bozuk oldugunu
+                        // (sessiz return) â€” kullanici butonun bozuk oldugunu
                         // saniyordu.
                         if (emailInput.isBlank() || passwordInput.isBlank()) {
                             Toast.makeText(context, context.getString(R.string.auth_error_fields_required), Toast.LENGTH_SHORT).show()
@@ -260,7 +268,7 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                 }
 
                 // Sifresini unutan kullanicinin uygulamaya girmesinin hicbir yolu
-                // yoktu — ne burada ne web'de sifirlama akisi vardi. Supabase
+                // yoktu â€” ne burada ne web'de sifirlama akisi vardi. Supabase
                 // sifirlama e-postasi gonderiyor; e-postadaki link web'deki
                 // /auth/reset sayfasina dusup yeni sifre belirlemeyi sagliyor.
                 if (isLogin) {
@@ -432,7 +440,7 @@ private suspend fun ensureUserProfile(userId: String, email: String?, desiredUse
 
     val stillDefaultName = existing.username.isNullOrBlank() || existing.username == sanitizedDefaultUsername(email)
     if (!desiredUsername.isNullOrBlank() && desiredUsername != existing.username && stillDefaultName) {
-        // Kullanici adi baskasinda olabilir (UNIQUE) — basarisiz olursa sessizce
+        // Kullanici adi baskasinda olabilir (UNIQUE) â€” basarisiz olursa sessizce
         // varsayilanda kaliyoruz, kullanici Profil > Duzenle'den degistirebilir.
         runCatching {
             supabaseClient.postgrest["user_profiles"]
