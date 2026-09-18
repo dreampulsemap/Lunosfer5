@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  android:roundIcon da API 26+ cihazlarda uyarlanabilir (adaptive) ikon
+  kullanmali. Bu dosya yokken yuvarlak ikon eski mipmap-*/ic_launcher_round.png
+  dosyalarina dusuyordu: launcher maskesi uygulanmadigi icin ic_launcher ile
+  ayni cihazda iki farkli gorunum olusabiliyordu.
+-->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>

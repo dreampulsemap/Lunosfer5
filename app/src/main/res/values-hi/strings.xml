@@ -68,7 +68,6 @@
     <string name="summary_monthly">मासिक</string>
     <string name="summary_generating_ai">AI सारांश बनाया जा रहा है...</string>
     <string name="summary_loading">सारांश लोड हो रहा है...</string>
-    <string name="summary_dreams_analyzed">🌙 %1$d सपनों का विश्लेषण किया गया</string>
     <string name="summary_sentiment">भावना: %1$s</string>
     <string name="summary_refresh">रीफ़्रेश करें</string>
     <string name="summary_not_created">हाल के %1$s स्वप्न लॉग से निकाला गया AI अवचेतन सारांश अभी तक नहीं बनाया गया है।</string>
@@ -340,13 +339,11 @@
     <string name="error_psyche_map">साइकी मैप लोड करने में विफल</string>
     <string name="error_prophet_failed">प्रोफेट जवाब देने में विफल रहा</string>
     <string name="error_referral_stats">रेफ़रल आँकड़े प्राप्त करने में विफल</string>
-    <string name="msg_mana_awarded">+%1$d माना प्राप्त हुआ!</string>
     <string name="msg_referral_applied">रेफ़रल कोड लागू किया गया!</string>
     <string name="error_notifications_load">सूचनाएं लोड करने में विफल</string>
     <string name="error_dream_load">सपना लोड करने में विफल</string>
     <string name="msg_dream_updated">सपना सफलतापूर्वक अपडेट किया गया</string>
     <string name="msg_dream_boosted">आपका सपना बूस्ट किया गया! (शेष आभा: %1$s)</string>
-    <string name="msg_dream_bounty_added">%1$d आभा इनाम जोड़ा गया! (शेष आभा: %2$s)</string>
     <string name="error_vision_not_found">विज़न नहीं मिला: %1$s</string>
     <string name="error_profile_load">प्रोफ़ाइल लोड करने में विफल</string>
     <string name="error_diary_feed_load">डायरी फ़ीड लोड करने में विफल</string>
@@ -443,7 +440,6 @@
     <string name="billing_plan_yearly">वार्षिक</string>
     <string name="billing_aura_pack_label">%1$d ऑरा</string>
     <string name="billing_purchase_processing">खरीद संसाधित हो रही है…</string>
-    <string name="billing_purchase_success_aura">आपके बैलेंस में %1$d ऑरा जोड़ी गई!</string>
     <string name="billing_purchase_success_premium">Lunosfer प्रीमियम में आपका स्वागत है!</string>
     <string name="billing_purchase_error">खरीद विफल रही। कृपया फिर से प्रयास करें।</string>
     <string name="billing_no_products">उत्पाद लोड हो रहे हैं…</string>
@@ -488,7 +484,6 @@
     <string name="goal_detail_translating">अनुवाद हो रहा है...</string>
     <string name="goal_detail_see_original">मूल देखें</string>
     <string name="goal_detail_translate">🌐 अनुवाद करें</string>
-    <string name="home_streak_days">%1$d दिन की लगातार श्रृंखला</string>
     <string name="home_streak_start">आज ही अपनी श्रृंखला शुरू करें</string>
     <string name="home_welcome_summary">आज %1$d सपने और %2$d सक्रिय विज़न आपका इंतज़ार कर रहे हैं</string>
     <string name="editor_camera_permission_denied">क्लिप रिकॉर्ड करने के लिए कैमरा अनुमति आवश्यक है</string>
@@ -658,7 +653,6 @@
     <string name="main_menu_globe">ग्लोब</string>
     <string name="pixabay_add_selected">चयनित जोड़ें (%1$d)</string>
     <string name="pixabay_clear_selection">साफ़ करें</string>
-    <string name="pixabay_selected_count">%1$d चयनित</string>
     <string name="vision_report_action">रिपोर्ट करें</string>
     <string name="vision_report_note_placeholder">अतिरिक्त विवरण (वैकल्पिक)…</string>
     <string name="vision_report_reason_harassment">उत्पीड़न या धमकाना</string>
@@ -703,7 +697,6 @@
     <string name="goal_detail_error_mana_failed">माना नहीं दिया जा सका</string>
     <string name="goal_detail_error_comment_add_failed">टिप्पणी नहीं जोड़ी जा सकी</string>
     <string name="goal_detail_error_comment_delete_failed">टिप्पणी नहीं हटाई जा सकी</string>
-    <string name="goal_detail_msg_media_added_format">%1$d मीडिया जोड़ा गया</string>
     <string name="common_error_unknown">एक त्रुटि हुई</string>
     <string name="vision_report_msg_already_reported">आप पहले ही इस विज़न की रिपोर्ट कर चुके हैं।</string>
     <string name="globe_coming_soon_title">ग्लोब जल्द ही आ रहा है</string>
@@ -835,4 +828,28 @@
     <string name="guest_sheet_cta">मुफ़्त खाता बनाएँ</string>
     <string name="guest_sheet_dismiss">अभी नहीं</string>
     <string name="error_guest_read_only">अतिथि खाते केवल पढ़ने के लिए हैं।</string>
+    <plurals name="home_streak_days">
+        <item quantity="one">%1$d दिन की लगातार श्रृंखला</item>
+        <item quantity="other">%1$d दिन की लगातार श्रृंखला</item>
+    </plurals>
+    <plurals name="pixabay_selected_count">
+        <item quantity="one">%1$d चयनित</item>
+        <item quantity="other">%1$d चयनित</item>
+    </plurals>
+    <plurals name="goal_detail_msg_media_added_format">
+        <item quantity="one">%1$d मीडिया जोड़ा गया</item>
+        <item quantity="other">%1$d मीडिया जोड़ा गया</item>
+    </plurals>
+    <plurals name="msg_mana_awarded">
+        <item quantity="one">+%1$d माना प्राप्त हुआ!</item>
+        <item quantity="other">+%1$d माना प्राप्त हुआ!</item>
+    </plurals>
+    <plurals name="msg_dream_bounty_added">
+        <item quantity="one">%1$d आभा इनाम जोड़ा गया! (शेष आभा: %2$s)</item>
+        <item quantity="other">%1$d आभा इनाम जोड़ा गया! (शेष आभा: %2$s)</item>
+    </plurals>
+    <plurals name="billing_purchase_success_aura">
+        <item quantity="one">आपके बैलेंस में %1$d ऑरा जोड़ी गई!</item>
+        <item quantity="other">आपके बैलेंस में %1$d ऑरा जोड़ी गई!</item>
+    </plurals>
 </resources>

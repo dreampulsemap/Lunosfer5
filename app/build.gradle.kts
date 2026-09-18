@@ -66,6 +66,14 @@ android {
     // Media3 Transformer/Effect henüz tamamen stabil değil; bu API'leri
     // reels editöründe kapsamlı biçimde kullanıyoruz.
     disable += "UnsafeOptInUsageError"
+    // IconLauncherShape, eski (API 24-25) launcher ikonlarinin kare alani
+    // tamamen doldurmamasini ister. Lunosfer'in ikonu BILEREK tam tasan
+    // koyu bir kare: amblem zaten kendi icinde bosluklu ve API 26+ icin
+    // ayni tasarim adaptive-icon olarak (arka plan + on plan katmani)
+    // tanimli. Uyariya uymak icin PNG'leri kucultmek Android 7'de
+    // boslukta yuzen kucuk bir kare birakirdi - marka varligini bozmadan
+    // uyariyi susturuyoruz.
+    disable += "IconLauncherShape"
   }
 }
 

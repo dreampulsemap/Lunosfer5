@@ -68,7 +68,6 @@
     <string name="summary_monthly">Mensual</string>
     <string name="summary_generating_ai">Se está creando el resumen de IA...</string>
     <string name="summary_loading">Cargando resumen...</string>
-    <string name="summary_dreams_analyzed">🌙 %1$d sueños analizados</string>
     <string name="summary_sentiment">Sentimiento: %1$s</string>
     <string name="summary_refresh">Actualizar</string>
     <string name="summary_not_created">El resumen subconsciente de IA extraído de los registros de sueños recientes de %1$s aún no se ha creado.</string>
@@ -262,7 +261,6 @@
     <string name="profile_stat_comments_empty">Aún no hay comentarios</string>
     <string name="profile_stat_friends">Amigos</string>
     <string name="profile_stat_friends_empty">Encuentra tu primer amigo</string>
-    <string name="msg_dream_bounty_added">¡Se añadió una recompensa de %1$d de Aura! (Aura restante: %2$s)</string>
     <string name="create_vision_cover_pixabay_btn">🖼️ Seleccionar de la galería multimedia de Pixabay</string>
     <string name="home_feed_sentiment_label">Emoción: %1$s</string>
     <string name="dream_detail_save_btn">Guardar</string>
@@ -276,7 +274,6 @@
     <string name="error_daily_compass_failed">Error al obtener la brújula diaria</string>
     <string name="error_no_session">Sesión no encontrada. Por favor, inicia sesión.</string>
     <string name="dream_detail_cancel">Cancelar</string>
-    <string name="msg_mana_awarded">¡+%1$d de Maná otorgado!</string>
     <string name="profile_language_label">Idioma de la aplicación</string>
     <string name="notifications_refresh">Actualizar</string>
     <string name="create_dream_tags_placeholder">Añadir etiquetas (pulsa intro o coma)</string>
@@ -442,7 +439,6 @@
     <string name="billing_plan_yearly">Anual</string>
     <string name="billing_aura_pack_label">%1$d Aura</string>
     <string name="billing_purchase_processing">Procesando compra…</string>
-    <string name="billing_purchase_success_aura">¡%1$d Aura añadida a tu saldo!</string>
     <string name="billing_purchase_success_premium">¡Bienvenido a Lunosfer Premium!</string>
     <string name="billing_purchase_error">Error en la compra. Inténtalo de nuevo.</string>
     <string name="billing_no_products">Cargando productos…</string>
@@ -487,7 +483,6 @@
     <string name="goal_detail_translating">Traduciendo...</string>
     <string name="goal_detail_see_original">Ver original</string>
     <string name="goal_detail_translate">🌐 Traducir</string>
-    <string name="home_streak_days">%1$d días de racha</string>
     <string name="home_streak_start">Comienza tu racha hoy</string>
     <string name="home_welcome_summary">Hoy te esperan %1$d sueños y %2$d visiones activas</string>
     <string name="editor_camera_permission_denied">Se requiere permiso de cámara para grabar un clip</string>
@@ -657,7 +652,6 @@
     <string name="main_menu_globe">Globo</string>
     <string name="pixabay_add_selected">Añadir seleccionados (%1$d)</string>
     <string name="pixabay_clear_selection">Borrar</string>
-    <string name="pixabay_selected_count">%1$d seleccionados</string>
     <string name="vision_report_action">Reportar</string>
     <string name="vision_report_note_placeholder">Detalles adicionales (opcional)…</string>
     <string name="vision_report_reason_harassment">Acoso o intimidación</string>
@@ -702,7 +696,6 @@
     <string name="goal_detail_error_mana_failed">No se pudo dar mana</string>
     <string name="goal_detail_error_comment_add_failed">No se pudo añadir el comentario</string>
     <string name="goal_detail_error_comment_delete_failed">No se pudo eliminar el comentario</string>
-    <string name="goal_detail_msg_media_added_format">%1$d medios añadidos</string>
     <string name="common_error_unknown">Ha ocurrido un error</string>
     <string name="vision_report_msg_already_reported">Ya has reportado esta visión.</string>
     <string name="globe_coming_soon_title">El Globo vendrá pronto</string>
@@ -835,4 +828,34 @@
     <string name="guest_sheet_cta">Crear cuenta gratis</string>
     <string name="guest_sheet_dismiss">Ahora no</string>
     <string name="error_guest_read_only">Las cuentas de invitado son de solo lectura.</string>
+    <plurals name="home_streak_days">
+        <item quantity="one">%1$d día de racha</item>
+        <item quantity="many">%1$d días de racha</item>
+        <item quantity="other">%1$d días de racha</item>
+    </plurals>
+    <plurals name="pixabay_selected_count">
+        <item quantity="one">%1$d seleccionado</item>
+        <item quantity="many">%1$d seleccionados</item>
+        <item quantity="other">%1$d seleccionados</item>
+    </plurals>
+    <plurals name="goal_detail_msg_media_added_format">
+        <item quantity="one">%1$d medio añadido</item>
+        <item quantity="many">%1$d medios añadidos</item>
+        <item quantity="other">%1$d medios añadidos</item>
+    </plurals>
+    <plurals name="msg_mana_awarded">
+        <item quantity="one">¡+%1$d de Maná otorgado!</item>
+        <item quantity="many">¡+%1$d de Maná otorgados!</item>
+        <item quantity="other">¡+%1$d de Maná otorgados!</item>
+    </plurals>
+    <plurals name="msg_dream_bounty_added">
+        <item quantity="one">¡Se añadió una recompensa de %1$d de Aura! (Aura restante: %2$s)</item>
+        <item quantity="many">¡Se añadió una recompensa de %1$d de Aura! (Aura restante: %2$s)</item>
+        <item quantity="other">¡Se añadió una recompensa de %1$d de Aura! (Aura restante: %2$s)</item>
+    </plurals>
+    <plurals name="billing_purchase_success_aura">
+        <item quantity="one">¡%1$d Aura añadida a tu saldo!</item>
+        <item quantity="many">¡%1$d Auras añadidas a tu saldo!</item>
+        <item quantity="other">¡%1$d Auras añadidas a tu saldo!</item>
+    </plurals>
 </resources>

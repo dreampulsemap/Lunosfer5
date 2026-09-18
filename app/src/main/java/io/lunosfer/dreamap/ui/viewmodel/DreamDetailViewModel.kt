@@ -236,7 +236,7 @@ class DreamDetailViewModel : ViewModel() {
             repository.addBounty(dreamId, amount).onSuccess { res ->
                 val current = _state.value as? DreamDetailUiState.Success ?: return@onSuccess
                 val newTotal = res.newBounty ?: (current.bounty + amount)
-                val msg = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.msg_dream_bounty_added, amount, res.aurasLeft?.toString() ?: "—")
+                val msg = io.lunosfer.dreamap.DreamapApp.instance.resources.getQuantityString(io.lunosfer.dreamap.R.plurals.msg_dream_bounty_added, amount, amount, res.aurasLeft?.toString() ?: "—")
                 _state.value = current.copy(
                     bounty = newTotal,
                     actionMessage = msg

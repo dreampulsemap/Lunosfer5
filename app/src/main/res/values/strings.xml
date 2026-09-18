@@ -72,7 +72,6 @@
     <string name="summary_monthly">Monthly</string>
     <string name="summary_generating_ai">AI Summary is being created...</string>
     <string name="summary_loading">Loading summary...</string>
-    <string name="summary_dreams_analyzed">🌙 %1$d Dreams Analyzed</string>
     <string name="summary_sentiment">Sentiment: %1$s</string>
     <string name="summary_refresh">Refresh</string>
     <string name="summary_not_created">The AI subconscious summary extracted from recent %1$s dream logs has not been created yet.</string>
@@ -90,7 +89,6 @@
     <string name="pixabay_images_not_found">No images found.</string>
     <string name="pixabay_videos_not_found">No videos found.</string>
     <string name="pixabay_add_selected">Add Selected (%1$d)</string>
-    <string name="pixabay_selected_count">%1$d selected</string>
     <string name="pixabay_clear_selection">Clear</string>
 
     <!-- ReferralCard -->
@@ -326,7 +324,6 @@
     <string name="billing_plan_yearly">Yearly</string>
     <string name="billing_aura_pack_label">%1$d Aura</string>
     <string name="billing_purchase_processing">Processing purchase…</string>
-    <string name="billing_purchase_success_aura">%1$d Aura added to your balance!</string>
     <string name="billing_purchase_success_premium">Welcome to Lunosfer Premium!</string>
     <string name="billing_purchase_error">Purchase failed. Please try again.</string>
     <string name="billing_no_products">Loading products…</string>
@@ -437,13 +434,11 @@
     <string name="error_psyche_map">Failed to load Psyche Map</string>
     <string name="error_prophet_failed">Prophet failed to respond</string>
     <string name="error_referral_stats">Failed to get referral statistics</string>
-    <string name="msg_mana_awarded">+%1$d Mana awarded!</string>
     <string name="msg_referral_applied">Referral code applied!</string>
     <string name="error_notifications_load">Failed to load notifications</string>
     <string name="error_dream_load">Failed to load dream</string>
     <string name="msg_dream_updated">Dream successfully updated</string>
     <string name="msg_dream_boosted">Your dream was boosted! (Aura left: %1$s)</string>
-    <string name="msg_dream_bounty_added">%1$d Aura bounty added! (Aura left: %2$s)</string>
     <string name="error_vision_not_found">Vision not found: %1$s</string>
     <string name="error_profile_load">Failed to load profile</string>
     <string name="error_diary_feed_load">Failed to load diary feed</string>
@@ -496,7 +491,6 @@
     <string name="goal_detail_translating">Translating...</string>
     <string name="goal_detail_see_original">See original</string>
     <string name="goal_detail_translate">🌐 Translate</string>
-    <string name="home_streak_days">%1$d day streak</string>
     <string name="home_streak_start">Start your streak today</string>
     <string name="home_welcome_summary">Today, %1$d dreams and %2$d active visions await you</string>
     <!-- Reels editor -->
@@ -784,7 +778,6 @@
     <string name="goal_detail_error_mana_failed">Could not give mana</string>
     <string name="goal_detail_error_comment_add_failed">Could not add comment</string>
     <string name="goal_detail_error_comment_delete_failed">Could not delete comment</string>
-    <string name="goal_detail_msg_media_added_format">%1$d media added</string>
     <string name="common_error_unknown">An error occurred</string>
     <string name="vision_report_msg_already_reported">You have already reported this vision.</string>
     <string name="globe_coming_soon_title">Globe is Coming Soon</string>
@@ -865,4 +858,28 @@
     <string name="guest_sheet_cta">Create free account</string>
     <string name="guest_sheet_dismiss">Not now</string>
     <string name="error_guest_read_only">Guest accounts are read-only.</string>
+    <plurals name="home_streak_days">
+        <item quantity="one">%1$d day streak</item>
+        <item quantity="other">%1$d day streak</item>
+    </plurals>
+    <plurals name="pixabay_selected_count">
+        <item quantity="one">%1$d selected</item>
+        <item quantity="other">%1$d selected</item>
+    </plurals>
+    <plurals name="goal_detail_msg_media_added_format">
+        <item quantity="one">%1$d media added</item>
+        <item quantity="other">%1$d media added</item>
+    </plurals>
+    <plurals name="msg_mana_awarded">
+        <item quantity="one">+%1$d Mana awarded!</item>
+        <item quantity="other">+%1$d Mana awarded!</item>
+    </plurals>
+    <plurals name="msg_dream_bounty_added">
+        <item quantity="one">%1$d Aura bounty added! (Aura left: %2$s)</item>
+        <item quantity="other">%1$d Aura bounty added! (Aura left: %2$s)</item>
+    </plurals>
+    <plurals name="billing_purchase_success_aura">
+        <item quantity="one">%1$d Aura added to your balance!</item>
+        <item quantity="other">%1$d Aura added to your balance!</item>
+    </plurals>
 </resources>

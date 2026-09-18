@@ -67,7 +67,6 @@
     <string name="summary_monthly">за месяц</string>
     <string name="summary_generating_ai">Создается ИИ-сводка...</string>
     <string name="summary_loading">Загрузка сводки...</string>
-    <string name="summary_dreams_analyzed">🌙 Проанализировано снов: %1$d</string>
     <string name="summary_sentiment">Настроение: %1$s</string>
     <string name="summary_refresh">Обновить</string>
     <string name="summary_not_created">ИИ-сводка подсознания, извлеченная из недавних записей снов (%1$s), еще не создана.</string>
@@ -339,13 +338,11 @@
     <string name="error_psyche_map">Не удалось загрузить Карту психики</string>
     <string name="error_prophet_failed">Пророк не смог ответить</string>
     <string name="error_referral_stats">Не удалось получить статистику рефералов</string>
-    <string name="msg_mana_awarded">+%1$d Маны получено!</string>
     <string name="msg_referral_applied">Реферальный код применён!</string>
     <string name="error_notifications_load">Не удалось загрузить уведомления</string>
     <string name="error_dream_load">Не удалось загрузить сон</string>
     <string name="msg_dream_updated">Сон успешно обновлён</string>
     <string name="msg_dream_boosted">Ваш сон был продвинут! (Осталось Ауры: %1$s)</string>
-    <string name="msg_dream_bounty_added">Добавлена награда %1$d Аура! (Осталось Ауры: %2$s)</string>
     <string name="error_vision_not_found">Видение не найдено: %1$s</string>
     <string name="error_profile_load">Не удалось загрузить профиль</string>
     <string name="error_diary_feed_load">Не удалось загрузить ленту дневника</string>
@@ -442,7 +439,6 @@
     <string name="billing_plan_yearly">Ежегодно</string>
     <string name="billing_aura_pack_label">%1$d Аура</string>
     <string name="billing_purchase_processing">Обработка покупки…</string>
-    <string name="billing_purchase_success_aura">%1$d Аура добавлена на ваш баланс!</string>
     <string name="billing_purchase_success_premium">Добро пожаловать в Lunosfer Премиум!</string>
     <string name="billing_purchase_error">Не удалось совершить покупку. Попробуйте снова.</string>
     <string name="billing_no_products">Загрузка товаров…</string>
@@ -487,7 +483,6 @@
     <string name="goal_detail_translating">Перевод...</string>
     <string name="goal_detail_see_original">Показать оригинал</string>
     <string name="goal_detail_translate">🌐 Перевести</string>
-    <string name="home_streak_days">%1$d дней подряд</string>
     <string name="home_streak_start">Начните серию сегодня</string>
     <string name="home_welcome_summary">Сегодня вас ждут %1$d снов и %2$d активных видений</string>
     <string name="editor_camera_permission_denied">Для записи клипа требуется разрешение на использование камеры</string>
@@ -657,7 +652,6 @@
     <string name="main_menu_globe">Глобус</string>
     <string name="pixabay_add_selected">Добавить выбранное (%1$d)</string>
     <string name="pixabay_clear_selection">Очистить</string>
-    <string name="pixabay_selected_count">Выбрано: %1$d</string>
     <string name="vision_report_action">Пожаловаться</string>
     <string name="vision_report_note_placeholder">Дополнительные сведения (необязательно)…</string>
     <string name="vision_report_reason_harassment">Домогательства или травля</string>
@@ -702,7 +696,6 @@
     <string name="goal_detail_error_mana_failed">Не удалось дать ману</string>
     <string name="goal_detail_error_comment_add_failed">Не удалось добавить комментарий</string>
     <string name="goal_detail_error_comment_delete_failed">Не удалось удалить комментарий</string>
-    <string name="goal_detail_msg_media_added_format">Добавлено %1$d медиа</string>
     <string name="common_error_unknown">Произошла ошибка</string>
     <string name="vision_report_msg_already_reported">Вы уже пожаловались на это видение.</string>
     <string name="globe_coming_soon_title">Глобус скоро появится</string>
@@ -836,4 +829,40 @@
     <string name="guest_sheet_cta">Создать бесплатный аккаунт</string>
     <string name="guest_sheet_dismiss">Не сейчас</string>
     <string name="error_guest_read_only">Гостевые аккаунты доступны только для чтения.</string>
+    <plurals name="home_streak_days">
+        <item quantity="one">%1$d день подряд</item>
+        <item quantity="few">%1$d дня подряд</item>
+        <item quantity="many">%1$d дней подряд</item>
+        <item quantity="other">%1$d дней подряд</item>
+    </plurals>
+    <plurals name="pixabay_selected_count">
+        <item quantity="one">Выбран: %1$d</item>
+        <item quantity="few">Выбрано: %1$d</item>
+        <item quantity="many">Выбрано: %1$d</item>
+        <item quantity="other">Выбрано: %1$d</item>
+    </plurals>
+    <plurals name="goal_detail_msg_media_added_format">
+        <item quantity="one">Добавлен %1$d медиафайл</item>
+        <item quantity="few">Добавлено %1$d медиафайла</item>
+        <item quantity="many">Добавлено %1$d медиафайлов</item>
+        <item quantity="other">Добавлено %1$d медиафайлов</item>
+    </plurals>
+    <plurals name="msg_mana_awarded">
+        <item quantity="one">+%1$d Мана получена!</item>
+        <item quantity="few">+%1$d Маны получено!</item>
+        <item quantity="many">+%1$d Маны получено!</item>
+        <item quantity="other">+%1$d Маны получено!</item>
+    </plurals>
+    <plurals name="msg_dream_bounty_added">
+        <item quantity="one">Добавлена награда %1$d Аура! (Осталось Ауры: %2$s)</item>
+        <item quantity="few">Добавлена награда %1$d Ауры! (Осталось Ауры: %2$s)</item>
+        <item quantity="many">Добавлена награда %1$d Ауры! (Осталось Ауры: %2$s)</item>
+        <item quantity="other">Добавлена награда %1$d Ауры! (Осталось Ауры: %2$s)</item>
+    </plurals>
+    <plurals name="billing_purchase_success_aura">
+        <item quantity="one">%1$d Аура добавлена на ваш баланс!</item>
+        <item quantity="few">%1$d Ауры добавлено на ваш баланс!</item>
+        <item quantity="many">%1$d Ауры добавлено на ваш баланс!</item>
+        <item quantity="other">%1$d Ауры добавлено на ваш баланс!</item>
+    </plurals>
 </resources>

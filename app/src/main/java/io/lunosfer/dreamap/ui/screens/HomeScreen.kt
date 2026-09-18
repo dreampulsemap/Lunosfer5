@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import io.github.jan.supabase.auth.auth
 import io.lunosfer.dreamap.R
@@ -334,7 +335,7 @@ private fun WelcomeStreakHeader(
             Spacer(Modifier.width(6.dp))
             Text(
                 text = if (streak.streakDays > 0) {
-                    stringResource(R.string.home_streak_days, streak.streakDays)
+                    pluralStringResource(R.plurals.home_streak_days, streak.streakDays, streak.streakDays)
                 } else {
                     stringResource(R.string.home_streak_start)
                 },

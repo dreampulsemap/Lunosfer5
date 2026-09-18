@@ -67,7 +67,6 @@
     <string name="summary_monthly">月次</string>
     <string name="summary_generating_ai">AI要約を作成中...</string>
     <string name="summary_loading">要約を読み込み中...</string>
-    <string name="summary_dreams_analyzed">🌙 %1$d件の夢を分析しました</string>
     <string name="summary_sentiment">感情: %1$s</string>
     <string name="summary_refresh">更新</string>
     <string name="summary_not_created">最近の%1$sの夢ログから抽出されたAI潜在意識要約はまだ作成されていません。</string>
@@ -261,7 +260,6 @@
     <string name="profile_stat_comments_empty">まだコメントはありません</string>
     <string name="profile_stat_friends">友達</string>
     <string name="profile_stat_friends_empty">最初の友達を見つけよう</string>
-    <string name="msg_dream_bounty_added">%1$d オーラのバウンティを追加しました！（残りオーラ：%2$s）</string>
     <string name="create_vision_cover_pixabay_btn">🖼️ Pixabayメディアギャラリーから選択</string>
     <string name="home_feed_sentiment_label">感情：%1$s</string>
     <string name="dream_detail_save_btn">保存</string>
@@ -275,7 +273,6 @@
     <string name="error_daily_compass_failed">デイリーコンパスの取得に失敗しました</string>
     <string name="error_no_session">セッションが見つかりません。ログインしてください。</string>
     <string name="dream_detail_cancel">キャンセル</string>
-    <string name="msg_mana_awarded">+%1$d マナを獲得しました！</string>
     <string name="profile_language_label">アプリの言語</string>
     <string name="notifications_refresh">更新</string>
     <string name="create_dream_tags_placeholder">タグを追加 (Enterまたはカンマを押してください)</string>
@@ -441,7 +438,6 @@
     <string name="billing_plan_yearly">年額</string>
     <string name="billing_aura_pack_label">%1$d オーラ</string>
     <string name="billing_purchase_processing">購入処理中…</string>
-    <string name="billing_purchase_success_aura">%1$d オーラが残高に追加されました！</string>
     <string name="billing_purchase_success_premium">Lunosfer プレミアムへようこそ！</string>
     <string name="billing_purchase_error">購入に失敗しました。もう一度お試しください。</string>
     <string name="billing_no_products">商品を読み込み中…</string>
@@ -486,7 +482,6 @@
     <string name="goal_detail_translating">翻訳中...</string>
     <string name="goal_detail_see_original">元の文章を見る</string>
     <string name="goal_detail_translate">🌐 翻訳</string>
-    <string name="home_streak_days">%1$d日連続</string>
     <string name="home_streak_start">今日から連続記録を始めよう</string>
     <string name="home_welcome_summary">今日は%1$d件の夢と%2$d件のアクティブなビジョンがあなたを待っています</string>
     <string name="editor_camera_permission_denied">クリップを録画するにはカメラの許可が必要です</string>
@@ -656,7 +651,6 @@
     <string name="main_menu_globe">グローブ</string>
     <string name="pixabay_add_selected">選択した項目を追加 (%1$d)</string>
     <string name="pixabay_clear_selection">クリア</string>
-    <string name="pixabay_selected_count">%1$d件選択中</string>
     <string name="vision_report_action">報告</string>
     <string name="vision_report_note_placeholder">追加の詳細(任意)…</string>
     <string name="vision_report_reason_harassment">嫌がらせやいじめ</string>
@@ -701,7 +695,6 @@
     <string name="goal_detail_error_mana_failed">マナを与えられませんでした</string>
     <string name="goal_detail_error_comment_add_failed">コメントを追加できませんでした</string>
     <string name="goal_detail_error_comment_delete_failed">コメントを削除できませんでした</string>
-    <string name="goal_detail_msg_media_added_format">%1$d件のメディアが追加されました</string>
     <string name="common_error_unknown">エラーが発生しました</string>
     <string name="vision_report_msg_already_reported">このビジョンはすでに報告されています。</string>
     <string name="globe_coming_soon_title">グローブは近日公開予定です</string>
@@ -832,4 +825,22 @@
     <string name="guest_sheet_cta">無料アカウントを作成</string>
     <string name="guest_sheet_dismiss">今はしない</string>
     <string name="error_guest_read_only">ゲストアカウントは閲覧のみです。</string>
+    <plurals name="home_streak_days">
+        <item quantity="other">%1$d日連続</item>
+    </plurals>
+    <plurals name="pixabay_selected_count">
+        <item quantity="other">%1$d件選択中</item>
+    </plurals>
+    <plurals name="goal_detail_msg_media_added_format">
+        <item quantity="other">%1$d件のメディアが追加されました</item>
+    </plurals>
+    <plurals name="msg_mana_awarded">
+        <item quantity="other">+%1$d マナを獲得しました！</item>
+    </plurals>
+    <plurals name="msg_dream_bounty_added">
+        <item quantity="other">%1$d オーラのバウンティを追加しました！（残りオーラ：%2$s）</item>
+    </plurals>
+    <plurals name="billing_purchase_success_aura">
+        <item quantity="other">%1$d オーラが残高に追加されました！</item>
+    </plurals>
 </resources>

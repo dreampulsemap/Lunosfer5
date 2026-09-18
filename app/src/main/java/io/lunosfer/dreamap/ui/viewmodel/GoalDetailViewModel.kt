@@ -415,7 +415,7 @@ class GoalDetailViewModel(
             if (lastUrl != null) {
                 _state.value = current.copy(
                     goal = current.goal.copy(coverImageUrl = lastUrl),
-                    actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_media_added_format, items.size)
+                    actionMessage = io.lunosfer.dreamap.DreamapApp.instance.resources.getQuantityString(io.lunosfer.dreamap.R.plurals.goal_detail_msg_media_added_format, items.size, items.size)
                 )
             }
         }

@@ -69,7 +69,6 @@
     <string name="thread_url_dialog_title">إضافة رابط وسائط</string>
     <string name="vision_public_visions_title">الرؤى العامة</string>
     <string name="thread_remove_attachment">إزالة</string>
-    <string name="summary_dreams_analyzed">🌙 تم تحليل %1$d من الأحلام</string>
     <string name="pixabay_title">معرض وسائط Pixabay</string>
     <string name="thread_play_desc">تشغيل</string>
     <string name="referral_title">دعوة صديق وكسب المانا</string>
@@ -348,9 +347,7 @@
     <string name="error_share_failed">تعذّرت المشاركة</string>
     <string name="error_mental_wall">تعذّر إنشاء الجدار الذهني</string>
     <string name="error_psyche_map">تعذّر تحميل خريطة النفس</string>
-    <string name="msg_mana_awarded">‏+%1$d مانا مُنحت!</string>
     <string name="msg_referral_applied">تم تطبيق كود الإحالة!</string>
-    <string name="msg_dream_bounty_added">تمت إضافة مكافأة %1$d أورا! (المتبقي من الأورا: %2$s)</string>
     <string name="error_vision_not_found">الرؤية غير موجودة: %1$s</string>
     <string name="error_profile_load">تعذّر تحميل الملف الشخصي</string>
     <string name="error_no_session">لم يتم العثور على جلسة. يرجى تسجيل الدخول.</string>
@@ -443,7 +440,6 @@
     <string name="billing_plan_yearly">سنوي</string>
     <string name="billing_aura_pack_label">%1$d أورا</string>
     <string name="billing_purchase_processing">جارٍ معالجة الشراء…</string>
-    <string name="billing_purchase_success_aura">تمت إضافة %1$d أورا إلى رصيدك!</string>
     <string name="billing_purchase_success_premium">مرحباً بك في لونوسفر المميز!</string>
     <string name="billing_purchase_error">فشلت عملية الشراء. يرجى المحاولة مرة أخرى.</string>
     <string name="billing_no_products">جارٍ تحميل المنتجات…</string>
@@ -488,7 +484,6 @@
     <string name="goal_detail_translating">جارٍ الترجمة...</string>
     <string name="goal_detail_see_original">عرض النص الأصلي</string>
     <string name="goal_detail_translate">🌐 ترجمة</string>
-    <string name="home_streak_days">%1$d يوم متتالٍ</string>
     <string name="home_streak_start">ابدأ سلسلتك اليوم</string>
     <string name="home_welcome_summary">اليوم بانتظارك %1$d حلم و%2$d رؤية نشطة</string>
     <string name="editor_camera_permission_denied">يلزم إذن الكاميرا لتسجيل مقطع</string>
@@ -658,7 +653,6 @@
     <string name="main_menu_globe">الكرة الأرضية</string>
     <string name="pixabay_add_selected">إضافة المحدد (%1$d)</string>
     <string name="pixabay_clear_selection">مسح</string>
-    <string name="pixabay_selected_count">تم تحديد %1$d</string>
     <string name="vision_report_action">إبلاغ</string>
     <string name="vision_report_note_placeholder">تفاصيل إضافية (اختياري)…</string>
     <string name="vision_report_reason_harassment">مضايقة أو تنمر</string>
@@ -703,7 +697,6 @@
     <string name="goal_detail_error_mana_failed">تعذر إعطاء مانا</string>
     <string name="goal_detail_error_comment_add_failed">تعذر إضافة التعليق</string>
     <string name="goal_detail_error_comment_delete_failed">تعذر حذف التعليق</string>
-    <string name="goal_detail_msg_media_added_format">تم إضافة %1$d من الوسائط</string>
     <string name="common_error_unknown">حدث خطأ ما</string>
     <string name="vision_report_msg_already_reported">لقد أبلغت بالفعل عن هذه الرؤية.</string>
     <string name="globe_coming_soon_title">قريباً ركن الأحلام</string>
@@ -839,4 +832,52 @@
     <string name="guest_sheet_cta">إنشاء حساب مجاني</string>
     <string name="guest_sheet_dismiss">ليس الآن</string>
     <string name="error_guest_read_only">حسابات الضيوف للقراءة فقط.</string>
+    <plurals name="home_streak_days">
+        <item quantity="zero">%1$d يوم متتالٍ</item>
+        <item quantity="one">%1$d يوم متتالٍ</item>
+        <item quantity="two">%1$d يومان متتاليان</item>
+        <item quantity="few">%1$d أيام متتالية</item>
+        <item quantity="many">%1$d يومًا متتاليًا</item>
+        <item quantity="other">%1$d يوم متتالٍ</item>
+    </plurals>
+    <plurals name="pixabay_selected_count">
+        <item quantity="zero">تم تحديد %1$d</item>
+        <item quantity="one">تم تحديد %1$d</item>
+        <item quantity="two">تم تحديد %1$d</item>
+        <item quantity="few">تم تحديد %1$d</item>
+        <item quantity="many">تم تحديد %1$d</item>
+        <item quantity="other">تم تحديد %1$d</item>
+    </plurals>
+    <plurals name="goal_detail_msg_media_added_format">
+        <item quantity="zero">تم إضافة %1$d من الوسائط</item>
+        <item quantity="one">تم إضافة %1$d من الوسائط</item>
+        <item quantity="two">تم إضافة %1$d من الوسائط</item>
+        <item quantity="few">تم إضافة %1$d من الوسائط</item>
+        <item quantity="many">تم إضافة %1$d من الوسائط</item>
+        <item quantity="other">تم إضافة %1$d من الوسائط</item>
+    </plurals>
+    <plurals name="msg_mana_awarded">
+        <item quantity="zero">‏+%1$d مانا مُنحت!</item>
+        <item quantity="one">‏+%1$d مانا مُنحت!</item>
+        <item quantity="two">‏+%1$d مانا مُنحت!</item>
+        <item quantity="few">‏+%1$d مانا مُنحت!</item>
+        <item quantity="many">‏+%1$d مانا مُنحت!</item>
+        <item quantity="other">‏+%1$d مانا مُنحت!</item>
+    </plurals>
+    <plurals name="msg_dream_bounty_added">
+        <item quantity="zero">تمت إضافة مكافأة %1$d أورا! (المتبقي من الأورا: %2$s)</item>
+        <item quantity="one">تمت إضافة مكافأة %1$d أورا! (المتبقي من الأورا: %2$s)</item>
+        <item quantity="two">تمت إضافة مكافأة %1$d أورا! (المتبقي من الأورا: %2$s)</item>
+        <item quantity="few">تمت إضافة مكافأة %1$d أورا! (المتبقي من الأورا: %2$s)</item>
+        <item quantity="many">تمت إضافة مكافأة %1$d أورا! (المتبقي من الأورا: %2$s)</item>
+        <item quantity="other">تمت إضافة مكافأة %1$d أورا! (المتبقي من الأورا: %2$s)</item>
+    </plurals>
+    <plurals name="billing_purchase_success_aura">
+        <item quantity="zero">تمت إضافة %1$d أورا إلى رصيدك!</item>
+        <item quantity="one">تمت إضافة %1$d أورا إلى رصيدك!</item>
+        <item quantity="two">تمت إضافة %1$d أورا إلى رصيدك!</item>
+        <item quantity="few">تمت إضافة %1$d أورا إلى رصيدك!</item>
+        <item quantity="many">تمت إضافة %1$d أورا إلى رصيدك!</item>
+        <item quantity="other">تمت إضافة %1$d أورا إلى رصيدك!</item>
+    </plurals>
 </resources>
