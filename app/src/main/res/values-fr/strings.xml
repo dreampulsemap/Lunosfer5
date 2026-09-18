@@ -509,7 +509,7 @@
     <string name="home_brand_watermark">LUNOSFER</string>
     <string name="spiritual_psyche_map_title">Carte Psychique</string>
     <string name="spiritual_score_suffix">/100</string>
-    <string name="spiritual_percentage_format">%%%1$d</string>
+    <string name="spiritual_percentage_format">%1$d %%</string>
     <string name="mental_wall_image_desc">Image du Mur Mental</string>
     <string name="common_user_fallback">Utilisateur</string>
     <string name="common_someone_fallback">Quelqu\'un</string>
@@ -823,4 +823,9 @@
     <string name="error_server">Un problème est survenu de notre côté. Veuillez réessayer dans un instant.</string>
     <string name="error_session_expired">Votre session a expiré. Veuillez vous reconnecter.</string>
     <string name="cd_use_my_location">Utiliser ma position</string>
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="one">🌙 %1$d rêve analysé</item>
+        <item quantity="many">🌙 %1$d rêves analysés</item>
+        <item quantity="other">🌙 %1$d rêves analysés</item>
+    </plurals>
 </resources>

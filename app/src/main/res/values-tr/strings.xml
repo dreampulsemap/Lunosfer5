@@ -840,9 +840,6 @@
     <string name="notif_dream_image_gift_body">Senin için bir rüya görseli oluşturuldu.</string>
     <string name="notif_request_no_longer_available">Bu takip isteği artık geçerli değil.</string>
 
-    <plurals name="summary_dreams_analyzed_plural">
-        <item quantity="other">🌙 %1$d Rüya Analiz Edildi</item>
-    </plurals>
 
     <string name="profile_logout_confirm_title">Çıkış yapılsın mı?</string>
     <string name="profile_logout_confirm_desc">Tekrar girmek için e-posta ve şifreni yeniden girmen gerekecek.</string>
@@ -856,4 +853,8 @@
     <string name="error_session_expired">Oturumun sona erdi. Lütfen tekrar giriş yap.</string>
 
     <string name="cd_use_my_location">Konumumu kullan</string>
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="one">🌙 %1$d Rüya Analiz Edildi</item>
+        <item quantity="other">🌙 %1$d Rüya Analiz Edildi</item>
+    </plurals>
 </resources>

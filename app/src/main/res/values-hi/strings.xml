@@ -511,7 +511,7 @@
     <string name="home_brand_watermark">LUNOSFER</string>
     <string name="spiritual_psyche_map_title">मनोविज्ञान मानचित्र</string>
     <string name="spiritual_score_suffix">/100</string>
-    <string name="spiritual_percentage_format">%%1$d</string>
+    <string name="spiritual_percentage_format">%1$d%%</string>
     <string name="mental_wall_image_desc">मानसिक दीवार चित्र</string>
     <string name="common_user_fallback">उपयोगकर्ता</string>
     <string name="common_someone_fallback">कोई</string>
@@ -825,4 +825,8 @@
     <string name="error_server">हमारी ओर से कुछ गड़बड़ हो गई। कृपया थोड़ी देर बाद फिर कोशिश करें।</string>
     <string name="error_session_expired">आपका सत्र समाप्त हो गया है। कृपया फिर से लॉग इन करें।</string>
     <string name="cd_use_my_location">मेरा स्थान उपयोग करें</string>
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="one">🌙 %1$d सपना विश्लेषित</item>
+        <item quantity="other">🌙 %1$d सपने विश्लेषित</item>
+    </plurals>
 </resources>

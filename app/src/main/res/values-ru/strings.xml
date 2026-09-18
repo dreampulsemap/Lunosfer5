@@ -510,7 +510,7 @@
     <string name="home_brand_watermark">LUNOSFER</string>
     <string name="spiritual_psyche_map_title">Карта психики</string>
     <string name="spiritual_score_suffix">/100</string>
-    <string name="spiritual_percentage_format">%%1$d</string>
+    <string name="spiritual_percentage_format">%1$d%%</string>
     <string name="mental_wall_image_desc">Изображение Ментальной Стены</string>
     <string name="common_user_fallback">Пользователь</string>
     <string name="common_someone_fallback">Кто-то</string>
@@ -824,4 +824,10 @@
     <string name="error_server">Что-то пошло не так на нашей стороне. Попробуйте чуть позже.</string>
     <string name="error_session_expired">Сеанс истёк. Войдите снова.</string>
     <string name="cd_use_my_location">Использовать моё местоположение</string>
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="one">🌙 %1$d сон проанализирован</item>
+        <item quantity="few">🌙 %1$d сна проанализировано</item>
+        <item quantity="many">🌙 %1$d снов проанализировано</item>
+        <item quantity="other">🌙 %1$d сна проанализировано</item>
+    </plurals>
 </resources>

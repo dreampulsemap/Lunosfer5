@@ -510,7 +510,7 @@
     <string name="home_brand_watermark">LUNOSFER</string>
     <string name="spiritual_psyche_map_title">Mapa Psíquico</string>
     <string name="spiritual_score_suffix">/100</string>
-    <string name="spiritual_percentage_format">%%%1$d</string>
+    <string name="spiritual_percentage_format">%1$d %%</string>
     <string name="mental_wall_image_desc">Imagen del Muro Mental</string>
     <string name="common_user_fallback">Usuario</string>
     <string name="common_someone_fallback">Alguien</string>
@@ -824,4 +824,9 @@
     <string name="error_server">Algo salió mal por nuestra parte. Inténtalo de nuevo en un momento.</string>
     <string name="error_session_expired">Tu sesión ha caducado. Inicia sesión de nuevo.</string>
     <string name="cd_use_my_location">Usar mi ubicación</string>
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="one">🌙 %1$d sueño analizado</item>
+        <item quantity="many">🌙 %1$d sueños analizados</item>
+        <item quantity="other">🌙 %1$d sueños analizados</item>
+    </plurals>
 </resources>

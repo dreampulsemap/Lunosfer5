@@ -511,7 +511,7 @@
     <string name="home_brand_watermark">LUNOSFER</string>
     <string name="spiritual_psyche_map_title">خريطة النفس</string>
     <string name="spiritual_score_suffix">/100</string>
-    <string name="spiritual_percentage_format">%%1$d</string>
+    <string name="spiritual_percentage_format">%1$d%%</string>
     <string name="mental_wall_image_desc">صورة الجدار الذهني</string>
     <string name="common_user_fallback">مستخدم</string>
     <string name="common_someone_fallback">شخص ما</string>
@@ -825,4 +825,12 @@
     <string name="error_server">حدث خطأ من جانبنا. يرجى المحاولة بعد قليل.</string>
     <string name="error_session_expired">انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.</string>
     <string name="cd_use_my_location">استخدام موقعي</string>
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="zero">🌙 تم تحليل %1$d حلم</item>
+        <item quantity="one">🌙 تم تحليل %1$d حلم</item>
+        <item quantity="two">🌙 تم تحليل %1$d حلمين</item>
+        <item quantity="few">🌙 تم تحليل %1$d أحلام</item>
+        <item quantity="many">🌙 تم تحليل %1$d حلمًا</item>
+        <item quantity="other">🌙 تم تحليل %1$d حلم</item>
+    </plurals>
 </resources>

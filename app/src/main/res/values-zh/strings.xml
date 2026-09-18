@@ -511,7 +511,7 @@
     <string name="home_brand_watermark">LUNOSFER</string>
     <string name="spiritual_psyche_map_title">心灵地图</string>
     <string name="spiritual_score_suffix">/100</string>
-    <string name="spiritual_percentage_format">%%1$d</string>
+    <string name="spiritual_percentage_format">%1$d%%</string>
     <string name="mental_wall_image_desc">心理墙图片</string>
     <string name="common_user_fallback">用户</string>
     <string name="common_someone_fallback">某人</string>
@@ -825,4 +825,7 @@
     <string name="error_server">我们这边出了点问题。请稍后重试。</string>
     <string name="error_session_expired">登录状态已过期。请重新登录。</string>
     <string name="cd_use_my_location">使用我的位置</string>
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="other">🌙 已分析 %1$d 个梦境</item>
+    </plurals>
 </resources>

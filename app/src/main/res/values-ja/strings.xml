@@ -509,7 +509,7 @@
     <string name="home_brand_watermark">LUNOSFER</string>
     <string name="spiritual_psyche_map_title">サイコマップ</string>
     <string name="spiritual_score_suffix">/100</string>
-    <string name="spiritual_percentage_format">%%1$d</string>
+    <string name="spiritual_percentage_format">%1$d%%</string>
     <string name="mental_wall_image_desc">メンタルウォールの画像</string>
     <string name="common_user_fallback">ユーザー</string>
     <string name="common_someone_fallback">誰か</string>
@@ -823,4 +823,7 @@
     <string name="error_server">こちら側で問題が発生しました。しばらくしてからもう一度お試しください。</string>
     <string name="error_session_expired">セッションの有効期限が切れました。もう一度ログインしてください。</string>
     <string name="cd_use_my_location">現在地を使用</string>
+    <plurals name="summary_dreams_analyzed_plural">
+        <item quantity="other">🌙 %1$d件の夢を分析しました</item>
+    </plurals>
 </resources>
