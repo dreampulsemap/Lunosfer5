@@ -20,7 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Message
+import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.TrackChanges
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -543,7 +543,7 @@ private fun DreamFeedCard(
                             .padding(horizontal = 8.dp, vertical = 10.dp)
                     ) {
                         Icon(
-                            Icons.Filled.Message,
+                            Icons.AutoMirrored.Filled.Message,
                             contentDescription = null,
                             tint = Color(0xFF94A3B8),
                             modifier = Modifier.size(13.dp)

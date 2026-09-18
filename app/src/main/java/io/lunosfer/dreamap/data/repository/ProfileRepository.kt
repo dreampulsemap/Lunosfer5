@@ -3,6 +3,8 @@ package io.lunosfer.dreamap.data.repository
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.storage.storage
+import io.lunosfer.dreamap.DreamapApp
+import io.lunosfer.dreamap.R
 import io.lunosfer.dreamap.data.model.FullUserProfile
 import io.lunosfer.dreamap.data.model.PremiumStatusResponse
 import io.lunosfer.dreamap.data.model.UpdateProfileRequest
@@ -137,7 +139,8 @@ class ProfileRepository {
     suspend fun deleteAccount(): Result<Unit> = runCatching {
         val res = api.deleteAccount()
         if (!res.success && !res.ok) {
-            throw Exception(res.error ?: "Hesap silinemedi")
+            // Sabit Turkce yedek metin uygulama Ingilizce'yken de goruluyordu.
+            throw Exception(res.error ?: DreamapApp.instance.getString(R.string.error_delete_failed))
         }
     }
 

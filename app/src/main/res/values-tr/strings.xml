@@ -167,7 +167,7 @@
     <!-- SpiritualToolsScreen -->
     <string name="spiritual_title">Ruhsal Araçlar</string>
     <string name="spiritual_tab_mental_wall">Zihin Duvarı</string>
-    <string name="spiritual_tab_psyche_map">Psyche Map</string>
+    <string name="spiritual_tab_psyche_map">Ruh Haritası</string>
     <string name="spiritual_tab_prophet">Kahin</string>
     <string name="spiritual_mental_wall_header">Zihin Duvarı (Mental Wall)</string>
     <string name="spiritual_mental_wall_desc">Rüya bilinçaltının sembollerini, arketip motiflerini ve duygu haritanı tek bir soyut kolaj ve anlatıda birleştirir.</string>
@@ -266,8 +266,8 @@
     <string name="profile_change_password_too_short">Şifre en az 6 karakter olmalı.</string>
     <string name="profile_change_password_mismatch">Şifreler eşleşmiyor.</string>
     <string name="profile_change_password_success">Şifren güncellendi.</string>
-    <string name="main_menu_auras">Your Auras: 0</string>
-    <string name="main_menu_buy_aura">Buy Aura</string>
+    <string name="main_menu_auras">Auraların: %1$d</string>
+    <string name="main_menu_buy_aura">Aura Satın Al</string>
     <string name="main_menu_spiritual_tools">Ruhsal Araçlar</string>
     <string name="main_menu_settings">Ayarlar</string>
     <string name="main_menu_help">Yardım ve Geri Bildirim</string>
@@ -295,9 +295,9 @@
     <string name="public_profile_follow_pending">Takip İsteği Gönderildi (Bekliyor)</string>
     <string name="public_profile_follow_btn">Takip Et</string>
     <string name="public_profile_message_btn">Mesaj</string>
-    <string name="create_dream_pixabay_search">Search Pixabay...</string>
+    <string name="create_dream_pixabay_search">Pixabay\'de ara...</string>
     <string name="create_dream_pixabay_btn">Pixabay\'dan Seç</string>
-    <string name="create_dream_tags_placeholder">Add tags (press enter or comma)</string>
+    <string name="create_dream_tags_placeholder">Etiket ekle (enter veya virgül)</string>
     <string name="notifications_mark_all_read">Tümünü Okundu Yap</string>
     <string name="notifications_refresh">Yeniden Denetle</string>
     <string name="notifications_empty">Henüz bildiriminiz yok.</string>

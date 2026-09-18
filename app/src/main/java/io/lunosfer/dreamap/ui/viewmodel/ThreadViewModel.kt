@@ -7,6 +7,7 @@ import io.lunosfer.dreamap.data.model.Message
 import io.lunosfer.dreamap.data.model.UserProfile
 import io.lunosfer.dreamap.data.repository.BlockRepository
 import io.lunosfer.dreamap.data.repository.MessagesRepository
+import io.lunosfer.dreamap.util.ErrorText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -74,7 +75,8 @@ class ThreadViewModel(
                 .onFailure { error ->
                     _state.value = _state.value.copy(
                         isInitialLoading = false,
-                        loadError = error.message ?: "Bilinmeyen hata"
+                        // Sabit Turkce yedek + ham teknik metin yerine ErrorText.
+                        loadError = ErrorText.friendly(error)
                     )
                 }
         }

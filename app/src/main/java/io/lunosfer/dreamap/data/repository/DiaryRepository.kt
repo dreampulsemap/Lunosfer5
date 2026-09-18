@@ -2,6 +2,8 @@ package io.lunosfer.dreamap.data.repository
 
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.storage.storage
+import io.lunosfer.dreamap.DreamapApp
+import io.lunosfer.dreamap.R
 import io.lunosfer.dreamap.data.model.CreateDiaryCommentRequest
 import io.lunosfer.dreamap.data.model.CreateDiaryInput
 import io.lunosfer.dreamap.data.model.DeleteDiaryCommentRequest
@@ -69,7 +71,9 @@ class DiaryRepository {
     suspend fun deleteEntry(entryId: String): Result<Unit> = runCatching {
         val res = api.deleteDiaryEntry(DeleteDiaryInput(entryId = entryId))
         if (!res.success) {
-            throw Exception("Girdi silinemedi")
+            // Mesaj dogrudan kullaniciya gosteriliyor; sabit Turkce metin
+            // uygulama Ingilizce'yken de Turkce cikiyordu.
+            throw Exception(DreamapApp.instance.getString(R.string.error_delete_failed))
         }
     }
 

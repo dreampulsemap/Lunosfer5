@@ -30,6 +30,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Article
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -62,6 +63,7 @@ import io.lunosfer.dreamap.ui.components.ReferralCard
 import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.ProfileUiState
 import io.lunosfer.dreamap.ui.viewmodel.ProfileViewModel
+import io.lunosfer.dreamap.util.AppLanguage
 import io.lunosfer.dreamap.util.GlobalContentPicker
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -198,7 +200,7 @@ fun ProfileScreen(
                                     border = BorderStroke(1.dp, ShadowWorkRose.copy(alpha = 0.5f)),
                                     shape = RoundedCornerShape(12.dp)
                                 ) {
-                                    Icon(Icons.Default.Logout, contentDescription = null, tint = ShadowWorkRose, modifier = Modifier.size(18.dp))
+                                    Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = null, tint = ShadowWorkRose, modifier = Modifier.size(18.dp))
                                     Spacer(Modifier.width(8.dp))
                                     Text(stringResource(R.string.profile_logout_btn), color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                                 }
@@ -344,7 +346,7 @@ fun ProfileScreen(
                     AlertDialog(
                         onDismissRequest = { showLogoutConfirm = false },
                         containerColor = Void900,
-                        icon = { Icon(Icons.Default.Logout, contentDescription = null, tint = ShadowWorkRose) },
+                        icon = { Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = null, tint = ShadowWorkRose) },
                         title = { Text(stringResource(R.string.profile_logout_confirm_title), color = Color.White, fontWeight = FontWeight.Bold) },
                         text = { Text(stringResource(R.string.profile_logout_confirm_desc), color = MoonSilver) },
                         confirmButton = {
@@ -991,7 +993,21 @@ private fun EditProfileDialog(
     // (ne uygulamada ne web'de) — alan hep bos kaliyordu.
     var bio by remember { mutableStateOf(profile.bio ?: "") }
     var profileVisibility by remember { mutableStateOf(profile.profileVisibility) }
-    var language by remember { mutableStateOf(profile.language ?: "tr") }
+    // Dil secici EKRANDA O AN GECERLI olan dille acilmali, DB'deki (eskimis
+    // olabilen) degerle degil: kullanici dile hic dokunmadan Kaydet'e bastiginda
+    // onSave icindeki setApplicationLocales o degeri uyguluyor ve uygulamayi
+    // sessizce baska bir dile atiyordu. Canli dogrulandi (emulator, 18 Eylul):
+    // uygulama Almanca'yken sadece "Hakkimda" alanini doldurup Kaydet'e basmak
+    // tum arayuzu Turkce'ye cevirdi. Ustelik `language` null olan (dilini hic
+    // secmemis) HER kullanici sabit "tr" yedegi yuzunden Turkce'ye dusuyordu.
+    // Web'de ayni hata daha once duzeltilmisti (pages/profile.js, ec0bdc5).
+    var language by remember {
+        mutableStateOf(
+            AppLanguage.code().takeIf { it in SUPPORTED_LANGUAGE_CODES }
+                ?: profile.language?.takeIf { it in SUPPORTED_LANGUAGE_CODES }
+                ?: "en"
+        )
+    }
     var gender by remember { mutableStateOf(profile.gender ?: "unspecified") }
 
     val genders = listOf(

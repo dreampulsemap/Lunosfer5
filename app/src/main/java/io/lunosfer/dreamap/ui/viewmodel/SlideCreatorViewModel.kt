@@ -11,6 +11,7 @@ import io.lunosfer.dreamap.data.model.UpdateSlideRequest
 import io.lunosfer.dreamap.data.repository.VisionRepository
 import io.lunosfer.dreamap.ui.theme.DEFAULT_CAPTION_COLOR_HEX
 import io.lunosfer.dreamap.ui.theme.DEFAULT_CAPTION_FONT_KEY
+import io.lunosfer.dreamap.util.ErrorText
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -299,7 +300,9 @@ class SlideCreatorViewModel(
                 val latest = _state.value as? SlideCreatorUiState.Content ?: return@onFailure
                 _state.value = latest.copy(
                     slides = latest.slides.map { if (it.id == slideId) original else it },
-                    error = err.message ?: "Kaydedilemedi."
+                    // Ham `err.message` (teknik metin) ve sabit Turkce yedek
+                    // yerine ErrorText: yerellestirilmis, anlasilir mesaj.
+                    error = ErrorText.friendly(err)
                 )
             }
         }
@@ -316,7 +319,7 @@ class SlideCreatorViewModel(
                 val latest = _state.value as? SlideCreatorUiState.Content ?: return@onFailure
                 _state.value = latest.copy(
                     slides = (latest.slides + removed).sortedBy { it.orderIndex ?: 0 },
-                    error = err.message ?: "Silinemedi."
+                    error = ErrorText.friendly(err)
                 )
             }
         }
