@@ -326,7 +326,7 @@
     <string name="billing_purchase_processing">Processing purchase…</string>
     <string name="billing_purchase_success_premium">Welcome to Lunosfer Premium!</string>
     <string name="billing_purchase_error">Purchase failed. Please try again.</string>
-    <string name="billing_no_products">Loading products…</string>
+    <string name="billing_no_products">No products are available right now. Please try again later.</string>
     <string name="billing_upgrade_cta">Upgrade to Premium</string>
     <string name="main_menu_spiritual_tools">Spiritual Tools</string>
     <string name="main_menu_settings">Settings</string>
@@ -882,4 +882,7 @@
         <item quantity="one">%1$d Aura added to your balance!</item>
         <item quantity="other">%1$d Aura added to your balance!</item>
     </plurals>
+    <string name="billing_loading">Loading products…</string>
+    <string name="billing_unavailable_device">In-app purchases are not available on this device. A device with an up-to-date Google Play Store is required.</string>
+    <string name="billing_load_error">Could not reach the store. Check your connection and try again.</string>
 </resources>

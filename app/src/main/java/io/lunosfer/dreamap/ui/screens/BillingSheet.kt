@@ -1,4 +1,4 @@
-package io.lunosfer.dreamap.ui.screens
+﻿package io.lunosfer.dreamap.ui.screens
 
 import android.app.Activity
 import androidx.compose.foundation.BorderStroke
@@ -47,6 +47,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -55,6 +56,7 @@ import io.lunosfer.dreamap.R
 import io.lunosfer.dreamap.data.repository.AuraPackOffer
 import io.lunosfer.dreamap.data.repository.PremiumPlanOffer
 import io.lunosfer.dreamap.data.repository.PurchaseFlowState
+import io.lunosfer.dreamap.data.repository.StoreState
 import io.lunosfer.dreamap.ui.theme.AstralAmber
 import io.lunosfer.dreamap.ui.theme.AstralGold
 import io.lunosfer.dreamap.ui.theme.SemanticDanger400
@@ -79,11 +81,12 @@ fun BillingSheet(
     val auraOffers by viewModel.auraOffers.collectAsStateWithLifecycle()
     val premiumOffers by viewModel.premiumOffers.collectAsStateWithLifecycle()
     val purchaseState by viewModel.purchaseState.collectAsStateWithLifecycle()
+    val storeState by viewModel.storeState.collectAsStateWithLifecycle()
 
     var selectedTab by remember { mutableIntStateOf(if (initialTab == BillingTab.AURA) 0 else 1) }
 
-    // Satın alma başarıyla bittiğinde sheet'i otomatik kapatıyoruz —
-    // kullanıcı sonucu ProfileScreen/TopBar'daki güncellenen bakiyeden görür.
+    // SatÄ±n alma baÅŸarÄ±yla bittiÄŸinde sheet'i otomatik kapatÄ±yoruz â€”
+    // kullanÄ±cÄ± sonucu ProfileScreen/TopBar'daki gÃ¼ncellenen bakiyeden gÃ¶rÃ¼r.
     LaunchedEffect(purchaseState) {
         if (purchaseState is PurchaseFlowState.Success) {
             kotlinx.coroutines.delay(900)
@@ -138,11 +141,19 @@ fun BillingSheet(
             }
 
             if (selectedTab == 0) {
-                AuraPackList(offers = auraOffers) { productId ->
+                AuraPackList(
+                    offers = auraOffers,
+                    storeState = storeState,
+                    onRetry = viewModel::retryLoadProducts
+                ) { productId ->
                     activity?.let { viewModel.buyAura(it, productId) }
                 }
             } else {
-                PremiumPlanList(offers = premiumOffers) { basePlanId ->
+                PremiumPlanList(
+                    offers = premiumOffers,
+                    storeState = storeState,
+                    onRetry = viewModel::retryLoadProducts
+                ) { basePlanId ->
                     activity?.let { viewModel.buyPremium(it, basePlanId) }
                 }
             }
@@ -170,9 +181,14 @@ private fun StatusBanner(text: String, color: Color) {
 }
 
 @Composable
-private fun AuraPackList(offers: List<AuraPackOffer>, onBuy: (String) -> Unit) {
+private fun AuraPackList(
+    offers: List<AuraPackOffer>,
+    storeState: StoreState,
+    onRetry: () -> Unit,
+    onBuy: (String) -> Unit
+) {
     if (offers.isEmpty()) {
-        LoadingRow()
+        StoreStatusRow(storeState, onRetry)
         return
     }
     LazyColumn(
@@ -213,7 +229,12 @@ private fun AuraPackList(offers: List<AuraPackOffer>, onBuy: (String) -> Unit) {
 }
 
 @Composable
-private fun PremiumPlanList(offers: List<PremiumPlanOffer>, onBuy: (String) -> Unit) {
+private fun PremiumPlanList(
+    offers: List<PremiumPlanOffer>,
+    storeState: StoreState,
+    onRetry: () -> Unit,
+    onBuy: (String) -> Unit
+) {
     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
         Surface(
             color = Void800.copy(alpha = 0.7f),
@@ -240,7 +261,7 @@ private fun PremiumPlanList(offers: List<PremiumPlanOffer>, onBuy: (String) -> U
         }
 
         if (offers.isEmpty()) {
-            LoadingRow()
+            StoreStatusRow(storeState, onRetry)
             return
         }
 
@@ -307,17 +328,52 @@ private fun PerkItem(text: String) {
 }
 
 @Composable
-private fun LoadingRow() {
+private fun StoreStatusRow(storeState: StoreState, onRetry: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(120.dp),
+            .height(150.dp)
+            .padding(horizontal = 24.dp),
         contentAlignment = Alignment.Center
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            CircularProgressIndicator(color = AstralGold, modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
-            Spacer(Modifier.width(10.dp))
-            Text(stringResource(R.string.billing_no_products), color = Color.Gray, fontSize = 13.sp)
+        when (storeState) {
+            StoreState.Loading, StoreState.Ready -> Row(verticalAlignment = Alignment.CenterVertically) {
+                CircularProgressIndicator(color = AstralGold, modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                Spacer(Modifier.width(10.dp))
+                Text(stringResource(R.string.billing_loading), color = Color.Gray, fontSize = 13.sp)
+            }
+
+            // Cihaz Play Billing'i desteklemiyor: tekrar denemek ise
+            // yaramaz, o yuzden buton gostermiyoruz.
+            is StoreState.Unavailable -> Text(
+                text = stringResource(R.string.billing_unavailable_device),
+                color = Color.Gray,
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center
+            )
+
+            StoreState.NoProducts -> Text(
+                text = stringResource(R.string.billing_no_products),
+                color = Color.Gray,
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center
+            )
+
+            is StoreState.Error -> Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = stringResource(R.string.billing_load_error),
+                    color = Color.Gray,
+                    fontSize = 13.sp,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(Modifier.height(12.dp))
+                Button(
+                    onClick = onRetry,
+                    colors = ButtonDefaults.buttonColors(containerColor = AstralGold, contentColor = Void900)
+                ) {
+                    Text(stringResource(R.string.retry), fontWeight = FontWeight.Bold)
+                }
+            }
         }
     }
 }

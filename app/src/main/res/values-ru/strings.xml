@@ -441,7 +441,7 @@
     <string name="billing_purchase_processing">Обработка покупки…</string>
     <string name="billing_purchase_success_premium">Добро пожаловать в Lunosfer Премиум!</string>
     <string name="billing_purchase_error">Не удалось совершить покупку. Попробуйте снова.</string>
-    <string name="billing_no_products">Загрузка товаров…</string>
+    <string name="billing_no_products">Сейчас нет доступных товаров. Попробуйте позже.</string>
     <string name="billing_upgrade_cta">Перейти на Премиум</string>
     <string name="goal_detail_retry">Повторить</string>
     <string name="goal_detail_add_image_url">Добавить изображение по URL</string>
@@ -865,4 +865,7 @@
         <item quantity="many">%1$d Ауры добавлено на ваш баланс!</item>
         <item quantity="other">%1$d Ауры добавлено на ваш баланс!</item>
     </plurals>
+    <string name="billing_loading">Загрузка товаров…</string>
+    <string name="billing_unavailable_device">Встроенные покупки недоступны на этом устройстве. Требуется устройство с актуальной версией Google Play Маркета.</string>
+    <string name="billing_load_error">Не удалось связаться с магазином. Проверьте подключение и повторите попытку.</string>
 </resources>

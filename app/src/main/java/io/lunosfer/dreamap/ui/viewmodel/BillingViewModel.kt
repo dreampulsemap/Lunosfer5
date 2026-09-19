@@ -7,6 +7,7 @@ import io.lunosfer.dreamap.data.repository.AuraPackOffer
 import io.lunosfer.dreamap.data.repository.BillingRepository
 import io.lunosfer.dreamap.data.repository.PremiumPlanOffer
 import io.lunosfer.dreamap.data.repository.PurchaseFlowState
+import io.lunosfer.dreamap.data.repository.StoreState
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -34,8 +35,15 @@ class BillingViewModel(
     val auraBalance: StateFlow<Int> = repository.auraBalance
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
+    val storeState: StateFlow<StoreState> = repository.storeState
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), StoreState.Loading)
+
     init {
         repository.connectAndLoadProducts()
+    }
+
+    fun retryLoadProducts() {
+        repository.retryLoadProducts()
     }
 
     fun buyAura(activity: Activity, productId: String) {

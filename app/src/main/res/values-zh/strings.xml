@@ -442,7 +442,7 @@
     <string name="billing_purchase_processing">正在处理购买…</string>
     <string name="billing_purchase_success_premium">欢迎使用 Lunosfer 高级版！</string>
     <string name="billing_purchase_error">购买失败，请重试。</string>
-    <string name="billing_no_products">正在加载商品…</string>
+    <string name="billing_no_products">当前没有可购买的商品。请稍后再试。</string>
     <string name="billing_upgrade_cta">升级到高级版</string>
     <string name="goal_detail_retry">重试</string>
     <string name="goal_detail_add_image_url">通过 URL 添加图片</string>
@@ -845,4 +845,7 @@
     <plurals name="billing_purchase_success_aura">
         <item quantity="other">%1$d 灵气已添加到你的余额！</item>
     </plurals>
+    <string name="billing_loading">正在加载商品…</string>
+    <string name="billing_unavailable_device">此设备不支持应用内购买。需要安装最新版 Google Play 商店的设备。</string>
+    <string name="billing_load_error">无法连接到商店。请检查网络后重试。</string>
 </resources>

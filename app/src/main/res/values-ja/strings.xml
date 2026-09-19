@@ -440,7 +440,7 @@
     <string name="billing_purchase_processing">購入処理中…</string>
     <string name="billing_purchase_success_premium">Lunosfer プレミアムへようこそ！</string>
     <string name="billing_purchase_error">購入に失敗しました。もう一度お試しください。</string>
-    <string name="billing_no_products">商品を読み込み中…</string>
+    <string name="billing_no_products">現在購入できる商品はありません。しばらくしてからもう一度お試しください。</string>
     <string name="billing_upgrade_cta">プレミアムにアップグレード</string>
     <string name="goal_detail_retry">再試行</string>
     <string name="goal_detail_add_image_url">URLで画像を追加</string>
@@ -843,4 +843,7 @@
     <plurals name="billing_purchase_success_aura">
         <item quantity="other">%1$d オーラが残高に追加されました！</item>
     </plurals>
+    <string name="billing_loading">商品を読み込んでいます…</string>
+    <string name="billing_unavailable_device">この端末ではアプリ内購入を利用できません。最新の Google Play ストアが必要です。</string>
+    <string name="billing_load_error">ストアに接続できませんでした。接続を確認してもう一度お試しください。</string>
 </resources>

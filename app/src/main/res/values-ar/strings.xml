@@ -442,7 +442,7 @@
     <string name="billing_purchase_processing">جارٍ معالجة الشراء…</string>
     <string name="billing_purchase_success_premium">مرحباً بك في لونوسفر المميز!</string>
     <string name="billing_purchase_error">فشلت عملية الشراء. يرجى المحاولة مرة أخرى.</string>
-    <string name="billing_no_products">جارٍ تحميل المنتجات…</string>
+    <string name="billing_no_products">لا توجد منتجات متاحة حاليًا. يرجى المحاولة لاحقًا.</string>
     <string name="billing_upgrade_cta">الترقية إلى المميز</string>
     <string name="goal_detail_retry">إعادة المحاولة</string>
     <string name="goal_detail_add_image_url">إضافة صورة عبر رابط URL</string>
@@ -880,4 +880,7 @@
         <item quantity="many">تمت إضافة %1$d أورا إلى رصيدك!</item>
         <item quantity="other">تمت إضافة %1$d أورا إلى رصيدك!</item>
     </plurals>
+    <string name="billing_loading">جارٍ تحميل المنتجات…</string>
+    <string name="billing_unavailable_device">عمليات الشراء داخل التطبيق غير متاحة على هذا الجهاز. يلزم جهاز عليه متجر Google Play محدّث.</string>
+    <string name="billing_load_error">تعذّر الوصول إلى المتجر. تحقّق من اتصالك وحاول مرة أخرى.</string>
 </resources>

@@ -54,6 +54,42 @@ sealed class PurchaseFlowState {
 }
 
 /**
+ * Magazanin durumu.
+ *
+ * ONCEDEN boyle bir state YOKTU: ekran yalnizca teklif listesinin bos olup
+ * olmadigina bakiyordu, bu yuzden "henuz yukleniyor", "cihazda Play Billing
+ * yok" ve "Play Console'da urun tanimli degil" durumlarinin ucu de ayni
+ * sonsuz "Urunler yukleniyor..." spinner'i olarak gorunuyordu (canli
+ * raporlandi: hem emulatorde hem gercek cihazda hic acilmiyor). Baglanti
+ * kurulamadiginda da hicbir sey yapilmadigi icin spinner asla bitmiyordu.
+ */
+sealed class StoreState {
+    /** Baglaniliyor ya da urunler sorgulaniyor. */
+    object Loading : StoreState()
+
+    /** Baglanti kuruldu ve en az bir teklif var. */
+    object Ready : StoreState()
+
+    /**
+     * Cihazda Play Billing kullanilamiyor (Play Store yok/eski, emulator
+     * imaji Play'siz, kullanici profili desteklemiyor). Yeniden denemek
+     * genelde ise yaramaz.
+     */
+    data class Unavailable(val debugMessage: String) : StoreState()
+
+    /**
+     * Baglanti kuruldu ama Play hicbir urun dondurmedi. Neredeyse her zaman
+     * yapilandirma hatasidir: urunler Play Console'da olusturulmamis/aktif
+     * degil, uygulama hicbir track'e yuklenmemis, ya da imza/paket adi
+     * Play Console'daki ile eslesmiyor.
+     */
+    object NoProducts : StoreState()
+
+    /** Gecici hata (ag, servis kesintisi) - tekrar denenebilir. */
+    data class Error(val debugMessage: String) : StoreState()
+}
+
+/**
  * Play BillingClient bağlantısının uygulama boyunca TEK olması önerildiği
  * için (bkz. Play Billing dokümantasyonu) singleton olarak tutuluyor —
  * NetworkModule ile aynı `object` deseni.
@@ -94,6 +130,9 @@ object BillingRepository : PurchasesUpdatedListener {
     private val _purchaseState = MutableStateFlow<PurchaseFlowState>(PurchaseFlowState.Idle)
     val purchaseState: StateFlow<PurchaseFlowState> = _purchaseState.asStateFlow()
 
+    private val _storeState = MutableStateFlow<StoreState>(StoreState.Loading)
+    val storeState: StateFlow<StoreState> = _storeState.asStateFlow()
+
     // TopBar'daki Aura pill'i ve ProfileScreen'in ayrı ayrı istek atmasını
     // önlemek için bakiyeyi burada, tek yerde tutuyoruz.
     private val _auraBalance = MutableStateFlow(0)
@@ -112,24 +151,43 @@ object BillingRepository : PurchasesUpdatedListener {
     fun connectAndLoadProducts() {
         scope.launch { refreshAuraBalance() }
         if (billingClient.isReady) {
+            _storeState.value = StoreState.Loading
             scope.launch { queryProducts() }
             return
         }
+        _storeState.value = StoreState.Loading
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    scope.launch {
+                when (billingResult.responseCode) {
+                    BillingClient.BillingResponseCode.OK -> scope.launch {
                         queryProducts()
                         processExistingPurchases()
                     }
+
+                    // Cihaz/hesap Play Billing'i hic desteklemiyor. Emulatorde
+                    // gorunen durum bu: "In-app billing API version 3 is not
+                    // supported on this device".
+                    BillingClient.BillingResponseCode.BILLING_UNAVAILABLE,
+                    BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED ->
+                        _storeState.value = StoreState.Unavailable(billingResult.debugMessage)
+
+                    // Gecici: ag yok, servis mesgul vs.
+                    else -> _storeState.value = StoreState.Error(billingResult.debugMessage)
                 }
             }
 
-            // enableAutoServiceReconnection() otomatik yeniden dener,
-            // burada ekstra bir şey yapmamıza gerek yok.
-            override fun onBillingServiceDisconnected() = Unit
+            // enableAutoServiceReconnection() otomatik yeniden dener; ekrana
+            // yine de bir sey soylemeliyiz, yoksa spinner asili kalir.
+            override fun onBillingServiceDisconnected() {
+                if (_storeState.value !is StoreState.Ready) {
+                    _storeState.value = StoreState.Error("service_disconnected")
+                }
+            }
         })
     }
+
+    /** Ekrandaki "Tekrar dene" butonu icin. */
+    fun retryLoadProducts() = connectAndLoadProducts()
 
     private suspend fun queryProducts() {
         val subsParams = QueryProductDetailsParams.newBuilder()
@@ -174,6 +232,13 @@ object BillingRepository : PurchasesUpdatedListener {
             auraProductDetailsByProductId[pd.productId] = pd
             AuraPackOffer(pd.productId, auraCount, offer.formattedPrice)
         }.sortedBy { it.auraCount }
+
+        // Baglanti kuruldu ama Play hicbir sey dondurmediyse bu bir
+        // yapilandirma hatasidir; bos listeyi "yukleniyor" gibi gostermek
+        // kullaniciyi sonsuza kadar bekletiyordu.
+        _storeState.value =
+            if (_auraOffers.value.isEmpty() && _premiumOffers.value.isEmpty()) StoreState.NoProducts
+            else StoreState.Ready
     }
 
     private suspend fun queryProductDetails(

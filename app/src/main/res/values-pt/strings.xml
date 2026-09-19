@@ -441,7 +441,7 @@
     <string name="billing_purchase_processing">Processando compra…</string>
     <string name="billing_purchase_success_premium">Bem-vindo ao Lunosfer Premium!</string>
     <string name="billing_purchase_error">Falha na compra. Tente novamente.</string>
-    <string name="billing_no_products">Carregando produtos…</string>
+    <string name="billing_no_products">Nenhum produto disponível no momento. Tente novamente mais tarde.</string>
     <string name="billing_upgrade_cta">Fazer upgrade para Premium</string>
     <string name="goal_detail_retry">Tentar novamente</string>
     <string name="goal_detail_add_image_url">Adicionar Imagem via URL</string>
@@ -858,4 +858,7 @@
         <item quantity="many">%1$d Auras adicionadas ao seu saldo!</item>
         <item quantity="other">%1$d Auras adicionadas ao seu saldo!</item>
     </plurals>
+    <string name="billing_loading">Carregando produtos…</string>
+    <string name="billing_unavailable_device">As compras no aplicativo não estão disponíveis neste dispositivo. É necessário um aparelho com a Google Play Store atualizada.</string>
+    <string name="billing_load_error">Não foi possível acessar a loja. Verifique sua conexão e tente novamente.</string>
 </resources>

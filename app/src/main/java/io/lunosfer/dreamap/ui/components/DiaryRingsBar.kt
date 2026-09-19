@@ -76,7 +76,12 @@ fun DiaryRingsBar(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        items(rings, key = { it.userId }) { ring ->
+        // distinctBy SAVUNMA amacli: sunucu (bozuk arkadaslik verisi yuzunden)
+        // ayni userId'yi iki kez dondurdugunde LazyRow "Key ... was already
+        // used" ile uygulamayi cokertiyordu. Sunucu tarafi duzeltildi
+        // (lib/supabaseAdmin.js -> getAcceptedFriendIds tekillestirme), ama
+        // istemci hicbir payload'a guvenip cokmemelidir.
+        items(rings.distinctBy { it.userId }, key = { it.userId }) { ring ->
             RingItem(
                 ring = ring,
                 onAddClick = onOpenComposer,

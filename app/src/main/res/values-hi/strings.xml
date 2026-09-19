@@ -442,7 +442,7 @@
     <string name="billing_purchase_processing">खरीद संसाधित हो रही है…</string>
     <string name="billing_purchase_success_premium">Lunosfer प्रीमियम में आपका स्वागत है!</string>
     <string name="billing_purchase_error">खरीद विफल रही। कृपया फिर से प्रयास करें।</string>
-    <string name="billing_no_products">उत्पाद लोड हो रहे हैं…</string>
+    <string name="billing_no_products">अभी कोई उत्पाद उपलब्ध नहीं है। कृपया बाद में पुनः प्रयास करें।</string>
     <string name="billing_upgrade_cta">प्रीमियम में अपग्रेड करें</string>
     <string name="goal_detail_retry">पुनः प्रयास करें</string>
     <string name="goal_detail_add_image_url">URL से छवि जोड़ें</string>
@@ -852,4 +852,7 @@
         <item quantity="one">आपके बैलेंस में %1$d ऑरा जोड़ी गई!</item>
         <item quantity="other">आपके बैलेंस में %1$d ऑरा जोड़ी गई!</item>
     </plurals>
+    <string name="billing_loading">उत्पाद लोड हो रहे हैं…</string>
+    <string name="billing_unavailable_device">इस डिवाइस पर इन-ऐप ख़रीदारी उपलब्ध नहीं है। अद्यतन Google Play Store वाला डिवाइस आवश्यक है।</string>
+    <string name="billing_load_error">स्टोर से कनेक्ट नहीं हो सका। अपना कनेक्शन जाँचें और पुनः प्रयास करें।</string>
 </resources>

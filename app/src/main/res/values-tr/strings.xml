@@ -497,7 +497,7 @@
     <string name="billing_purchase_processing">Satın alma işleniyor…</string>
     <string name="billing_purchase_success_premium">Lunosfer Premium\'a hoş geldin!</string>
     <string name="billing_purchase_error">Satın alma başarısız oldu. Lütfen tekrar deneyin.</string>
-    <string name="billing_no_products">Ürünler yükleniyor…</string>
+    <string name="billing_no_products">Şu anda satın alınabilir ürün yok. Lütfen daha sonra tekrar dene.</string>
     <string name="billing_upgrade_cta">Premium\'a Yükselt</string>
     <string name="goal_detail_retry">Tekrar Dene</string>
     <string name="goal_detail_add_image_url">URL ile Görsel Ekle</string>
@@ -880,4 +880,7 @@
         <item quantity="one">Bakiyene %1$d Aura eklendi!</item>
         <item quantity="other">Bakiyene %1$d Aura eklendi!</item>
     </plurals>
+    <string name="billing_loading">Ürünler yükleniyor…</string>
+    <string name="billing_unavailable_device">Bu cihazda uygulama içi satın alma kullanılamıyor. Güncel Google Play Store\' yüklü bir cihaz gerekiyor.</string>
+    <string name="billing_load_error">Mağazaya ulaşılamadı. Bağlantını kontrol edip tekrar dene.</string>
 </resources>
