@@ -152,7 +152,7 @@ object BillingRepository : PurchasesUpdatedListener {
         scope.launch { refreshAuraBalance() }
         if (billingClient.isReady) {
             _storeState.value = StoreState.Loading
-            scope.launch { queryProducts() }
+            scope.launch { loadProductsAndPurchasesSafely() }
             return
         }
         _storeState.value = StoreState.Loading
@@ -160,19 +160,23 @@ object BillingRepository : PurchasesUpdatedListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 when (billingResult.responseCode) {
                     BillingClient.BillingResponseCode.OK -> scope.launch {
-                        queryProducts()
-                        processExistingPurchases()
+                        loadProductsAndPurchasesSafely()
                     }
 
                     // Cihaz/hesap Play Billing'i hic desteklemiyor. Emulatorde
                     // gorunen durum bu: "In-app billing API version 3 is not
                     // supported on this device".
                     BillingClient.BillingResponseCode.BILLING_UNAVAILABLE,
-                    BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED ->
+                    BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED -> {
+                        android.util.Log.w("BillingRepository", "Cihaz Play Billing desteklemiyor: ${billingResult.responseCode} ${billingResult.debugMessage}")
                         _storeState.value = StoreState.Unavailable(billingResult.debugMessage)
+                    }
 
                     // Gecici: ag yok, servis mesgul vs.
-                    else -> _storeState.value = StoreState.Error(billingResult.debugMessage)
+                    else -> {
+                        android.util.Log.w("BillingRepository", "onBillingSetupFinished hata: ${billingResult.responseCode} ${billingResult.debugMessage}")
+                        _storeState.value = StoreState.Error(billingResult.debugMessage)
+                    }
                 }
             }
 
@@ -188,6 +192,23 @@ object BillingRepository : PurchasesUpdatedListener {
 
     /** Ekrandaki "Tekrar dene" butonu icin. */
     fun retryLoadProducts() = connectAndLoadProducts()
+
+    // queryProducts() (ya da onun cagirdigi processExistingPurchases())
+    // beklenmedik bir istisna firlatirsa - ag katmaninda tuhaf bir durum,
+    // BillingClient'in kendi kutuphanesinde bir kenar durum vs. - ONCEDEN
+    // _storeState hicbir zaman Loading'den cikmiyordu ve UI sonsuza kadar
+    // "yukleniyor" gosteriyordu. Coroutine'i burada sariyoruz ki HANGI
+    // sebeple olursa olsun _storeState mutlaka bir sonuca (Ready/NoProducts/
+    // Error) ulassin.
+    private suspend fun loadProductsAndPurchasesSafely() {
+        try {
+            queryProducts()
+            processExistingPurchases()
+        } catch (e: Exception) {
+            android.util.Log.e("BillingRepository", "Urun/satin alma yukleme hatasi", e)
+            _storeState.value = StoreState.Error(e.message ?: "load_failed")
+        }
+    }
 
     private suspend fun queryProducts() {
         val subsParams = QueryProductDetailsParams.newBuilder()
@@ -281,7 +302,28 @@ object BillingRepository : PurchasesUpdatedListener {
             )
             .build()
         _purchaseState.value = PurchaseFlowState.Processing
-        billingClient.launchBillingFlow(activity, params)
+        // launchBillingFlow senkron bir BillingResult DONDURUR; onPurchasesUpdated
+        // yalnizca odeme sayfasi GERCEKTEN acildiysa cagrilir. Bu donus degeri
+        // ONCEDEN yok sayiliyordu, o yuzden ITEM_ALREADY_OWNED (onceki test
+        // satin almasi consume edilmemisse), DEVELOPER_ERROR (yanlis/eksik
+        // urun-teklif eslesmesi) ya da ITEM_UNAVAILABLE (Play Console'da urun
+        // yoksa/aktif degilse) gibi senkron hatalarda odeme sayfasi HIC
+        // ACILMIYOR ve onPurchasesUpdated de asla tetiklenmiyordu - sonuc,
+        // "Islemde" spinner'inin sonsuza kadar asili kalmasiydi (canli
+        // raporlandi). Simdi bu donus degeri kontrol ediliyor.
+        val launchResult = billingClient.launchBillingFlow(activity, params)
+        if (launchResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            if (launchResult.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+                // Onceki bir test/basarisiz akistan consume/acknowledge
+                // edilmemis bir satin alma kalmis olabilir - kullaniciyi
+                // sonsuza kadar kilitli birakmamak icin mevcut satin almalari
+                // yeniden isleyip (consume dahil) durumu duzeltmeyi dene.
+                scope.launch { processExistingPurchases() }
+            }
+            _purchaseState.value = PurchaseFlowState.Error(
+                "${launchResult.responseCode}: ${launchResult.debugMessage}"
+            )
+        }
     }
 
     // --- PurchasesUpdatedListener ---
@@ -295,6 +337,7 @@ object BillingRepository : PurchasesUpdatedListener {
                 _purchaseState.value = PurchaseFlowState.Idle
             }
             else -> {
+                android.util.Log.w("BillingRepository", "onPurchasesUpdated hata: ${billingResult.responseCode} ${billingResult.debugMessage}")
                 _purchaseState.value = PurchaseFlowState.Error(billingResult.debugMessage)
             }
         }
@@ -361,6 +404,7 @@ object BillingRepository : PurchasesUpdatedListener {
 
             _purchaseState.value = PurchaseFlowState.Success(response.status, response.aurasAdded)
         } catch (e: Exception) {
+            android.util.Log.e("BillingRepository", "Satin alma dogrulama hatasi", e)
             _purchaseState.value = PurchaseFlowState.Error(e.message ?: "verify_failed")
         }
     }
