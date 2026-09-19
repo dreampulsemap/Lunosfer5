@@ -848,4 +848,5 @@
     <string name="billing_loading">正在加载商品…</string>
     <string name="billing_unavailable_device">此设备不支持应用内购买。需要安装最新版 Google Play 商店的设备。</string>
     <string name="billing_load_error">无法连接到商店。请检查网络后重试。</string>
+    <string name="dream_simple_heading">简单来说，这意味着什么？</string>
 </resources>

@@ -45,6 +45,10 @@ data class DreamDetail(
 
 @Serializable
 data class AiJungianAnalysis(
+    // Jungcu analizden ONCE gosterilen sade-dil bolumu (analyze-dream.js).
+    // Bu alandan once analiz edilmis ruyalarda null olur; ekran o zaman
+    // dogrudan eski duzenle (baslik + summary) devam eder.
+    val simple: Map<String, String>? = null,
     val title: Map<String, String>? = null,
     val summary: Map<String, String>? = null,
     val motiv: Map<String, String>? = null,

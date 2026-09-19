@@ -846,4 +846,5 @@
     <string name="billing_loading">商品を読み込んでいます…</string>
     <string name="billing_unavailable_device">この端末ではアプリ内購入を利用できません。最新の Google Play ストアが必要です。</string>
     <string name="billing_load_error">ストアに接続できませんでした。接続を確認してもう一度お試しください。</string>
+    <string name="dream_simple_heading">かんたんに言うと？</string>
 </resources>

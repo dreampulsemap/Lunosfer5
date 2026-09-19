@@ -1237,6 +1237,30 @@ private fun DreamAnalysisCardPage(
                             ?: analysis.motiv?.get("en")
                             ?: ""
 
+                        // Sade-dil bolumu ayrintili analizden ONCE gelir.
+                        val simple = analysis.simple?.get(locale)
+                            ?: analysis.simple?.get("en")
+                            ?: ""
+                        if (simple.isNotBlank()) {
+                            Text(
+                                text = stringResource(R.string.dream_simple_heading),
+                                color = AetherCyan,
+                                style = MaterialTheme.typography.titleMedium.copy(
+                                    fontFamily = SerifFontFamily,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            )
+                            Text(
+                                text = simple,
+                                color = Color(0xFFCBD5E1),
+                                style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 22.sp)
+                            )
+                            HorizontalDivider(
+                                color = AstralGold.copy(alpha = 0.25f),
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
+
                         if (!title.isNullOrBlank()) {
                             Text(
                                 text = title,

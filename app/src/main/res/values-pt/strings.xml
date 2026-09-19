@@ -861,4 +861,5 @@
     <string name="billing_loading">Carregando produtos…</string>
     <string name="billing_unavailable_device">As compras no aplicativo não estão disponíveis neste dispositivo. É necessário um aparelho com a Google Play Store atualizada.</string>
     <string name="billing_load_error">Não foi possível acessar a loja. Verifique sua conexão e tente novamente.</string>
+    <string name="dream_simple_heading">Em poucas palavras: o que significa?</string>
 </resources>

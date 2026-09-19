@@ -883,4 +883,5 @@
     <string name="billing_loading">Ürünler yükleniyor…</string>
     <string name="billing_unavailable_device">Bu cihazda uygulama içi satın alma kullanılamıyor. Güncel Google Play Store\' yüklü bir cihaz gerekiyor.</string>
     <string name="billing_load_error">Mağazaya ulaşılamadı. Bağlantını kontrol edip tekrar dene.</string>
+    <string name="dream_simple_heading">Basitçe ne anlama geliyor?</string>
 </resources>
