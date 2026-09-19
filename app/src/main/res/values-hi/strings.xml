@@ -856,4 +856,6 @@
     <string name="billing_unavailable_device">इस डिवाइस पर इन-ऐप ख़रीदारी उपलब्ध नहीं है। अद्यतन Google Play Store वाला डिवाइस आवश्यक है।</string>
     <string name="billing_load_error">स्टोर से कनेक्ट नहीं हो सका। अपना कनेक्शन जाँचें और पुनः प्रयास करें।</string>
     <string name="dream_simple_heading">सरल शब्दों में: इसका क्या मतलब है?</string>
+    <string name="billing_dismiss_error">बंद करें</string>
+    <string name="billing_purchase_pending">भुगतान की पुष्टि होने का इंतज़ार है। भुगतान के तरीके के आधार पर इसमें कुछ समय लग सकता है।</string>
 </resources>

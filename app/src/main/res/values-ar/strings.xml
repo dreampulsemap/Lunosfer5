@@ -884,4 +884,6 @@
     <string name="billing_unavailable_device">عمليات الشراء داخل التطبيق غير متاحة على هذا الجهاز. يلزم جهاز عليه متجر Google Play محدّث.</string>
     <string name="billing_load_error">تعذّر الوصول إلى المتجر. تحقّق من اتصالك وحاول مرة أخرى.</string>
     <string name="dream_simple_heading">ببساطة: ماذا يعني هذا؟</string>
+    <string name="billing_dismiss_error">إغلاق</string>
+    <string name="billing_purchase_pending">الدفع بانتظار التأكيد. قد يستغرق هذا بعض الوقت حسب طريقة الدفع.</string>
 </resources>

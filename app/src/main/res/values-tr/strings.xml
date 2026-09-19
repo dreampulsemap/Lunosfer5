@@ -884,4 +884,6 @@
     <string name="billing_unavailable_device">Bu cihazda uygulama içi satın alma kullanılamıyor. Güncel Google Play Store\' yüklü bir cihaz gerekiyor.</string>
     <string name="billing_load_error">Mağazaya ulaşılamadı. Bağlantını kontrol edip tekrar dene.</string>
     <string name="dream_simple_heading">Basitçe ne anlama geliyor?</string>
+    <string name="billing_dismiss_error">Kapat</string>
+    <string name="billing_purchase_pending">Ödemen onay bekliyor. Ödeme yöntemine bağlı olarak bu biraz sürebilir.</string>
 </resources>

@@ -2,6 +2,7 @@
 
 import android.app.Activity
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -133,9 +134,19 @@ fun BillingSheet(
                     },
                     color = SemanticSuccess400
                 )
+                is PurchaseFlowState.Pending -> StatusBanner(
+                    text = stringResource(R.string.billing_purchase_pending),
+                    color = AstralAmber,
+                    onDismiss = viewModel::dismissStatus
+                )
                 is PurchaseFlowState.Error -> StatusBanner(
                     text = stringResource(R.string.billing_purchase_error),
-                    color = SemanticDanger400
+                    color = SemanticDanger400,
+                    // Hata banner'i kapatilabilir olmali - ONCEDEN sheet
+                    // yeniden acilana kadar ekranda asili kaliyordu, "yeniden
+                    // dene" icin acik bir yol yoktu (kullanici Satin Al'a
+                    // tekrar basabiliyordu ama bunu nereden bilecekti?).
+                    onDismiss = viewModel::dismissStatus
                 )
                 PurchaseFlowState.Idle -> Unit
             }
@@ -162,7 +173,7 @@ fun BillingSheet(
 }
 
 @Composable
-private fun StatusBanner(text: String, color: Color) {
+private fun StatusBanner(text: String, color: Color, onDismiss: (() -> Unit)? = null) {
     Surface(
         color = color.copy(alpha = 0.15f),
         shape = RoundedCornerShape(10.dp),
@@ -171,12 +182,22 @@ private fun StatusBanner(text: String, color: Color) {
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        Text(
-            text = text,
-            color = color,
-            fontSize = 13.sp,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp)
-        )
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = text, color = color, fontSize = 13.sp, modifier = Modifier.weight(1f))
+            if (onDismiss != null) {
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = stringResource(R.string.billing_dismiss_error),
+                    color = color,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.clickable(onClick = onDismiss)
+                )
+            }
+        }
     }
 }
 

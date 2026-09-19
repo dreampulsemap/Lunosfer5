@@ -51,6 +51,14 @@ sealed class PurchaseFlowState {
     object Processing : PurchaseFlowState()
     data class Success(val status: String, val aurasAdded: Int = 0) : PurchaseFlowState()
     data class Error(val message: String) : PurchaseFlowState()
+
+    // Odeme yontemi gecikmeli onaylaniyor (ör. bazi banka/operator faturali
+    // odemeleri). Purchase.PurchaseState.PENDING - handlePurchase() bu
+    // durumda ENTITLEMENT VERMEZ (dogru), ama ONCEDEN state'i hic
+    // guncellemedigi icin ekran satin alma baslatildiginda gecen
+    // Processing'de SONSUZA KADAR kaliyordu. Bu, kullanicinin bildirdigi
+    // "sonsuz yukleniyor" sikayetlerinden biriyle birebir eslesiyor.
+    object Pending : PurchaseFlowState()
 }
 
 /**
@@ -277,16 +285,31 @@ object BillingRepository : PurchasesUpdatedListener {
     // --- Satın alma başlatma ---
 
     fun launchAuraPurchase(activity: Activity, productId: String) {
-        val productDetails = auraProductDetailsByProductId[productId] ?: return
-        val offerToken = productDetails.oneTimePurchaseOfferDetailsList?.firstOrNull()?.offerToken ?: return
+        // ProductDetails haritasi yalnizca basarili bir queryProducts()
+        // sonrasi doluyor. Bos/eskimis olabilir (ör. kullanici sheet'i
+        // urunler yuklenmeden hizlica actiysa) - ONCEDEN bu durumda tik
+        // bile atmadan sessizce hicbir sey olmuyordu, kullanici butona
+        // basip hicbir tepki gormuyordu.
+        val productDetails = auraProductDetailsByProductId[productId]
+        val offerToken = productDetails?.oneTimePurchaseOfferDetailsList?.firstOrNull()?.offerToken
+        if (productDetails == null || offerToken == null) {
+            android.util.Log.w("BillingRepository", "launchAuraPurchase: urun bulunamadi productId=$productId")
+            _purchaseState.value = PurchaseFlowState.Error("product_not_loaded")
+            return
+        }
         launchFlow(activity, productDetails, offerToken)
     }
 
     fun launchPremiumPurchase(activity: Activity, basePlanId: String) {
-        val productDetails = premiumProductDetails ?: return
-        val offerToken = productDetails.subscriptionOfferDetails
+        val productDetails = premiumProductDetails
+        val offerToken = productDetails?.subscriptionOfferDetails
             ?.firstOrNull { it.basePlanId == basePlanId }
-            ?.offerToken ?: return
+            ?.offerToken
+        if (productDetails == null || offerToken == null) {
+            android.util.Log.w("BillingRepository", "launchPremiumPurchase: plan bulunamadi basePlanId=$basePlanId")
+            _purchaseState.value = PurchaseFlowState.Error("product_not_loaded")
+            return
+        }
         launchFlow(activity, productDetails, offerToken)
     }
 
@@ -365,6 +388,15 @@ object BillingRepository : PurchasesUpdatedListener {
     }
 
     private suspend fun handlePurchase(purchase: Purchase) {
+        if (purchase.purchaseState == Purchase.PurchaseState.PENDING) {
+            // Hak verme - odeme henuz kesinlesmedi. onPurchasesUpdated bu
+            // satin alma PURCHASED olarak GUNCELLENDIGINDE tekrar
+            // cagrilacak (Play, durumu degistiginde PurchasesUpdatedListener'i
+            // yeniden tetikler); simdilik kullaniciya net bir durum goster.
+            android.util.Log.i("BillingRepository", "Satin alma beklemede (PENDING): ${purchase.products}")
+            _purchaseState.value = PurchaseFlowState.Pending
+            return
+        }
         if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED) return
 
         val productId = purchase.products.firstOrNull() ?: run {

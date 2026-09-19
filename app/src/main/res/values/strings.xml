@@ -886,4 +886,6 @@
     <string name="billing_unavailable_device">In-app purchases are not available on this device. A device with an up-to-date Google Play Store is required.</string>
     <string name="billing_load_error">Could not reach the store. Check your connection and try again.</string>
     <string name="dream_simple_heading">Simply: what does it mean?</string>
+    <string name="billing_dismiss_error">Dismiss</string>
+    <string name="billing_purchase_pending">Payment is awaiting confirmation. This can take a while depending on your payment method.</string>
 </resources>

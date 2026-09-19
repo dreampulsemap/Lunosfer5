@@ -869,4 +869,6 @@
     <string name="billing_unavailable_device">Встроенные покупки недоступны на этом устройстве. Требуется устройство с актуальной версией Google Play Маркета.</string>
     <string name="billing_load_error">Не удалось связаться с магазином. Проверьте подключение и повторите попытку.</string>
     <string name="dream_simple_heading">Простыми словами: что это значит?</string>
+    <string name="billing_dismiss_error">Закрыть</string>
+    <string name="billing_purchase_pending">Платёж ожидает подтверждения. В зависимости от способа оплаты это может занять некоторое время.</string>
 </resources>
