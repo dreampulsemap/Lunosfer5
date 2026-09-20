@@ -2,15 +2,14 @@
 <!--
   Android 12+ (API 31 ve ustu) icin yedekleme/cihaz aktarimi kurallari.
 
-  NEDEN: supabase-kt oturumu duz SharedPreferences'ta tutuyor
-  ("<paket>_preferences.xml" icindeki "sb-<proje>-supabase-co-session"
-  anahtari) ve icinde access_token ile REFRESH TOKEN duz metin halinde
-  duruyor (emülatorde dogrulandi). Kurallar bostayken Auto Backup bu
-  dosyayi da kullanicinin Google Drive yedegine yolluyor ve yedek baska bir
-  cihaza geri yuklendiginde o cihaz sessizce ayni hesapla acilmis oluyor.
-  Kimlik bilgileri yedege ASLA girmemeli; sharedpref alani tamamen disarida
-  birakildi (icindeki diger degerler yalnizca yeniden uretilebilir onbellek
-  ve arayuz tercihleri).
+  GUNCELLEME: Supabase oturumu artik EncryptedSessionManager ile ayri,
+  sifreli bir SharedPreferences dosyasinda ("lunosfer_secure_session")
+  tutuluyor; duz metin degil. EncryptedSharedPreferences zaten Android
+  Keystore'a bagli oldugu icin farkli bir cihaza geri yuklendiginde
+  cozulemez ve kullanilamaz. Yine de savunma katmani olarak tum
+  "sharedpref" alani yedekten disarida birakiliyor — icindeki diger
+  degerler yalnizca yeniden uretilebilir onbellek ve arayuz tercihleri
+  oldugundan bunun bir maliyeti yok.
 -->
 <data-extraction-rules>
     <cloud-backup>

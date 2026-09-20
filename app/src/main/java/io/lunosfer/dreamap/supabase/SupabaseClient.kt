@@ -1,6 +1,7 @@
 package io.lunosfer.dreamap.supabase
 
 import io.lunosfer.dreamap.BuildConfig
+import io.lunosfer.dreamap.DreamapApp
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.compose.auth.ComposeAuth
@@ -20,6 +21,11 @@ val supabaseClient = createSupabaseClient(
     install(Auth) {
         scheme = "io.lunosfer.dreamap"
         host = "auth-callback"
+        // Varsayilan SettingsSessionManager duz metin SharedPreferences
+        // kullanir (access_token + refresh_token sifrelenmemis halde
+        // diskte durur). EncryptedSessionManager, ayni jetonlari
+        // Android Keystore korumali AES256-GCM ile saklar.
+        sessionManager = EncryptedSessionManager(DreamapApp.instance)
     }
     install(ComposeAuth)
     install(Postgrest)
