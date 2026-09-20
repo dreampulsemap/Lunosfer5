@@ -3,8 +3,9 @@
   Android 11 ve altindaki cihazlar icin Auto Backup kurallari
   (API 31+ icin data_extraction_rules.xml gecerli; ayni gerekce orada).
 
-  Supabase oturumu (access_token + refresh_token) SharedPreferences'ta duz
-  metin tutuluyor; bu alan yedege dahil edilmemeli.
+  Supabase oturumu artik EncryptedSessionManager ile sifreli tutuluyor
+  (bkz. data_extraction_rules.xml). sharedpref alani yine de savunma
+  katmani olarak yedekten disarida birakiliyor.
 -->
 <full-backup-content>
     <exclude domain="sharedpref" path="." />

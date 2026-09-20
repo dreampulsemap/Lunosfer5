@@ -47,6 +47,7 @@ uiTextGoogleFonts = "1.7.5"
 media3 = "1.5.0"
 billing = "9.1.0"
 browser = "1.8.0"
+securityCrypto = "1.1.0"
 
 
 [libraries]
@@ -121,6 +122,7 @@ media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "medi
 media3-effect = { group = "androidx.media3", name = "media3-effect", version.ref = "media3" }
 media3-transformer = { group = "androidx.media3", name = "media3-transformer", version.ref = "media3" }
 media3-common = { group = "androidx.media3", name = "media3-common", version.ref = "media3" }
+androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 
 
 [plugins]
