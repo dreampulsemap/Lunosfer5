@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import androidx.compose.ui.res.stringResource
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import io.lunosfer.dreamap.R
 import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.*
@@ -35,6 +36,7 @@ import io.lunosfer.dreamap.ui.viewmodel.*
 fun SpiritualToolsScreen(
     onBack: () -> Unit = {},
     onUpgrade: () -> Unit = {},
+    onOpenDeepAnalysis: () -> Unit = {},
     viewModel: SpiritualToolsViewModel = viewModel()
 ) {
     val mentalWallState by viewModel.mentalWallState.collectAsState()
@@ -97,6 +99,47 @@ fun SpiritualToolsScreen(
                                 color = if (selectedTab == index) AstralGold else Color.Gray
                             )
                         }
+                    )
+                }
+            }
+
+            // Derin Analiz yalnizca ust bardaki tasma menusunde duruyordu ve
+            // kimse bulamiyordu. Diger AI okumalarinin yaninda, gorunur bir
+            // giris.
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 10.dp)
+                    .clickable(onClick = onOpenDeepAnalysis),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = Void900),
+                border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.45f))
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(14.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text("🧠", fontSize = 20.sp)
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            stringResource(R.string.deep_analysis_title),
+                            color = AstralGold,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = SerifFontFamily
+                        )
+                        Text(
+                            stringResource(R.string.deep_analysis_intro_title),
+                            color = Color(0xFFCBD5E1),
+                            fontSize = 12.sp
+                        )
+                    }
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = null,
+                        tint = AstralGold,
+                        modifier = Modifier.size(18.dp)
                     )
                 }
             }

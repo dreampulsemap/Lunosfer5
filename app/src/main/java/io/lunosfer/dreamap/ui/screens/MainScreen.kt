@@ -324,7 +324,8 @@ fun MainScreen(
                     onUpgrade = {
                         billingSheetTab = BillingTab.PREMIUM
                         showBillingSheet = true
-                    }
+                    },
+                    onOpenDeepAnalysis = { navController.navigate(Screen.DeepAnalysis.route) }
                 )
             }
             composable(Screen.DeepAnalysis.route) {
