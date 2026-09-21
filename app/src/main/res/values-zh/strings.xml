@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">梦境图像</string>
     <string name="dream_slide_title_1">梦境文本</string>
     <string name="dream_slide_title_2">AI分析</string>
+    <string name="dream_slide_title_simple">用简单的话说</string>
+    <string name="dream_simple_empty">通俗版解读尚未生成。梦境分析完成后会显示在这里。</string>
     <string name="retry">重试</string>
     <string name="error_feed">无法加载动态</string>
     <string name="summary_title">梦境总结</string>

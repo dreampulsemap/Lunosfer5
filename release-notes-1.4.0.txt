@@ -1,0 +1,84 @@
+<en-US>
+• The Oracle now reads your question. Answers are drawn from your own dreams and vision board — not the same daily text everyone else saw.
+• New "General Prophecy" button: a reading built from what you've recorded.
+• Dream analysis opens with a plain-language page explaining your dream in everyday words, before the deeper Jungian reading.
+• Sign-in sessions are now stored encrypted on your device.
+</en-US>
+<ar>
+• العرّاف يقرأ سؤالك فعلياً الآن. تأتي الإجابة من أحلامك ولوحة رؤاك، لا من النص اليومي نفسه الذي يراه الجميع.
+• زر جديد "نبوءة عامة": قراءة مبنية على ما سجّلته.
+• يبدأ تحليل الحلم بصفحة بلغة بسيطة تشرح حلمك بكلمات يومية، قبل التفسير اليونغي الأعمق.
+• تُحفظ جلسة تسجيل الدخول مشفّرة على جهازك.
+</ar>
+<de-DE>
+• Das Orakel liest jetzt wirklich deine Frage. Die Antwort stammt aus deinen eigenen Träumen und deinem Visionsboard – nicht mehr derselbe Tagestext für alle.
+• Neue Schaltfläche „Allgemeine Prophezeiung“: eine Deutung aus dem, was du aufgezeichnet hast.
+• Die Traumanalyse beginnt nun mit einer Seite in einfacher Sprache, vor der tieferen Jung-Deutung.
+• Anmeldesitzungen werden verschlüsselt auf deinem Gerät gespeichert.
+</de-DE>
+<es-ES>
+• El Oráculo ya lee tu pregunta. La respuesta sale de tus propios sueños y de tu tablero de visión, no del mismo texto diario para todos.
+• Nuevo botón «Profecía general»: una lectura creada a partir de lo que has registrado.
+• El análisis del sueño ahora empieza con una página en lenguaje sencillo, antes de la lectura junguiana.
+• Tu sesión se guarda cifrada en el dispositivo.
+</es-ES>
+<fr-FR>
+• L'Oracle lit enfin votre question. La réponse vient de vos propres rêves et de votre tableau de visions, et non du même texte quotidien pour tous.
+• Nouveau bouton « Prophétie générale » : une lecture tirée de ce que vous avez enregistré.
+• L'analyse du rêve s'ouvre sur une page en langage simple, avant l'interprétation jungienne.
+• Votre session de connexion est stockée chiffrée sur l'appareil.
+</fr-FR>
+<hi-IN>
+• भविष्यवक्ता अब सचमुच आपका सवाल पढ़ता है। जवाब आपके अपने सपनों और विज़न बोर्ड से आता है, सबको दिखने वाले एक ही रोज़ाना पाठ से नहीं।
+• नया "सामान्य भविष्यवाणी" बटन: आपकी दर्ज की गई बातों से बनी व्याख्या।
+• सपने का विश्लेषण अब सरल भाषा वाले पन्ने से शुरू होता है, गहरी युंगीय व्याख्या उसके बाद।
+• साइन-इन सत्र अब आपके डिवाइस पर एन्क्रिप्टेड रहता है।
+</hi-IN>
+<it-IT>
+• L'Oracolo ora legge davvero la tua domanda. La risposta nasce dai tuoi sogni e dalla tua bacheca delle visioni, non dallo stesso testo giornaliero per tutti.
+• Nuovo pulsante «Profezia generale»: una lettura costruita su ciò che hai registrato.
+• L'analisi del sogno si apre con una pagina in linguaggio semplice, prima della lettura junghiana.
+• La sessione di accesso è salvata cifrata sul dispositivo.
+</it-IT>
+<iw-IL>
+• האורקל קורא עכשיו באמת את השאלה שלך. התשובה נשענת על החלומות שלך ועל לוח החזון שלך, ולא על אותו טקסט יומי שכולם ראו.
+• כפתור חדש "נבואה כללית": קריאה שנבנית ממה שתיעדת.
+• ניתוח החלום נפתח בעמוד בשפה פשוטה, לפני הפרשנות היונגיאנית המעמיקה.
+• הפעלת ההתחברות נשמרת מוצפנת במכשיר שלך.
+</iw-IL>
+<ja-JP>
+• 予言者があなたの質問を実際に読むようになりました。回答はあなた自身の夢とビジョンボードから導かれ、全員に配られる同じ日替わり文ではありません。
+• 新しい「総合予言」ボタン：記録した内容から作られる解釈です。
+• 夢の分析は、深いユング的解釈の前に、やさしい言葉のページから始まります。
+• ログインセッションは端末内で暗号化して保存されます。
+</ja-JP>
+<ko-KR>
+• 예언자가 이제 질문을 실제로 읽습니다. 답변은 모두에게 똑같이 제공되던 일일 문구가 아니라, 당신의 꿈과 비전 보드에서 나옵니다.
+• 새로운 '종합 예언' 버튼: 기록한 내용을 바탕으로 한 해석입니다.
+• 꿈 분석이 깊은 융 해석에 앞서 쉬운 말로 쓴 페이지로 시작합니다.
+• 로그인 세션이 기기에 암호화되어 저장됩니다.
+</ko-KR>
+<pt-BR>
+• O Oráculo agora lê de fato a sua pergunta. A resposta vem dos seus próprios sonhos e do seu quadro de visões, e não do mesmo texto diário mostrado a todos.
+• Novo botão "Profecia geral": uma leitura criada a partir do que você registrou.
+• A análise do sonho começa com uma página em linguagem simples, antes da leitura junguiana.
+• Sua sessão de login fica salva criptografada no aparelho.
+</pt-BR>
+<ru-RU>
+• Оракул теперь действительно читает ваш вопрос. Ответ строится на ваших снах и доске визуализации, а не на одном и том же тексте дня для всех.
+• Новая кнопка «Общее пророчество»: толкование по тому, что вы записали.
+• Анализ сна начинается со страницы простым языком, а уже затем идёт юнгианское толкование.
+• Сессия входа хранится на устройстве в зашифрованном виде.
+</ru-RU>
+<tr-TR>
+• Kahin artık yazdığın soruyu gerçekten okuyor. Cevap kendi rüyalarından ve vizyon panondan geliyor; herkese gösterilen aynı günlük metin değil.
+• Yeni "Genel Kehanet" butonu: kaydettiklerinden üretilen kişisel bir yorum.
+• Rüya analizi artık sade dille yazılmış bir sayfayla açılıyor; derin Jungcu yorum ondan sonra geliyor.
+• Giriş oturumun cihazında şifreli saklanıyor.
+</tr-TR>
+<uk>
+• Оракул тепер справді читає ваше запитання. Відповідь спирається на ваші сни та дошку візій, а не на той самий щоденний текст для всіх.
+• Нова кнопка «Загальне пророцтво»: тлумачення на основі того, що ви записали.
+• Аналіз сну тепер починається зі сторінки простою мовою, а юнгіанське тлумачення йде після неї.
+• Сесія входу зберігається на пристрої в зашифрованому вигляді.
+</uk>

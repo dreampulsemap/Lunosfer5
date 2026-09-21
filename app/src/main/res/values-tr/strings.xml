@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">Rüya Görseli</string>
     <string name="dream_slide_title_1">Rüya Metni</string>
     <string name="dream_slide_title_2">AI Analizi</string>
+    <string name="dream_slide_title_simple">Sade Dille</string>
+    <string name="dream_simple_empty">Sade dille özet henüz hazır değil. Rüya analizi tamamlandığında burada görünecek.</string>
     <string name="retry">Tekrar Dene</string>
     <string name="error_feed">Akış yüklenemedi</string>
     <string name="empty_vision">Henüz aktif bir vizyon yok</string>

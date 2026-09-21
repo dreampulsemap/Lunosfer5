@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">Imagen del sueño</string>
     <string name="dream_slide_title_1">Texto del sueño</string>
     <string name="dream_slide_title_2">Análisis IA</string>
+    <string name="dream_slide_title_simple">En palabras sencillas</string>
+    <string name="dream_simple_empty">El resumen en lenguaje sencillo aún no está listo. Aparecerá cuando termine el análisis del sueño.</string>
     <string name="retry">Reintentar</string>
     <string name="error_feed">No se pudo cargar el feed</string>
 

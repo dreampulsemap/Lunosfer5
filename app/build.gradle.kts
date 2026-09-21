@@ -1,4 +1,7 @@
 import com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy
+// android {} blogu icinde "java" Gradle'in kendi eklentisine cozuluyor,
+// bu yuzden java.util.Properties tam adiyla kullanilamiyor.
+import java.util.Properties
 
 plugins {
   alias(libs.plugins.android.application)
@@ -18,19 +21,29 @@ android {
     applicationId = "io.lunosfer.dreamap"
     minSdk = 24
     targetSdk = 36
-    versionCode = 8
-    versionName = "1.3.4"
+    versionCode = 9
+    versionName = "1.4.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   signingConfigs {
     create("release") {
-      val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
+      // Imza sifreleri once ortam degiskeninden (CI), yoksa local.properties'ten
+      // okunuyor. local.properties .gitignore'da; boylece sifreyi her release
+      // derlemesinde elle export etmeye gerek kalmiyor ve depoya da girmiyor.
+      val localProps = Properties().apply {
+        val f = rootProject.file("local.properties")
+        if (f.exists()) f.inputStream().use { load(it) }
+      }
+      fun secret(name: String): String? =
+        System.getenv(name) ?: localProps.getProperty(name)
+
+      val keystorePath = secret("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
       storeFile = file(keystorePath)
-      storePassword = System.getenv("STORE_PASSWORD")
-      keyAlias = "upload"
-      keyPassword = System.getenv("KEY_PASSWORD")
+      storePassword = secret("STORE_PASSWORD")
+      keyAlias = secret("KEY_ALIAS") ?: "upload"
+      keyPassword = secret("KEY_PASSWORD")
     }
     create("debugConfig") {
       storeFile = file("${rootDir}/debug.keystore")

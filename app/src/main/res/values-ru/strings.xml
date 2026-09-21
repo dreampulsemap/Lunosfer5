@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">Изображение сна</string>
     <string name="dream_slide_title_1">Текст сна</string>
     <string name="dream_slide_title_2">ИИ-анализ</string>
+    <string name="dream_slide_title_simple">Простыми словами</string>
+    <string name="dream_simple_empty">Краткое изложение простым языком ещё не готово. Оно появится, когда завершится анализ сна.</string>
     <string name="retry">Повторить</string>
     <string name="error_feed">Не удалось загрузить ленту</string>
     <string name="summary_title">Сводки сновидений</string>

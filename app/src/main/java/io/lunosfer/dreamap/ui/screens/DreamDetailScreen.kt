@@ -148,7 +148,9 @@ private fun getDetailSlideTitle(pageIndex: Int): String {
     return when (pageIndex) {
         0 -> stringResource(id = io.lunosfer.dreamap.R.string.dream_slide_title_0)
         1 -> stringResource(id = io.lunosfer.dreamap.R.string.dream_slide_title_1)
-        2 -> stringResource(id = io.lunosfer.dreamap.R.string.dream_slide_title_2)
+        // Sade-dil ozeti, Jungcu analizden ONCEKI slayt.
+        2 -> stringResource(id = io.lunosfer.dreamap.R.string.dream_slide_title_simple)
+        3 -> stringResource(id = io.lunosfer.dreamap.R.string.dream_slide_title_2)
         else -> stringResource(R.string.dream_detail_slide_title_detail)
     }
 }
@@ -189,7 +191,7 @@ fun DreamDetailContent(
     var showBountyDialog by remember { mutableStateOf(false) }
     var showCommentsSheet by remember { mutableStateOf(false) }
 
-    val pagerState = rememberPagerState(pageCount = { 3 })
+    val pagerState = rememberPagerState(pageCount = { 4 })
 
     Column(
         modifier = Modifier
@@ -312,7 +314,7 @@ fun DreamDetailContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "$slideLabel (${pagerState.currentPage + 1}/3)",
+                text = "$slideLabel (${pagerState.currentPage + 1}/4)",
                 color = Color(0xFF94A3B8),
                 fontFamily = FontFamily.Monospace,
                 fontSize = 12.sp,
@@ -347,7 +349,8 @@ fun DreamDetailContent(
             when (page) {
                 0 -> DreamImageCardPage(dream = dream)
                 1 -> DreamTextCardPage(dream = dream)
-                2 -> DreamAnalysisCardPage(
+                2 -> DreamSimpleCardPage(dream = dream)
+                3 -> DreamAnalysisCardPage(
                     dream = dream,
                     isGeneratingDeepAnalysis = state.isGeneratingDeepAnalysis,
                     deepAnalysisResult = state.deepAnalysisResult,
@@ -1160,6 +1163,68 @@ private fun DreamTextCardPage(
     }
 }
 
+/**
+ * Jungcu analizden ONCEKI slayt: ayni analizin gunluk dille yazilmis hali.
+ * Metni backend uretiyor (analyze-dream.js -> `simple`), burada sadece
+ * kendi sayfasinda gosteriliyor.
+ */
+@Composable
+private fun DreamSimpleCardPage(dream: DreamDetail) {
+    val locale = io.lunosfer.dreamap.util.AppLanguage.code()
+    val analysis = dream.aiJungianAnalysis
+    val simple = analysis?.simple?.get(locale)
+        ?: analysis?.simple?.get("en")
+        ?: ""
+
+    Card(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = 4.dp),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Void900),
+        border = BorderStroke(1.dp, AetherCyan.copy(alpha = 0.25f))
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(text = "💬", fontSize = 18.sp)
+                Text(
+                    text = stringResource(R.string.dream_simple_heading),
+                    color = AetherCyan,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontFamily = SerifFontFamily,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+
+            if (simple.isNotBlank()) {
+                Text(
+                    text = simple,
+                    color = Color(0xFFE2E8F0),
+                    style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 23.sp)
+                )
+            } else {
+                // Analiz henuz bitmemis ya da bu alan eklenmeden once analiz
+                // edilmis eski bir ruya olabilir.
+                Text(
+                    text = stringResource(R.string.dream_simple_empty),
+                    color = Color(0xFF94A3B8),
+                    style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 22.sp)
+                )
+            }
+        }
+    }
+}
+
 @Composable
 private fun DreamAnalysisCardPage(
     dream: DreamDetail,
@@ -1170,7 +1235,7 @@ private fun DreamAnalysisCardPage(
     onRequestDeepAnalysis: () -> Unit
 ) {
     val locale = io.lunosfer.dreamap.util.AppLanguage.code()
-    val titleLabel = getDetailSlideTitle(2)
+    val titleLabel = getDetailSlideTitle(3)
 
     Card(
         modifier = Modifier
@@ -1237,29 +1302,8 @@ private fun DreamAnalysisCardPage(
                             ?: analysis.motiv?.get("en")
                             ?: ""
 
-                        // Sade-dil bolumu ayrintili analizden ONCE gelir.
-                        val simple = analysis.simple?.get(locale)
-                            ?: analysis.simple?.get("en")
-                            ?: ""
-                        if (simple.isNotBlank()) {
-                            Text(
-                                text = stringResource(R.string.dream_simple_heading),
-                                color = AetherCyan,
-                                style = MaterialTheme.typography.titleMedium.copy(
-                                    fontFamily = SerifFontFamily,
-                                    fontWeight = FontWeight.SemiBold
-                                )
-                            )
-                            Text(
-                                text = simple,
-                                color = Color(0xFFCBD5E1),
-                                style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 22.sp)
-                            )
-                            HorizontalDivider(
-                                color = AstralGold.copy(alpha = 0.25f),
-                                modifier = Modifier.padding(vertical = 4.dp)
-                            )
-                        }
+                        // Sade-dil bolumu artik kendi slaytinda (bkz.
+                        // DreamSimpleCardPage), burada tekrar gosterilmiyor.
 
                         if (!title.isNullOrBlank()) {
                             Text(

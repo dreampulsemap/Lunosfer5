@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">Dream Image</string>
     <string name="dream_slide_title_1">Dream Text</string>
     <string name="dream_slide_title_2">AI Analysis</string>
+    <string name="dream_slide_title_simple">In Plain Words</string>
+    <string name="dream_simple_empty">The plain-language summary isn’t ready yet. It appears once the dream analysis finishes.</string>
     <string name="retry">Retry</string>
     <string name="error_feed">Could not load feed</string>
     <string name="empty_vision" translatable="false">No active visions yet</string>

@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">स्वप्न चित्र</string>
     <string name="dream_slide_title_1">स्वप्न पाठ</string>
     <string name="dream_slide_title_2">एआई विश्लेषण</string>
+    <string name="dream_slide_title_simple">सरल शब्दों में</string>
+    <string name="dream_simple_empty">सरल भाषा में सारांश अभी तैयार नहीं है। सपने का विश्लेषण पूरा होते ही यह दिखेगा।</string>
     <string name="retry">पुनः प्रयास करें</string>
     <string name="error_feed">फ़ीड लोड नहीं हो सका</string>
 

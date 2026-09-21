@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">صورة الحلم</string>
     <string name="dream_slide_title_1">نص الحلم</string>
     <string name="dream_slide_title_2">تحليل الذكاء الاصطناعي</string>
+    <string name="dream_slide_title_simple">بكلمات بسيطة</string>
+    <string name="dream_simple_empty">الملخّص بلغة بسيطة ليس جاهزاً بعد. سيظهر بمجرد انتهاء تحليل الحلم.</string>
     <string name="retry">إعادة المحاولة</string>
     <string name="error_feed">تعذر تحميل الخلاصة</string>
 

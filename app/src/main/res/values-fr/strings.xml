@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">Image du rêve</string>
     <string name="dream_slide_title_1">Texte du rêve</string>
     <string name="dream_slide_title_2">Analyse IA</string>
+    <string name="dream_slide_title_simple">En mots simples</string>
+    <string name="dream_simple_empty">Le résumé en langage simple n’est pas encore prêt. Il apparaîtra une fois l’analyse du rêve terminée.</string>
     <string name="retry">Réessayer</string>
     <string name="error_feed">Impossible de charger le flux</string>
     <string name="summary_title">Résumés de rêves</string>

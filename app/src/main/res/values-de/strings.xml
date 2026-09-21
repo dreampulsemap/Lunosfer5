@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">Traumbild</string>
     <string name="dream_slide_title_1">Traumtext</string>
     <string name="dream_slide_title_2">KI-Analyse</string>
+    <string name="dream_slide_title_simple">In einfachen Worten</string>
+    <string name="dream_simple_empty">Die Zusammenfassung in einfacher Sprache ist noch nicht fertig. Sie erscheint, sobald die Traumanalyse abgeschlossen ist.</string>
     <string name="retry">Erneut versuchen</string>
     <string name="error_feed">Feed konnte nicht geladen werden</string>
 

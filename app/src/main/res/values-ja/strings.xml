@@ -60,6 +60,8 @@
     <string name="dream_slide_title_0">夢の画像</string>
     <string name="dream_slide_title_1">夢のテキスト</string>
     <string name="dream_slide_title_2">AI分析</string>
+    <string name="dream_slide_title_simple">やさしい言葉で</string>
+    <string name="dream_simple_empty">やさしい言葉での要約はまだ準備できていません。夢の分析が終わると表示されます。</string>
     <string name="retry">再試行</string>
     <string name="error_feed">フィードを読み込めませんでした</string>
     <string name="summary_title">夢の要約</string>
