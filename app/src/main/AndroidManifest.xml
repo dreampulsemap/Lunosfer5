@@ -42,7 +42,7 @@
             android:value="https://384d4820128ecda47472d1244f574540@o4512118425452544.ingest.de.sentry.io/4512118509011024" />
         <meta-data
             android:name="io.sentry.traces.sample-rate"
-            android:value="1.0" />
+            android:value="${sentryTracesSampleRate}" />
 
         <activity
             android:name=".MainActivity"

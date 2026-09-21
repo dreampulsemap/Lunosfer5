@@ -46,8 +46,11 @@ android {
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("release")
+      // Her islemi Sentry'ye gondermek kotayi hizla tuketir; uretimde ornekle.
+      manifestPlaceholders["sentryTracesSampleRate"] = "0.2"
     }
     debug {
+      manifestPlaceholders["sentryTracesSampleRate"] = "1.0"
       // debug.keystore .gitignore'da (bkz. oradaki not), yani temiz bir klonda
       // YOK. Kosulsuz baglandiginda validateSigningDebug "Keystore file not
       // found" ile patliyordu ve depoyu klonlayan hic kimse projeyi
