@@ -33,6 +33,17 @@
         android:supportsRtl="true"
         android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.MyApplication">
+
+        <!-- Sentry: hata izleme ve performans takibi. DSN ve ayarlar
+             kod tarafında Application sınıfına dokunmadan burada
+             tanımlanıyor. -->
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://384d4820128ecda47472d1244f574540@o4512118425452544.ingest.de.sentry.io/4512118509011024" />
+        <meta-data
+            android:name="io.sentry.traces.sample-rate"
+            android:value="1.0" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

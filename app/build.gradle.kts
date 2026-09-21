@@ -149,6 +149,7 @@ dependencies {
 
   implementation(platform(libs.supabase.bom))
   implementation(libs.supabase.auth)
+  implementation(libs.androidx.security.crypto)
   implementation(libs.supabase.compose.auth)
   implementation(libs.supabase.postgrest)
   implementation(libs.supabase.storage)
@@ -163,6 +164,10 @@ dependencies {
   implementation(libs.androidx.browser)
   implementation("androidx.appcompat:appcompat:1.6.1")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+
+  // Sentry: crash/hata izleme ve performans takibi (BOM ile versiyon yönetimi)
+  implementation(platform("io.sentry:sentry-bom:8.57.0"))
+  implementation("io.sentry:sentry-android")
 
   // Reels editör: tam ekran önizleme + export (bkz. ui/screens/videoeditor/)
   implementation(libs.media3.exoplayer)

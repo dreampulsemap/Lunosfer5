@@ -2,12 +2,7 @@
 .gradle
 .kotlin
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+/.idea/
 .DS_Store
 /build
 /captures
@@ -32,13 +27,3 @@ build/
 # Firebase konsolundan yeniden indirmek gerekir (yoksa build sadece uyarir,
 # bkz. app/build.gradle.kts -> missingGoogleServicesStrategy = WARN).
 app/google-services.json
-
-# IDE'ye ozel, makineye bagli durum
-/.idea/deploymentTargetSelector.xml
-/.idea/appInsightsSettings.xml
-/.idea/AndroidProjectSystem.xml
-/.idea/deviceManager.xml
-/.idea/misc.xml
-/.idea/gradle.xml
-/.idea/compiler.xml
-/.idea/.name
