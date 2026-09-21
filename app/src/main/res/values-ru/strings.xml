@@ -926,4 +926,9 @@
     <string name="deep_analysis_error_rate_limited">Вы израсходовали глубокие анализы на этот час. Попробуйте позже.</string>
     <string name="deep_analysis_error_failed">Не удалось создать анализ. Попробуйте ещё раз.</string>
     <string name="deep_analysis_error_failed_refunded">Не удалось создать анализ, Аура возвращена. Попробуйте ещё раз.</string>
+
+    <!-- Play satin alma dogrulama hatalari -->
+    <string name="billing_error_not_configured">Проверка покупок ещё не настроена. Если с вас списали средства, Google вернёт их автоматически в течение нескольких дней.</string>
+    <string name="billing_error_not_purchased">Google не считает эту покупку завершённой.</string>
+    <string name="billing_error_subscription_inactive">Эта подписка не выглядит активной на стороне Google.</string>
 </resources>

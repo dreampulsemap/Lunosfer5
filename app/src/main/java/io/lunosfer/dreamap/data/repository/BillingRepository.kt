@@ -437,8 +437,22 @@ object BillingRepository : PurchasesUpdatedListener {
             _purchaseState.value = PurchaseFlowState.Success(response.status, response.aurasAdded)
         } catch (e: Exception) {
             android.util.Log.e("BillingRepository", "Satin alma dogrulama hatasi", e)
-            _purchaseState.value = PurchaseFlowState.Error(e.message ?: "verify_failed")
+            // Retrofit 2xx disinda HttpException firlatiyor ve govdedeki
+            // {"error":"..."} kodu kayboluyordu; kullanici her durumda ayni
+            // "HTTP 500" metnini goruyordu. Kodu cikarip arayuze veriyoruz
+            // ki "dogrulama henuz yapilandirilmadi" ile gercek bir hata
+            // birbirinden ayirt edilebilsin.
+            _purchaseState.value = PurchaseFlowState.Error(verifyErrorCode(e))
         }
+    }
+
+    /** HTTP hata govdesindeki `error` kodunu cikarir; yoksa genel bir kod doner. */
+    private fun verifyErrorCode(error: Throwable): String {
+        val http = error as? retrofit2.HttpException ?: return "verify_failed"
+        val body = runCatching { http.response()?.errorBody()?.string() }.getOrNull()
+            ?: return "verify_failed"
+        val code = runCatching { org.json.JSONObject(body).optString("error") }.getOrNull()
+        return code?.takeIf { it.isNotBlank() } ?: "verify_failed"
     }
 
     private suspend fun acknowledgePurchase(purchaseToken: String) {

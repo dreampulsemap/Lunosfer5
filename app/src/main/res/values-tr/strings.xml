@@ -941,4 +941,9 @@
     <string name="deep_analysis_error_rate_limited">Bu saatlik derin analiz hakkını kullandın. Biraz sonra tekrar dene.</string>
     <string name="deep_analysis_error_failed">Analiz üretilemedi. Lütfen tekrar dene.</string>
     <string name="deep_analysis_error_failed_refunded">Analiz üretilemedi, Aura\'n geri verildi. Lütfen tekrar dene.</string>
+
+    <!-- Play satin alma dogrulama hatalari -->
+    <string name="billing_error_not_configured">Satın alma doğrulaması henüz kurulmadı. Ücret alındıysa Google birkaç gün içinde otomatik iade eder.</string>
+    <string name="billing_error_not_purchased">Google bu satın almayı tamamlanmış olarak görmüyor.</string>
+    <string name="billing_error_subscription_inactive">Bu abonelik Google tarafında aktif görünmüyor.</string>
 </resources>

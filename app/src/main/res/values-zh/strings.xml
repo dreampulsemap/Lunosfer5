@@ -906,4 +906,9 @@
     <string name="deep_analysis_error_rate_limited">这一小时的深度分析次数已用完，请稍后再试。</string>
     <string name="deep_analysis_error_failed">无法生成分析，请再试一次。</string>
     <string name="deep_analysis_error_failed_refunded">无法生成分析，灵气已退回，请再试一次。</string>
+
+    <!-- Play satin alma dogrulama hatalari -->
+    <string name="billing_error_not_configured">购买验证尚未配置。如果已扣款，Google 会在几天内自动退款。</string>
+    <string name="billing_error_not_purchased">Google 未将此次购买记录为已完成。</string>
+    <string name="billing_error_subscription_inactive">该订阅在 Google 一侧看起来未生效。</string>
 </resources>

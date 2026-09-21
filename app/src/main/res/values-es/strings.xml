@@ -919,4 +919,9 @@
     <string name="deep_analysis_error_rate_limited">Has agotado tus análisis profundos de esta hora. Inténtalo más tarde.</string>
     <string name="deep_analysis_error_failed">No se pudo generar el análisis. Inténtalo de nuevo.</string>
     <string name="deep_analysis_error_failed_refunded">No se pudo generar el análisis, así que se te devolvió el Aura. Inténtalo de nuevo.</string>
+
+    <!-- Play satin alma dogrulama hatalari -->
+    <string name="billing_error_not_configured">La verificación de compra aún no está configurada. Si se te cobró, Google lo reembolsa automáticamente en unos días.</string>
+    <string name="billing_error_not_purchased">Google no registra esta compra como completada.</string>
+    <string name="billing_error_subscription_inactive">Esta suscripción no aparece activa en Google.</string>
 </resources>

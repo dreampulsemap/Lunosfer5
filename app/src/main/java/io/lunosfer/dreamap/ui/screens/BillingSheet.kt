@@ -140,7 +140,17 @@ fun BillingSheet(
                     onDismiss = viewModel::dismissStatus
                 )
                 is PurchaseFlowState.Error -> StatusBanner(
-                    text = stringResource(R.string.billing_purchase_error),
+                    // Sunucunun dondugu koda gore ayri metin. Ozellikle
+                    // billing_not_configured onemli: satin alma dogrulanamadigi
+                    // icin uygulama consume/acknowledge ETMIYOR, dolayisiyla
+                    // Google ucreti 3 gun icinde otomatik iade ediyor -
+                    // kullanicinin bunu bilmesi gerek.
+                    text = when (state.message) {
+                        "billing_not_configured" -> stringResource(R.string.billing_error_not_configured)
+                        "not_purchased" -> stringResource(R.string.billing_error_not_purchased)
+                        "subscription_not_active" -> stringResource(R.string.billing_error_subscription_inactive)
+                        else -> stringResource(R.string.billing_purchase_error)
+                    },
                     color = SemanticDanger400,
                     // Hata banner'i kapatilabilir olmali - ONCEDEN sheet
                     // yeniden acilana kadar ekranda asili kaliyordu, "yeniden

@@ -918,4 +918,9 @@
     <string name="deep_analysis_error_rate_limited">Vous avez épuisé vos analyses profondes pour cette heure. Réessayez plus tard.</string>
     <string name="deep_analysis_error_failed">L\'analyse n\'a pas pu être produite. Veuillez réessayer.</string>
     <string name="deep_analysis_error_failed_refunded">L\'analyse n\'a pas pu être produite, votre Aura a été remboursée. Veuillez réessayer.</string>
+
+    <!-- Play satin alma dogrulama hatalari -->
+    <string name="billing_error_not_configured">La vérification des achats n\'est pas encore configurée. Si vous avez été débité, Google rembourse automatiquement sous quelques jours.</string>
+    <string name="billing_error_not_purchased">Google ne signale pas cet achat comme terminé.</string>
+    <string name="billing_error_subscription_inactive">Cet abonnement ne semble pas actif côté Google.</string>
 </resources>

@@ -941,4 +941,9 @@
     <string name="deep_analysis_error_rate_limited">استنفدت تحليلاتك العميقة لهذه الساعة. حاول لاحقًا.</string>
     <string name="deep_analysis_error_failed">تعذّر إنتاج التحليل. حاول مرة أخرى.</string>
     <string name="deep_analysis_error_failed_refunded">تعذّر إنتاج التحليل، لذا أُعيدت الأورا إليك. حاول مرة أخرى.</string>
+
+    <!-- Play satin alma dogrulama hatalari -->
+    <string name="billing_error_not_configured">لم يُضبط التحقق من الشراء بعد. إذا خُصم منك مبلغ، فستعيده Google تلقائيًا خلال أيام قليلة.</string>
+    <string name="billing_error_not_purchased">لا تُبلّغ Google عن اكتمال عملية الشراء هذه.</string>
+    <string name="billing_error_subscription_inactive">لا يبدو هذا الاشتراك نشطًا لدى Google.</string>
 </resources>

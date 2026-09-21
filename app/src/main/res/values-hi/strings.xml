@@ -913,4 +913,9 @@
     <string name="deep_analysis_error_rate_limited">इस घंटे के गहन विश्लेषण खत्म हो गए। बाद में फिर कोशिश करें।</string>
     <string name="deep_analysis_error_failed">विश्लेषण तैयार नहीं हो सका। कृपया फिर कोशिश करें।</string>
     <string name="deep_analysis_error_failed_refunded">विश्लेषण तैयार नहीं हो सका, इसलिए आपका Aura लौटा दिया गया। कृपया फिर कोशिश करें।</string>
+
+    <!-- Play satin alma dogrulama hatalari -->
+    <string name="billing_error_not_configured">खरीद सत्यापन अभी सेट नहीं हुआ है। अगर शुल्क लिया गया है, तो Google कुछ दिनों में अपने आप वापस कर देगा।</string>
+    <string name="billing_error_not_purchased">Google इस खरीद को पूरा हुआ नहीं दिखा रहा।</string>
+    <string name="billing_error_subscription_inactive">यह सदस्यता Google की ओर से सक्रिय नहीं दिख रही।</string>
 </resources>
