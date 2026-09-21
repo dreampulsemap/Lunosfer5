@@ -60,7 +60,11 @@ class SpiritualToolsViewModel(
         _mentalWallState.value = MentalWallUiState.Loading
         viewModelScope.launch {
             repository.generateMentalWall(
-                io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.app_lang_code),
+                // R.string.app_lang_code UYGULAMA context'inden okunuyordu ve o,
+                // AppCompatDelegate ile secilen per-app dili takip etmiyor: uygulama
+                // Turkce'yken sunucuya "en" gidiyor, Zihin Duvari ve Kahin Ingilizce
+                // donuyordu (bkz. AppLanguage dosyasindaki ayni sinif hata notu).
+                io.lunosfer.dreamap.util.AppLanguage.code(),
                 deep
             )
                 .onSuccess { res ->
@@ -127,7 +131,11 @@ class SpiritualToolsViewModel(
             repository.consultProphet(
                 mode,
                 question,
-                io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.app_lang_code),
+                // R.string.app_lang_code UYGULAMA context'inden okunuyordu ve o,
+                // AppCompatDelegate ile secilen per-app dili takip etmiyor: uygulama
+                // Turkce'yken sunucuya "en" gidiyor, Zihin Duvari ve Kahin Ingilizce
+                // donuyordu (bkz. AppLanguage dosyasindaki ayni sinif hata notu).
+                io.lunosfer.dreamap.util.AppLanguage.code(),
                 deep
             )
                 .onSuccess { res ->

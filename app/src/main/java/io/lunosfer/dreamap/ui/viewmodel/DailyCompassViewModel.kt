@@ -52,6 +52,10 @@ class DailyCompassViewModel(
 
     private fun restoreTodaysReading() {
         if (prefs.getString(userScopedKey(KEY_DATE), null) != today()) return
+        // Okuma hangi dilde uretildiyse o dille birlikte saklaniyor. Dil
+        // kaydedilmedigi icin, kullanici uygulama dilini degistirse bile o
+        // gunku eski dildeki metin gosterilmeye devam ediyordu.
+        if (prefs.getString(userScopedKey(KEY_LANG), null) != currentLanguage()) return
         val reading = prefs.getString(userScopedKey(KEY_READING), null) ?: return
         _state.value = CompassUiState.Success(
             reading = reading,
@@ -63,6 +67,7 @@ class DailyCompassViewModel(
     private fun persist(reading: String, archetype: String?, color: String?) {
         prefs.edit()
             .putString(userScopedKey(KEY_DATE), today())
+            .putString(userScopedKey(KEY_LANG), currentLanguage())
             .putString(userScopedKey(KEY_READING), reading)
             .putString(userScopedKey(KEY_ARCHETYPE), archetype)
             .putString(userScopedKey(KEY_COLOR), color)
@@ -106,6 +111,8 @@ class DailyCompassViewModel(
     private companion object {
         const val PREFS_NAME = "lunosfer_daily_compass"
         const val KEY_DATE = "date"
+        // Okumanin uretildigi dil; dil degisince onbellek gecersiz sayilir.
+        const val KEY_LANG = "lang"
         const val KEY_READING = "reading"
         const val KEY_ARCHETYPE = "archetype"
         const val KEY_COLOR = "color"

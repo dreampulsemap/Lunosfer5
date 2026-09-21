@@ -1,0 +1,112 @@
+<en-US>
+• Dream analysis, the Mental Wall and the Compass now come in your language.
+• The plain-language page is now on feed cards too, not only in the dream detail — and it is shorter.
+• Buying Aura and Premium works again, and errors say what went wrong.
+• New: Deep Analysis reads all your dreams and visions at once — a fear map and a card you can share.
+• The Mental Wall works, with a free report every day.
+• Fixed: invisible shared-vision invites and Boost taking Aura for nothing.
+</en-US>
+<ar>
+• التحليل وجدار العقل والبوصلة تظهر الآن بلغتك؛ كانت تأتي بالإنجليزية.
+• صفحة الشرح المبسّط صارت في التدفق أيضًا، وأصبحت أقصر.
+• عادت مشتريات الأورا و Premium للعمل، وتوضّح الأخطاء سببها.
+• جديد: التحليل العميق يقرأ كل أحلامك ورؤاك معًا — خريطة مخاوف وبطاقة للمشاركة.
+• جدار العقل يعمل، مع تقرير مجاني كل يوم.
+• أُصلح: صفحة الشرح المبسّط الفارغة، ودعوات الرؤية غير الظاهرة، و"التوهج" بلا أثر.
+</ar>
+<de-DE>
+• Traumdeutung, Mentale Wand und Kompass kommen jetzt in deiner Sprache; bisher war das Englisch.
+• Die Klartext-Seite steht jetzt auch auf den Feed-Karten und ist kürzer.
+• Aura- und Premium-Käufe gehen wieder; Fehler nennen den Grund.
+• Neu: Die Tiefenanalyse liest alle Träume und Visionen zusammen — Angstkarte und Karte zum Teilen.
+• Die Mentale Wand läuft, mit einem kostenlosen Bericht pro Tag.
+• Behoben: leere Klartext-Seite, unsichtbare Visions-Einladungen, wirkungsloses Strahlen.
+</de-DE>
+<es-ES>
+• El análisis, el Muro Mental y la Brújula ya salen en tu idioma; antes venían en inglés.
+• La página en lenguaje sencillo ahora también está en el feed, y es más corta.
+• Comprar Aura y Premium funciona de nuevo; los errores dicen el motivo.
+• Nuevo: el Análisis Profundo lee todos tus sueños y visiones juntos — mapa de miedos y carta para compartir.
+• El Muro Mental funciona, con un informe gratis al día.
+• Corregido: invitaciones de visión invisibles y Brillo sin efecto.
+</es-ES>
+<fr-FR>
+• L'analyse, le Mur Mental et la Boussole sortent enfin dans votre langue ; c'était l'anglais.
+• La page en langage simple est aussi dans le fil, et plus courte.
+• L'achat d'Aura et de Premium remarche ; les erreurs disent la raison.
+• Nouveau : l'Analyse Profonde lit tous vos rêves et visions ensemble — carte des peurs et carte à partager.
+• Le Mur Mental fonctionne, avec un rapport gratuit par jour.
+• Corrigé : page en langage simple vide, invitations invisibles, Éclat sans effet.
+</fr-FR>
+<hi-IN>
+• विश्लेषण, मानसिक दीवार और कम्पास अब आपकी भाषा में आते हैं; पहले अंग्रेज़ी में आते थे।
+• सरल-भाषा पेज अब फ़ीड में भी है, और छोटा हो गया है।
+• Aura और Premium खरीदना फिर काम करता है; त्रुटियाँ कारण बताती हैं।
+• नया: गहन विश्लेषण सभी सपनों और विज़न को एक साथ पढ़ता है — डर का नक्शा और साझा करने योग्य कार्ड।
+• मानसिक दीवार काम करती है, हर दिन एक मुफ़्त रिपोर्ट।
+• ठीक: खाली सरल-भाषा पेज, न दिखने वाले विज़न निमंत्रण, बेकार Aura लेने वाला बूस्ट।
+</hi-IN>
+<it-IT>
+• L'analisi, il Muro Mentale e la Bussola ora escono nella tua lingua; prima erano in inglese.
+• La pagina in linguaggio semplice è anche nel feed, ed è più breve.
+• Gli acquisti di Aura e Premium funzionano di nuovo; gli errori dicono il perché.
+• Novità: l'Analisi Profonda legge sogni e visioni insieme — mappa delle paure e carta da condividere.
+• Il Muro Mentale funziona, con un report gratuito al giorno.
+• Corretti: inviti alle visioni invisibili e Bagliore senza effetto.
+</it-IT>
+<iw-IL>
+• הניתוח, קיר המחשבות והמצפן מופיעים עכשיו בשפה שלך; קודם הם היו באנגלית.
+• עמוד ההסבר הפשוט נמצא גם בפיד, והתקצר.
+• רכישת אאורה ו-Premium עובדת שוב, והשגיאות מסבירות את הסיבה.
+• חדש: ניתוח עומק קורא את כל החלומות והחזונות יחד — מפת פחדים וכרטיס לשיתוף.
+• קיר המחשבות פועל, עם דוח חינמי בכל יום.
+• תוקנו: עמוד ההסבר הפשוט הריק, הזמנות לחזון שלא הופיעו, ו"הארה" ללא השפעה.
+</iw-IL>
+<ja-JP>
+• 夢の分析・メンタルウォール・コンパスがあなたの言語で表示されます。これまでは英語でした。
+• 「やさしい言葉」のページはフィードにも出るようになり、短くなりました。
+• オーラとプレミアムの購入が復旧。エラーも理由を伝えます。
+• 新機能：ディープ分析が夢とビジョンをまとめて読み解き、恐れの地図と共有できるカードを出します。
+• メンタルウォールが動くようになり、毎日1件は無料。
+• 修正：空だった「やさしい言葉」のページ、表示されない共同ビジョンの招待、効果のないブースト。
+</ja-JP>
+<ko-KR>
+• 꿈 분석, 멘탈 월, 나침반이 이제 사용자의 언어로 나옵니다. 전에는 영어였습니다.
+• 쉬운 설명 페이지가 피드에도 표시되며, 더 짧아졌습니다.
+• 오라와 프리미엄 구매가 다시 작동하고, 오류가 이유를 알려줍니다.
+• 새 기능: 딥 분석이 꿈과 비전을 한 번에 읽어 두려움 지도와 공유용 카드를 만듭니다.
+• 멘탈 월이 작동합니다. 매일 무료 리포트 한 번.
+• 수정: 비어 있던 쉬운 설명 페이지, 보이지 않던 공동 비전 초대, 효과 없던 부스트.
+</ko-KR>
+<pt-BR>
+• A análise, o Muro Mental e a Bússola agora saem no seu idioma; antes vinham em inglês.
+• A página em linguagem simples também está no feed, e está mais curta.
+• Comprar Aura e Premium funciona de novo; os erros dizem o motivo.
+• Novidade: a Análise Profunda lê todos os seus sonhos e visões juntos — mapa de medos e cartão para compartilhar.
+• O Muro Mental funciona, com um relatório grátis por dia.
+• Corrigido: página em linguagem simples vazia, convites invisíveis, Brilho sem efeito.
+</pt-BR>
+<ru-RU>
+• Разбор сна, Ментальная стена и Компас теперь на вашем языке; раньше был английский.
+• Страница простыми словами теперь и в ленте, и стала короче.
+• Покупка Ауры и Premium снова работает; ошибки называют причину.
+• Новое: Глубокий анализ читает все сны и видения сразу — карта страхов и карточка для обмена.
+• Ментальная стена работает, один бесплатный отчёт в день.
+• Исправлено: пустая страница простыми словами, невидимые приглашения, «Сияние» впустую.
+</ru-RU>
+<tr-TR>
+• Rüya analizi, Zihin Duvarı ve Pusula artık senin dilinde; İngilizce geliyorlardı.
+• Sade anlatım sayfası artık akış kartlarında da var, sadece rüya detayında değil — ve daha kısa.
+• Aura ve Premium satın alma yeniden çalışıyor; hatalar nedenini söylüyor.
+• Yeni: Derin Analiz tüm rüya ve vizyonlarını birlikte okuyor — korku haritası ve paylaşılabilir kart.
+• Zihin Duvarı çalışıyor, her gün ücretsiz bir rapor.
+• Düzeltildi: görünmeyen ortak vizyon davetleri ve boşa Aura alan Parlat.
+</tr-TR>
+<uk>
+• Розбір сну, Ментальна стіна і Компас тепер вашою мовою; раніше була англійська.
+• Сторінка простою мовою тепер і в стрічці, і стала коротшою.
+• Купівля Аури та Premium знову працює; помилки називають причину.
+• Нове: Глибокий аналіз читає всі сни та візії разом — карта страхів і картка для поширення.
+• Ментальна стіна працює, один безкоштовний звіт щодня.
+• Виправлено: порожню сторінку простою мовою, невидимі запрошення, «Сяйво» без ефекту.
+</uk>

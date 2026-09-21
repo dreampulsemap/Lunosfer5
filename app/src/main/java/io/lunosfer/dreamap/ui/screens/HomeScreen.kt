@@ -462,7 +462,8 @@ fun getHomeSlideTitle(pageIndex: Int): String {
     return when (pageIndex) {
         0 -> stringResource(R.string.dream_slide_title_0)
         1 -> stringResource(R.string.dream_slide_title_1)
-        2 -> stringResource(R.string.dream_slide_title_2)
+        2 -> stringResource(R.string.dream_slide_title_simple)
+        3 -> stringResource(R.string.dream_slide_title_2)
         else -> ""
     }
 }
@@ -480,7 +481,9 @@ private fun DreamFeedCard(
     onDreamClick: (Long) -> Unit,
     onUserClick: (String) -> Unit = {}
 ) {
-    val pagerState = rememberPagerState(pageCount = { 3 })
+    // 4 sayfa: gorsel, metin, sade anlatim, Jung analizi. Sade anlatim
+    // yalnizca ruya detayinda vardi; akista hic gorunmuyordu.
+    val pagerState = rememberPagerState(pageCount = { 4 })
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -502,10 +505,10 @@ private fun DreamFeedCard(
                 onUserClick = onUserClick
             )
 
-            // Top-left page indicator text (e.g., "Rüya Görseli (1/3)") in gray monospace style
+            // Top-left page indicator text (e.g., "Rüya Görseli (1/4)") in gray monospace style
             val slideLabel = getHomeSlideTitle(pagerState.currentPage)
             Text(
-                text = "$slideLabel (${pagerState.currentPage + 1}/3)",
+                text = "$slideLabel (${pagerState.currentPage + 1}/${pagerState.pageCount})",
                 color = Color(0xFF94A3B8),
                 fontFamily = FontFamily.Monospace,
                 fontSize = 11.sp,
@@ -523,7 +526,8 @@ private fun DreamFeedCard(
                 when (page) {
                     0 -> DreamImagePage(dream = dream, onDreamClick = onDreamClick)
                     1 -> DreamTextPage(dream = dream)
-                    2 -> DreamAnalysisPage(dream = dream)
+                    2 -> DreamSimplePage(dream = dream)
+                    3 -> DreamAnalysisPage(dream = dream)
                 }
             }
 
@@ -743,9 +747,59 @@ private fun DreamTextPage(dream: Dream) {
     }
 }
 
+/**
+ * Akistaki "Basitce ne anlama geliyor" sayfasi. Metni backend uretiyor
+ * (analyze-dream.js -> `simple`); DreamDetailScreen'deki karsiligiyla ayni
+ * alandan besleniyor, sadece akis karti olcusunde.
+ */
+@Composable
+private fun DreamSimplePage(dream: Dream) {
+    val locale = AppLanguage.code()
+    val analysis = dream.aiJungianAnalysis
+    val simple = analysis?.simple?.get(locale)
+        ?: analysis?.simple?.get("en")
+        ?: ""
+
+    Card(
+        modifier = Modifier.fillMaxSize(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Void800),
+        border = BorderStroke(1.dp, AetherCyan.copy(alpha = 0.3f))
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Text(text = "💬", fontSize = 16.sp)
+                Text(
+                    text = stringResource(R.string.dream_simple_heading),
+                    color = AetherCyan,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.5.sp
+                )
+            }
+
+            Text(
+                text = simple.ifBlank { stringResource(R.string.dream_simple_empty) },
+                color = if (simple.isBlank()) Color(0xFF94A3B8) else Color(0xFFE2E8F0),
+                fontSize = 13.sp,
+                lineHeight = 21.sp
+            )
+        }
+    }
+}
+
 @Composable
 private fun DreamAnalysisPage(dream: Dream) {
-    val titleLabel = getHomeSlideTitle(2)
+    val titleLabel = getHomeSlideTitle(3)
     val analysis = dream.aiJungianAnalysis
     // Cok dilli analiz metni, cihaz dili degil kullanicinin sectigi UYGULAMA dili.
     val locale = AppLanguage.code()
