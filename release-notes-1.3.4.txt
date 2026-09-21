@@ -1,0 +1,84 @@
+<en-US>
+• Fixed a crash that closed the app moments after opening.
+• Google and GitHub sign-in now completes reliably, instead of sending you back to the login screen.
+• The Aura and Premium purchase screen no longer hangs on "Loading". Pending payments and errors are shown clearly, with a retry option.
+• Aura balance now shows correctly in every language, plus many translation fixes.
+</en-US>
+<tr-TR>
+• Uygulamanın açıldıktan saniyeler sonra kapanmasına yol açan hata giderildi.
+• Google ve GitHub ile giriş artık sorunsuz tamamlanıyor; sürekli giriş ekranına dönme sorunu düzeltildi.
+• Aura ve Premium satın alma ekranı "yükleniyor"da takılı kalmıyor. Bekleyen ödemeler ve hatalar açıkça gösteriliyor, tekrar deneme eklendi.
+• Aura bakiyesi tüm dillerde doğru görünüyor; birçok çeviri düzeltmesi yapıldı.
+</tr-TR>
+<de-DE>
+• Absturz behoben, der die App kurz nach dem Öffnen beendete.
+• Anmeldung mit Google und GitHub gelingt jetzt zuverlässig, statt dich zum Anmeldebildschirm zurückzuschicken.
+• Der Kaufbildschirm bleibt nicht mehr bei „Wird geladen“ hängen. Offene Zahlungen und Fehler werden klar angezeigt, mit Wiederholen-Option.
+• Aura-Guthaben wird in jeder Sprache korrekt angezeigt, dazu viele Übersetzungskorrekturen.
+</de-DE>
+<es-ES>
+• Corregido un fallo que cerraba la app pocos segundos después de abrirla.
+• El inicio de sesión con Google y GitHub ahora se completa bien, en lugar de devolverte a la pantalla de acceso.
+• La pantalla de compra ya no se queda en «Cargando». Los pagos pendientes y los errores se muestran con claridad, con opción de reintentar.
+• El saldo de Aura se muestra correctamente en todos los idiomas, además de muchas correcciones de traducción.
+</es-ES>
+<fr-FR>
+• Correction d'un plantage qui fermait l'application peu après son ouverture.
+• La connexion Google et GitHub aboutit désormais, au lieu de vous renvoyer à l'écran de connexion.
+• L'écran d'achat ne reste plus bloqué sur « Chargement ». Les paiements en attente et les erreurs sont indiqués, avec une option pour réessayer.
+• Le solde d'Aura s'affiche correctement dans toutes les langues, plus de nombreuses corrections de traduction.
+</fr-FR>
+<pt-PT>
+• Corrigida uma falha que fechava a aplicação pouco depois de abrir.
+• O início de sessão com Google e GitHub conclui-se agora de forma fiável, em vez de o devolver ao ecrã de entrada.
+• O ecrã de compra já não fica preso em «A carregar». Pagamentos pendentes e erros são apresentados com clareza, com opção de tentar novamente.
+• O saldo de Aura aparece correto em todos os idiomas, além de várias correções de tradução.
+</pt-PT>
+<ru-RU>
+• Исправлен сбой, закрывавший приложение вскоре после запуска.
+• Вход через Google и GitHub теперь завершается корректно, а не возвращает вас на экран входа.
+• Экран покупки больше не зависает на «Загрузке». Ожидающие платежи и ошибки показываются явно, с возможностью повторить.
+• Баланс Ауры отображается верно на всех языках, плюс множество исправлений перевода.
+</ru-RU>
+<hi-IN>
+• ऐप खुलने के कुछ ही पल बाद बंद हो जाने वाली गड़बड़ी ठीक की गई।
+• Google और GitHub से साइन-इन अब पूरा होता है, लॉगिन स्क्रीन पर वापस नहीं भेजता।
+• खरीद स्क्रीन अब "लोड हो रहा है" पर नहीं अटकती। लंबित भुगतान और त्रुटियाँ स्पष्ट दिखती हैं, पुनः प्रयास के साथ।
+• Aura बैलेंस हर भाषा में सही दिखता है, साथ ही कई अनुवाद सुधार।
+</hi-IN>
+<ja-JP>
+• アプリを開いた直後に終了する不具合を修正しました。
+• Google と GitHub でのログインが確実に完了するようになり、ログイン画面に戻されなくなりました。
+• 購入画面が「読み込み中」で止まらなくなりました。保留中の支払いやエラーが表示され、再試行できます。
+• オーラの残高がすべての言語で正しく表示され、多数の翻訳を修正しました。
+</ja-JP>
+<zh-CN>
+• 修复了应用打开后几秒内闪退的问题。
+• Google 和 GitHub 登录现在可以顺利完成，不会再退回登录页面。
+• 购买页面不再卡在“正在加载”。待处理付款和错误会清楚显示，并可重试。
+• 灵气余额在所有语言下均显示正确，并修正了大量翻译。
+</zh-CN>
+<ar>
+• تم إصلاح عطل كان يُغلق التطبيق بعد ثوانٍ من فتحه.
+• تسجيل الدخول عبر Google وGitHub يكتمل الآن بدل إعادتك إلى شاشة الدخول.
+• لم تعد شاشة الشراء تتوقف عند "جارٍ التحميل". تظهر المدفوعات المعلّقة والأخطاء بوضوح مع إعادة المحاولة.
+• يظهر رصيد الأورا صحيحًا بكل اللغات، مع تصحيحات ترجمة كثيرة.
+</ar>
+<en-GB>
+• Fixed a crash that closed the app moments after opening.
+• Google and GitHub sign-in now completes reliably, instead of sending you back to the login screen.
+• The Aura and Premium purchase screen no longer hangs on "Loading". Pending payments and errors are shown clearly, with a retry option.
+• Aura balance now shows correctly in every language, plus many translation fixes.
+</en-GB>
+<pt-BR>
+• Corrigida uma falha que fechava o aplicativo poucos segundos depois de abrir.
+• O login com Google e GitHub agora é concluído normalmente, em vez de levar você de volta à tela de entrada.
+• A tela de compra não fica mais presa em "Carregando". Pagamentos pendentes e erros aparecem com clareza, com opção de tentar de novo.
+• O saldo de Aura aparece correto em todos os idiomas, além de várias correções de tradução.
+</pt-BR>
+<zh-TW>
+• 修復了應用程式開啟後幾秒內閃退的問題。
+• Google 和 GitHub 登入現在可以順利完成，不會再退回登入頁面。
+• 購買頁面不再卡在「正在載入」。待處理付款和錯誤會清楚顯示，並可重試。
+• 靈氣餘額在所有語言下均顯示正確，並修正了大量翻譯。
+</zh-TW>
