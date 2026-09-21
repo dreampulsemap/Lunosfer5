@@ -1,0 +1,98 @@
+<en-US>
+• Buying Aura and Premium works again, and errors now say what went wrong.
+• New: Deep Analysis reads all your dreams and visions at once — a fear map and a card you can share.
+• The Mental Wall works, with a free report every day.
+• Fixed: the blank plain-language page, invisible shared-vision invites, and Boost taking Aura for nothing.
+• Delete journal entries; tap a name in the feed to open that profile.
+</en-US>
+<ar>
+• عادت مشتريات الأورا و Premium للعمل، وتوضّح الأخطاء سببها الآن.
+• جديد: التحليل العميق يقرأ كل أحلامك ورؤاك معًا — خريطة مخاوف وبطاقة للمشاركة.
+• جدار العقل يعمل، مع تقرير مجاني كل يوم.
+• أُصلح: صفحة الشرح المبسّط الفارغة، ودعوات الرؤية غير الظاهرة، و"التوهج" بلا أثر.
+• احذف سجلات يومياتك، وانقر اسمًا في التدفق لفتح ملفه.
+</ar>
+<de-DE>
+• Aura- und Premium-Käufe gehen wieder; Fehler nennen jetzt den Grund.
+• Neu: Die Tiefenanalyse liest alle Träume und Visionen zusammen — Angstkarte und Karte zum Teilen.
+• Die Mentale Wand läuft, mit einem kostenlosen Bericht pro Tag.
+• Behoben: leere Klartext-Seite, unsichtbare Visions-Einladungen, Strahlen ohne Wirkung.
+• Journaleinträge löschen; im Feed auf einen Namen tippen öffnet das Profil.
+</de-DE>
+<es-ES>
+• Comprar Aura y Premium funciona de nuevo; los errores ya dicen el motivo.
+• Nuevo: el Análisis Profundo lee todos tus sueños y visiones juntos — mapa de miedos y carta para compartir.
+• El Muro Mental funciona, con un informe gratis al día.
+• Corregido: página en lenguaje sencillo vacía, invitaciones de visión invisibles y Brillo sin efecto.
+• Borra entradas del diario; toca un nombre del feed para abrir su perfil.
+</es-ES>
+<fr-FR>
+• L'achat d'Aura et de Premium remarche ; les erreurs disent la raison.
+• Nouveau : l'Analyse Profonde lit tous vos rêves et visions ensemble — carte des peurs et carte à partager.
+• Le Mur Mental fonctionne, avec un rapport gratuit par jour.
+• Corrigé : page en langage simple vide, invitations de vision invisibles, Éclat sans effet.
+• Supprimez des entrées du journal ; touchez un nom dans le fil pour ouvrir le profil.
+</fr-FR>
+<hi-IN>
+• Aura और Premium खरीदना फिर काम करता है; त्रुटियाँ अब कारण बताती हैं।
+• नया: गहन विश्लेषण सभी सपनों और विज़न को एक साथ पढ़ता है — डर का नक्शा और साझा करने योग्य कार्ड।
+• मानसिक दीवार काम करती है, हर दिन एक मुफ़्त रिपोर्ट।
+• ठीक: खाली सरल-भाषा पेज, न दिखने वाले विज़न निमंत्रण, बेकार Aura लेने वाला बूस्ट।
+• डायरी प्रविष्टियाँ हटाएँ; फ़ीड में नाम पर टैप कर प्रोफ़ाइल खोलें।
+</hi-IN>
+<it-IT>
+• Gli acquisti di Aura e Premium funzionano di nuovo; gli errori dicono il perché.
+• Novità: l'Analisi Profonda legge sogni e visioni insieme — mappa delle paure e carta da condividere.
+• Il Muro Mentale funziona, con un report gratuito al giorno.
+• Corretti: pagina in linguaggio semplice vuota, inviti alle visioni invisibili, Bagliore senza effetto.
+• Elimina voci dal diario; tocca un nome nel feed per aprire il profilo.
+</it-IT>
+<iw-IL>
+• רכישת אאורה ו-Premium עובדת שוב, והשגיאות מסבירות את הסיבה.
+• חדש: ניתוח עומק קורא את כל החלומות והחזונות יחד — מפת פחדים וכרטיס לשיתוף.
+• קיר המחשבות פועל, עם דוח חינמי בכל יום.
+• תוקנו: עמוד ההסבר הפשוט הריק, הזמנות לחזון שלא הופיעו, ו"הארה" ללא השפעה.
+• מחקו רשומות ביומן; הקישו על שם בפיד כדי לפתוח פרופיל.
+</iw-IL>
+<ja-JP>
+• オーラとプレミアムの購入が復旧。エラーも理由を伝えます。
+• 新機能：ディープ分析が夢とビジョンをまとめて読み解き、恐れの地図と共有できるカードを出します。
+• メンタルウォールが動くようになり、毎日1件は無料。
+• 修正：空だった「やさしい言葉」のページ、表示されない共同ビジョンの招待、オーラだけ消えるブースト。
+• 日誌の記録を削除でき、フィードの名前をタップするとプロフィールが開きます。
+</ja-JP>
+<ko-KR>
+• 오라와 프리미엄 구매가 다시 작동하고, 오류가 이유를 알려줍니다.
+• 새 기능: 딥 분석이 꿈과 비전을 한 번에 읽어 두려움 지도와 공유용 카드를 만듭니다.
+• 멘탈 월이 작동합니다. 매일 무료 리포트 한 번.
+• 수정: 비어 있던 쉬운 설명 페이지, 보이지 않던 공동 비전 초대, 효과 없던 부스트.
+• 일지 기록 삭제, 피드의 이름을 눌러 프로필 열기.
+</ko-KR>
+<pt-BR>
+• Comprar Aura e Premium funciona de novo; os erros agora dizem o motivo.
+• Novidade: a Análise Profunda lê todos os seus sonhos e visões juntos — mapa de medos e cartão para compartilhar.
+• O Muro Mental funciona, com um relatório grátis por dia.
+• Corrigido: página em linguagem simples vazia, convites de visão invisíveis e Brilho sem efeito.
+• Apague registros do diário; toque num nome no feed para abrir o perfil.
+</pt-BR>
+<ru-RU>
+• Покупка Ауры и Premium снова работает; ошибки теперь называют причину.
+• Новое: Глубокий анализ читает все сны и видения сразу — карта страхов и карточка для обмена.
+• Ментальная стена работает, один бесплатный отчёт в день.
+• Исправлено: пустая страница простыми словами, невидимые приглашения и «Сияние» впустую.
+• Удаляйте записи дневника; имя в ленте открывает профиль.
+</ru-RU>
+<tr-TR>
+• Aura ve Premium satın alma yeniden çalışıyor; hatalar artık nedenini söylüyor.
+• Yeni: Derin Analiz tüm rüya ve vizyonlarını birlikte okuyor — korku haritası ve paylaşılabilir kart.
+• Zihin Duvarı çalışıyor, her gün ücretsiz bir rapor.
+• Düzeltildi: boş sade anlatım sayfası, görünmeyen ortak vizyon davetleri, boşa Aura alan Parlat.
+• Günce kayıtlarını sil; akışta isme dokunup profile git.
+</tr-TR>
+<uk>
+• Купівля Аури та Premium знову працює; помилки тепер називають причину.
+• Нове: Глибокий аналіз читає всі сни та візії разом — карта страхів і картка для поширення.
+• Ментальна стіна працює, один безкоштовний звіт щодня.
+• Виправлено: порожню сторінку простою мовою, невидимі запрошення, «Сяйво» без ефекту.
+• Видаляйте записи щоденника; ім'я у стрічці відкриває профіль.
+</uk>
