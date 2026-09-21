@@ -896,4 +896,34 @@
     <string name="error_mental_wall_no_goals">Сначала добавьте хотя бы одно активное видение — Ментальная стена сопоставляет сны с вашими целями.</string>
     <string name="error_insufficient_auras">У вас недостаточно Ауры для этого.</string>
     <string name="error_insufficient_auras_cost">Недостаточно Ауры — это стоит %1$d Ауры.</string>
+
+    <!-- Derin Analiz (Opus 5) -->
+    <string name="common_back">Назад</string>
+    <string name="main_menu_deep_analysis">Глубокий анализ</string>
+    <string name="deep_analysis_title">Глубокий анализ</string>
+    <string name="deep_analysis_intro_title">Вся ваша запись, прочитанная сразу</string>
+    <string name="deep_analysis_intro_body">Ваши недавние сны, ваши видения и архетипы, вокруг которых они кружат, читаются вместе: кем вы предстаёте на бумаге, какие страхи возвращаются снова и снова, и одно конкретное действие против самого сильного из них.</string>
+    <string name="deep_analysis_price_note">%1$d Ауры · бесплатно с Premium · на том языке, на котором вы записываете сны</string>
+    <string name="deep_analysis_cta">Сделать глубокий анализ (%1$d Ауры)</string>
+    <string name="deep_analysis_balance">%1$d Ауры</string>
+    <string name="deep_analysis_loading_hint">Это займёт 5–15 секунд. Не закрывайте экран.</string>
+    <string name="deep_analysis_step_reading">Читаем ваши сны…</string>
+    <string name="deep_analysis_step_patterns">Ищем закономерности…</string>
+    <string name="deep_analysis_step_fears">Составляем карту страхов…</string>
+    <string name="deep_analysis_step_card">Рисуем вашу карту…</string>
+    <string name="deep_analysis_section_personality">Кем вы предстаёте</string>
+    <string name="deep_analysis_section_fears">Карта страхов</string>
+    <string name="deep_analysis_section_solution">Встреча с этим</string>
+    <string name="deep_analysis_history_title">Прошлые анализы</string>
+    <string name="deep_analysis_disclaimer">Это размышление над тем, что вы написали, а не диагноз и не медицинский совет. Если что-то из этого вас тяготит, разговор со специалистом стоит больше любого приложения.</string>
+    <string name="deep_analysis_download">Сохранить</string>
+    <string name="deep_analysis_share">Поделиться</string>
+    <string name="deep_analysis_card_saved">Сохранено в галерею</string>
+    <string name="deep_analysis_card_save_failed">Не удалось сохранить карту</string>
+    <string name="deep_analysis_back_to_list">Назад</string>
+    <string name="deep_analysis_buy_auras">Получить Ауру</string>
+    <string name="deep_analysis_error_not_enough_dreams">Сначала запишите хотя бы %1$d снов — анализу нужно что-то читать.</string>
+    <string name="deep_analysis_error_rate_limited">Вы израсходовали глубокие анализы на этот час. Попробуйте позже.</string>
+    <string name="deep_analysis_error_failed">Не удалось создать анализ. Попробуйте ещё раз.</string>
+    <string name="deep_analysis_error_failed_refunded">Не удалось создать анализ, Аура возвращена. Попробуйте ещё раз.</string>
 </resources>

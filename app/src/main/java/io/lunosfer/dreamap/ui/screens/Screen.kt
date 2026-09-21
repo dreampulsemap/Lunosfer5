@@ -81,4 +81,9 @@ sealed class Screen(val route: String) {
     // "Ortak Vizyonlarım" — başkasının vizyonuna işbirlikçi olarak davet
     // edildiğim/katıldığım vizyonlar (bkz. goal_collaborators tablosu).
     object SharedVisions : Screen("shared_visions")
+
+    // "Derin Analiz" — son ruya/vizyonlarin tamami birlikte okunup Opus 5
+    // ile tek rapor uretilir (10 Aura / premium). Tek ruyanin derin
+    // analizinden (DreamDetailScreen) ayri bir ekran.
+    object DeepAnalysis : Screen("deep_analysis")
 }

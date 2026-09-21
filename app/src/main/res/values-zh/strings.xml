@@ -876,4 +876,34 @@
     <string name="error_mental_wall_no_goals">请先添加至少一个进行中的愿景——心墙会把你的梦境与目标对照。</string>
     <string name="error_insufficient_auras">你的灵气不足。</string>
     <string name="error_insufficient_auras_cost">灵气不足——这需要 %1$d 灵气。</string>
+
+    <!-- Derin Analiz (Opus 5) -->
+    <string name="common_back">返回</string>
+    <string name="main_menu_deep_analysis">深度分析</string>
+    <string name="deep_analysis_title">深度分析</string>
+    <string name="deep_analysis_intro_title">把你的全部记录一次读完</string>
+    <string name="deep_analysis_intro_body">你最近的梦境、你的愿景，以及它们反复围绕的原型会被一起阅读：记录中的你看起来是怎样的人、哪些恐惧一再回来，以及针对最强的那一项你可以做的一件具体的事。</string>
+    <string name="deep_analysis_price_note">%1$d 灵气 · 高级会员免费 · 使用你记录梦境的语言</string>
+    <string name="deep_analysis_cta">进行深度分析（%1$d 灵气）</string>
+    <string name="deep_analysis_balance">%1$d 灵气</string>
+    <string name="deep_analysis_loading_hint">大约需要 5-15 秒，请保持屏幕打开。</string>
+    <string name="deep_analysis_step_reading">正在阅读你的梦境…</string>
+    <string name="deep_analysis_step_patterns">正在寻找模式…</string>
+    <string name="deep_analysis_step_fears">正在绘制恐惧地图…</string>
+    <string name="deep_analysis_step_card">正在生成你的卡片…</string>
+    <string name="deep_analysis_section_personality">记录中的你</string>
+    <string name="deep_analysis_section_fears">恐惧地图</string>
+    <string name="deep_analysis_section_solution">面对它</string>
+    <string name="deep_analysis_history_title">以往的分析</string>
+    <string name="deep_analysis_disclaimer">这是对你所写内容的一次反思性解读，不是诊断，也不是医疗建议。如果这里的某些内容让你难受，找专业人士聊聊比任何应用都更有帮助。</string>
+    <string name="deep_analysis_download">保存</string>
+    <string name="deep_analysis_share">分享</string>
+    <string name="deep_analysis_card_saved">已保存到相册</string>
+    <string name="deep_analysis_card_save_failed">无法保存卡片</string>
+    <string name="deep_analysis_back_to_list">返回</string>
+    <string name="deep_analysis_buy_auras">获取灵气</string>
+    <string name="deep_analysis_error_not_enough_dreams">请先记录至少 %1$d 个梦境——分析需要有可读的内容。</string>
+    <string name="deep_analysis_error_rate_limited">这一小时的深度分析次数已用完，请稍后再试。</string>
+    <string name="deep_analysis_error_failed">无法生成分析，请再试一次。</string>
+    <string name="deep_analysis_error_failed_refunded">无法生成分析，灵气已退回，请再试一次。</string>
 </resources>

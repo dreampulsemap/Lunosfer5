@@ -874,4 +874,34 @@
     <string name="error_mental_wall_no_goals">まず有効なビジョンを1つ追加してください。メンタルウォールは夢と目標を照らし合わせます。</string>
     <string name="error_insufficient_auras">そのためのオーラが足りません。</string>
     <string name="error_insufficient_auras_cost">オーラが足りません。これには %1$d オーラが必要です。</string>
+
+    <!-- Derin Analiz (Opus 5) -->
+    <string name="common_back">戻る</string>
+    <string name="main_menu_deep_analysis">ディープ分析</string>
+    <string name="deep_analysis_title">ディープ分析</string>
+    <string name="deep_analysis_intro_title">記録のすべてを、一度に読む</string>
+    <string name="deep_analysis_intro_body">最近の夢、ビジョン、そしてそれらが巡り続ける元型をまとめて読み解きます。記録の上のあなたがどんな人に見えるか、どんな恐れが繰り返し戻ってくるか、そして最も強い恐れに対してできる具体的な一歩。</string>
+    <string name="deep_analysis_price_note">%1$d オーラ · プレミアムなら無料 · 夢を書いている言語で</string>
+    <string name="deep_analysis_cta">ディープ分析する（%1$d オーラ）</string>
+    <string name="deep_analysis_balance">%1$d オーラ</string>
+    <string name="deep_analysis_loading_hint">5〜15秒かかります。画面を開いたままにしてください。</string>
+    <string name="deep_analysis_step_reading">夢を読んでいます…</string>
+    <string name="deep_analysis_step_patterns">パターンを探しています…</string>
+    <string name="deep_analysis_step_fears">恐れを地図にしています…</string>
+    <string name="deep_analysis_step_card">カードを描いています…</string>
+    <string name="deep_analysis_section_personality">記録の上のあなた</string>
+    <string name="deep_analysis_section_fears">恐れの地図</string>
+    <string name="deep_analysis_section_solution">向き合う</string>
+    <string name="deep_analysis_history_title">これまでの分析</string>
+    <string name="deep_analysis_disclaimer">これはあなたが書いたものを振り返るための読み解きであり、診断でも医療的助言でもありません。ここにある何かが重くのしかかるなら、専門家に話すことはどんなアプリよりも価値があります。</string>
+    <string name="deep_analysis_download">保存</string>
+    <string name="deep_analysis_share">共有</string>
+    <string name="deep_analysis_card_saved">ギャラリーに保存しました</string>
+    <string name="deep_analysis_card_save_failed">カードを保存できませんでした</string>
+    <string name="deep_analysis_back_to_list">戻る</string>
+    <string name="deep_analysis_buy_auras">オーラを入手</string>
+    <string name="deep_analysis_error_not_enough_dreams">まず %1$d 件以上の夢を記録してください。分析には読むものが必要です。</string>
+    <string name="deep_analysis_error_rate_limited">この1時間のディープ分析を使い切りました。しばらくしてからお試しください。</string>
+    <string name="deep_analysis_error_failed">分析を作成できませんでした。もう一度お試しください。</string>
+    <string name="deep_analysis_error_failed_refunded">分析を作成できなかったため、オーラを返金しました。もう一度お試しください。</string>
 </resources>

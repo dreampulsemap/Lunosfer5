@@ -889,4 +889,34 @@
     <string name="error_mental_wall_no_goals">Adiciona primeiro pelo menos uma visão ativa — o Muro Mental compara os teus sonhos com os teus objetivos.</string>
     <string name="error_insufficient_auras">Não tens Aura suficiente para isto.</string>
     <string name="error_insufficient_auras_cost">Aura insuficiente — isto custa %1$d Aura.</string>
+
+    <!-- Derin Analiz (Opus 5) -->
+    <string name="common_back">Voltar</string>
+    <string name="main_menu_deep_analysis">Análise Profunda</string>
+    <string name="deep_analysis_title">Análise Profunda</string>
+    <string name="deep_analysis_intro_title">Todo o teu registo, lido de uma vez</string>
+    <string name="deep_analysis_intro_body">Os teus sonhos recentes, as tuas visões e os arquétipos à volta dos quais giram são lidos em conjunto: quem pareces ser no papel, que medos voltam sempre e uma coisa concreta que podes fazer quanto ao mais forte.</string>
+    <string name="deep_analysis_price_note">%1$d Aura · grátis com Premium · na língua em que escreves os teus sonhos</string>
+    <string name="deep_analysis_cta">Fazer Análise Profunda (%1$d Aura)</string>
+    <string name="deep_analysis_balance">%1$d Aura</string>
+    <string name="deep_analysis_loading_hint">Isto demora 5 a 15 segundos. Mantém o ecrã aberto.</string>
+    <string name="deep_analysis_step_reading">A ler os teus sonhos…</string>
+    <string name="deep_analysis_step_patterns">A procurar padrões…</string>
+    <string name="deep_analysis_step_fears">A mapear os medos…</string>
+    <string name="deep_analysis_step_card">A desenhar o teu cartão…</string>
+    <string name="deep_analysis_section_personality">Quem pareces ser</string>
+    <string name="deep_analysis_section_fears">Mapa de medos</string>
+    <string name="deep_analysis_section_solution">Enfrentar</string>
+    <string name="deep_analysis_history_title">Análises anteriores</string>
+    <string name="deep_analysis_disclaimer">Esta é uma leitura reflexiva do que escreveste, não um diagnóstico nem aconselhamento médico. Se algo aqui te pesa, falar com um profissional vale mais do que qualquer aplicação.</string>
+    <string name="deep_analysis_download">Guardar</string>
+    <string name="deep_analysis_share">Partilhar</string>
+    <string name="deep_analysis_card_saved">Guardado na tua galeria</string>
+    <string name="deep_analysis_card_save_failed">Não foi possível guardar o cartão</string>
+    <string name="deep_analysis_back_to_list">Voltar</string>
+    <string name="deep_analysis_buy_auras">Obter Aura</string>
+    <string name="deep_analysis_error_not_enough_dreams">Regista primeiro pelo menos %1$d sonhos — a análise precisa de algo para ler.</string>
+    <string name="deep_analysis_error_rate_limited">Esgotaste as tuas análises profundas desta hora. Tenta mais tarde.</string>
+    <string name="deep_analysis_error_failed">Não foi possível produzir a análise. Tenta novamente.</string>
+    <string name="deep_analysis_error_failed_refunded">Não foi possível produzir a análise, por isso a tua Aura foi devolvida. Tenta novamente.</string>
 </resources>

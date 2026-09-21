@@ -911,4 +911,34 @@
     <string name="error_mental_wall_no_goals">Önce en az bir aktif vizyon ekle — Zihin Duvarı rüyalarını hedeflerinle karşılaştırır.</string>
     <string name="error_insufficient_auras">Bunun için yeterli Auran yok.</string>
     <string name="error_insufficient_auras_cost">Yeterli Aura yok — bu işlem %1$d Aura tutuyor.</string>
+
+    <!-- Derin Analiz (Opus 5) -->
+    <string name="common_back">Geri</string>
+    <string name="main_menu_deep_analysis">Derin Analiz</string>
+    <string name="deep_analysis_title">Derin Analiz</string>
+    <string name="deep_analysis_intro_title">Tüm kaydın, tek seferde</string>
+    <string name="deep_analysis_intro_body">Son rüyaların, vizyonların ve etraflarında dönüp durduğun arketipler birlikte okunur: kâğıt üzerinde nasıl biri göründüğün, hangi korkuların tekrar ettiği ve en baskın olanı için yapabileceğin somut bir şey.</string>
+    <string name="deep_analysis_price_note">%1$d Aura · Premium\'da ücretsiz · rüyalarını yazdığın dilde</string>
+    <string name="deep_analysis_cta">Derin Analiz Yap (%1$d Aura)</string>
+    <string name="deep_analysis_balance">%1$d Aura</string>
+    <string name="deep_analysis_loading_hint">Bu 5-15 saniye sürer. Ekranı açık tut.</string>
+    <string name="deep_analysis_step_reading">Rüyaların okunuyor…</string>
+    <string name="deep_analysis_step_patterns">Örüntüler çıkarılıyor…</string>
+    <string name="deep_analysis_step_fears">Korku haritası kuruluyor…</string>
+    <string name="deep_analysis_step_card">Kartın çiziliyor…</string>
+    <string name="deep_analysis_section_personality">Kâğıt üzerinde sen</string>
+    <string name="deep_analysis_section_fears">Korku haritası</string>
+    <string name="deep_analysis_section_solution">Yüzleşme</string>
+    <string name="deep_analysis_history_title">Önceki analizler</string>
+    <string name="deep_analysis_disclaimer">Bu, yazdıklarının üzerine düşünen bir okumadır; tanı ya da tıbbi tavsiye değildir. Burada bir şey sana ağır geliyorsa, bir uzmanla konuşmak hiçbir uygulamanın veremeyeceği kadar değerlidir.</string>
+    <string name="deep_analysis_download">Kaydet</string>
+    <string name="deep_analysis_share">Paylaş</string>
+    <string name="deep_analysis_card_saved">Galerine kaydedildi</string>
+    <string name="deep_analysis_card_save_failed">Kart kaydedilemedi</string>
+    <string name="deep_analysis_back_to_list">Geri dön</string>
+    <string name="deep_analysis_buy_auras">Aura al</string>
+    <string name="deep_analysis_error_not_enough_dreams">Önce en az %1$d rüya kaydet — analizin okuyacak bir şeye ihtiyacı var.</string>
+    <string name="deep_analysis_error_rate_limited">Bu saatlik derin analiz hakkını kullandın. Biraz sonra tekrar dene.</string>
+    <string name="deep_analysis_error_failed">Analiz üretilemedi. Lütfen tekrar dene.</string>
+    <string name="deep_analysis_error_failed_refunded">Analiz üretilemedi, Aura\'n geri verildi. Lütfen tekrar dene.</string>
 </resources>

@@ -911,4 +911,34 @@
     <string name="error_mental_wall_no_goals">أضف رؤية نشطة واحدة على الأقل أولًا — يقارن جدار العقل أحلامك بأهدافك.</string>
     <string name="error_insufficient_auras">لا تملك أورا كافية لهذا.</string>
     <string name="error_insufficient_auras_cost">أورا غير كافية — يكلّف هذا %1$d أورا.</string>
+
+    <!-- Derin Analiz (Opus 5) -->
+    <string name="common_back">رجوع</string>
+    <string name="main_menu_deep_analysis">التحليل العميق</string>
+    <string name="deep_analysis_title">التحليل العميق</string>
+    <string name="deep_analysis_intro_title">كل سجلك، يُقرأ دفعة واحدة</string>
+    <string name="deep_analysis_intro_body">تُقرأ أحلامك الأخيرة ورؤاك والأنماط الأولية التي تدور حولها معًا: من تبدو عليه على الورق، وأي مخاوف تعود مرارًا، وخطوة ملموسة واحدة تجاه أقواها.</string>
+    <string name="deep_analysis_price_note">%1$d أورا · مجانًا مع Premium · باللغة التي تكتب بها أحلامك</string>
+    <string name="deep_analysis_cta">ابدأ التحليل العميق (%1$d أورا)</string>
+    <string name="deep_analysis_balance">%1$d أورا</string>
+    <string name="deep_analysis_loading_hint">يستغرق هذا من 5 إلى 15 ثانية. أبقِ الشاشة مفتوحة.</string>
+    <string name="deep_analysis_step_reading">نقرأ أحلامك…</string>
+    <string name="deep_analysis_step_patterns">نبحث عن الأنماط…</string>
+    <string name="deep_analysis_step_fears">نرسم خريطة المخاوف…</string>
+    <string name="deep_analysis_step_card">نصمّم بطاقتك…</string>
+    <string name="deep_analysis_section_personality">من تبدو عليه</string>
+    <string name="deep_analysis_section_fears">خريطة المخاوف</string>
+    <string name="deep_analysis_section_solution">المواجهة</string>
+    <string name="deep_analysis_history_title">التحليلات السابقة</string>
+    <string name="deep_analysis_disclaimer">هذه قراءة تأمّلية لما كتبته، وليست تشخيصًا ولا نصيحة طبية. إذا أثقلك شيء هنا، فالحديث مع مختص أثمن من أي تطبيق.</string>
+    <string name="deep_analysis_download">حفظ</string>
+    <string name="deep_analysis_share">مشاركة</string>
+    <string name="deep_analysis_card_saved">حُفظت في معرض الصور</string>
+    <string name="deep_analysis_card_save_failed">تعذّر حفظ البطاقة</string>
+    <string name="deep_analysis_back_to_list">رجوع</string>
+    <string name="deep_analysis_buy_auras">احصل على أورا</string>
+    <string name="deep_analysis_error_not_enough_dreams">سجّل %1$d أحلام على الأقل أولًا — التحليل يحتاج إلى مادة يقرأها.</string>
+    <string name="deep_analysis_error_rate_limited">استنفدت تحليلاتك العميقة لهذه الساعة. حاول لاحقًا.</string>
+    <string name="deep_analysis_error_failed">تعذّر إنتاج التحليل. حاول مرة أخرى.</string>
+    <string name="deep_analysis_error_failed_refunded">تعذّر إنتاج التحليل، لذا أُعيدت الأورا إليك. حاول مرة أخرى.</string>
 </resources>

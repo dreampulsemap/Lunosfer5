@@ -913,4 +913,34 @@
     <string name="error_mental_wall_no_goals">Add at least one active vision first — the Mental Wall reads your dreams against your goals.</string>
     <string name="error_insufficient_auras">You don\'t have enough Aura for this.</string>
     <string name="error_insufficient_auras_cost">Not enough Aura — this costs %1$d Aura.</string>
+
+    <!-- Derin Analiz (Opus 5) -->
+    <string name="common_back">Back</string>
+    <string name="main_menu_deep_analysis">Deep Analysis</string>
+    <string name="deep_analysis_title">Deep Analysis</string>
+    <string name="deep_analysis_intro_title">Your whole record, read at once</string>
+    <string name="deep_analysis_intro_body">Your recent dreams, your visions and the archetypes they keep circling are read together, in one pass: who you seem to be on the page, which fears keep coming back, and one concrete thing you could do about the strongest one.</string>
+    <string name="deep_analysis_price_note">%1$d Aura · free with Premium · written in the language you record your dreams in</string>
+    <string name="deep_analysis_cta">Run Deep Analysis (%1$d Aura)</string>
+    <string name="deep_analysis_balance">%1$d Aura</string>
+    <string name="deep_analysis_loading_hint">This takes 5-15 seconds. Keep the screen open.</string>
+    <string name="deep_analysis_step_reading">Reading your dreams…</string>
+    <string name="deep_analysis_step_patterns">Finding the patterns…</string>
+    <string name="deep_analysis_step_fears">Mapping the fears…</string>
+    <string name="deep_analysis_step_card">Drawing your card…</string>
+    <string name="deep_analysis_section_personality">Who you seem to be</string>
+    <string name="deep_analysis_section_fears">Fear map</string>
+    <string name="deep_analysis_section_solution">Meeting it</string>
+    <string name="deep_analysis_history_title">Earlier analyses</string>
+    <string name="deep_analysis_disclaimer">This is a reflective reading of what you wrote, not a diagnosis or medical advice. If something here weighs on you, talking to a professional is worth more than any app.</string>
+    <string name="deep_analysis_download">Save</string>
+    <string name="deep_analysis_share">Share</string>
+    <string name="deep_analysis_card_saved">Saved to your gallery</string>
+    <string name="deep_analysis_card_save_failed">Could not save the card</string>
+    <string name="deep_analysis_back_to_list">Back</string>
+    <string name="deep_analysis_buy_auras">Get Aura</string>
+    <string name="deep_analysis_error_not_enough_dreams">Record at least %1$d dreams first — the analysis needs something to read.</string>
+    <string name="deep_analysis_error_rate_limited">You have used your deep analyses for this hour. Try again later.</string>
+    <string name="deep_analysis_error_failed">The analysis could not be produced. Please try again.</string>
+    <string name="deep_analysis_error_failed_refunded">The analysis could not be produced, so your Aura was returned. Please try again.</string>
 </resources>

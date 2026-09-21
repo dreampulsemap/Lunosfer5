@@ -197,6 +197,7 @@ fun MainScreen(
                     onGlobeClick = { navController.navigate(Screen.Globe.route) },
                     onSharedVisionsClick = { navController.navigate(Screen.SharedVisions.route) },
                     onSpiritualToolsClick = { navController.navigate(Screen.SpiritualTools.route) },
+                    onDeepAnalysisClick = { navController.navigate(Screen.DeepAnalysis.route) },
                     onBuyAuraClick = {
                         billingSheetTab = BillingTab.AURA
                         showBillingSheet = true
@@ -322,6 +323,15 @@ fun MainScreen(
                     onBack = { navController.popBackStack() },
                     onUpgrade = {
                         billingSheetTab = BillingTab.PREMIUM
+                        showBillingSheet = true
+                    }
+                )
+            }
+            composable(Screen.DeepAnalysis.route) {
+                DeepAnalysisScreen(
+                    onBack = { navController.popBackStack() },
+                    onBuyAuras = {
+                        billingSheetTab = BillingTab.AURA
                         showBillingSheet = true
                     }
                 )
@@ -485,7 +495,8 @@ fun TopBar(
     onBuyAuraClick: (() -> Unit)? = null,
     onGlobeClick: (() -> Unit)? = null,
     onSharedVisionsClick: (() -> Unit)? = null,
-    onSpiritualToolsClick: (() -> Unit)? = null
+    onSpiritualToolsClick: (() -> Unit)? = null,
+    onDeepAnalysisClick: (() -> Unit)? = null
 ) {
     var showAuraPopup by remember { mutableStateOf(false) }
 
@@ -617,6 +628,13 @@ fun TopBar(
                             onClick = {
                                 showMoreMenu = false
                                 onSpiritualToolsClick?.invoke()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.main_menu_deep_analysis)) },
+                            onClick = {
+                                showMoreMenu = false
+                                onDeepAnalysisClick?.invoke()
                             }
                         )
                         DropdownMenuItem(

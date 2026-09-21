@@ -883,4 +883,34 @@
     <string name="error_mental_wall_no_goals">पहले कम से कम एक सक्रिय विज़न जोड़ें — मानसिक दीवार आपके सपनों की तुलना आपके लक्ष्यों से करती है।</string>
     <string name="error_insufficient_auras">इसके लिए आपके पास पर्याप्त Aura नहीं है।</string>
     <string name="error_insufficient_auras_cost">पर्याप्त Aura नहीं — इसकी कीमत %1$d Aura है।</string>
+
+    <!-- Derin Analiz (Opus 5) -->
+    <string name="common_back">वापस</string>
+    <string name="main_menu_deep_analysis">गहन विश्लेषण</string>
+    <string name="deep_analysis_title">गहन विश्लेषण</string>
+    <string name="deep_analysis_intro_title">आपका पूरा रिकॉर्ड, एक साथ पढ़ा गया</string>
+    <string name="deep_analysis_intro_body">आपके हालिया सपने, आपके विज़न और जिन आदिरूपों के इर्द-गिर्द वे घूमते हैं — सब एक साथ पढ़े जाते हैं: कागज़ पर आप कौन दिखते हैं, कौन-से डर बार-बार लौटते हैं, और सबसे प्रबल डर के लिए एक ठोस कदम।</string>
+    <string name="deep_analysis_price_note">%1$d Aura · Premium के साथ मुफ़्त · उसी भाषा में जिसमें आप सपने लिखते हैं</string>
+    <string name="deep_analysis_cta">गहन विश्लेषण करें (%1$d Aura)</string>
+    <string name="deep_analysis_balance">%1$d Aura</string>
+    <string name="deep_analysis_loading_hint">इसमें 5-15 सेकंड लगते हैं। स्क्रीन खुली रखें।</string>
+    <string name="deep_analysis_step_reading">आपके सपने पढ़े जा रहे हैं…</string>
+    <string name="deep_analysis_step_patterns">पैटर्न खोजे जा रहे हैं…</string>
+    <string name="deep_analysis_step_fears">डर का नक्शा बन रहा है…</string>
+    <string name="deep_analysis_step_card">आपका कार्ड बन रहा है…</string>
+    <string name="deep_analysis_section_personality">कागज़ पर आप</string>
+    <string name="deep_analysis_section_fears">डर का नक्शा</string>
+    <string name="deep_analysis_section_solution">सामना करना</string>
+    <string name="deep_analysis_history_title">पिछले विश्लेषण</string>
+    <string name="deep_analysis_disclaimer">यह आपके लिखे पर एक चिंतनशील पाठ है, कोई निदान या चिकित्सकीय सलाह नहीं। अगर यहाँ की कोई बात आप पर भारी पड़े, तो किसी पेशेवर से बात करना किसी भी ऐप से ज़्यादा काम आएगा।</string>
+    <string name="deep_analysis_download">सहेजें</string>
+    <string name="deep_analysis_share">साझा करें</string>
+    <string name="deep_analysis_card_saved">आपकी गैलरी में सहेजा गया</string>
+    <string name="deep_analysis_card_save_failed">कार्ड सहेजा नहीं जा सका</string>
+    <string name="deep_analysis_back_to_list">वापस</string>
+    <string name="deep_analysis_buy_auras">Aura लें</string>
+    <string name="deep_analysis_error_not_enough_dreams">पहले कम से कम %1$d सपने दर्ज करें — विश्लेषण को पढ़ने के लिए कुछ चाहिए।</string>
+    <string name="deep_analysis_error_rate_limited">इस घंटे के गहन विश्लेषण खत्म हो गए। बाद में फिर कोशिश करें।</string>
+    <string name="deep_analysis_error_failed">विश्लेषण तैयार नहीं हो सका। कृपया फिर कोशिश करें।</string>
+    <string name="deep_analysis_error_failed_refunded">विश्लेषण तैयार नहीं हो सका, इसलिए आपका Aura लौटा दिया गया। कृपया फिर कोशिश करें।</string>
 </resources>

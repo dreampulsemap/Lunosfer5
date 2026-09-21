@@ -884,4 +884,34 @@
     <string name="error_mental_wall_no_goals">Füge zuerst mindestens eine aktive Vision hinzu — die Mentale Wand vergleicht deine Träume mit deinen Zielen.</string>
     <string name="error_insufficient_auras">Du hast dafür nicht genug Aura.</string>
     <string name="error_insufficient_auras_cost">Nicht genug Aura — das kostet %1$d Aura.</string>
+
+    <!-- Derin Analiz (Opus 5) -->
+    <string name="common_back">Zurück</string>
+    <string name="main_menu_deep_analysis">Tiefenanalyse</string>
+    <string name="deep_analysis_title">Tiefenanalyse</string>
+    <string name="deep_analysis_intro_title">Deine ganze Aufzeichnung, auf einmal gelesen</string>
+    <string name="deep_analysis_intro_body">Deine letzten Träume, deine Visionen und die Archetypen, um die sie kreisen, werden zusammen gelesen: wer du auf dem Papier zu sein scheinst, welche Ängste wiederkehren und eine konkrete Sache, die du gegen die stärkste tun könntest.</string>
+    <string name="deep_analysis_price_note">%1$d Aura · mit Premium kostenlos · in der Sprache, in der du deine Träume aufschreibst</string>
+    <string name="deep_analysis_cta">Tiefenanalyse starten (%1$d Aura)</string>
+    <string name="deep_analysis_balance">%1$d Aura</string>
+    <string name="deep_analysis_loading_hint">Das dauert 5-15 Sekunden. Lass den Bildschirm offen.</string>
+    <string name="deep_analysis_step_reading">Deine Träume werden gelesen…</string>
+    <string name="deep_analysis_step_patterns">Muster werden gesucht…</string>
+    <string name="deep_analysis_step_fears">Ängste werden kartiert…</string>
+    <string name="deep_analysis_step_card">Deine Karte entsteht…</string>
+    <string name="deep_analysis_section_personality">Wer du zu sein scheinst</string>
+    <string name="deep_analysis_section_fears">Angstkarte</string>
+    <string name="deep_analysis_section_solution">Begegnung</string>
+    <string name="deep_analysis_history_title">Frühere Analysen</string>
+    <string name="deep_analysis_disclaimer">Dies ist eine nachdenkliche Lesart dessen, was du geschrieben hast — keine Diagnose und keine medizinische Beratung. Wenn dich etwas davon belastet, ist ein Gespräch mit einer Fachperson mehr wert als jede App.</string>
+    <string name="deep_analysis_download">Speichern</string>
+    <string name="deep_analysis_share">Teilen</string>
+    <string name="deep_analysis_card_saved">In deiner Galerie gespeichert</string>
+    <string name="deep_analysis_card_save_failed">Karte konnte nicht gespeichert werden</string>
+    <string name="deep_analysis_back_to_list">Zurück</string>
+    <string name="deep_analysis_buy_auras">Aura holen</string>
+    <string name="deep_analysis_error_not_enough_dreams">Zeichne zuerst mindestens %1$d Träume auf — die Analyse braucht etwas zu lesen.</string>
+    <string name="deep_analysis_error_rate_limited">Du hast deine Tiefenanalysen für diese Stunde aufgebraucht. Versuch es später erneut.</string>
+    <string name="deep_analysis_error_failed">Die Analyse konnte nicht erstellt werden. Bitte versuche es erneut.</string>
+    <string name="deep_analysis_error_failed_refunded">Die Analyse konnte nicht erstellt werden, deine Aura wurde zurückgebucht. Bitte versuche es erneut.</string>
 </resources>

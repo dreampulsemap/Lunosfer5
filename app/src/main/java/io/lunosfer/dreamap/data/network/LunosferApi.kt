@@ -403,6 +403,16 @@ interface LunosferApi {
     @GET("api/psyche-map")
     suspend fun getPsycheMap(): io.lunosfer.dreamap.data.model.PsycheMapResponse
 
+    // --- Derin Analiz (Opus 5) ---
+
+    @POST("api/analysis/deep")
+    suspend fun generateDeepAnalysis(
+        @Body request: io.lunosfer.dreamap.data.model.DeepAnalysisRequest
+    ): io.lunosfer.dreamap.data.model.DeepAnalysisResponse
+
+    @GET("api/analysis/deep")
+    suspend fun listDeepAnalyses(): io.lunosfer.dreamap.data.model.DeepAnalysisListResponse
+
     @POST("api/prophet")
     suspend fun consultProphet(
         @Body request: io.lunosfer.dreamap.data.model.ProphetRequest
