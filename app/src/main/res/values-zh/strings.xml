@@ -862,4 +862,18 @@
     <string name="dream_simple_heading">简单来说，这意味着什么？</string>
     <string name="billing_dismiss_error">关闭</string>
     <string name="billing_purchase_pending">付款正在等待确认。根据支付方式不同，可能需要一些时间。</string>
+
+    <!-- Kalici Gunce silme + derin yorum teklifi (1.4.1) -->
+    <string name="diary_journal_delete_title">删除这条记录吗？</string>
+    <string name="diary_journal_delete_body">它将从你的日志中永久删除，且无法恢复。</string>
+    <string name="diary_journal_delete_confirm">删除</string>
+    <string name="diary_journal_delete_cancel">取消</string>
+    <string name="diary_journal_delete_failed">无法删除该记录</string>
+    <string name="spiritual_deep_prompt_title">想要更深入的解读吗？</string>
+    <string name="spiritual_deep_prompt_body">高级会员可无限获得深度解读。或用 %1$d 灵气仅解锁这一次。</string>
+    <string name="spiritual_deep_btn_aura">用 %1$d 灵气解锁</string>
+    <string name="spiritual_mental_wall_remaining">今天还剩 %1$d 次免费报告</string>
+    <string name="error_mental_wall_no_goals">请先添加至少一个进行中的愿景——心墙会把你的梦境与目标对照。</string>
+    <string name="error_insufficient_auras">你的灵气不足。</string>
+    <string name="error_insufficient_auras_cost">灵气不足——这需要 %1$d 灵气。</string>
 </resources>

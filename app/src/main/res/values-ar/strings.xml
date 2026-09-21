@@ -897,4 +897,18 @@
     <string name="dream_simple_heading">ببساطة: ماذا يعني هذا؟</string>
     <string name="billing_dismiss_error">إغلاق</string>
     <string name="billing_purchase_pending">الدفع بانتظار التأكيد. قد يستغرق هذا بعض الوقت حسب طريقة الدفع.</string>
+
+    <!-- Kalici Gunce silme + derin yorum teklifi (1.4.1) -->
+    <string name="diary_journal_delete_title">حذف هذا السجل؟</string>
+    <string name="diary_journal_delete_body">سيُحذف نهائيًا من يومياتك، ولا يمكن التراجع عن ذلك.</string>
+    <string name="diary_journal_delete_confirm">حذف</string>
+    <string name="diary_journal_delete_cancel">إلغاء</string>
+    <string name="diary_journal_delete_failed">تعذّر حذف السجل</string>
+    <string name="spiritual_deep_prompt_title">هل تريد تفسيرًا أعمق؟</string>
+    <string name="spiritual_deep_prompt_body">يمنحك Premium قراءات معمّقة بلا حدود. أو افتح هذه القراءة فقط مقابل %1$d أورا.</string>
+    <string name="spiritual_deep_btn_aura">افتح مقابل %1$d أورا</string>
+    <string name="spiritual_mental_wall_remaining">تبقّى لك %1$d تقارير مجانية اليوم</string>
+    <string name="error_mental_wall_no_goals">أضف رؤية نشطة واحدة على الأقل أولًا — يقارن جدار العقل أحلامك بأهدافك.</string>
+    <string name="error_insufficient_auras">لا تملك أورا كافية لهذا.</string>
+    <string name="error_insufficient_auras_cost">أورا غير كافية — يكلّف هذا %1$d أورا.</string>
 </resources>

@@ -869,4 +869,18 @@
     <string name="dream_simple_heading">सरल शब्दों में: इसका क्या मतलब है?</string>
     <string name="billing_dismiss_error">बंद करें</string>
     <string name="billing_purchase_pending">भुगतान की पुष्टि होने का इंतज़ार है। भुगतान के तरीके के आधार पर इसमें कुछ समय लग सकता है।</string>
+
+    <!-- Kalici Gunce silme + derin yorum teklifi (1.4.1) -->
+    <string name="diary_journal_delete_title">यह प्रविष्टि हटाएँ?</string>
+    <string name="diary_journal_delete_body">यह आपकी डायरी से स्थायी रूप से हट जाएगी। इसे वापस नहीं लाया जा सकता।</string>
+    <string name="diary_journal_delete_confirm">हटाएँ</string>
+    <string name="diary_journal_delete_cancel">रद्द करें</string>
+    <string name="diary_journal_delete_failed">प्रविष्टि हटाई नहीं जा सकी</string>
+    <string name="spiritual_deep_prompt_title">क्या आप गहरी व्याख्या चाहते हैं?</string>
+    <string name="spiritual_deep_prompt_body">Premium असीमित विस्तृत व्याख्याएँ देता है। या सिर्फ़ यही %1$d Aura में खोलें।</string>
+    <string name="spiritual_deep_btn_aura">%1$d Aura में खोलें</string>
+    <string name="spiritual_mental_wall_remaining">आज %1$d मुफ़्त रिपोर्ट बाकी हैं</string>
+    <string name="error_mental_wall_no_goals">पहले कम से कम एक सक्रिय विज़न जोड़ें — मानसिक दीवार आपके सपनों की तुलना आपके लक्ष्यों से करती है।</string>
+    <string name="error_insufficient_auras">इसके लिए आपके पास पर्याप्त Aura नहीं है।</string>
+    <string name="error_insufficient_auras_cost">पर्याप्त Aura नहीं — इसकी कीमत %1$d Aura है।</string>
 </resources>

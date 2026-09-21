@@ -68,7 +68,8 @@ fun HomeScreen(
     onOpenDreamReels: (List<Dream>, Int) -> Unit = { _, _ -> },
     onOpenComposer: () -> Unit = {},
     onOpenViewer: (String) -> Unit = {},
-    onOpenReels: (List<Goal>, Int) -> Unit = { _, _ -> }
+    onOpenReels: (List<Goal>, Int) -> Unit = { _, _ -> },
+    onUserClick: (String) -> Unit = {}
 ) {
     val state by viewModel.state.collectAsState()
     val compassState by compassViewModel.state.collectAsState()
@@ -115,7 +116,8 @@ fun HomeScreen(
                 headerCounts = headerCounts,
                 isLoadingMore = isLoadingMore,
                 canLoadMore = canLoadMore,
-                onLoadMore = viewModel::loadMore
+                onLoadMore = viewModel::loadMore,
+                onUserClick = onUserClick
             )
         }
     }
@@ -179,7 +181,8 @@ private fun HomeFeedList(
     headerCounts: io.lunosfer.dreamap.ui.viewmodel.HomeHeaderCounts,
     isLoadingMore: Boolean = false,
     canLoadMore: Boolean = false,
-    onLoadMore: () -> Unit = {}
+    onLoadMore: () -> Unit = {},
+    onUserClick: (String) -> Unit = {}
 ) {
     val listState = rememberLazyListState()
 
@@ -277,7 +280,8 @@ private fun HomeFeedList(
                         onDreamClick = { id ->
                             val index = dreamsList.indexOfFirst { it.id == id }.coerceAtLeast(0)
                             onOpenDreamReels(dreamsList, index)
-                        }
+                        },
+                        onUserClick = onUserClick
                     )
                 }
                 is FeedItem.VisionItem -> {
@@ -286,7 +290,8 @@ private fun HomeFeedList(
                         onClick = {
                             val index = visionGoals.indexOfFirst { it.id == feedItem.goal.id }.coerceAtLeast(0)
                             onOpenReels(visionGoals, index)
-                        }
+                        },
+                        onUserClick = onUserClick
                     )
                 }
             }
@@ -364,16 +369,26 @@ private fun FeedCardOwnerHeader(
     ownerName: String,
     avatarUrl: String?,
     dreamDate: String? = null,
-    visibility: String? = null
+    visibility: String? = null,
+    ownerId: String? = null,
+    onUserClick: (String) -> Unit = {}
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        // Avatar + isim tiklanabilir: akistaki bir gonderiden dogrudan o
+        // kisinin profiline gidilebiliyor (Explore/Notifications ile ayni
+        // onUserClick deseni). ownerId yoksa tiklama devre disi.
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = if (ownerId != null) {
+                Modifier.clickable { onUserClick(ownerId) }
+            } else {
+                Modifier
+            }
         ) {
             Box(
                 modifier = Modifier
@@ -462,7 +477,8 @@ private fun DreamFeedCard(
     isLiked: Boolean,
     likesCount: Int,
     onToggleLike: () -> Unit,
-    onDreamClick: (Long) -> Unit
+    onDreamClick: (Long) -> Unit,
+    onUserClick: (String) -> Unit = {}
 ) {
     val pagerState = rememberPagerState(pageCount = { 3 })
 
@@ -481,7 +497,9 @@ private fun DreamFeedCard(
                 ownerName = dream.owner?.nameOrFallback ?: stringResource(R.string.common_unknown_fallback),
                 avatarUrl = dream.owner?.avatarUrl,
                 dreamDate = dream.dreamDate ?: dream.createdAt,
-                visibility = dream.visibility
+                visibility = dream.visibility,
+                ownerId = dream.owner?.id,
+                onUserClick = onUserClick
             )
 
             // Top-left page indicator text (e.g., "Rüya Görseli (1/3)") in gray monospace style
@@ -857,7 +875,7 @@ private fun DreamAnalysisPage(dream: Dream) {
 
 /** goals tablosundan bir kart — GoalCard.jsx'in ön yüzüyle aynı alanlar (title, cover, completion). */
 @Composable
-private fun VisionFeedCard(goal: Goal, onClick: () -> Unit) {
+private fun VisionFeedCard(goal: Goal, onClick: () -> Unit, onUserClick: (String) -> Unit = {}) {
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = RoundedCornerShape(20.dp),
@@ -868,7 +886,9 @@ private fun VisionFeedCard(goal: Goal, onClick: () -> Unit) {
             FeedCardOwnerHeader(
                 ownerName = goal.owner?.nameOrFallback ?: stringResource(R.string.common_unknown_fallback),
                 avatarUrl = goal.owner?.avatarUrl,
-                visibility = stringResource(R.string.home_feed_vision_badge)
+                visibility = stringResource(R.string.home_feed_vision_badge),
+                ownerId = goal.owner?.id,
+                onUserClick = onUserClick
             )
 
             Box {

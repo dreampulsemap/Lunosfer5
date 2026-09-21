@@ -28,7 +28,11 @@ sealed class DiaryJournalUiState {
     data class Success(
         val owner: UserProfile?,
         val groupedEntries: Map<String, List<DiaryEntry>>,
-        val isSelf: Boolean
+        val isSelf: Boolean,
+        /** Silme isteginin sonucu; gosterildikten sonra [clearActionError] ile temizlenir. */
+        val actionError: String? = null,
+        /** Silinmekte olan kaydin id'si — o kartin butonu bloke edilir. */
+        val deletingId: String? = null
     ) : DiaryJournalUiState()
 }
 
@@ -64,6 +68,39 @@ class DiaryJournalViewModel(
                     _state.value = DiaryJournalUiState.Error(error.message ?: fallback)
                 }
         }
+    }
+
+    /** Kalici Gunce'den bir kaydi kalici olarak sil (yalnizca kendi kayitlarim).
+     *  Listeyi yeniden cekmek yerine yerel olarak cikariyoruz: kullanici uzun bir
+     *  arsivin ortasindayken kaydirma konumunu kaybetmesin. */
+    fun deleteEntry(entryId: String) {
+        val current = _state.value as? DiaryJournalUiState.Success ?: return
+        if (!current.isSelf || current.deletingId != null) return
+
+        _state.value = current.copy(deletingId = entryId, actionError = null)
+        viewModelScope.launch {
+            repository.deleteEntry(entryId)
+                .onSuccess {
+                    val latest = _state.value as? DiaryJournalUiState.Success ?: return@onSuccess
+                    val pruned = latest.groupedEntries
+                        .mapValues { (_, entries) -> entries.filterNot { it.id == entryId } }
+                        .filterValues { it.isNotEmpty() }
+                    _state.value = latest.copy(groupedEntries = pruned, deletingId = null)
+                }
+                .onFailure { error ->
+                    val latest = _state.value as? DiaryJournalUiState.Success ?: return@onFailure
+                    _state.value = latest.copy(
+                        deletingId = null,
+                        actionError = error.message
+                            ?: DreamapApp.instance.getString(R.string.diary_journal_delete_failed)
+                    )
+                }
+        }
+    }
+
+    fun clearActionError() {
+        val current = _state.value as? DiaryJournalUiState.Success ?: return
+        _state.value = current.copy(actionError = null)
     }
 
     class Factory(private val userId: String) : ViewModelProvider.Factory {

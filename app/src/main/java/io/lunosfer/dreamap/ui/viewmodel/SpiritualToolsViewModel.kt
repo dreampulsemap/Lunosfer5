@@ -15,7 +15,8 @@ sealed class MentalWallUiState {
     object Idle : MentalWallUiState()
     object Loading : MentalWallUiState()
     data class Success(val response: MentalWallResponse) : MentalWallUiState()
-    data class Error(val message: String) : MentalWallUiState()
+    /** [insufficientAura] true ise arayuz "Aura al / Premium'a gec" teklifini gosterir. */
+    data class Error(val message: String, val insufficientAura: Boolean = false) : MentalWallUiState()
 }
 
 sealed class PsycheMapUiState {
@@ -29,7 +30,7 @@ sealed class ProphetUiState {
     object Idle : ProphetUiState()
     object Loading : ProphetUiState()
     data class Success(val response: ProphetResponse) : ProphetUiState()
-    data class Error(val message: String) : ProphetUiState()
+    data class Error(val message: String, val insufficientAura: Boolean = false) : ProphetUiState()
 }
 
 class SpiritualToolsViewModel(
@@ -45,25 +46,44 @@ class SpiritualToolsViewModel(
     private val _prophetState = MutableStateFlow<ProphetUiState>(ProphetUiState.Idle)
     val prophetState: StateFlow<ProphetUiState> = _prophetState.asStateFlow()
 
+    // "Daha derin yorum" ayni istegi tekrarliyor; son sorulani hatirlamamiz
+    // gerekiyor ki kullanici soruyu yeniden yazmak zorunda kalmasin.
+    private var lastMode: String = io.lunosfer.dreamap.data.model.ProphetRequest.MODE_GENERAL
+    private var lastQuestion: String? = null
+
     init {
         loadPsycheMap()
     }
 
-    fun generateMentalWall() {
+    /** [deep] true: "daha derin yorum" — premium uyeye bedava, degilse 10 Aura. */
+    fun generateMentalWall(deep: Boolean = false) {
         _mentalWallState.value = MentalWallUiState.Loading
         viewModelScope.launch {
-            repository.generateMentalWall(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.app_lang_code))
+            repository.generateMentalWall(
+                io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.app_lang_code),
+                deep
+            )
                 .onSuccess { res ->
                     _mentalWallState.value = MentalWallUiState.Success(res)
                 }
                 .onFailure { err ->
+                    val app = io.lunosfer.dreamap.DreamapApp.instance
                     val msg = err.message ?: ""
-                    val friendly = if (msg.contains("400")) {
-                        io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_mental_wall_not_enough_data)
-                    } else {
-                        io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_mental_wall)
+                    // 400 iki farkli sebep olabiliyor ve ikisinin cozumu ayri:
+                    // yeterli ruya yok VS aktif vizyon yok. Eskiden ikisi de
+                    // "yeterli veri yok" diye tek metne dusuyordu.
+                    val friendly = when {
+                        io.lunosfer.dreamap.util.ApiErrors.isInsufficientAura(err) ->
+                            io.lunosfer.dreamap.util.ApiErrors.message(err, app.getString(io.lunosfer.dreamap.R.string.error_mental_wall))
+                        msg.contains("no_active_goals") -> app.getString(io.lunosfer.dreamap.R.string.error_mental_wall_no_goals)
+                        msg.contains("not_enough_dreams") || msg.contains("400") ->
+                            app.getString(io.lunosfer.dreamap.R.string.error_mental_wall_not_enough_data)
+                        else -> app.getString(io.lunosfer.dreamap.R.string.error_mental_wall)
                     }
-                    _mentalWallState.value = MentalWallUiState.Error(friendly)
+                    _mentalWallState.value = MentalWallUiState.Error(
+                        friendly,
+                        io.lunosfer.dreamap.util.ApiErrors.isInsufficientAura(err)
+                    )
                 }
         }
     }
@@ -82,29 +102,43 @@ class SpiritualToolsViewModel(
     }
 
     /** Kullanicinin kendi ruya ve vizyonlarindan kehanet uretir. */
-    fun generalProphecy() {
-        runProphet(io.lunosfer.dreamap.data.model.ProphetRequest.MODE_GENERAL, null)
+    fun generalProphecy(deep: Boolean = false) {
+        lastMode = io.lunosfer.dreamap.data.model.ProphetRequest.MODE_GENERAL
+        lastQuestion = null
+        runProphet(io.lunosfer.dreamap.data.model.ProphetRequest.MODE_GENERAL, null, deep)
     }
 
     /** Kullanicinin yazdigi soruya cevap verir. */
-    fun askProphet(question: String) {
+    fun askProphet(question: String, deep: Boolean = false) {
         if (question.isBlank()) return
-        runProphet(io.lunosfer.dreamap.data.model.ProphetRequest.MODE_ASK, question)
+        lastMode = io.lunosfer.dreamap.data.model.ProphetRequest.MODE_ASK
+        lastQuestion = question
+        runProphet(io.lunosfer.dreamap.data.model.ProphetRequest.MODE_ASK, question, deep)
     }
 
-    private fun runProphet(mode: String, question: String?) {
+    /** "Daha derin bir yorum ister misin?" — ayni istegi derin surumle tekrarlar. */
+    fun deepenLastProphecy() {
+        runProphet(lastMode, lastQuestion, deep = true)
+    }
+
+    private fun runProphet(mode: String, question: String?, deep: Boolean = false) {
         _prophetState.value = ProphetUiState.Loading
         viewModelScope.launch {
             repository.consultProphet(
                 mode,
                 question,
-                io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.app_lang_code)
+                io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.app_lang_code),
+                deep
             )
                 .onSuccess { res ->
                     _prophetState.value = ProphetUiState.Success(res)
                 }
                 .onFailure { err ->
-                    _prophetState.value = ProphetUiState.Error(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_prophet_failed))
+                    val fallback = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_prophet_failed)
+                    _prophetState.value = ProphetUiState.Error(
+                        io.lunosfer.dreamap.util.ApiErrors.message(err, fallback),
+                        io.lunosfer.dreamap.util.ApiErrors.isInsufficientAura(err)
+                    )
                 }
         }
     }

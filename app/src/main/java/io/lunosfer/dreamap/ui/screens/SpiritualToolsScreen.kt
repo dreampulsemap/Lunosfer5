@@ -107,13 +107,18 @@ fun SpiritualToolsScreen(
                     .padding(16.dp)
             ) {
                 when (selectedTab) {
-                    0 -> MentalWallSection(state = mentalWallState, onGenerate = viewModel::generateMentalWall)
+                    0 -> MentalWallSection(
+                        state = mentalWallState,
+                        onGenerate = { deep -> viewModel.generateMentalWall(deep) },
+                        onUpgrade = onUpgrade
+                    )
                     1 -> PsycheMapSection(state = psycheMapState, onRefresh = viewModel::loadPsycheMap)
                     2 -> ProphetSection(
                         state = prophetState,
-                        onGeneral = viewModel::generalProphecy,
-                        onAsk = viewModel::askProphet,
-                        onUpgrade = onUpgrade
+                        onGeneral = { viewModel.generalProphecy() },
+                        onAsk = { question -> viewModel.askProphet(question) },
+                        onUpgrade = onUpgrade,
+                        onDeepen = viewModel::deepenLastProphecy
                     )
                 }
             }
@@ -121,12 +126,17 @@ fun SpiritualToolsScreen(
     }
 }
 
+// Sunucu deepCost bildirmezse kullanilan varsayilan fiyat; backend'deki
+// DEEP_AURA_COST ile ayni (pages/api/mental-wall/generate.js, prophet.js).
+private const val DEFAULT_DEEP_AURA_COST = 10
+
 // --- 1) Zihin Duvarı (Mental Wall) ---
 
 @Composable
 private fun MentalWallSection(
     state: MentalWallUiState,
-    onGenerate: () -> Unit
+    onGenerate: (Boolean) -> Unit,
+    onUpgrade: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -162,7 +172,7 @@ private fun MentalWallSection(
                     )
 
                     Button(
-                        onClick = onGenerate,
+                        onClick = { onGenerate(false) },
                         enabled = state !is MentalWallUiState.Loading,
                         colors = ButtonDefaults.buttonColors(containerColor = AetherViolet),
                         shape = RoundedCornerShape(12.dp),
@@ -206,6 +216,17 @@ private fun MentalWallSection(
             }
             is MentalWallUiState.Success -> {
                 val res = state.response
+                if (res.limitReached) {
+                    item {
+                        ProphetUpsellCard(
+                            title = stringResource(R.string.spiritual_prophet_limit_title),
+                            body = stringResource(R.string.spiritual_prophet_limit_body, res.dailyLimit ?: 3),
+                            onUpgrade = onUpgrade,
+                            auraCost = res.deepCost ?: DEFAULT_DEEP_AURA_COST,
+                            onPayWithAura = { onGenerate(true) }
+                        )
+                    }
+                }
                 item {
                     Card(
                         modifier = Modifier.fillMaxWidth(),
@@ -256,7 +277,33 @@ private fun MentalWallSection(
                                     }
                                 }
                             }
+
+                            res.remaining?.let { left ->
+                                if (!res.isPremium) {
+                                    Text(
+                                        text = stringResource(R.string.spiritual_mental_wall_remaining, left),
+                                        color = Color.Gray,
+                                        fontSize = 11.sp
+                                    )
+                                }
+                            }
                         }
+                    }
+                }
+                // Kisa (ucretsiz) rapor alindiysa derin surumu teklif et:
+                // Premium sinirsiz, degilse tek seferlik Aura.
+                if (!res.isPremium && !res.detailed && !res.limitReached) {
+                    item {
+                        ProphetUpsellCard(
+                            title = stringResource(R.string.spiritual_deep_prompt_title),
+                            body = stringResource(
+                                R.string.spiritual_deep_prompt_body,
+                                res.deepCost ?: DEFAULT_DEEP_AURA_COST
+                            ),
+                            onUpgrade = onUpgrade,
+                            auraCost = res.deepCost ?: DEFAULT_DEEP_AURA_COST,
+                            onPayWithAura = { onGenerate(true) }
+                        )
                     }
                 }
             }
@@ -273,6 +320,18 @@ private fun MentalWallSection(
                             color = SemanticDanger400,
                             fontSize = 13.sp,
                             modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                }
+                // Aura yetmedigi icin basarisiz olduysa cikis yolunu goster;
+                // eskiden sadece "olusturulamadi" yaziyor, kullanici neden
+                // olmadigini hicbir sekilde ogrenemiyordu.
+                if (state.insufficientAura) {
+                    item {
+                        ProphetUpsellCard(
+                            title = stringResource(R.string.spiritual_deep_prompt_title),
+                            body = stringResource(R.string.spiritual_deep_prompt_body, DEFAULT_DEEP_AURA_COST),
+                            onUpgrade = onUpgrade
                         )
                     }
                 }
@@ -453,7 +512,8 @@ private fun ProphetSection(
     state: ProphetUiState,
     onGeneral: () -> Unit,
     onAsk: (String) -> Unit,
-    onUpgrade: () -> Unit
+    onUpgrade: () -> Unit,
+    onDeepen: () -> Unit
 ) {
     var questionText by remember { mutableStateOf("") }
     val busy = state is ProphetUiState.Loading
@@ -574,7 +634,10 @@ private fun ProphetSection(
                                 R.string.spiritual_prophet_limit_body,
                                 res.dailyLimit ?: 3
                             ),
-                            onUpgrade = onUpgrade
+                            onUpgrade = onUpgrade,
+                            auraCost = res.deepCost ?: DEFAULT_DEEP_AURA_COST,
+                            onPayWithAura = onDeepen,
+                            busy = busy
                         )
                     }
 
@@ -642,9 +705,15 @@ private fun ProphetSection(
                         if (!res.isPremium && !res.detailed) {
                             item {
                                 ProphetUpsellCard(
-                                    title = stringResource(R.string.spiritual_prophet_upsell_title),
-                                    body = stringResource(R.string.spiritual_prophet_upsell_body),
-                                    onUpgrade = onUpgrade
+                                    title = stringResource(R.string.spiritual_deep_prompt_title),
+                                    body = stringResource(
+                                        R.string.spiritual_deep_prompt_body,
+                                        res.deepCost ?: DEFAULT_DEEP_AURA_COST
+                                    ),
+                                    onUpgrade = onUpgrade,
+                                    auraCost = res.deepCost ?: DEFAULT_DEEP_AURA_COST,
+                                    onPayWithAura = onDeepen,
+                                    busy = busy
                                 )
                             }
                         }
@@ -655,17 +724,34 @@ private fun ProphetSection(
                 item {
                     Text(state.message, color = SemanticDanger400, fontSize = 13.sp)
                 }
+                if (state.insufficientAura) {
+                    item {
+                        ProphetUpsellCard(
+                            title = stringResource(R.string.spiritual_deep_prompt_title),
+                            body = stringResource(R.string.spiritual_deep_prompt_body, DEFAULT_DEEP_AURA_COST),
+                            onUpgrade = onUpgrade
+                        )
+                    }
+                }
             }
             is ProphetUiState.Idle -> {}
         }
     }
 }
 
+/**
+ * "Daha derin bir yorum ister misin?" teklifi. Iki cikis yolu sunar:
+ * Premium abonelik (sinirsiz) veya tek seferlik Aura odemesi. Aura yolu
+ * [onPayWithAura] verilmediginde hic gosterilmez.
+ */
 @Composable
 private fun ProphetUpsellCard(
     title: String,
     body: String,
-    onUpgrade: () -> Unit
+    onUpgrade: () -> Unit,
+    auraCost: Int? = null,
+    onPayWithAura: (() -> Unit)? = null,
+    busy: Boolean = false
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -694,6 +780,22 @@ private fun ProphetUpsellCard(
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp
                 )
+            }
+            if (onPayWithAura != null && auraCost != null) {
+                OutlinedButton(
+                    onClick = onPayWithAura,
+                    enabled = !busy,
+                    border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.6f)),
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        stringResource(R.string.spiritual_deep_btn_aura, auraCost),
+                        color = AstralGold,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 13.sp
+                    )
+                }
             }
         }
     }

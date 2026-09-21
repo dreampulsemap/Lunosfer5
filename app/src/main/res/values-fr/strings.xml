@@ -874,4 +874,18 @@
     <string name="dream_simple_heading">En clair : qu\'est-ce que cela signifie ?</string>
     <string name="billing_dismiss_error">Fermer</string>
     <string name="billing_purchase_pending">Le paiement est en attente de confirmation. Selon le mode de paiement, cela peut prendre un moment.</string>
+
+    <!-- Kalici Gunce silme + derin yorum teklifi (1.4.1) -->
+    <string name="diary_journal_delete_title">Supprimer cette entrée ?</string>
+    <string name="diary_journal_delete_body">Elle sera définitivement retirée de votre journal. Cette action est irréversible.</string>
+    <string name="diary_journal_delete_confirm">Supprimer</string>
+    <string name="diary_journal_delete_cancel">Annuler</string>
+    <string name="diary_journal_delete_failed">Impossible de supprimer l\'entrée</string>
+    <string name="spiritual_deep_prompt_title">Vous voulez une interprétation plus approfondie ?</string>
+    <string name="spiritual_deep_prompt_body">Premium offre des lectures approfondies illimitées. Ou débloquez celle-ci pour %1$d Aura.</string>
+    <string name="spiritual_deep_btn_aura">Débloquer pour %1$d Aura</string>
+    <string name="spiritual_mental_wall_remaining">Il vous reste %1$d rapports gratuits aujourd\'hui</string>
+    <string name="error_mental_wall_no_goals">Ajoutez d\'abord au moins une vision active — le Mur Mental confronte vos rêves à vos objectifs.</string>
+    <string name="error_insufficient_auras">Vous n\'avez pas assez d\'Aura pour cela.</string>
+    <string name="error_insufficient_auras_cost">Aura insuffisante — cela coûte %1$d Aura.</string>
 </resources>

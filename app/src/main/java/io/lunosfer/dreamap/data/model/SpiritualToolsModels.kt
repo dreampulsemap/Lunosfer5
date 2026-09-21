@@ -6,7 +6,9 @@ import kotlinx.serialization.Serializable
 // --- Mental Wall ---
 @Serializable
 data class MentalWallRequest(
-    val lang: String = "tr"
+    val lang: String = "tr",
+    /** true: "daha derin yorum" — premium uyeye bedava, degilse [MentalWallResponse.deepCost] Aura. */
+    val deep: Boolean = false
 )
 
 @Serializable
@@ -18,6 +20,17 @@ data class MentalWallResponse(
     val narrative: String? = null,
     val summary: String? = null,
     val archetypes: List<String>? = emptyList(),
+    val success: Boolean? = true,
+    /** Derin (uzun) surum mu uretildi? */
+    val detailed: Boolean = false,
+    val isPremium: Boolean = false,
+    /** Ucretsiz gunluk hak bitti. */
+    val limitReached: Boolean = false,
+    val remaining: Int? = null,
+    val dailyLimit: Int? = null,
+    /** Derin yorumun Aura fiyati (premium degilse). */
+    val deepCost: Int? = null,
+    val aurasLeft: Int? = null,
     val error: String? = null
 ) {
     val displayImage: String? get() = image ?: imageUrl ?: url
@@ -64,7 +77,9 @@ data class PsycheNode(
 data class ProphetRequest(
     val mode: String = MODE_GENERAL,
     val question: String? = null,
-    val lang: String = "tr"
+    val lang: String = "tr",
+    /** true: "daha derin yorum" — premium uyeye bedava, degilse [ProphetResponse.deepCost] Aura. */
+    val deep: Boolean = false
 ) {
     companion object {
         const val MODE_GENERAL = "general"
@@ -90,6 +105,9 @@ data class ProphetResponse(
     val needsContent: Boolean = false,
     val remaining: Int? = null,
     val dailyLimit: Int? = null,
+    /** Derin yorumun Aura fiyati (premium degilse). */
+    val deepCost: Int? = null,
+    val aurasLeft: Int? = null,
     val error: String? = null
 ) {
     val resultText: String? get() = prophecy ?: answer ?: guidance

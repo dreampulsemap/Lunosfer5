@@ -897,4 +897,18 @@
     <string name="dream_simple_heading">Basitçe ne anlama geliyor?</string>
     <string name="billing_dismiss_error">Kapat</string>
     <string name="billing_purchase_pending">Ödemen onay bekliyor. Ödeme yöntemine bağlı olarak bu biraz sürebilir.</string>
+
+    <!-- Kalici Gunce silme + derin yorum teklifi (1.4.1) -->
+    <string name="diary_journal_delete_title">Bu kayıt silinsin mi?</string>
+    <string name="diary_journal_delete_body">Kalıcı Günce\'den tamamen kaldırılacak. Bu işlem geri alınamaz.</string>
+    <string name="diary_journal_delete_confirm">Sil</string>
+    <string name="diary_journal_delete_cancel">Vazgeç</string>
+    <string name="diary_journal_delete_failed">Kayıt silinemedi</string>
+    <string name="spiritual_deep_prompt_title">Daha derin bir yorum ister misin?</string>
+    <string name="spiritual_deep_prompt_body">Premium sınırsız ve çok daha ayrıntılı yorum verir. Ya da yalnızca bunu %1$d Aura ile aç.</string>
+    <string name="spiritual_deep_btn_aura">%1$d Aura ile aç</string>
+    <string name="spiritual_mental_wall_remaining">Bugün %1$d ücretsiz rapor hakkın kaldı</string>
+    <string name="error_mental_wall_no_goals">Önce en az bir aktif vizyon ekle — Zihin Duvarı rüyalarını hedeflerinle karşılaştırır.</string>
+    <string name="error_insufficient_auras">Bunun için yeterli Auran yok.</string>
+    <string name="error_insufficient_auras_cost">Yeterli Aura yok — bu işlem %1$d Aura tutuyor.</string>
 </resources>

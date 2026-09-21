@@ -882,4 +882,18 @@
     <string name="dream_simple_heading">Простыми словами: что это значит?</string>
     <string name="billing_dismiss_error">Закрыть</string>
     <string name="billing_purchase_pending">Платёж ожидает подтверждения. В зависимости от способа оплаты это может занять некоторое время.</string>
+
+    <!-- Kalici Gunce silme + derin yorum teklifi (1.4.1) -->
+    <string name="diary_journal_delete_title">Удалить эту запись?</string>
+    <string name="diary_journal_delete_body">Она будет навсегда удалена из дневника. Отменить это действие нельзя.</string>
+    <string name="diary_journal_delete_confirm">Удалить</string>
+    <string name="diary_journal_delete_cancel">Отмена</string>
+    <string name="diary_journal_delete_failed">Не удалось удалить запись</string>
+    <string name="spiritual_deep_prompt_title">Хотите более глубокое толкование?</string>
+    <string name="spiritual_deep_prompt_body">Premium даёт безлимитные подробные толкования. Или откройте только это за %1$d Ауры.</string>
+    <string name="spiritual_deep_btn_aura">Открыть за %1$d Ауры</string>
+    <string name="spiritual_mental_wall_remaining">Сегодня осталось бесплатных отчётов: %1$d</string>
+    <string name="error_mental_wall_no_goals">Сначала добавьте хотя бы одно активное видение — Ментальная стена сопоставляет сны с вашими целями.</string>
+    <string name="error_insufficient_auras">У вас недостаточно Ауры для этого.</string>
+    <string name="error_insufficient_auras_cost">Недостаточно Ауры — это стоит %1$d Ауры.</string>
 </resources>

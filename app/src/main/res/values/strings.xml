@@ -899,4 +899,18 @@
     <string name="dream_simple_heading">Simply: what does it mean?</string>
     <string name="billing_dismiss_error">Dismiss</string>
     <string name="billing_purchase_pending">Payment is awaiting confirmation. This can take a while depending on your payment method.</string>
+
+    <!-- Kalici Gunce silme + derin yorum teklifi (1.4.1) -->
+    <string name="diary_journal_delete_title">Delete this entry?</string>
+    <string name="diary_journal_delete_body">It will be permanently removed from your journal. This cannot be undone.</string>
+    <string name="diary_journal_delete_confirm">Delete</string>
+    <string name="diary_journal_delete_cancel">Cancel</string>
+    <string name="diary_journal_delete_failed">The entry could not be deleted</string>
+    <string name="spiritual_deep_prompt_title">Want a deeper interpretation?</string>
+    <string name="spiritual_deep_prompt_body">Premium gives unlimited in-depth readings. Or unlock just this one for %1$d Aura.</string>
+    <string name="spiritual_deep_btn_aura">Unlock with %1$d Aura</string>
+    <string name="spiritual_mental_wall_remaining">%1$d free reports left today</string>
+    <string name="error_mental_wall_no_goals">Add at least one active vision first — the Mental Wall reads your dreams against your goals.</string>
+    <string name="error_insufficient_auras">You don\'t have enough Aura for this.</string>
+    <string name="error_insufficient_auras_cost">Not enough Aura — this costs %1$d Aura.</string>
 </resources>

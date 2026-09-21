@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -104,6 +105,9 @@ fun DiaryJournalScreen(
     val viewModel: DiaryJournalViewModel = viewModel(factory = factory)
     val state by viewModel.state.collectAsState()
 
+    // Silme onayi: kalici bir arsivden siliyoruz, geri alinamiyor.
+    var pendingDelete by remember { mutableStateOf<DiaryEntry?>(null) }
+
     val todayLabel = stringResource(R.string.diary_journal_today)
     val yesterdayLabel = stringResource(R.string.diary_journal_yesterday)
     val unknownLabel = stringResource(R.string.diary_journal_unknown_date)
@@ -195,7 +199,40 @@ fun DiaryJournalScreen(
                                 }
 
                                 items(entries, key = { it.id }) { entry ->
-                                    JournalEntryCard(entry = entry)
+                                    JournalEntryCard(
+                                        entry = entry,
+                                        canDelete = s.isSelf,
+                                        isDeleting = s.deletingId == entry.id,
+                                        onDelete = { pendingDelete = entry }
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    if (s.actionError != null) {
+                        Card(
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(containerColor = Void900),
+                            border = BorderStroke(1.dp, SemanticDanger400.copy(alpha = 0.6f))
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = s.actionError,
+                                    color = SemanticDanger400,
+                                    fontSize = 13.sp,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                TextButton(onClick = { viewModel.clearActionError() }) {
+                                    Text(stringResource(R.string.diary_journal_delete_cancel), color = AstralGold)
                                 }
                             }
                         }
@@ -204,10 +241,41 @@ fun DiaryJournalScreen(
             }
         }
     }
+
+    pendingDelete?.let { entry ->
+        AlertDialog(
+            onDismissRequest = { pendingDelete = null },
+            containerColor = Void900,
+            title = {
+                Text(stringResource(R.string.diary_journal_delete_title), color = Color.White)
+            },
+            text = {
+                Text(stringResource(R.string.diary_journal_delete_body), color = Color.Gray, fontSize = 13.sp)
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.deleteEntry(entry.id)
+                    pendingDelete = null
+                }) {
+                    Text(stringResource(R.string.diary_journal_delete_confirm), color = SemanticDanger400, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { pendingDelete = null }) {
+                    Text(stringResource(R.string.diary_journal_delete_cancel), color = Color.Gray)
+                }
+            }
+        )
+    }
 }
 
 @Composable
-private fun JournalEntryCard(entry: DiaryEntry) {
+private fun JournalEntryCard(
+    entry: DiaryEntry,
+    canDelete: Boolean,
+    isDeleting: Boolean,
+    onDelete: () -> Unit
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
@@ -233,24 +301,52 @@ private fun JournalEntryCard(entry: DiaryEntry) {
                     fontWeight = FontWeight.Medium
                 )
 
-                // Privacy indicator
-                if (entry.visibility == "private") {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(4.dp))
-                            .background(Void800)
-                            .padding(horizontal = 6.dp, vertical = 2.dp)
-                    ) {
-                        Text(stringResource(R.string.diary_journal_private_badge), color = AstralGold, fontSize = 10.sp)
+                // Privacy indicator + kendi kaydimsa silme
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    if (entry.visibility == "private") {
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(Void800)
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        ) {
+                            Text(stringResource(R.string.diary_journal_private_badge), color = AstralGold, fontSize = 10.sp)
+                        }
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(AetherCyan.copy(alpha = 0.2f))
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        ) {
+                            Text(stringResource(R.string.diary_journal_public_badge), color = AetherCyan, fontSize = 10.sp)
+                        }
                     }
-                } else {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(4.dp))
-                            .background(AetherCyan.copy(alpha = 0.2f))
-                            .padding(horizontal = 6.dp, vertical = 2.dp)
-                    ) {
-                        Text(stringResource(R.string.diary_journal_public_badge), color = AetherCyan, fontSize = 10.sp)
+
+                    if (canDelete) {
+                        IconButton(
+                            onClick = onDelete,
+                            enabled = !isDeleting,
+                            modifier = Modifier.size(28.dp)
+                        ) {
+                            if (isDeleting) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(14.dp),
+                                    color = SemanticDanger400,
+                                    strokeWidth = 2.dp
+                                )
+                            } else {
+                                Icon(
+                                    Icons.Default.DeleteOutline,
+                                    contentDescription = stringResource(R.string.diary_journal_delete_confirm),
+                                    tint = Color.Gray,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }

@@ -228,7 +228,8 @@ fun MainScreen(
                     onOpenDreamReels = openDreamReels,
                     onOpenComposer = { navController.navigate(Screen.DiaryComposer.route) },
                     onOpenViewer = { userId -> navController.navigate(Screen.DiaryStoryViewer.routeFor(userId)) },
-                    onOpenReels = openReels
+                    onOpenReels = openReels,
+                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
                 )
             }
             composable(Screen.Explore.route) {
