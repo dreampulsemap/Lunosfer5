@@ -34,6 +34,7 @@ import io.lunosfer.dreamap.ui.viewmodel.*
 @Composable
 fun SpiritualToolsScreen(
     onBack: () -> Unit = {},
+    onUpgrade: () -> Unit = {},
     viewModel: SpiritualToolsViewModel = viewModel()
 ) {
     val mentalWallState by viewModel.mentalWallState.collectAsState()
@@ -108,7 +109,12 @@ fun SpiritualToolsScreen(
                 when (selectedTab) {
                     0 -> MentalWallSection(state = mentalWallState, onGenerate = viewModel::generateMentalWall)
                     1 -> PsycheMapSection(state = psycheMapState, onRefresh = viewModel::loadPsycheMap)
-                    2 -> ProphetSection(state = prophetState, onAsk = viewModel::consultProphet)
+                    2 -> ProphetSection(
+                        state = prophetState,
+                        onGeneral = viewModel::generalProphecy,
+                        onAsk = viewModel::askProphet,
+                        onUpgrade = onUpgrade
+                    )
                 }
             }
         }
@@ -445,9 +451,12 @@ private fun PsycheMapSection(
 @Composable
 private fun ProphetSection(
     state: ProphetUiState,
-    onAsk: (String) -> Unit
+    onGeneral: () -> Unit,
+    onAsk: (String) -> Unit,
+    onUpgrade: () -> Unit
 ) {
     var questionText by remember { mutableStateOf("") }
+    val busy = state is ProphetUiState.Loading
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -481,6 +490,34 @@ private fun ProphetSection(
                         fontSize = 13.sp
                     )
 
+                    // 1) Genel kehanet — soru gerektirmez, kullanicinin kendi
+                    //    ruya ve vizyonlarindan uretilir.
+                    Button(
+                        onClick = onGeneral,
+                        enabled = !busy,
+                        colors = ButtonDefaults.buttonColors(containerColor = AetherViolet),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = AstralGold, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            stringResource(R.string.spiritual_prophet_general_btn),
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 13.sp
+                        )
+                    }
+
+                    Text(
+                        text = stringResource(R.string.spiritual_prophet_or),
+                        color = Color.Gray,
+                        fontSize = 11.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    // 2) Kahine sor — yazilan soruya cevap.
                     OutlinedTextField(
                         value = questionText,
                         onValueChange = { questionText = it },
@@ -497,16 +534,14 @@ private fun ProphetSection(
 
                     Button(
                         onClick = {
-                            if (questionText.isNotBlank()) {
-                                onAsk(questionText)
-                            }
+                            if (questionText.isNotBlank()) onAsk(questionText)
                         },
-                        enabled = state !is ProphetUiState.Loading && questionText.isNotBlank(),
+                        enabled = !busy && questionText.isNotBlank(),
                         colors = ButtonDefaults.buttonColors(containerColor = AetherViolet),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        if (state is ProphetUiState.Loading) {
+                        if (busy) {
                             CircularProgressIndicator(modifier = Modifier.size(18.dp), color = Color.White, strokeWidth = 2.dp)
                             Spacer(Modifier.width(8.dp))
                             Text(stringResource(R.string.spiritual_prophet_loading), color = Color.White, fontSize = 13.sp)
@@ -530,40 +565,86 @@ private fun ProphetSection(
             }
             is ProphetUiState.Success -> {
                 val res = state.response
-                item {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.cardColors(containerColor = Void900),
-                        border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.6f))
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(18.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            if (!res.card.isNullOrBlank()) {
-                                Box(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(50))
-                                        .background(AetherViolet.copy(alpha = 0.3f))
-                                        .border(0.5.dp, AstralGold, RoundedCornerShape(50))
-                                        .padding(horizontal = 12.dp, vertical = 4.dp)
+                when {
+                    // Ucretsiz gunluk hak bitti -> premium teklifi.
+                    res.limitReached -> item {
+                        ProphetUpsellCard(
+                            title = stringResource(R.string.spiritual_prophet_limit_title),
+                            body = stringResource(
+                                R.string.spiritual_prophet_limit_body,
+                                res.dailyLimit ?: 3
+                            ),
+                            onUpgrade = onUpgrade
+                        )
+                    }
+
+                    // Hic ruya/vizyon yok -> once icerik eklemesi gerekiyor.
+                    res.needsContent -> item {
+                        Text(
+                            stringResource(R.string.spiritual_prophet_needs_content),
+                            color = Color(0xFFCBD5E1),
+                            fontSize = 13.sp
+                        )
+                    }
+
+                    else -> {
+                        item {
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(20.dp),
+                                colors = CardDefaults.cardColors(containerColor = Void900),
+                                border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.6f))
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(18.dp),
+                                    verticalArrangement = Arrangement.spacedBy(12.dp)
                                 ) {
-                                    Text(
-                                        text = stringResource(R.string.spiritual_prophet_card_label, res.card),
-                                        color = AstralGold,
-                                        fontSize = 11.sp,
-                                        fontWeight = FontWeight.Bold
-                                    )
+                                    if (!res.card.isNullOrBlank()) {
+                                        Box(
+                                            modifier = Modifier
+                                                .clip(RoundedCornerShape(50))
+                                                .background(AetherViolet.copy(alpha = 0.3f))
+                                                .border(0.5.dp, AstralGold, RoundedCornerShape(50))
+                                                .padding(horizontal = 12.dp, vertical = 4.dp)
+                                        ) {
+                                            Text(
+                                                text = stringResource(R.string.spiritual_prophet_card_label, res.card),
+                                                color = AstralGold,
+                                                fontSize = 11.sp,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                    }
+
+                                    if (!res.resultText.isNullOrBlank()) {
+                                        Text(
+                                            text = res.resultText!!,
+                                            color = Color.White,
+                                            fontSize = 14.sp,
+                                            lineHeight = 22.sp
+                                        )
+                                    }
+
+                                    res.remaining?.let { left ->
+                                        if (!res.isPremium) {
+                                            Text(
+                                                text = stringResource(R.string.spiritual_prophet_remaining, left),
+                                                color = Color.Gray,
+                                                fontSize = 11.sp
+                                            )
+                                        }
+                                    }
                                 }
                             }
+                        }
 
-                            if (!res.resultText.isNullOrBlank()) {
-                                Text(
-                                    text = res.resultText!!,
-                                    color = Color.White,
-                                    fontSize = 14.sp,
-                                    lineHeight = 22.sp
+                        // Kisa (ucretsiz) cevap aldiysa daha detaylisini teklif et.
+                        if (!res.isPremium && !res.detailed) {
+                            item {
+                                ProphetUpsellCard(
+                                    title = stringResource(R.string.spiritual_prophet_upsell_title),
+                                    body = stringResource(R.string.spiritual_prophet_upsell_body),
+                                    onUpgrade = onUpgrade
                                 )
                             }
                         }
@@ -576,6 +657,44 @@ private fun ProphetSection(
                 }
             }
             is ProphetUiState.Idle -> {}
+        }
+    }
+}
+
+@Composable
+private fun ProphetUpsellCard(
+    title: String,
+    body: String,
+    onUpgrade: () -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = Void900),
+        border = BorderStroke(1.dp, AstralGold)
+    ) {
+        Column(
+            modifier = Modifier.padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Icon(Icons.Default.Star, contentDescription = null, tint = AstralGold, modifier = Modifier.size(18.dp))
+                Text(title, color = AstralGold, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            }
+            Text(body, color = Color(0xFFCBD5E1), fontSize = 13.sp, lineHeight = 19.sp)
+            Button(
+                onClick = onUpgrade,
+                colors = ButtonDefaults.buttonColors(containerColor = AstralGold),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    stringResource(R.string.billing_upgrade_cta),
+                    color = Void950,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp
+                )
+            }
         }
     }
 }

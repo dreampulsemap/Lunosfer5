@@ -81,11 +81,25 @@ class SpiritualToolsViewModel(
         }
     }
 
-    fun consultProphet(question: String) {
+    /** Kullanicinin kendi ruya ve vizyonlarindan kehanet uretir. */
+    fun generalProphecy() {
+        runProphet(io.lunosfer.dreamap.data.model.ProphetRequest.MODE_GENERAL, null)
+    }
+
+    /** Kullanicinin yazdigi soruya cevap verir. */
+    fun askProphet(question: String) {
         if (question.isBlank()) return
+        runProphet(io.lunosfer.dreamap.data.model.ProphetRequest.MODE_ASK, question)
+    }
+
+    private fun runProphet(mode: String, question: String?) {
         _prophetState.value = ProphetUiState.Loading
         viewModelScope.launch {
-            repository.consultProphet(question, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.app_lang_code))
+            repository.consultProphet(
+                mode,
+                question,
+                io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.app_lang_code)
+            )
                 .onSuccess { res ->
                     _prophetState.value = ProphetUiState.Success(res)
                 }

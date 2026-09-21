@@ -185,6 +185,14 @@
     <string name="spiritual_prophet_loading">Drawing prophecy…</string>
     <string name="spiritual_prophet_btn">Consult Prophet</string>
     <string name="spiritual_prophet_card_label">CARD: %1$s</string>
+    <string name="spiritual_prophet_general_btn">General Prophecy</string>
+    <string name="spiritual_prophet_or">or</string>
+    <string name="spiritual_prophet_limit_title">Daily limit reached</string>
+    <string name="spiritual_prophet_limit_body">You have used your %1$d free readings for today. Go Premium for unlimited readings and far more detailed answers.</string>
+    <string name="spiritual_prophet_needs_content">The Oracle reads your dreams and visions — record at least one to begin.</string>
+    <string name="spiritual_prophet_upsell_title">Want a deeper reading?</string>
+    <string name="spiritual_prophet_upsell_body">Premium gives you a longer interpretation that links your dreams to your vision board, names the tension behind them, and ends with one concrete step.</string>
+    <string name="spiritual_prophet_remaining">%1$d free readings left today</string>
 
     <!-- VisionScreen -->
     <string name="vision_load_failed">Visions could not be loaded</string>
@@ -316,6 +324,7 @@
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
     <string name="billing_premium_sheet_subtitle">Monthly 10 AI Images &amp; 10 Deep Analyses</string>
     <string name="billing_perk_deep_analysis">10 Deep Dream Analyses / month</string>
+    <string name="billing_perk_prophet">Unlimited, in-depth Oracle readings</string>
     <string name="billing_perk_ai_images">10 AI Image Generations / month</string>
     <string name="billing_perk_freemium_videos">Completely free video uploads for all</string>
     <string name="billing_perk_badge">Golden Premium Member badge &amp; perks</string>

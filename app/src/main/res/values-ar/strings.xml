@@ -168,6 +168,14 @@
     <string name="msg_attachment_generic">تم إرسال المرفق</string>
     <string name="vision_retry">إعادة المحاولة</string>
     <string name="spiritual_prophet_card_label">البطاقة: %1$s</string>
+    <string name="spiritual_prophet_general_btn">نبوءة عامة</string>
+    <string name="spiritual_prophet_or">أو</string>
+    <string name="spiritual_prophet_limit_title">انتهى حدّك اليومي</string>
+    <string name="spiritual_prophet_limit_body">لقد استخدمت قراءاتك المجانية الـ %1$d لهذا اليوم. اشترك في Premium للحصول على قراءات غير محدودة وإجابات أكثر تفصيلاً.</string>
+    <string name="spiritual_prophet_needs_content">العرّاف يقرأ أحلامك ورؤاك — سجّل واحدة على الأقل للبدء.</string>
+    <string name="spiritual_prophet_upsell_title">هل تريد قراءة أعمق؟</string>
+    <string name="spiritual_prophet_upsell_body">يمنحك Premium تفسيراً مطوّلاً يربط أحلامك بلوحة رؤاك، ويسمّي التوتر الكامن خلفها، وينتهي بخطوة عملية واحدة.</string>
+    <string name="spiritual_prophet_remaining">بقيت لك %1$d قراءات مجانية اليوم</string>
     <string name="referral_your_code">رمز الدعوة الخاص بك:</string>
     <string name="summary_monthly">شهري</string>
     <string name="spiritual_synthesizing">جاري التوليف…</string>
@@ -432,6 +440,7 @@
     <string name="billing_premium_sheet_title">لونوسفر المميز</string>
     <string name="billing_premium_sheet_subtitle">10 صور بالذكاء الاصطناعي و 10 تحليلات عميقة شهرياً</string>
     <string name="billing_perk_deep_analysis">10 تحليلات عميقة للأحلام شهرياً</string>
+    <string name="billing_perk_prophet">قراءات العرّاف غير محدودة ومعمّقة</string>
     <string name="billing_perk_ai_images">10 عمليات إنشاء صور بالذكاء الاصطناعي شهرياً</string>
     <string name="billing_perk_freemium_videos">رفع مقاطع فيديو مجاني وغير محدود للجميع</string>
     <string name="billing_perk_badge">شارة العضوية المميزة الذهبية ومزايا خاصة</string>

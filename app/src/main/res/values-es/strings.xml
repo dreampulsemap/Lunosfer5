@@ -161,6 +161,14 @@
     <string name="spiritual_prophet_loading">Revelando profecía…</string>
     <string name="spiritual_prophet_btn">Consultar al Profeta</string>
     <string name="spiritual_prophet_card_label">CARTA: %1$s</string>
+    <string name="spiritual_prophet_general_btn">Profecía general</string>
+    <string name="spiritual_prophet_or">o</string>
+    <string name="spiritual_prophet_limit_title">Límite diario alcanzado</string>
+    <string name="spiritual_prophet_limit_body">Has usado tus %1$d lecturas gratuitas de hoy. Con Premium obtienes lecturas ilimitadas y respuestas mucho más detalladas.</string>
+    <string name="spiritual_prophet_needs_content">El Oráculo lee tus sueños y visiones: registra al menos uno para empezar.</string>
+    <string name="spiritual_prophet_upsell_title">¿Quieres una lectura más profunda?</string>
+    <string name="spiritual_prophet_upsell_body">Premium te da una interpretación extensa que conecta tus sueños con tu tablero de visión, nombra la tensión detrás de ellos y termina con un paso concreto.</string>
+    <string name="spiritual_prophet_remaining">Te quedan %1$d lecturas gratuitas hoy</string>
     <string name="vision_load_failed">No se pudieron cargar las visiones</string>
     <string name="vision_retry">Reintentar</string>
     <string name="vision_public_visions_title">Visiones públicas</string>
@@ -431,6 +439,7 @@
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
     <string name="billing_premium_sheet_subtitle">10 imágenes de IA y 10 análisis profundos al mes</string>
     <string name="billing_perk_deep_analysis">10 análisis profundos de sueños / mes</string>
+    <string name="billing_perk_prophet">Lecturas del Oráculo ilimitadas y profundas</string>
     <string name="billing_perk_ai_images">10 generaciones de imágenes con IA / mes</string>
     <string name="billing_perk_freemium_videos">Subidas de video completamente gratuitas e ilimitadas</string>
     <string name="billing_perk_badge">Insignia dorada de Miembro Premium</string>

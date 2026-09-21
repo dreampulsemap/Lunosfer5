@@ -160,6 +160,14 @@
     <string name="spiritual_prophet_loading">Tirage de la prophétie…</string>
     <string name="spiritual_prophet_btn">Consulter le Prophète</string>
     <string name="spiritual_prophet_card_label">CARTE : %1$s</string>
+    <string name="spiritual_prophet_general_btn">Prophétie générale</string>
+    <string name="spiritual_prophet_or">ou</string>
+    <string name="spiritual_prophet_limit_title">Limite quotidienne atteinte</string>
+    <string name="spiritual_prophet_limit_body">Vous avez utilisé vos %1$d lectures gratuites du jour. Passez à Premium pour des lectures illimitées et des réponses bien plus détaillées.</string>
+    <string name="spiritual_prophet_needs_content">L’Oracle lit vos rêves et vos visions — enregistrez-en au moins un pour commencer.</string>
+    <string name="spiritual_prophet_upsell_title">Envie d’une lecture plus profonde ?</string>
+    <string name="spiritual_prophet_upsell_body">Premium vous offre une interprétation longue qui relie vos rêves à votre tableau de visions, nomme la tension sous-jacente et se termine par une action concrète.</string>
+    <string name="spiritual_prophet_remaining">Il vous reste %1$d lectures gratuites aujourd’hui</string>
     <string name="vision_load_failed">Impossible de charger les visions</string>
     <string name="vision_retry">Réessayer</string>
     <string name="vision_public_visions_title">Visions publiques</string>
@@ -430,6 +438,7 @@
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
     <string name="billing_premium_sheet_subtitle">10 images IA et 10 analyses approfondies par mois</string>
     <string name="billing_perk_deep_analysis">10 analyses approfondies des rêves / mois</string>
+    <string name="billing_perk_prophet">Lectures de l’Oracle illimitées et approfondies</string>
     <string name="billing_perk_ai_images">10 générations d\'images par IA / mois</string>
     <string name="billing_perk_freemium_videos">Ajouts de vidéos totalement gratuits et illimités</string>
     <string name="billing_perk_badge">Badge doré de Membre Premium</string>

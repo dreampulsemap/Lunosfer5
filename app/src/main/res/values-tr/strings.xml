@@ -185,6 +185,14 @@
     <string name="spiritual_prophet_loading">Kehanet Çekiliyor...</string>
     <string name="spiritual_prophet_btn">Kahin\'e Danış</string>
     <string name="spiritual_prophet_card_label">KART: %1$s</string>
+    <string name="spiritual_prophet_general_btn">Genel Kehanet</string>
+    <string name="spiritual_prophet_or">veya</string>
+    <string name="spiritual_prophet_limit_title">Günlük hakkın doldu</string>
+    <string name="spiritual_prophet_limit_body">Bugünkü %1$d ücretsiz kehanet hakkını kullandın. Premium ile sınırsız kehanet ve çok daha detaylı yorum al.</string>
+    <string name="spiritual_prophet_needs_content">Kahin senin rüyalarını ve vizyonlarını okur — başlamak için en az bir tane kaydet.</string>
+    <string name="spiritual_prophet_upsell_title">Daha derin bir yorum ister misin?</string>
+    <string name="spiritual_prophet_upsell_body">Premium’da rüyalarını vizyon panonla ilişkilendiren, ardındaki gerilimi adlandıran ve somut bir adımla biten uzun bir yorum alırsın.</string>
+    <string name="spiritual_prophet_remaining">Bugün %1$d ücretsiz hakkın kaldı</string>
 
     <!-- VisionScreen -->
     <string name="vision_load_failed">Vizyonlar yüklenemedi</string>
@@ -487,6 +495,7 @@
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
     <string name="billing_premium_sheet_subtitle">Ayda 10 AI Görseli &amp; 10 Derin Analiz</string>
     <string name="billing_perk_deep_analysis">Ayda 10 Derin Rüya Analizi</string>
+    <string name="billing_perk_prophet">Sınırsız ve derinlemesine Kahin yorumu</string>
     <string name="billing_perk_ai_images">Ayda 10 Yapay Zeka Görseli Üretimi</string>
     <string name="billing_perk_freemium_videos">Tamamen ücretsiz ve sınırsız video ekleme</string>
     <string name="billing_perk_badge">Özel Altın Premium Profil Rozeti</string>

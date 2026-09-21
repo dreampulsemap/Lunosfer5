@@ -160,6 +160,14 @@
     <string name="spiritual_prophet_loading">正在求取预言…</string>
     <string name="spiritual_prophet_btn">咨询先知</string>
     <string name="spiritual_prophet_card_label">卡牌：%1$s</string>
+    <string name="spiritual_prophet_general_btn">综合预言</string>
+    <string name="spiritual_prophet_or">或</string>
+    <string name="spiritual_prophet_limit_title">已达今日上限</string>
+    <string name="spiritual_prophet_limit_body">你已用完今天的 %1$d 次免费预言。升级高级版，畅享无限次预言与更详尽的解读。</string>
+    <string name="spiritual_prophet_needs_content">预言者会解读你的梦境与愿景——请先记录至少一条。</string>
+    <string name="spiritual_prophet_upsell_title">想要更深入的解读吗？</string>
+    <string name="spiritual_prophet_upsell_body">高级版提供更长的解读：把你的梦境与愿景板联系起来，点出背后的张力，并以一个具体行动收尾。</string>
+    <string name="spiritual_prophet_remaining">今日还剩 %1$d 次免费预言</string>
 
 
     <string name="vision_jung_guide">荣格指南</string>
@@ -432,6 +440,7 @@
     <string name="billing_premium_sheet_title">Lunosfer 高级版</string>
     <string name="billing_premium_sheet_subtitle">每月 10 张 AI 图像与 10 次深度分析</string>
     <string name="billing_perk_deep_analysis">每月 10 次深度梦境分析</string>
+    <string name="billing_perk_prophet">无限次深度预言解读</string>
     <string name="billing_perk_ai_images">每月 10 次 AI 图像生成</string>
     <string name="billing_perk_freemium_videos">完全免费且无限的视频上传</string>
     <string name="billing_perk_badge">尊贵金色高级会员徽章</string>

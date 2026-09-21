@@ -275,6 +275,7 @@ private fun PremiumPlanList(
                     )
                 }
                 PerkItem(stringResource(R.string.billing_perk_deep_analysis))
+                PerkItem(stringResource(R.string.billing_perk_prophet))
                 PerkItem(stringResource(R.string.billing_perk_ai_images))
                 PerkItem(stringResource(R.string.billing_perk_freemium_videos))
                 PerkItem(stringResource(R.string.billing_perk_badge))

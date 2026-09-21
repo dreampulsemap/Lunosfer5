@@ -317,7 +317,13 @@ fun MainScreen(
                 GlobeScreen(onBack = { navController.popBackStack() })
             }
             composable(Screen.SpiritualTools.route) {
-                SpiritualToolsScreen(onBack = { navController.popBackStack() })
+                SpiritualToolsScreen(
+                    onBack = { navController.popBackStack() },
+                    onUpgrade = {
+                        billingSheetTab = BillingTab.PREMIUM
+                        showBillingSheet = true
+                    }
+                )
             }
             composable(Screen.SharedVisions.route) {
                 SharedVisionsScreen(

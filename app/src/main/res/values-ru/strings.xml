@@ -160,6 +160,14 @@
     <string name="spiritual_prophet_loading">Составление пророчества…</string>
     <string name="spiritual_prophet_btn">Спросить Пророка</string>
     <string name="spiritual_prophet_card_label">КАРТА: %1$s</string>
+    <string name="spiritual_prophet_general_btn">Общее пророчество</string>
+    <string name="spiritual_prophet_or">или</string>
+    <string name="spiritual_prophet_limit_title">Дневной лимит исчерпан</string>
+    <string name="spiritual_prophet_limit_body">Вы использовали свои %1$d бесплатных предсказания на сегодня. Premium даёт безлимитные предсказания и гораздо более подробные ответы.</string>
+    <string name="spiritual_prophet_needs_content">Оракул читает ваши сны и визуализации — запишите хотя бы одну, чтобы начать.</string>
+    <string name="spiritual_prophet_upsell_title">Хотите более глубокое толкование?</string>
+    <string name="spiritual_prophet_upsell_body">Premium даёт развёрнутое толкование, которое связывает ваши сны с доской визуализации, называет стоящее за ними напряжение и завершается одним конкретным шагом.</string>
+    <string name="spiritual_prophet_remaining">Сегодня осталось бесплатных предсказаний: %1$d</string>
     <string name="vision_load_failed">Не удалось загрузить видения</string>
     <string name="vision_retry">Повторить</string>
     <string name="vision_public_visions_title">Публичные видения</string>
@@ -431,6 +439,7 @@
     <string name="billing_premium_sheet_title">Lunosfer Премиум</string>
     <string name="billing_premium_sheet_subtitle">10 ИИ-изображений и 10 глубоких анализов в месяц</string>
     <string name="billing_perk_deep_analysis">10 глубоких анализов снов / месяц</string>
+    <string name="billing_perk_prophet">Безлимитные и глубокие предсказания Оракула</string>
     <string name="billing_perk_ai_images">10 генераций изображений с ИИ / месяц</string>
     <string name="billing_perk_freemium_videos">Полностью бесплатная и безлимитная загрузка видео</string>
     <string name="billing_perk_badge">Золотой значок Премиум-участника</string>

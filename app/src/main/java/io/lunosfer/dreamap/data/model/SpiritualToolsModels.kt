@@ -59,19 +59,37 @@ data class PsycheNode(
 )
 
 // --- Prophet ---
+/** [mode]: "general" = ruya/vizyonlardan kehanet, "ask" = yazilan soruya cevap. */
 @Serializable
 data class ProphetRequest(
+    val mode: String = MODE_GENERAL,
     val question: String? = null,
     val lang: String = "tr"
-)
+) {
+    companion object {
+        const val MODE_GENERAL = "general"
+        const val MODE_ASK = "ask"
+    }
+}
 
 @Serializable
 data class ProphetResponse(
     val ok: Boolean? = true,
+    val success: Boolean? = true,
     val prophecy: String? = null,
     val answer: String? = null,
     val card: String? = null,
     val guidance: String? = null,
+    val mode: String? = null,
+    val isPremium: Boolean = false,
+    /** Premium Claude uretimi mi (uzun/gerekceli), yoksa kisa ucretsiz metin mi. */
+    val detailed: Boolean = false,
+    /** Ucretsiz gunluk hak bitti — arayuz premium teklifini gosterir. */
+    val limitReached: Boolean = false,
+    /** Kullanicinin hic ruyasi/vizyonu yok — once icerik eklemesi gerek. */
+    val needsContent: Boolean = false,
+    val remaining: Int? = null,
+    val dailyLimit: Int? = null,
     val error: String? = null
 ) {
     val resultText: String? get() = prophecy ?: answer ?: guidance

@@ -161,6 +161,14 @@
     <string name="spiritual_prophet_loading">Extraindo profecia…</string>
     <string name="spiritual_prophet_btn">Consultar Profeta</string>
     <string name="spiritual_prophet_card_label">CARTA: %1$s</string>
+    <string name="spiritual_prophet_general_btn">Profecia geral</string>
+    <string name="spiritual_prophet_or">ou</string>
+    <string name="spiritual_prophet_limit_title">Limite diário atingido</string>
+    <string name="spiritual_prophet_limit_body">Você usou suas %1$d leituras gratuitas de hoje. Com o Premium, tenha leituras ilimitadas e respostas muito mais detalhadas.</string>
+    <string name="spiritual_prophet_needs_content">O Oráculo lê seus sonhos e visões — registre pelo menos um para começar.</string>
+    <string name="spiritual_prophet_upsell_title">Quer uma leitura mais profunda?</string>
+    <string name="spiritual_prophet_upsell_body">O Premium oferece uma interpretação longa que liga seus sonhos ao seu quadro de visões, nomeia a tensão por trás deles e termina com um passo concreto.</string>
+    <string name="spiritual_prophet_remaining">Restam %1$d leituras gratuitas hoje</string>
     <string name="vision_load_failed">Não foi possível carregar as visões</string>
     <string name="vision_retry">Tentar novamente</string>
     <string name="vision_public_visions_title">Visões Públicas</string>
@@ -431,6 +439,7 @@
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
     <string name="billing_premium_sheet_subtitle">10 imagens de IA e 10 análises profundas por mês</string>
     <string name="billing_perk_deep_analysis">10 análises profundas de sonhos / mês</string>
+    <string name="billing_perk_prophet">Leituras do Oráculo ilimitadas e profundas</string>
     <string name="billing_perk_ai_images">10 gerações de imagens por IA / mês</string>
     <string name="billing_perk_freemium_videos">Envios de vídeos totalmente gratuitos e ilimitados</string>
     <string name="billing_perk_badge">Emblema dourado de Membro Premium</string>

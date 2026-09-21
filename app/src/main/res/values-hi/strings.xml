@@ -161,6 +161,14 @@
     <string name="spiritual_prophet_loading">भविष्यवाणी निकाली जा रही है…</string>
     <string name="spiritual_prophet_btn">पैगंबर से परामर्श लें</string>
     <string name="spiritual_prophet_card_label">कार्ड: %1$s</string>
+    <string name="spiritual_prophet_general_btn">सामान्य भविष्यवाणी</string>
+    <string name="spiritual_prophet_or">या</string>
+    <string name="spiritual_prophet_limit_title">आज की सीमा पूरी</string>
+    <string name="spiritual_prophet_limit_body">आपने आज की अपनी %1$d मुफ़्त भविष्यवाणियाँ इस्तेमाल कर ली हैं। Premium लें और असीमित तथा कहीं अधिक विस्तृत उत्तर पाएँ।</string>
+    <string name="spiritual_prophet_needs_content">भविष्यवक्ता आपके सपनों और विज़न को पढ़ता है — शुरू करने के लिए कम से कम एक दर्ज करें।</string>
+    <string name="spiritual_prophet_upsell_title">और गहरी व्याख्या चाहिए?</string>
+    <string name="spiritual_prophet_upsell_body">Premium में आपको लंबी व्याख्या मिलती है जो आपके सपनों को आपके विज़न बोर्ड से जोड़ती है, उनके पीछे के तनाव को पहचानती है और एक ठोस क़दम के साथ समाप्त होती है।</string>
+    <string name="spiritual_prophet_remaining">आज %1$d मुफ़्त भविष्यवाणियाँ बची हैं</string>
 
     <string name="vision_no_public_visions_desc">आप स्वयं पहला दृष्टिकोण बना सकते हैं।</string>
     <string name="empty_vision">अभी तक कोई सक्रिय दृष्टिकोण नहीं है</string>
@@ -432,6 +440,7 @@
     <string name="billing_premium_sheet_title">Lunosfer प्रीमियम</string>
     <string name="billing_premium_sheet_subtitle">प्रति माह 10 एआई छवियां और 10 गहन विश्लेषण</string>
     <string name="billing_perk_deep_analysis">प्रति माह 10 गहन स्वप्न विश्लेषण</string>
+    <string name="billing_perk_prophet">असीमित और गहन भविष्यवक्ता व्याख्याएँ</string>
     <string name="billing_perk_ai_images">प्रति माह 10 एआई छवि निर्माण</string>
     <string name="billing_perk_freemium_videos">सभी के लिए पूरी तरह से मुफ़्त और असीमित वीडियो अपलोड</string>
     <string name="billing_perk_badge">विशेष गोल्डन प्रीमियम सदस्य बैज</string>

@@ -23,8 +23,12 @@ class SpiritualToolsRepository(
         res
     }
 
-    suspend fun consultProphet(question: String? = null, lang: String = "tr"): Result<ProphetResponse> = runCatching {
-        val res = api.consultProphet(ProphetRequest(question, lang))
+    suspend fun consultProphet(
+        mode: String = ProphetRequest.MODE_GENERAL,
+        question: String? = null,
+        lang: String = "tr"
+    ): Result<ProphetResponse> = runCatching {
+        val res = api.consultProphet(ProphetRequest(mode, question, lang))
         if (res.ok == false && res.error != null) {
             throw Exception(res.error)
         }

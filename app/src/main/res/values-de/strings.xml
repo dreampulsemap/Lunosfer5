@@ -162,6 +162,14 @@
     <string name="spiritual_prophet_loading">Prophezeiung wird erstellt…</string>
     <string name="spiritual_prophet_btn">Propheten konsultieren</string>
     <string name="spiritual_prophet_card_label">KARTE: %1$s</string>
+    <string name="spiritual_prophet_general_btn">Allgemeine Prophezeiung</string>
+    <string name="spiritual_prophet_or">oder</string>
+    <string name="spiritual_prophet_limit_title">Tageslimit erreicht</string>
+    <string name="spiritual_prophet_limit_body">Du hast deine %1$d kostenlosen Lesungen für heute verbraucht. Mit Premium erhältst du unbegrenzte Lesungen und deutlich ausführlichere Deutungen.</string>
+    <string name="spiritual_prophet_needs_content">Das Orakel liest deine Träume und Visionen — zeichne mindestens eine auf, um zu beginnen.</string>
+    <string name="spiritual_prophet_upsell_title">Möchtest du eine tiefere Deutung?</string>
+    <string name="spiritual_prophet_upsell_body">Premium liefert dir eine ausführliche Deutung, die deine Träume mit deinem Visionsboard verknüpft, die dahinterliegende Spannung benennt und mit einem konkreten Schritt endet.</string>
+    <string name="spiritual_prophet_remaining">Heute noch %1$d kostenlose Lesungen übrig</string>
     <string name="vision_load_failed">Visionen konnten nicht geladen werden</string>
     <string name="vision_retry">Wiederholen</string>
     <string name="vision_public_visions_title">Öffentliche Visionen</string>
@@ -433,6 +441,7 @@
     <string name="billing_premium_sheet_title">Lunosfer Premium</string>
     <string name="billing_premium_sheet_subtitle">Monatlich 10 KI-Bilder &amp; 10 tiefe Analysen</string>
     <string name="billing_perk_deep_analysis">Monatlich 10 tiefe Traumanalysen</string>
+    <string name="billing_perk_prophet">Unbegrenzte, tiefgehende Orakel-Deutungen</string>
     <string name="billing_perk_ai_images">Monatlich 10 KI-Bildgenerierungen</string>
     <string name="billing_perk_freemium_videos">Vollständig kostenlose &amp; unbegrenzte Video-Uploads</string>
     <string name="billing_perk_badge">Goldenes Premium-Mitgliedsabzeichen</string>

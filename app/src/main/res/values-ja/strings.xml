@@ -160,6 +160,14 @@
     <string name="spiritual_prophet_loading">予言を導き出し中…</string>
     <string name="spiritual_prophet_btn">預言者に相談する</string>
     <string name="spiritual_prophet_card_label">カード: %1$s</string>
+    <string name="spiritual_prophet_general_btn">総合予言</string>
+    <string name="spiritual_prophet_or">または</string>
+    <string name="spiritual_prophet_limit_title">本日の上限に達しました</string>
+    <string name="spiritual_prophet_limit_body">本日の無料予言 %1$d 回をすべて使いました。プレミアムなら回数無制限で、より詳しい解説が得られます。</string>
+    <string name="spiritual_prophet_needs_content">予言者はあなたの夢とビジョンを読み解きます。まずは1つ記録してください。</string>
+    <string name="spiritual_prophet_upsell_title">もっと深い解釈が必要ですか？</string>
+    <string name="spiritual_prophet_upsell_body">プレミアムでは、夢とビジョンボードを結びつけ、その奥にある葩藤を言葉にし、具体的な一歩で締めくくる長い解釈が得られます。</string>
+    <string name="spiritual_prophet_remaining">本日の無料予言は残り %1$d 回です</string>
     <string name="vision_load_failed">ビジョンを読み込めませんでした</string>
     <string name="vision_retry">再試行</string>
     <string name="vision_public_visions_title">公開ビジョン</string>
@@ -430,6 +438,7 @@
     <string name="billing_premium_sheet_title">Lunosfer プレミアム</string>
     <string name="billing_premium_sheet_subtitle">毎月10枚のAI画像と10回の深層分析</string>
     <string name="billing_perk_deep_analysis">毎月10回の夢の深層分析</string>
+    <string name="billing_perk_prophet">無制限で深い予言の解釈</string>
     <string name="billing_perk_ai_images">毎月10枚のAI画像生成</string>
     <string name="billing_perk_freemium_videos">完全無料かつ無制限の動画アップロード</string>
     <string name="billing_perk_badge">特別な黄金のプレミアムメンバーバッジ</string>
