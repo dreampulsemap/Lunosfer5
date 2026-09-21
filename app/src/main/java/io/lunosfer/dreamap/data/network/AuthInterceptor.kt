@@ -1,4 +1,3 @@
-```kotlin
 package io.lunosfer.dreamap.data.network
 
 import android.util.Log
@@ -96,4 +95,3 @@ class AuthInterceptor : Interceptor {
         return response
     }
 }
-```
