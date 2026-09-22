@@ -946,4 +946,12 @@
     <string name="billing_error_not_configured">Satın alma doğrulaması henüz kurulmadı. Ücret alındıysa Google birkaç gün içinde otomatik iade eder.</string>
     <string name="billing_error_not_purchased">Google bu satın almayı tamamlanmış olarak görmüyor.</string>
     <string name="billing_error_subscription_inactive">Bu abonelik Google tarafında aktif görünmüyor.</string>
+    <string name="dream_detail_boosted_badge">Parlıyor</string>
+    <string name="dream_detail_already_boosted">Bu rüya zaten parlıyor — Aura harcanmadı.</string>
+    <string name="deep_section_archetypes">Arketipler</string>
+    <string name="deep_section_shadows">Bilinçaltının Gölgeleri</string>
+    <string name="deep_section_individuation">Bireyleşme &amp; Dönüşüm</string>
+    <string name="deep_section_symbols">Semboller</string>
+    <string name="deep_section_emotions">Duygular</string>
+    <string name="deep_section_reflections">Ruhsal Yansımalar</string>
 </resources>

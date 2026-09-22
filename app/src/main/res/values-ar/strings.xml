@@ -946,4 +946,12 @@
     <string name="billing_error_not_configured">لم يُضبط التحقق من الشراء بعد. إذا خُصم منك مبلغ، فستعيده Google تلقائيًا خلال أيام قليلة.</string>
     <string name="billing_error_not_purchased">لا تُبلّغ Google عن اكتمال عملية الشراء هذه.</string>
     <string name="billing_error_subscription_inactive">لا يبدو هذا الاشتراك نشطًا لدى Google.</string>
+    <string name="dream_detail_boosted_badge">متوهّج</string>
+    <string name="dream_detail_already_boosted">هذا الحلم متوهّج بالفعل — لم تُنفق أي أورا.</string>
+    <string name="deep_section_archetypes">الأنماط الأولية</string>
+    <string name="deep_section_shadows">ظلال اللاوعي</string>
+    <string name="deep_section_individuation">التفرّد والتحوّل</string>
+    <string name="deep_section_symbols">الرموز</string>
+    <string name="deep_section_emotions">المشاعر</string>
+    <string name="deep_section_reflections">تأملات روحية</string>
 </resources>

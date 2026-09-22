@@ -25,7 +25,7 @@ sealed class DreamDetailUiState {
         val actionError: String? = null,
         val actionMessage: String? = null,
         val isGeneratingDeepAnalysis: Boolean = false,
-        val deepAnalysisResult: String? = null,
+        val deepAnalysisResult: io.lunosfer.dreamap.data.model.DeepAnalysisContent? = null,
         // Google Play UGC politikası: rüya şikayeti.
         val showReportSheet: Boolean = false,
         val isSubmittingReport: Boolean = false
@@ -212,8 +212,18 @@ class DreamDetailViewModel : ViewModel() {
         viewModelScope.launch {
             repository.boostDream(dreamId).onSuccess { res ->
                 val current = _state.value as? DreamDetailUiState.Success ?: return@onSuccess
-                val msg = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.msg_dream_boosted, res.aurasLeft?.toString() ?: "—")
+                val msg = if (res.alreadyBoosted) {
+                    io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_already_boosted)
+                } else {
+                    io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.msg_dream_boosted, res.aurasLeft?.toString() ?: "—")
+                }
                 _state.value = current.copy(actionMessage = msg)
+                // Parlama rozetinin ekranda belirmesi icin ruyayi tazele —
+                // aksi halde islem basarili olsa bile hicbir sey degismiyor.
+                repository.getDream(dreamId).onSuccess { updatedDream ->
+                    val latest = _state.value as? DreamDetailUiState.Success ?: return@onSuccess
+                    _state.value = latest.copy(dream = updatedDream)
+                }
             }.onFailure { err ->
                 val msg = err.message ?: ""
                 if (msg.contains("no_auras", ignoreCase = true) || msg.contains("402")) {
@@ -267,11 +277,21 @@ class DreamDetailViewModel : ViewModel() {
         viewModelScope.launch {
             repository.generateDeepAnalysis(dreamId).onSuccess { response ->
                 val latest = _state.value as? DreamDetailUiState.Success ?: return@onSuccess
-                val text = response.resultText ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_deep_analysis_success)
+                val content = io.lunosfer.dreamap.data.model.DeepAnalysisContent.from(
+                    response.analysisElement,
+                    io.lunosfer.dreamap.util.AppLanguage.code()
+                )
+                // Sunucu istegi kuyruga aldiysa icerik bos doner; asagidaki
+                // getDream() tazelemesi ya da bir sonraki acilis sonucu getirir.
+                val readyMessage = if (content != null) {
+                    io.lunosfer.dreamap.R.string.dream_detail_deep_analysis_ready
+                } else {
+                    io.lunosfer.dreamap.R.string.dream_detail_deep_analysis_success
+                }
                 _state.value = latest.copy(
                     isGeneratingDeepAnalysis = false,
-                    deepAnalysisResult = text,
-                    actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_deep_analysis_ready)
+                    deepAnalysisResult = content,
+                    actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(readyMessage)
                 )
                 repository.getDream(dreamId).onSuccess { updatedDream ->
                     val latest2 = _state.value as? DreamDetailUiState.Success ?: return@onSuccess

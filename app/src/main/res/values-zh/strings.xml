@@ -911,4 +911,12 @@
     <string name="billing_error_not_configured">购买验证尚未配置。如果已扣款，Google 会在几天内自动退款。</string>
     <string name="billing_error_not_purchased">Google 未将此次购买记录为已完成。</string>
     <string name="billing_error_subscription_inactive">该订阅在 Google 一侧看起来未生效。</string>
+    <string name="dream_detail_boosted_badge">闪耀中</string>
+    <string name="dream_detail_already_boosted">这个梦已经在闪耀——未消耗灵光。</string>
+    <string name="deep_section_archetypes">原型</string>
+    <string name="deep_section_shadows">潜意识的阴影</string>
+    <string name="deep_section_individuation">个体化与转化</string>
+    <string name="deep_section_symbols">象征</string>
+    <string name="deep_section_emotions">情绪</string>
+    <string name="deep_section_reflections">心灵省思</string>
 </resources>

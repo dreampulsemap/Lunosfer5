@@ -20,12 +20,19 @@ data class GenerateDeepAnalysisRequest(
 data class GenerateDeepAnalysisResponse(
     val ok: Boolean? = true,
     val success: Boolean? = true,
-    val analysis: String? = null,
-    @SerialName("deep_analysis") val deepAnalysis: String? = null,
+    // Sunucu burada YAPILANDIRILMIS bir JSON nesnesi donuyor (title, summary,
+    // shadow_focus, symbols, ...). `String` olarak tanimliyken cozumleme
+    // "Expected String but was BEGIN_OBJECT" ile patliyor, hata runCatching'e
+    // dusuyor ve ekranda analiz hic gorunmuyordu.
+    val analysis: kotlinx.serialization.json.JsonElement? = null,
+    @SerialName("deep_analysis") val deepAnalysis: kotlinx.serialization.json.JsonElement? = null,
     val error: String? = null,
-    val message: String? = null
+    val message: String? = null,
+    // Sunucu bu girdiyi kuyruga aldiysa icerik henuz yoktur; ekranin
+    // "hazirlaniyor" demesi icin gerekli.
+    val queued: Boolean? = null
 ) {
-    val resultText: String? get() = analysis ?: deepAnalysis ?: message
+    val analysisElement: kotlinx.serialization.json.JsonElement? get() = analysis ?: deepAnalysis
 }
 
 // --- 2) Daily Compass ---

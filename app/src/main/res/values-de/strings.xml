@@ -919,4 +919,12 @@
     <string name="billing_error_not_configured">Die Kaufprüfung ist noch nicht eingerichtet. Falls dir etwas berechnet wurde, erstattet Google es innerhalb weniger Tage automatisch.</string>
     <string name="billing_error_not_purchased">Google meldet diesen Kauf nicht als abgeschlossen.</string>
     <string name="billing_error_subscription_inactive">Dieses Abo wirkt auf Googles Seite nicht aktiv.</string>
+    <string name="dream_detail_boosted_badge">Leuchtet</string>
+    <string name="dream_detail_already_boosted">Dieser Traum leuchtet bereits — es wurde keine Aura verbraucht.</string>
+    <string name="deep_section_archetypes">Archetypen</string>
+    <string name="deep_section_shadows">Schatten des Unbewussten</string>
+    <string name="deep_section_individuation">Individuation &amp; Wandlung</string>
+    <string name="deep_section_symbols">Symbole</string>
+    <string name="deep_section_emotions">Gefühle</string>
+    <string name="deep_section_reflections">Spirituelle Reflexionen</string>
 </resources>

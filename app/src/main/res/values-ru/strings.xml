@@ -931,4 +931,12 @@
     <string name="billing_error_not_configured">Проверка покупок ещё не настроена. Если с вас списали средства, Google вернёт их автоматически в течение нескольких дней.</string>
     <string name="billing_error_not_purchased">Google не считает эту покупку завершённой.</string>
     <string name="billing_error_subscription_inactive">Эта подписка не выглядит активной на стороне Google.</string>
+    <string name="dream_detail_boosted_badge">Сияет</string>
+    <string name="dream_detail_already_boosted">Этот сон уже сияет — Аура не потрачена.</string>
+    <string name="deep_section_archetypes">Архетипы</string>
+    <string name="deep_section_shadows">Тени бессознательного</string>
+    <string name="deep_section_individuation">Индивидуация и преображение</string>
+    <string name="deep_section_symbols">Символы</string>
+    <string name="deep_section_emotions">Эмоции</string>
+    <string name="deep_section_reflections">Духовные размышления</string>
 </resources>

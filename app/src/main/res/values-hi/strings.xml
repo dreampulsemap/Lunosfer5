@@ -918,4 +918,12 @@
     <string name="billing_error_not_configured">खरीद सत्यापन अभी सेट नहीं हुआ है। अगर शुल्क लिया गया है, तो Google कुछ दिनों में अपने आप वापस कर देगा।</string>
     <string name="billing_error_not_purchased">Google इस खरीद को पूरा हुआ नहीं दिखा रहा।</string>
     <string name="billing_error_subscription_inactive">यह सदस्यता Google की ओर से सक्रिय नहीं दिख रही।</string>
+    <string name="dream_detail_boosted_badge">चमक रहा है</string>
+    <string name="dream_detail_already_boosted">यह सपना पहले से चमक रहा है — कोई ऑरा खर्च नहीं हुआ।</string>
+    <string name="deep_section_archetypes">आदिप्ररूप</string>
+    <string name="deep_section_shadows">अवचेतन की छायाएँ</string>
+    <string name="deep_section_individuation">वैयक्तिकरण और रूपांतरण</string>
+    <string name="deep_section_symbols">प्रतीक</string>
+    <string name="deep_section_emotions">भावनाएँ</string>
+    <string name="deep_section_reflections">आध्यात्मिक चिंतन</string>
 </resources>

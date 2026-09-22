@@ -948,4 +948,12 @@
     <string name="billing_error_not_configured">Purchase verification is not set up yet. If you were charged, Google refunds it automatically within a few days.</string>
     <string name="billing_error_not_purchased">Google does not report this purchase as completed.</string>
     <string name="billing_error_subscription_inactive">This subscription does not look active on Google\'s side.</string>
+    <string name="dream_detail_boosted_badge">Glowing</string>
+    <string name="dream_detail_already_boosted">This dream is already glowing — no Aura was spent.</string>
+    <string name="deep_section_archetypes">Archetypes</string>
+    <string name="deep_section_shadows">Shadows of the Unconscious</string>
+    <string name="deep_section_individuation">Individuation &amp; Transformation</string>
+    <string name="deep_section_symbols">Symbols</string>
+    <string name="deep_section_emotions">Emotions</string>
+    <string name="deep_section_reflections">Spiritual Reflections</string>
 </resources>

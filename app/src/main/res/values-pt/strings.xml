@@ -924,4 +924,12 @@
     <string name="billing_error_not_configured">A verificação de compra ainda não está configurada. Se foste cobrado, a Google reembolsa automaticamente em poucos dias.</string>
     <string name="billing_error_not_purchased">A Google não regista esta compra como concluída.</string>
     <string name="billing_error_subscription_inactive">Esta subscrição não parece ativa do lado da Google.</string>
+    <string name="dream_detail_boosted_badge">Brilhando</string>
+    <string name="dream_detail_already_boosted">Este sonho já está brilhando — nenhuma Aura foi gasta.</string>
+    <string name="deep_section_archetypes">Arquétipos</string>
+    <string name="deep_section_shadows">Sombras do inconsciente</string>
+    <string name="deep_section_individuation">Individuação e transformação</string>
+    <string name="deep_section_symbols">Símbolos</string>
+    <string name="deep_section_emotions">Emoções</string>
+    <string name="deep_section_reflections">Reflexões espirituais</string>
 </resources>

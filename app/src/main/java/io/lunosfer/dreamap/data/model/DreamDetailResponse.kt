@@ -33,8 +33,30 @@ data class DreamDetail(
     val liked: Boolean = false,
     @SerialName("bounty_amount") val bountyAmount: Int = 0,
     val bounty: Int = 0,
-    val owner: UserProfile? = null
+    val owner: UserProfile? = null,
+    // api/get-dream `select('*')` yaptigi icin bu alanlar zaten yanitta
+    // geliyordu, modelde tanimli olmadigi icin atiliyordu — ekran da kayitli
+    // derin analizi gosteremiyordu. Icerik yapilandirilmis JSON (bkz.
+    // DeepAnalysisContent).
+    @SerialName("premium_deep_analysis")
+    val premiumDeepAnalysis: kotlinx.serialization.json.JsonElement? = null,
+    // Parlatma durumu da yanitta geliyordu ama modelde yoktu: sunucu Aura'yi
+    // dusurup ruyayi parlatmasina ragmen ekranda hicbir sey degismedigi icin
+    // ozellik "calismiyor" gibi gorunuyordu.
+    @SerialName("is_boosted") val isBoosted: Boolean = false,
+    @SerialName("boost_expires_at") val boostExpiresAt: String? = null
 ) {
+    /** Parlatma suresi dolmus kayitlari "parliyor" saymamak icin. */
+    val isCurrentlyBoosted: Boolean
+        get() {
+            if (!isBoosted) return false
+            val expiry = boostExpiresAt ?: return false
+            return runCatching {
+                java.time.Instant.parse(expiry.replace(" ", "T").replace("+00", "Z"))
+                    .isAfter(java.time.Instant.now())
+            }.getOrDefault(false)
+        }
+
     val displayImageUrl: String? get() = coverImageUrl?.takeIf { it.isNotBlank() }
         ?: aiImageUrl?.takeIf { it.isNotBlank() }
         ?: imageUrl?.takeIf { it.isNotBlank() }

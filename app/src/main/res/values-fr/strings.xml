@@ -923,4 +923,12 @@
     <string name="billing_error_not_configured">La vérification des achats n\'est pas encore configurée. Si vous avez été débité, Google rembourse automatiquement sous quelques jours.</string>
     <string name="billing_error_not_purchased">Google ne signale pas cet achat comme terminé.</string>
     <string name="billing_error_subscription_inactive">Cet abonnement ne semble pas actif côté Google.</string>
+    <string name="dream_detail_boosted_badge">Brille</string>
+    <string name="dream_detail_already_boosted">Ce rêve brille déjà — aucune Aura n\'a été dépensée.</string>
+    <string name="deep_section_archetypes">Archétypes</string>
+    <string name="deep_section_shadows">Ombres de l\'inconscient</string>
+    <string name="deep_section_individuation">Individuation et transformation</string>
+    <string name="deep_section_symbols">Symboles</string>
+    <string name="deep_section_emotions">Émotions</string>
+    <string name="deep_section_reflections">Réflexions spirituelles</string>
 </resources>

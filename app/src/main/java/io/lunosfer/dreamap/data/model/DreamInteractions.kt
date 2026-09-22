@@ -95,6 +95,11 @@ data class BoostDreamRequest(
 data class BoostDreamResponse(
     val ok: Boolean = false,
     @SerialName("aurasLeft") val aurasLeft: Int? = null,
+    // Ruya zaten parliyorsa sunucu Aura harcamaz ve bunu true doner. Ayirt
+    // edilmezse kullaniciya "parlatildi (Kalan Aura: —)" deniyor, ekranda da
+    // bir sey degismiyordu.
+    @SerialName("alreadyBoosted") val alreadyBoosted: Boolean = false,
+    @SerialName("boostExpiresAt") val boostExpiresAt: String? = null,
     val error: String? = null
 )
 

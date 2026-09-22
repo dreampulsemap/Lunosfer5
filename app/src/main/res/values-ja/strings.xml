@@ -909,4 +909,12 @@
     <string name="billing_error_not_configured">購入の確認はまだ設定されていません。請求が発生した場合、Google が数日以内に自動で返金します。</string>
     <string name="billing_error_not_purchased">Google はこの購入を完了として報告していません。</string>
     <string name="billing_error_subscription_inactive">この定期購入は Google 側で有効になっていないようです。</string>
+    <string name="dream_detail_boosted_badge">輝いています</string>
+    <string name="dream_detail_already_boosted">この夢はすでに輝いています。オーラは消費されていません。</string>
+    <string name="deep_section_archetypes">元型</string>
+    <string name="deep_section_shadows">無意識の影</string>
+    <string name="deep_section_individuation">個性化と変容</string>
+    <string name="deep_section_symbols">象徴</string>
+    <string name="deep_section_emotions">感情</string>
+    <string name="deep_section_reflections">魂の省察</string>
 </resources>

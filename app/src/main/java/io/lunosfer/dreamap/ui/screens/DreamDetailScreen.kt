@@ -423,13 +423,41 @@ fun DreamDetailContent(
             // Owner features: Boost & Add Bounty
             if (isOwner) {
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Button(
-                        onClick = onBoostDream,
-                        colors = ButtonDefaults.buttonColors(containerColor = AetherViolet),
-                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
-                        shape = RoundedCornerShape(10.dp)
-                    ) {
-                        Text(stringResource(R.string.dream_detail_boost_btn), fontSize = 11.sp, color = Color.White)
+                    // Zaten parliyorsa buton yerine durum rozeti: sunucu bu
+                    // durumda Aura harcamiyor, buton birakmak kullaniciya
+                    // "hicbir sey olmuyor" hissi veriyordu.
+                    if (dream.isCurrentlyBoosted) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(AetherViolet.copy(alpha = 0.25f))
+                                .border(1.dp, AetherViolet, RoundedCornerShape(10.dp))
+                                .padding(horizontal = 10.dp, vertical = 5.dp)
+                        ) {
+                            Icon(
+                                Icons.Filled.AutoAwesome,
+                                contentDescription = null,
+                                tint = AstralGold,
+                                modifier = Modifier.size(13.dp)
+                            )
+                            Text(
+                                stringResource(R.string.dream_detail_boosted_badge),
+                                fontSize = 11.sp,
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    } else {
+                        Button(
+                            onClick = onBoostDream,
+                            colors = ButtonDefaults.buttonColors(containerColor = AetherViolet),
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Text(stringResource(R.string.dream_detail_boost_btn), fontSize = 11.sp, color = Color.White)
+                        }
                     }
 
                     OutlinedButton(
@@ -1229,7 +1257,7 @@ private fun DreamSimpleCardPage(dream: DreamDetail) {
 private fun DreamAnalysisCardPage(
     dream: DreamDetail,
     isGeneratingDeepAnalysis: Boolean = false,
-    deepAnalysisResult: String? = null,
+    deepAnalysisResult: io.lunosfer.dreamap.data.model.DeepAnalysisContent? = null,
     onRefresh: () -> Unit,
     onAnalyze: () -> Unit,
     onRequestDeepAnalysis: () -> Unit
@@ -1373,37 +1401,32 @@ private fun DreamAnalysisCardPage(
                     )
 
                     // Derinlemesine Analiz Bölümü
-                    val activeDeepResult = deepAnalysisResult ?: dream.aiJungianAnalysis?.summary?.get("deep")
-                    if (!activeDeepResult.isNullOrBlank()) {
-                        Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Void800.copy(alpha = 0.8f)),
-                            border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.5f))
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(16.dp),
-                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                    // Once bu oturumda uretilen sonuc, yoksa ruyayla birlikte
+                    // gelen kayitli analiz (premium_deep_analysis), o da yoksa
+                    // eski duz metin alani.
+                    val activeDeepResult = deepAnalysisResult
+                        ?: io.lunosfer.dreamap.data.model.DeepAnalysisContent.from(
+                            dream.premiumDeepAnalysis,
+                            io.lunosfer.dreamap.util.AppLanguage.code()
+                        )
+                        ?: dream.aiJungianAnalysis?.summary?.get("deep")
+                            ?.takeIf { it.isNotBlank() }
+                            ?.let { io.lunosfer.dreamap.data.model.DeepAnalysisContent(summary = it) }
+                    if (activeDeepResult != null) {
+                        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                ) {
-                                    Text("🔮", fontSize = 16.sp)
-                                    Text(
-                                        text = stringResource(R.string.dream_detail_deep_analysis_title),
-                                        color = AstralGold,
-                                        fontWeight = FontWeight.Bold,
-                                        style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
-                                    )
-                                }
+                                Text("🔮", fontSize = 16.sp)
                                 Text(
-                                    text = activeDeepResult,
-                                    color = Color.White,
-                                    fontSize = 13.sp,
-                                    lineHeight = 20.sp
+                                    text = stringResource(R.string.dream_detail_deep_analysis_title),
+                                    color = AstralGold,
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
                                 )
                             }
+                            io.lunosfer.dreamap.ui.components.DeepAnalysisSections(activeDeepResult)
                         }
                     } else {
                         Button(
