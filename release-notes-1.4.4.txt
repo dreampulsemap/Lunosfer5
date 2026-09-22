@@ -1,98 +1,98 @@
 <en-US>
-• Deep Analysis now comes in your language, in sections: symbols, emotions, archetypes, reflections.
-• Boost is visible at last: a glowing dream gets a badge and costs no extra Aura.
-• Daily Compass and the seed of the day speak your language.
-• Private entries: photos and videos open only through protected links.
-• Comments and likes on private entries are hidden from others.
+• Deep Analysis now arrives in your own language, laid out in clear sections: symbols, emotions, archetypes and reflection questions.
+• A dream you boost now carries a "Glowing" badge, and a dream that is still glowing never costs you Aura again.
+• The Daily Compass and the seed of the day now follow your app language.
+• Photos and videos in your private journal entries open only through protected links.
+• Comments and likes on your private entries are no longer visible to anyone else.
 </en-US>
 <ar>
-• التحليل العميق بلغتك وبأقسام: الرموز، المشاعر، الأنماط الأولية، التأملات.
-• أثر التوهّج صار ظاهرًا: الحلم المتوهّج يحمل شارة ولا يكلّف أورا إضافية.
-• بوصلة اليوم وبذرة اليوم بلغتك.
-• المدوّنات الخاصة: الصور والفيديو تُفتح عبر روابط محمية فقط.
-• التعليقات والإعجابات على مدوّناتك الخاصة مخفية عن الآخرين.
+• التحليل العميق يصلك الآن بلغتك، موزّعًا على أقسام واضحة: الرموز والمشاعر والأنماط الأولية وأسئلة التأمل.
+• الحلم الذي تجعله متوهّجًا يحمل الآن شارة، والحلم الذي ما زال متوهّجًا لا يكلّفك أورا مرة أخرى.
+• بوصلة اليوم وبذرة اليوم تتبعان لغة التطبيق لديك.
+• الصور ومقاطع الفيديو في مدوّناتك الخاصة تُفتح عبر روابط محمية فقط.
+• التعليقات والإعجابات على مدوّناتك الخاصة لم تعد ظاهرة لأي شخص آخر.
 </ar>
 <de-DE>
-• Tiefenanalyse jetzt in deiner Sprache, in Abschnitten: Symbole, Gefühle, Archetypen, Reflexionen.
-• Leuchten ist sichtbar: Ein leuchtender Traum trägt ein Abzeichen, ohne weitere Aura.
-• Tageskompass und Saat des Tages sprechen deine Sprache.
-• Private Einträge: Fotos und Videos nur über geschützte Links.
-• Kommentare und Likes privater Einträge sind für andere verborgen.
+• Die Tiefenanalyse erscheint jetzt in deiner Sprache, übersichtlich gegliedert: Symbole, Gefühle, Archetypen und Reflexionsfragen.
+• Ein Traum, den du zum Leuchten bringst, trägt nun ein Abzeichen; ein noch leuchtender Traum kostet dich keine weitere Aura.
+• Tageskompass und Saat des Tages folgen jetzt deiner App-Sprache.
+• Fotos und Videos in privaten Tagebucheinträgen öffnen sich nur über geschützte Links.
+• Kommentare und Likes zu deinen privaten Einträgen sind für niemanden mehr sichtbar.
 </de-DE>
 <es-ES>
-• Análisis Profundo en tu idioma y por secciones: símbolos, emociones, arquetipos, reflexiones.
-• El brillo ya se ve: el sueño brillando lleva insignia y no gasta Aura extra.
-• La Brújula diaria y la semilla del día hablan tu idioma.
-• Entradas privadas: fotos y vídeos solo con enlaces protegidos.
-• Comentarios y "me gusta" de entradas privadas quedan ocultos.
+• El Análisis Profundo llega ahora en tu idioma, organizado en secciones claras: símbolos, emociones, arquetipos y preguntas de reflexión.
+• El sueño que haces brillar luce ahora una insignia, y un sueño que sigue brillando no vuelve a costarte Aura.
+• La Brújula diaria y la semilla del día siguen el idioma de tu aplicación.
+• Las fotos y vídeos de tus entradas privadas se abren solo mediante enlaces protegidos.
+• Los comentarios y "me gusta" de tus entradas privadas ya no son visibles para nadie más.
 </es-ES>
 <fr-FR>
-• Analyse Profonde dans votre langue, en sections : symboles, émotions, archétypes, réflexions.
-• L'éclat est visible : un rêve qui brille reçoit un badge, sans Aura en plus.
-• La Boussole du jour et la graine du jour parlent votre langue.
-• Entrées privées : photos et vidéos via des liens protégés uniquement.
-• Commentaires et j'aime des entrées privées masqués aux autres.
+• L'Analyse Profonde arrive dans votre langue, en sections claires : symboles, émotions, archétypes et questions de réflexion.
+• Un rêve que vous faites briller porte un badge, et un rêve encore brillant ne coûte plus d'Aura.
+• La Boussole du jour et la graine du jour suivent la langue de l'application.
+• Les photos et vidéos de vos entrées privées s'ouvrent via des liens protégés.
+• Les commentaires et j'aime de vos entrées privées ne sont plus visibles par les autres.
 </fr-FR>
 <hi-IN>
-• गहन विश्लेषण अब आपकी भाषा में, खंडों में: प्रतीक, भावनाएँ, आदिप्ररूप, चिंतन।
-• चमक अब दिखती है: चमकते सपने पर बैज, अतिरिक्त ऑरा खर्च नहीं।
-• दैनिक दिशासूचक और दिन का बीज आपकी भाषा में।
-• निजी प्रविष्टियाँ: तस्वीरें और वीडियो केवल सुरक्षित लिंक से।
-• निजी प्रविष्टियों की टिप्पणियाँ और पसंद दूसरों से छिपी।
+• गहन विश्लेषण अब आपकी अपनी भाषा में और स्पष्ट खंडों में आता है: प्रतीक, भावनाएँ, आदिप्ररूप और चिंतन प्रश्न।
+• जिस सपने को आप चमकाते हैं उस पर अब बैज दिखता है, और पहले से चमकते सपने पर दोबारा ऑरा खर्च नहीं होता।
+• दैनिक दिशासूचक और दिन का बीज अब आपकी ऐप भाषा में आते हैं।
+• आपकी निजी डायरी प्रविष्टियों की तस्वीरें और वीडियो केवल सुरक्षित लिंक से खुलते हैं।
+• आपकी निजी प्रविष्टियों पर टिप्पणियाँ और पसंद अब किसी और को दिखाई नहीं देतीं।
 </hi-IN>
 <it-IT>
-• Analisi Profonda nella tua lingua, in sezioni: simboli, emozioni, archetipi, riflessioni.
-• Il bagliore si vede: un sogno che brilla riceve un distintivo, senza Aura extra.
-• La Bussola del giorno e il seme del giorno parlano la tua lingua.
-• Voci private: foto e video solo tramite link protetti.
-• Commenti e "mi piace" delle voci private nascosti agli altri.
+• L'Analisi Profonda arriva ora nella tua lingua, organizzata in sezioni chiare: simboli, emozioni, archetipi e domande di riflessione.
+• Un sogno che fai brillare mostra ora un distintivo, e un sogno ancora luminoso non ti costa altra Aura.
+• La Bussola del giorno e il seme del giorno seguono la lingua della tua app.
+• Foto e video delle tue voci private si aprono solo tramite link protetti.
+• I commenti e i "mi piace" sulle tue voci private non sono più visibili a nessun altro.
 </it-IT>
 <iw-IL>
-• ניתוח מעמיק בשפה שלך, במקטעים: סמלים, רגשות, ארכיטיפים, התבוננות.
-• הזוהר נראה: חלום זוהר מקבל תג, בלי אאורה נוספת.
-• מצפן היום וזרע היום בשפה שלך.
-• רשומות פרטיות: תמונות וסרטונים רק דרך קישורים מוגנים.
-• תגובות ולייקים ברשומות פרטיות מוסתרים מאחרים.
+• הניתוח המעמיק מגיע כעת בשפה שלך, מחולק למקטעים ברורים: סמלים, רגשות, ארכיטיפים ושאלות להתבוננות.
+• חלום שהענקת לו זוהר נושא כעת תג, וחלום שעדיין זוהר לא יגבה ממך אאורה נוספת.
+• מצפן היום וזרע היום עוקבים כעת אחר שפת האפליקציה שלך.
+• תמונות וסרטונים ברשומות היומן הפרטיות שלך נפתחים רק דרך קישורים מוגנים.
+• תגובות ולייקים על הרשומות הפרטיות שלך אינם גלויים עוד לאף אחד אחר.
 </iw-IL>
 <ja-JP>
-• ディープ分析があなたの言語で、セクション別に：象徴、感情、元型、省察。
-• 輝きが見えます：輝く夢にバッジが付き、追加のオーラは不要です。
-• 今日のコンパスと今日の種があなたの言語で表示されます。
-• 非公開の記事：写真と動画は保護されたリンクのみ。
-• 非公開記事のコメントといいねは他の人に非表示。
+• ディープ分析があなたの言語で、象徴・感情・元型・省察の問いという分かりやすいセクションに分かれて届きます。
+• 輝かせた夢にはバッジが付き、まだ輝いている夢では再びオーラを消費しません。
+• 今日のコンパスと今日の種が、アプリの言語で表示されます。
+• 非公開の日記に添えた写真と動画は、保護されたリンクからのみ開きます。
+• 非公開の記事へのコメントといいねは、他の人には表示されません。
 </ja-JP>
 <ko-KR>
-• 심층 분석이 사용자의 언어로, 섹션별로: 상징, 감정, 원형, 성찰.
-• 빛남이 보입니다: 빛나는 꿈에 배지가 표시되며 추가 오라가 들지 않습니다.
-• 오늘의 나침반과 오늘의 씨앗이 사용자의 언어로 표시됩니다.
-• 비공개 항목: 사진과 동영상은 보호된 링크로만 열립니다.
-• 비공개 항목의 댓글과 좋아요는 다른 사람에게 숨겨집니다.
+• 심층 분석이 이제 사용자의 언어로, 상징·감정·원형·성찰 질문이라는 명확한 섹션으로 나뉘어 제공됩니다.
+• 빛나게 한 꿈에는 배지가 표시되며, 아직 빛나고 있는 꿈에는 오라가 다시 들지 않습니다.
+• 오늘의 나침반과 오늘의 씨앗이 앱 언어를 따릅니다.
+• 비공개 일기의 사진과 동영상은 보호된 링크로만 열립니다.
+• 비공개 항목의 댓글과 좋아요는 더 이상 다른 사람에게 보이지 않습니다.
 </ko-KR>
 <pt-BR>
-• Análise Profunda no seu idioma, em seções: símbolos, emoções, arquétipos, reflexões.
-• O brilho aparece: sonho brilhando ganha selo, sem gastar Aura extra.
-• A Bússola do dia e a semente do dia falam o seu idioma.
-• Entradas privadas: fotos e vídeos só por links protegidos.
-• Comentários e curtidas de entradas privadas ficam ocultos.
+• A Análise Profunda chega agora no seu idioma, organizada em seções claras: símbolos, emoções, arquétipos e perguntas de reflexão.
+• O sonho que você faz brilhar recebe um selo, e um sonho que ainda brilha não custa Aura novamente.
+• A Bússola do dia e a semente do dia seguem o idioma do seu aplicativo.
+• Fotos e vídeos das suas entradas privadas abrem apenas por links protegidos.
+• Comentários e curtidas nas suas entradas privadas não são mais visíveis para ninguém.
 </pt-BR>
 <ru-RU>
-• Глубокий анализ на вашем языке, по разделам: символы, эмоции, архетипы, размышления.
-• Сияние видно: сияющий сон отмечается значком, без лишней Ауры.
-• Компас дня и зерно дня говорят на вашем языке.
-• Приватные записи: фото и видео только по защищённым ссылкам.
-• Комментарии и лайки приватных записей скрыты от других.
+• Глубокий анализ теперь приходит на вашем языке и разбит на понятные разделы: символы, эмоции, архетипы и вопросы для размышления.
+• Сон, которому вы придали сияние, отмечается значком, а ещё сияющий сон больше не расходует Ауру.
+• Компас дня и зерно дня следуют языку вашего приложения.
+• Фото и видео в приватных записях дневника открываются только по защищённым ссылкам.
+• Комментарии и лайки к вашим приватным записям больше никому не видны.
 </ru-RU>
 <tr-TR>
-• Derin Analiz kendi dilinizde ve bölümler hâlinde: semboller, duygular, arketipler, yansımalar.
-• Parlatma artık görünüyor: parlayan rüya rozet alıyor, fazladan Aura gitmiyor.
-• Günün Pusulası ve günün tohumu sizin dilinizde.
-• Gizli girdiler: fotoğraf ve videolar yalnızca korumalı bağlantılarla.
-• Gizli girdilerin yorum ve beğenileri başkalarına kapalı.
+• Derin Analiz artık kendi dilinizde ve anlaşılır bölümler hâlinde geliyor: semboller, duygular, arketipler ve yansıma soruları.
+• Parlattığınız rüya artık "Parlıyor" rozetiyle görünüyor; hâlâ parlayan bir rüya için yeniden Aura harcanmıyor.
+• Günün Pusulası ve günün tohumu uygulama dilinizde geliyor.
+• Gizli günce girdilerinizdeki fotoğraf ve videolar yalnızca korumalı bağlantılarla açılıyor.
+• Gizli girdilerinizin yorum ve beğenileri artık kimseye görünmüyor.
 </tr-TR>
 <uk>
-• Глибокий аналіз вашою мовою, за розділами: символи, емоції, архетипи, роздуми.
-• Сяйво видно: осяяний сон отримує значок, без зайвої Аури.
-• Компас дня та зерно дня говорять вашою мовою.
-• Приватні записи: фото та відео лише за захищеними посиланнями.
-• Коментарі та вподобання приватних записів приховані.
+• Глибокий аналіз тепер надходить вашою мовою та поділений на зрозумілі розділи: символи, емоції, архетипи й питання для роздумів.
+• Сон, якому ви додали сяйво, тепер має значок, а той, що досі сяє, більше не витрачає Ауру.
+• Компас дня та зерно дня слідують мові вашого застосунку.
+• Фото та відео у приватних записах щоденника відкриваються лише за захищеними посиланнями.
+• Коментарі та вподобання до ваших приватних записів більше нікому не видно.
 </uk>
