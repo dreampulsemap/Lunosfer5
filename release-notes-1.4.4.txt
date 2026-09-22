@@ -1,0 +1,84 @@
+<en-US>
+• Deep Analysis now arrives in your language and waits until it is ready, instead of failing silently.
+• The Daily Compass and the seed of the day now speak your language.
+• Your journal is more private: photos and videos in private entries now open through protected links only.
+• Comments and likes on your private entries are no longer visible to anyone else.
+</en-US>
+<ar>
+• التحليل العميق يأتي الآن بلغتك وينتظر حتى يكتمل بدلًا من الفشل بصمت.
+• بوصلة اليوم وبذرة اليوم صارت بلغتك.
+• يومياتك أكثر خصوصية: صور وفيديوهات المدوّنات الخاصة تُفتح الآن عبر روابط محمية فقط.
+• التعليقات والإعجابات على مدوّناتك الخاصة لم تعد ظاهرة لأي شخص آخر.
+</ar>
+<de-DE>
+• Die Tiefenanalyse kommt jetzt in deiner Sprache und wartet, bis sie fertig ist, statt stillschweigend abzubrechen.
+• Der Tageskompass und die Saat des Tages sprechen jetzt deine Sprache.
+• Dein Tagebuch ist privater: Fotos und Videos in privaten Einträgen öffnen sich nur noch über geschützte Links.
+• Kommentare und Likes zu deinen privaten Einträgen sind für niemanden mehr sichtbar.
+</de-DE>
+<es-ES>
+• El Análisis Profundo ahora llega en tu idioma y espera hasta estar listo, en vez de fallar en silencio.
+• La Brújula diaria y la semilla del día ahora hablan tu idioma.
+• Tu diario es más privado: las fotos y vídeos de las entradas privadas se abren solo mediante enlaces protegidos.
+• Los comentarios y "me gusta" de tus entradas privadas ya no son visibles para nadie más.
+</es-ES>
+<fr-FR>
+• L'Analyse Profonde arrive désormais dans votre langue et attend d'être prête, au lieu d'échouer en silence.
+• La Boussole du jour et la graine du jour parlent maintenant votre langue.
+• Votre journal est plus privé : les photos et vidéos des entrées privées ne s'ouvrent plus que par des liens protégés.
+• Les commentaires et j'aime sur vos entrées privées ne sont plus visibles par personne d'autre.
+</fr-FR>
+<hi-IN>
+• गहन विश्लेषण अब आपकी भाषा में आता है और चुपचाप विफल होने के बजाय तैयार होने तक प्रतीक्षा करता है।
+• दैनिक दिशासूचक और दिन का बीज अब आपकी भाषा में हैं।
+• आपकी डायरी अधिक निजी है: निजी प्रविष्टियों की तस्वीरें और वीडियो अब केवल सुरक्षित लिंक से खुलते हैं।
+• आपकी निजी प्रविष्टियों पर टिप्पणियाँ और पसंद अब किसी और को दिखाई नहीं देतीं।
+</hi-IN>
+<it-IT>
+• L'Analisi Profonda ora arriva nella tua lingua e attende di essere pronta, invece di fallire in silenzio.
+• La Bussola del giorno e il seme del giorno ora parlano la tua lingua.
+• Il tuo diario è più privato: foto e video delle voci private si aprono solo tramite link protetti.
+• I commenti e i "mi piace" sulle tue voci private non sono più visibili a nessun altro.
+</it-IT>
+<iw-IL>
+• הניתוח המעמיק מגיע כעת בשפה שלך וממתין עד שיהיה מוכן, במקום להיכשל בשקט.
+• מצפן היום וזרע היום מדברים כעת בשפה שלך.
+• היומן שלך פרטי יותר: תמונות וסרטונים ברשומות פרטיות נפתחים כעת רק דרך קישורים מוגנים.
+• תגובות ולייקים על הרשומות הפרטיות שלך אינם גלויים עוד לאף אחד אחר.
+</iw-IL>
+<ja-JP>
+• ディープ分析があなたの言語で届くようになり、静かに失敗する代わりに完了まで待つようになりました。
+• 今日のコンパスと今日の種が、あなたの言語で表示されます。
+• 日記のプライバシーを強化しました。非公開の記事の写真と動画は、保護されたリンクからのみ開きます。
+• 非公開の記事へのコメントといいねは、他の人には表示されなくなりました。
+</ja-JP>
+<ko-KR>
+• 심층 분석이 이제 사용자의 언어로 제공되며, 조용히 실패하는 대신 완료될 때까지 기다립니다.
+• 오늘의 나침반과 오늘의 씨앗이 이제 사용자의 언어로 표시됩니다.
+• 일기가 더 안전해졌습니다. 비공개 항목의 사진과 동영상은 이제 보호된 링크로만 열립니다.
+• 비공개 항목의 댓글과 좋아요는 더 이상 다른 사람에게 표시되지 않습니다.
+</ko-KR>
+<pt-BR>
+• A Análise Profunda agora chega no seu idioma e espera até ficar pronta, em vez de falhar em silêncio.
+• A Bússola do dia e a semente do dia agora falam o seu idioma.
+• Seu diário está mais privado: fotos e vídeos de entradas privadas agora abrem apenas por links protegidos.
+• Comentários e curtidas nas suas entradas privadas não são mais visíveis para ninguém.
+</pt-BR>
+<ru-RU>
+• Глубокий анализ теперь приходит на вашем языке и дожидается готовности, а не завершается молча с ошибкой.
+• Компас дня и зерно дня теперь говорят на вашем языке.
+• Ваш дневник стал приватнее: фото и видео в приватных записях открываются только по защищённым ссылкам.
+• Комментарии и лайки к вашим приватным записям больше никому не видны.
+</ru-RU>
+<tr-TR>
+• Derin Analiz artık kendi dilinizde geliyor ve sessizce başarısız olmak yerine hazır olana kadar bekliyor.
+• Günün Pusulası ve günün tohumu artık sizin dilinizde.
+• Güncemiz daha gizli: gizli girdilerdeki fotoğraf ve videolar artık yalnızca korumalı bağlantılarla açılıyor.
+• Gizli girdilerinizdeki yorumlar ve beğeniler artık başka kimseye görünmüyor.
+</tr-TR>
+<uk>
+• Глибокий аналіз тепер надходить вашою мовою і чекає до готовності, а не завершується тихою помилкою.
+• Компас дня та зерно дня тепер говорять вашою мовою.
+• Ваш щоденник приватніший: фото та відео у приватних записах відкриваються лише за захищеними посиланнями.
+• Коментарі та вподобання до ваших приватних записів більше нікому не видно.
+</uk>
