@@ -21,7 +21,7 @@ android {
     applicationId = "io.lunosfer.dreamap"
     minSdk = 24
     targetSdk = 36
-    versionCode = 13
+    versionCode = 14
     versionName = "1.4.3"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
