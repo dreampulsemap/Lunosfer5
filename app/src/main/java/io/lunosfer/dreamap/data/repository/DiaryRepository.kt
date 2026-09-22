@@ -19,6 +19,7 @@ import io.lunosfer.dreamap.data.network.NetworkModule
 import io.lunosfer.dreamap.supabase.supabaseClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.days
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.UUID
@@ -34,7 +35,13 @@ class DiaryRepository {
 
     suspend fun persistMediaToStorage(mediaUrl: String): Result<String> = runCatching {
         if (mediaUrl.isBlank()) return@runCatching mediaUrl
-        if (mediaUrl.contains("supabase.co/storage/v1/object/public/")) {
+        // Bucket private oldugundan yeni yuklemeler /object/sign/ yolunu
+        // uretiyor; eski kayitlar hala /object/public/. Ikisi de "zaten
+        // storage'da" demek — tekrar indirip yuklemeye calismak gereksiz
+        // (ve imzasi dolmus bir URL'de basarisiz) olurdu.
+        if (mediaUrl.contains("supabase.co/storage/v1/object/public/") ||
+            mediaUrl.contains("supabase.co/storage/v1/object/sign/")
+        ) {
             return@runCatching mediaUrl
         }
         val req = Request.Builder()
@@ -112,6 +119,10 @@ class DiaryRepository {
             upsert = true
             contentType = mimeType
         }
-        bucket.publicUrl(uniquePath)
+        // Bucket private: publicUrl() artik erisilemeyen bir adres uretir ve
+        // composer'daki onizleme bos kalirdi. Imzali URL donuyoruz. Bu deger
+        // DB'ye de yazilyor ama sorun degil — sunucu okuma aninda yoldan
+        // yeni bir imza uretiyor (bkz. lib/diaryMediaUrl.js).
+        bucket.createSignedUrl(uniquePath, 1.days)
     }
 }
