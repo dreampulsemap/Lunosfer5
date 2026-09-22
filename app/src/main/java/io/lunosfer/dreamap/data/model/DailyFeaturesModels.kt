@@ -7,7 +7,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GenerateDeepAnalysisRequest(
-    @SerialName("dreamId") val dreamId: String
+    @SerialName("dreamId") val dreamId: String,
+    /**
+     * Sunucu (pages/api/generate-deep-analysis.js) `lang` yoksa 'en'
+     * varsayiyor — alan hic gonderilmedigi icin derin analiz her zaman
+     * Ingilizce uretiliyordu.
+     */
+    val lang: String = "en"
 )
 
 @Serializable

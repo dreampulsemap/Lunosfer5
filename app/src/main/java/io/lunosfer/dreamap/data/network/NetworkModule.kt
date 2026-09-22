@@ -21,6 +21,15 @@ object NetworkModule {
         ignoreUnknownKeys = true
         isLenient = true
         coerceInputValues = true
+        // Varsayilan degerli alanlar aksi halde govdeye HIC yazilmiyor:
+        // DailyCompassRequest.lang varsayilani "tr" oldugu icin Turkce
+        // kullanicida alan tamamen dusuyor, sunucu kendi 'en' varsayilanina
+        // donuyor ve pusula/tohum metinleri Ingilizce geliyordu.
+        encodeDefaults = true
+        // encodeDefaults ile birlikte sart: null alanlar yazilmazsa sunucudaki
+        // `const { x = 'varsayilan' } = req.body` ifadeleri calismaya devam
+        // eder (acik null gonderilseydi varsayilan devreye girmezdi).
+        explicitNulls = false
     }
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -35,7 +44,12 @@ object NetworkModule {
         .addInterceptor(AuthInterceptor())
         .addInterceptor(loggingInterceptor)
         .connectTimeout(15, TimeUnit.SECONDS)
-        .readTimeout(15, TimeUnit.SECONDS)
+        // Derin analiz ucu sunucuda OpenAI cagrisi + gorsel uretimi yapiyor ve
+        // 30-60 sn surebiliyor. 15 sn'lik okuma zaman asimi istegi sunucu daha
+        // yanit vermeden kesiyordu; ekranda bu, butona basildiginda sonucun
+        // hic gelmemesi olarak gorunuyordu.
+        .readTimeout(90, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
     private val rawUrl = if (BuildConfig.APP_URL.isNotBlank()) BuildConfig.APP_URL else "https://www.lunosfer.com/"

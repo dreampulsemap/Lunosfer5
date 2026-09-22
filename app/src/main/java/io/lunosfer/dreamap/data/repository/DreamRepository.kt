@@ -125,7 +125,12 @@ class DreamRepository {
     }
 
     suspend fun generateDeepAnalysis(dreamId: Long): Result<GenerateDeepAnalysisResponse> = runCatching {
-        val res = api.generateDeepAnalysis(GenerateDeepAnalysisRequest(dreamId = dreamId.toString()))
+        val res = api.generateDeepAnalysis(
+            GenerateDeepAnalysisRequest(
+                dreamId = dreamId.toString(),
+                lang = io.lunosfer.dreamap.util.AppLanguage.code()
+            )
+        )
         if (res.ok == false && res.error != null) {
             throw Exception(res.error)
         }

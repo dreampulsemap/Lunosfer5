@@ -76,10 +76,7 @@ class VisionViewModel(
             // dilde) kullanan herkes pusula okumasini Turkce aliyordu. Per-app
             // dil secimi sistem Locale'ine yansimayabildigi icin once
             // AppCompatDelegate'e bakiliyor (bkz. DailyCompassViewModel).
-            repository.getDailyCompass(
-                androidx.appcompat.app.AppCompatDelegate.getApplicationLocales()[0]?.language
-                    ?: java.util.Locale.getDefault().language
-            )
+            repository.getDailyCompass(io.lunosfer.dreamap.util.AppLanguage.code())
                 .onSuccess { res ->
                     if (res.error == "already_used_today" || (res.ok == false && res.error != null)) {
                         if (res.error == "already_used_today") {
@@ -123,7 +120,7 @@ class VisionViewModel(
         _seedGeneratingMap.value = currentMap
 
         viewModelScope.launch {
-            repository.generateDailySeed(goalId, "tr")
+            repository.generateDailySeed(goalId, io.lunosfer.dreamap.util.AppLanguage.code())
                 .onSuccess { newSeed ->
                     if (newSeed != null) {
                         val currentList = _dailySeeds.value.filterNot { it.goalId == goalId } + newSeed
