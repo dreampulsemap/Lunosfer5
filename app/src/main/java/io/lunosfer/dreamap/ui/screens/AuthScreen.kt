@@ -242,7 +242,7 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                                         email = user.email ?: emailInput,
                                         desiredUsername = if (!isLogin) username.trim() else pendingUsernameFromMetadata(user)
                                     )
-                                    applySavedLanguage(user.id)
+                                    io.lunosfer.dreamap.util.AppLanguage.syncWithProfile(user.id)
                                 }
 
                                 if (!isLogin) {
@@ -462,20 +462,6 @@ private suspend fun ensureUserProfile(userId: String, email: String?, desiredUse
     }
 }
 
-/** Profildeki dil tercihini uygulama diline uygular (giris/kayit sonrasi). */
-private suspend fun applySavedLanguage(userId: String) {
-    runCatching {
-        val result = supabaseClient.postgrest["user_profiles"]
-            .select(columns = Columns.list("language")) { filter { eq("id", userId) } }
-            .decodeList<Map<String, String>>()
-        val lang = result.firstOrNull()?.get("language")
-        if (!lang.isNullOrBlank()) {
-            androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(
-                androidx.core.os.LocaleListCompat.forLanguageTags(lang)
-            )
-        }
-    }
-}
 
 /**
  * Supabase'in ham hata metni ("Invalid login credentials" + URL + header dokumu)

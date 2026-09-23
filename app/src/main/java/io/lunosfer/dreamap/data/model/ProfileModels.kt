@@ -13,6 +13,7 @@ data class UpdateProfileRequest(
     @SerialName("is_private") val isPrivate: Boolean? = null,
     @SerialName("profile_visibility") val profileVisibility: String? = null,
     val language: String? = null,
+    @SerialName("language_explicit") val languageExplicit: Boolean? = null,
     val gender: String? = null
 )
 

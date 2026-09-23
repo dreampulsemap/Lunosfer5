@@ -299,8 +299,10 @@ fun ProfileScreen(
                         isSaving = s.isSavingProfile,
                         onDismiss = { viewModel.closeEditModal() },
                         onSave = { username, displayName, avatarUrl, bio, profileVisibility, language, gender ->
-                            val localeList = LocaleListCompat.forLanguageTags(language)
-                            AppCompatDelegate.setApplicationLocales(localeList)
+                            // null = kullanici dile dokunmadi; cihaz dilini izlemeye devam.
+                            if (language != null) {
+                                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(language))
+                            }
                             viewModel.updateProfile(
                                 username = username,
                                 displayName = displayName,
@@ -970,7 +972,7 @@ private fun ChangePasswordDialog(onDismiss: () -> Unit) {
 // user_profiles.language sütunundaki CHECK kısıtıyla ve app'in res/values-*
 // dizinleriyle birebir aynı liste — listede olmayan bir kod kaydedilmeye
 // çalışılırsa Postgres kısıt hatası döner.
-private val SUPPORTED_LANGUAGE_CODES = listOf("en", "tr", "es", "fr", "de", "pt", "ru", "ar", "hi", "zh", "ja", "fi", "ro", "uk")
+private val SUPPORTED_LANGUAGE_CODES = AppLanguage.SUPPORTED
 
 // Her dili kendi adıyla gösterir (Türkçe, English, Español...) — böylece 11 dilin
 // adı için 11 ayrı çeviri seti tutmaya gerek kalmıyor.
@@ -984,7 +986,7 @@ private fun EditProfileDialog(
     profile: FullUserProfile,
     isSaving: Boolean,
     onDismiss: () -> Unit,
-    onSave: (username: String, displayName: String, avatarUrl: String, bio: String, profileVisibility: String, language: String, gender: String) -> Unit
+    onSave: (username: String, displayName: String, avatarUrl: String, bio: String, profileVisibility: String, language: String?, gender: String) -> Unit
 ) {
     var username by remember { mutableStateOf(profile.username ?: "") }
     var displayName by remember { mutableStateOf(profile.displayName ?: "") }
@@ -1001,13 +1003,12 @@ private fun EditProfileDialog(
     // tum arayuzu Turkce'ye cevirdi. Ustelik `language` null olan (dilini hic
     // secmemis) HER kullanici sabit "tr" yedegi yuzunden Turkce'ye dusuyordu.
     // Web'de ayni hata daha once duzeltilmisti (pages/profile.js, ec0bdc5).
-    var language by remember {
-        mutableStateOf(
-            AppLanguage.code().takeIf { it in SUPPORTED_LANGUAGE_CODES }
-                ?: profile.language?.takeIf { it in SUPPORTED_LANGUAGE_CODES }
-                ?: "en"
-        )
+    val initialLanguage = remember {
+        AppLanguage.code().takeIf { it in SUPPORTED_LANGUAGE_CODES }
+            ?: profile.language?.takeIf { it in SUPPORTED_LANGUAGE_CODES }
+            ?: "en"
     }
+    var language by remember { mutableStateOf(initialLanguage) }
     var gender by remember { mutableStateOf(profile.gender ?: "unspecified") }
 
     val genders = listOf(
@@ -1327,7 +1328,7 @@ private fun EditProfileDialog(
 
                     Button(
                         onClick = {
-                            onSave(username, displayName, avatarUrl, bio, profileVisibility, language, gender)
+                            onSave(username, displayName, avatarUrl, bio, profileVisibility, language.takeIf { it != initialLanguage }, gender)
                         },
                         enabled = !isSaving,
                         modifier = Modifier.weight(1f),

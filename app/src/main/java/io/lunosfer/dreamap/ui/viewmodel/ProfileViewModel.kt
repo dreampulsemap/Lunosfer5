@@ -102,7 +102,7 @@ class ProfileViewModel(
         avatarUrl: String,
         bio: String,
         profileVisibility: String,
-        language: String,
+        language: String?,
         gender: String
     ) {
         val uid = currentUserId ?: return
@@ -144,7 +144,8 @@ class ProfileViewModel(
                 bio = bio.trim(),
                 isPrivate = resolvedIsPrivate,
                 profileVisibility = resolvedVisibility,
-                language = language.takeIf { it.isNotBlank() },
+                language = language?.takeIf { it.isNotBlank() },
+                languageExplicit = if (language.isNullOrBlank()) null else true,
                 gender = gender.takeIf { it.isNotBlank() }
             )
 

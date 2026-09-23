@@ -51,6 +51,16 @@ fun MainScreen(
     val sessionStatus by supabaseClient.auth.sessionStatus.collectAsState(initial = SessionStatus.Initializing)
     val isLoggedIn = sessionStatus is SessionStatus.Authenticated
 
+    // Uygulama her acilista (oturum zaten acikken) dili profile gore esitle:
+    // dili hic secmemis kullanici cihaz dilini gorur.
+    LaunchedEffect(isLoggedIn) {
+        if (isLoggedIn) {
+            supabaseClient.auth.currentUserOrNull()?.id?.let {
+                io.lunosfer.dreamap.util.AppLanguage.syncWithProfile(it)
+            }
+        }
+    }
+
     LaunchedEffect(isLoggedIn, pendingRoute) {
         if (isLoggedIn && !pendingRoute.isNullOrBlank()) {
             try {
