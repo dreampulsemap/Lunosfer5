@@ -774,6 +774,11 @@
     <string name="notif_generic_body">You have a new notification.</string>
     <string name="notif_channel_name">Lunosfer Notifications</string>
     <string name="notif_channel_description">Lunosfer message and interaction notifications</string>
+    <string name="notif_message_channel_name">Messages</string>
+    <string name="notif_message_channel_description">Direct message notifications</string>
+    <string name="notif_action_reply">Reply</string>
+    <string name="notif_action_mark_read">Mark as read</string>
+    <string name="notif_me">You</string>
     <string name="explore_tab_vision_board">Vision Board</string>
     <string name="common_unknown_fallback">Unknown</string>
     <string name="dream_detail_author_fallback">author</string>

@@ -71,6 +71,11 @@
             </intent-filter>
         </service>
 
+        <!-- Mesaj bildirimindeki kaydirip-cevapla ve okundu-isaretle aksiyonlari.
+             Sadece bu uygulamanin kendi PendingIntent'lerinden tetiklenir. -->
+        <receiver android:name=".service.ReplyReceiver" android:exported="false" />
+        <receiver android:name=".service.MarkReadReceiver" android:exported="false" />
+
         <!-- Reels editöründe ikincil "Kaydet" seçeneği: sistem Kamera
              uygulamasına video dosyası yazma izni için. -->
         <provider

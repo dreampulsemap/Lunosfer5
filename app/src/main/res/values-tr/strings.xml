@@ -707,6 +707,11 @@
     <string name="notif_generic_body">Yeni bir bildiriminiz var.</string>
     <string name="notif_channel_name">Lunosfer Bildirimleri</string>
     <string name="notif_channel_description">Lunosfer mesaj ve etkileşim bildirimleri</string>
+    <string name="notif_message_channel_name">Mesajlar</string>
+    <string name="notif_message_channel_description">Özel mesaj bildirimleri</string>
+    <string name="notif_action_reply">Yanıtla</string>
+    <string name="notif_action_mark_read">Okundu işaretle</string>
+    <string name="notif_me">Sen</string>
     <string name="explore_tab_vision_board">Vizyon Panosu</string>
     <string name="common_unknown_fallback">Bilinmeyen</string>
     <string name="dream_detail_author_fallback">yazar</string>
