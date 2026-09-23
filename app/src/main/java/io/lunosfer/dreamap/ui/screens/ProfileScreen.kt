@@ -970,7 +970,7 @@ private fun ChangePasswordDialog(onDismiss: () -> Unit) {
 // user_profiles.language sütunundaki CHECK kısıtıyla ve app'in res/values-*
 // dizinleriyle birebir aynı liste — listede olmayan bir kod kaydedilmeye
 // çalışılırsa Postgres kısıt hatası döner.
-private val SUPPORTED_LANGUAGE_CODES = listOf("en", "tr", "es", "fr", "de", "pt", "ru", "ar", "hi", "zh", "ja")
+private val SUPPORTED_LANGUAGE_CODES = listOf("en", "tr", "es", "fr", "de", "pt", "ru", "ar", "hi", "zh", "ja", "fi", "ro", "uk")
 
 // Her dili kendi adıyla gösterir (Türkçe, English, Español...) — böylece 11 dilin
 // adı için 11 ayrı çeviri seti tutmaya gerek kalmıyor.
