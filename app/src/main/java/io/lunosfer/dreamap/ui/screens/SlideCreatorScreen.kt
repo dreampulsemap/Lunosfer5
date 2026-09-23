@@ -131,7 +131,7 @@ fun SlideCreatorScreen(
                 } else {
                     Column(modifier = Modifier.fillMaxSize().padding(padding)) {
                         Text(
-                            text = "${s.slides.size} / $MAX_GOAL_SLIDES slayt",
+                            text = androidx.compose.ui.res.stringResource(R.string.slide_creator_count_format, s.slides.size, MAX_GOAL_SLIDES),
                             color = Color.White.copy(alpha = 0.6f),
                             fontSize = 12.sp,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
@@ -318,7 +318,10 @@ private fun SlideRow(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "${slide.durationSeconds ?: DEFAULT_IMAGE_DURATION_SECONDS_FALLBACK} sn" + if (slide.isVideo) " · video" else "",
+                    text = androidx.compose.ui.res.stringResource(
+                        if (slide.isVideo) R.string.slide_creator_duration_short_video else R.string.slide_creator_duration_short,
+                        slide.durationSeconds ?: DEFAULT_IMAGE_DURATION_SECONDS_FALLBACK
+                    ),
                     color = Color.White.copy(alpha = 0.5f),
                     fontSize = 11.sp
                 )

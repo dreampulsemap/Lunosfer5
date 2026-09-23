@@ -939,4 +939,13 @@
     <string name="deep_section_symbols">Символы</string>
     <string name="deep_section_emotions">Эмоции</string>
     <string name="deep_section_reflections">Духовные размышления</string>
+    <string name="notif_message_channel_name">Сообщения</string>
+    <string name="notif_message_channel_description">Уведомления о личных сообщениях</string>
+    <string name="notif_action_reply">Ответить</string>
+    <string name="notif_action_mark_read">Отметить как прочитанное</string>
+    <string name="notif_reply_failed">Не удалось отправить ответ</string>
+    <string name="notif_me">Вы</string>
+    <string name="slide_creator_count_format">%1$d / %2$d слайдов</string>
+    <string name="slide_creator_duration_short">%1$d с</string>
+    <string name="slide_creator_duration_short_video">%1$d с · видео</string>
 </resources>

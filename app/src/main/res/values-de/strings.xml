@@ -927,4 +927,13 @@
     <string name="deep_section_symbols">Symbole</string>
     <string name="deep_section_emotions">Gefühle</string>
     <string name="deep_section_reflections">Spirituelle Reflexionen</string>
+    <string name="notif_message_channel_name">Nachrichten</string>
+    <string name="notif_message_channel_description">Benachrichtigungen für Direktnachrichten</string>
+    <string name="notif_action_reply">Antworten</string>
+    <string name="notif_action_mark_read">Als gelesen markieren</string>
+    <string name="notif_reply_failed">Antwort konnte nicht gesendet werden</string>
+    <string name="notif_me">Du</string>
+    <string name="slide_creator_count_format">%1$d / %2$d Folien</string>
+    <string name="slide_creator_duration_short">%1$d s</string>
+    <string name="slide_creator_duration_short_video">%1$d s · Video</string>
 </resources>

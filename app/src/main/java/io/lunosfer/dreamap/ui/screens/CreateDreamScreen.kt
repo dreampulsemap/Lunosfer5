@@ -90,7 +90,8 @@ import androidx.appcompat.app.AppCompatDelegate
 private val SPEECH_LOCALE_REGION_FALLBACK = mapOf(
     "tr" to "tr-TR", "en" to "en-US", "es" to "es-ES", "fr" to "fr-FR",
     "de" to "de-DE", "pt" to "pt-PT", "ru" to "ru-RU", "ja" to "ja-JP",
-    "ar" to "ar-SA", "hi" to "hi-IN", "zh" to "zh-CN"
+    "ar" to "ar-SA", "hi" to "hi-IN", "zh" to "zh-CN",
+    "fi" to "fi-FI", "ro" to "ro-RO", "uk" to "uk-UA"
 )
 
 private fun resolveSpeechRecognitionLocaleTag(): String {

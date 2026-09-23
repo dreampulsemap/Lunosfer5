@@ -931,4 +931,13 @@
     <string name="deep_section_symbols">Symboles</string>
     <string name="deep_section_emotions">Émotions</string>
     <string name="deep_section_reflections">Réflexions spirituelles</string>
+    <string name="notif_message_channel_name">Messages</string>
+    <string name="notif_message_channel_description">Notifications des messages privés</string>
+    <string name="notif_action_reply">Répondre</string>
+    <string name="notif_action_mark_read">Marquer comme lu</string>
+    <string name="notif_reply_failed">La réponse n\'a pas pu être envoyée</string>
+    <string name="notif_me">Vous</string>
+    <string name="slide_creator_count_format">%1$d / %2$d diapositives</string>
+    <string name="slide_creator_duration_short">%1$d s</string>
+    <string name="slide_creator_duration_short_video">%1$d s · vidéo</string>
 </resources>

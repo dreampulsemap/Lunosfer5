@@ -954,4 +954,13 @@
     <string name="deep_section_symbols">الرموز</string>
     <string name="deep_section_emotions">المشاعر</string>
     <string name="deep_section_reflections">تأملات روحية</string>
+    <string name="notif_message_channel_name">الرسائل</string>
+    <string name="notif_message_channel_description">إشعارات الرسائل المباشرة</string>
+    <string name="notif_action_reply">رد</string>
+    <string name="notif_action_mark_read">تعليم كمقروء</string>
+    <string name="notif_reply_failed">تعذّر إرسال الرد</string>
+    <string name="notif_me">أنت</string>
+    <string name="slide_creator_count_format">%1$d / %2$d شرائح</string>
+    <string name="slide_creator_duration_short">%1$d ث</string>
+    <string name="slide_creator_duration_short_video">%1$d ث · فيديو</string>
 </resources>

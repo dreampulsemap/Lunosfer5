@@ -79,7 +79,7 @@ fun CollectiveNightReportCard(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = "%${data.percentage}",
+                    text = androidx.compose.ui.res.stringResource(io.lunosfer.dreamap.R.string.spiritual_percentage_format, data.percentage),
                     color = GlowGold,
                     fontFamily = TitleFont,
                     fontSize = 64.sp

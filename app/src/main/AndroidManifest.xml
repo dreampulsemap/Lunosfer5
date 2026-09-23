@@ -73,6 +73,15 @@
 
         <!-- Mesaj bildirimindeki kaydirip-cevapla ve okundu-isaretle aksiyonlari.
              Sadece bu uygulamanin kendi PendingIntent'lerinden tetiklenir. -->
+        <!-- Android 12 ve alti: AppCompatDelegate.setApplicationLocales ile secilen
+             uygulama dilini diske yazar; olmadan dil her yeniden acilista kayboluyordu. -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data android:name="autoStoreLocales" android:value="true" />
+        </service>
+
         <receiver android:name=".service.ReplyReceiver" android:exported="false" />
         <receiver android:name=".service.MarkReadReceiver" android:exported="false" />
 

@@ -21,8 +21,8 @@ android {
     applicationId = "io.lunosfer.dreamap"
     minSdk = 24
     targetSdk = 36
-    versionCode = 19
-    versionName = "1.4.8"
+    versionCode = 20
+    versionName = "1.4.9"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -85,6 +85,8 @@ android {
     compose = true
     buildConfig = true
   }
+  // Desteklenen dilleri (res/values-*) Android 13+ "Uygulama dili" ayarina bildirir.
+  androidResources { generateLocaleConfig = true }
   testOptions { unitTests { isIncludeAndroidResources = true } }
   dependenciesInfo {
     includeInApk = false
