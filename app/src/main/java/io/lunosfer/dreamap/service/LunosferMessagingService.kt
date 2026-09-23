@@ -46,6 +46,7 @@ class LunosferMessagingService : FirebaseMessagingService() {
 
         val senderId = data["senderId"]
         if (data["type"] == "message" && !senderId.isNullOrBlank()) {
+            if (senderId == activeThreadUserId) return
             val senderName = data["senderName"]?.takeIf { it.isNotBlank() } ?: title
             showMessageNotification(senderId, senderName, body)
         } else {
@@ -197,29 +198,53 @@ class LunosferMessagingService : FirebaseMessagingService() {
         // hash'leriyle ID cakismasini engeller.
         fun conversationNotificationId(senderId: String): Int = ("msg_$senderId").hashCode()
 
-        fun parseTargetRoute(data: Map<String, String>): String? {
-            val rawUrl = data["url"] ?: data["target_route"]
-            if (!rawUrl.isNullOrBlank()) {
-                val cleanUrl = rawUrl.trim().removePrefix("/")
-                if (cleanUrl.isNotBlank()) {
-                    return cleanUrl
-                }
-            }
+        // Sohbet ekrani acikken (ThreadScreen) o kisiden gelen push'u gostermemek
+        // ve ekran acilinca bildirimini kapatmak icin.
+        @Volatile
+        var activeThreadUserId: String? = null
 
+        // Oncelik type+id: backend "url"i web Service Worker icin web yoluyla
+        // gonderiyor (/u/.., /messages?with=..), native rotalarla eslesmiyor.
+        // Eski payload'lar icin url de native rotaya cevriliyor; taninmayan
+        // rota null doner (uygulama ana ekranda acilir).
+        fun parseTargetRoute(data: Map<String, String>): String? {
             val type = data["type"]?.lowercase()
-            val id = data["id"] ?: data["target_id"] ?: data["entity_id"]
+            val id = (data["id"] ?: data["target_id"] ?: data["entity_id"])?.takeIf { it.isNotBlank() }
             if (!type.isNullOrBlank()) {
-                return when (type) {
-                    "dream", "dream_detail" -> if (!id.isNullOrBlank()) "dream/$id" else null
-                    "thread", "message", "chat" -> if (!id.isNullOrBlank()) "thread/$id" else null
-                    "goal", "vision", "goal_detail" -> if (!id.isNullOrBlank()) "goal/$id" else null
-                    "user", "profile" -> if (!id.isNullOrBlank()) "public_profile/$id" else null
+                val route = when (type) {
+                    "dream", "dream_detail" -> id?.let { "dream/$it" }
+                    "thread", "message", "chat" -> id?.let { "thread/$it" }
+                    "goal", "vision", "goal_detail" -> id?.let { "goal/$it" }
+                    "user", "profile" -> id?.let { "public_profile/$it" }
+                    "diary", "diary_comment" -> id?.let { "diary_journal/$it" }
                     "notification", "notifications" -> "notifications"
                     else -> null
                 }
+                if (route != null) return route
             }
 
-            return null
+            val rawUrl = (data["url"] ?: data["target_route"])?.trim()?.removePrefix("/")
+            if (rawUrl.isNullOrBlank()) return null
+            val path = rawUrl.substringBefore('?')
+            val query = rawUrl.substringAfter('?', "")
+            val segments = path.split('/').filter { it.isNotBlank() }
+            val first = segments.firstOrNull() ?: return null
+            val second = segments.getOrNull(1)
+            return when (first) {
+                "u", "public_profile" -> second?.let { "public_profile/$it" }
+                "thread" -> second?.let { "thread/$it" }
+                "messages" -> query.split('&')
+                    .firstOrNull { it.startsWith("with=") }
+                    ?.removePrefix("with=")
+                    ?.takeIf { it.isNotBlank() }
+                    ?.let { "thread/$it" }
+                    ?: "messages"
+                "dream" -> second?.takeIf { it.toLongOrNull() != null }?.let { "dream/$it" }
+                "goal" -> second?.let { "goal/$it" }
+                "diary_journal" -> second?.let { "diary_journal/$it" }
+                "notifications" -> "notifications"
+                else -> null
+            }
         }
 
         fun sendTokenToServer(token: String) {

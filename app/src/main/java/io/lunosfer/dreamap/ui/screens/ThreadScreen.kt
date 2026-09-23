@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import io.lunosfer.dreamap.service.LunosferMessagingService
 import android.widget.Toast
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -68,6 +69,35 @@ fun ThreadScreen(otherUserId: String, navController: androidx.navigation.NavCont
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
     var showBlockConfirmDialog by remember { mutableStateOf(false) }
+
+    // Sohbet on plandayken bu kisinin push'u gosterilmez ve mevcut bildirimi
+    // kapatilir. Sadece RESUMED iken: uygulama arka plana atilirsa ekran hala
+    // composition'da olsa da bildirimler tekrar gelmeli.
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    DisposableEffect(otherUserId, lifecycleOwner) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            when (event) {
+                androidx.lifecycle.Lifecycle.Event.ON_RESUME -> {
+                    LunosferMessagingService.activeThreadUserId = otherUserId
+                    (context.getSystemService(android.content.Context.NOTIFICATION_SERVICE) as android.app.NotificationManager)
+                        .cancel(LunosferMessagingService.conversationNotificationId(otherUserId))
+                }
+                androidx.lifecycle.Lifecycle.Event.ON_PAUSE -> {
+                    if (LunosferMessagingService.activeThreadUserId == otherUserId) {
+                        LunosferMessagingService.activeThreadUserId = null
+                    }
+                }
+                else -> Unit
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            if (LunosferMessagingService.activeThreadUserId == otherUserId) {
+                LunosferMessagingService.activeThreadUserId = null
+            }
+        }
+    }
 
     LaunchedEffect(state.infoMessage) {
         state.infoMessage?.let {

@@ -778,6 +778,7 @@
     <string name="notif_message_channel_description">Direct message notifications</string>
     <string name="notif_action_reply">Reply</string>
     <string name="notif_action_mark_read">Mark as read</string>
+    <string name="notif_reply_failed">Reply could not be sent</string>
     <string name="notif_me">You</string>
     <string name="explore_tab_vision_board">Vision Board</string>
     <string name="common_unknown_fallback">Unknown</string>

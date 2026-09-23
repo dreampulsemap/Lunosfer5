@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
 import io.lunosfer.dreamap.data.model.SendMessageRequest
@@ -12,6 +13,8 @@ import io.lunosfer.dreamap.data.network.NetworkModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import io.lunosfer.dreamap.R
 
 /**
  * Bildirimdeki kaydirilan cevap kutusundan gelen metni yakalar. Uygulama acilmadan
@@ -43,6 +46,12 @@ class ReplyReceiver : BroadcastReceiver() {
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Cevap gonderilemedi", e)
+                // Bildirim yeniden post edilmezse cevap kutusu sonsuza dek "gonderiliyor"
+                // spinner'inda kalir; ayni icerikle yeniden gosterip kullaniciyi uyariyoruz.
+                if (notificationId != -1) repostNotification(appContext, notificationId)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(appContext, R.string.notif_reply_failed, Toast.LENGTH_SHORT).show()
+                }
             } finally {
                 pendingResult.finish()
             }
@@ -58,10 +67,21 @@ class ReplyReceiver : BroadcastReceiver() {
 
         style.addMessage(replyText, System.currentTimeMillis(), style.user)
 
+        // setOnlyAlertOnce: kendi cevabimiz icin tekrar ses/titresim olmasin.
         val rebuilt = NotificationCompat.Builder(context, active.notification)
             .setStyle(style)
+            .setOnlyAlertOnce(true)
             .build()
 
+        notificationManager.notify(notificationId, rebuilt)
+    }
+
+    private fun repostNotification(context: Context, notificationId: Int) {
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val active = notificationManager.activeNotifications.firstOrNull { it.id == notificationId } ?: return
+        val rebuilt = NotificationCompat.Builder(context, active.notification)
+            .setOnlyAlertOnce(true)
+            .build()
         notificationManager.notify(notificationId, rebuilt)
     }
 

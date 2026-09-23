@@ -711,6 +711,7 @@
     <string name="notif_message_channel_description">Özel mesaj bildirimleri</string>
     <string name="notif_action_reply">Yanıtla</string>
     <string name="notif_action_mark_read">Okundu işaretle</string>
+    <string name="notif_reply_failed">Yanıt gönderilemedi</string>
     <string name="notif_me">Sen</string>
     <string name="explore_tab_vision_board">Vizyon Panosu</string>
     <string name="common_unknown_fallback">Bilinmeyen</string>
