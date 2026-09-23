@@ -1,0 +1,140 @@
+<en-US>
+Version 1.4.9
+1. The app, notifications and AI content now follow your language
+2. Message notifications grouped per person; reply or mark as read from them
+3. Notifications open the right chat, profile or journal
+4. Lunosfer logo in notifications
+5. Faster Google sign-in without leaving the app
+6. Added Finnish, Romanian and Ukrainian
+7. Bug fixes and improvements
+</en-US>
+<ar>
+الإصدار 1.4.9
+1. التطبيق والإشعارات ومحتوى الذكاء الاصطناعي تتبع لغتك الآن
+2. تجميع إشعارات الرسائل حسب الشخص مع الرد أو التعليم كمقروء منها
+3. الإشعار يفتح المحادثة أو الملف الشخصي أو اليوميات الصحيحة
+4. شعار Lunosfer في الإشعارات
+5. تسجيل دخول أسرع عبر Google دون مغادرة التطبيق
+6. إضافة الفنلندية والرومانية والأوكرانية
+7. إصلاحات للأخطاء وتحسينات
+</ar>
+<de-DE>
+Version 1.4.9
+1. App, Benachrichtigungen und KI-Inhalte folgen jetzt deiner Sprache
+2. Nachrichten pro Person gruppiert; direkt antworten oder als gelesen markieren
+3. Benachrichtigungen öffnen den richtigen Chat, Profil oder Tagebuch
+4. Lunosfer-Logo in Benachrichtigungen
+5. Schnellere Google-Anmeldung ohne die App zu verlassen
+6. Finnisch, Rumänisch und Ukrainisch hinzugefügt
+7. Fehlerbehebungen und Verbesserungen
+</de-DE>
+<es-ES>
+Versión 1.4.9
+1. La app, las notificaciones y el contenido de IA siguen tu idioma
+2. Notificaciones agrupadas por persona; responde o marca como leído desde ellas
+3. Las notificaciones abren el chat, perfil o diario correcto
+4. Logo de Lunosfer en las notificaciones
+5. Inicio de sesión con Google más rápido, sin salir de la app
+6. Añadidos finés, rumano y ucraniano
+7. Corrección de errores y mejoras
+</es-ES>
+<fr-FR>
+Version 1.4.9
+1. L'app, les notifications et le contenu IA suivent votre langue
+2. Notifications regroupées par personne ; répondre ou marquer comme lu
+3. Les notifications ouvrent la bonne conversation, profil ou journal
+4. Logo Lunosfer dans les notifications
+5. Connexion Google plus rapide, sans quitter l'app
+6. Ajout du finnois, du roumain et de l'ukrainien
+7. Corrections de bugs et améliorations
+</fr-FR>
+<hi-IN>
+संस्करण 1.4.9
+1. ऐप, सूचनाएँ और AI सामग्री अब आपकी भाषा में
+2. संदेश सूचनाएँ व्यक्ति के अनुसार; उन्हीं से जवाब दें या पढ़ा हुआ चिह्नित करें
+3. सूचना सही चैट, प्रोफ़ाइल या डायरी खोलती है
+4. सूचनाओं में Lunosfer लोगो
+5. ऐप छोड़े बिना तेज़ Google साइन-इन
+6. फ़िनिश, रोमानियाई और यूक्रेनी जोड़ी गईं
+7. बग सुधार और बेहतरी
+</hi-IN>
+<it-IT>
+Versione 1.4.9
+1. App, notifiche e contenuti IA seguono la tua lingua
+2. Notifiche raggruppate per persona; rispondi o segna come letto
+3. Le notifiche aprono la chat, il profilo o il diario corretto
+4. Logo Lunosfer nelle notifiche
+5. Accesso con Google più rapido, senza uscire dall'app
+6. Aggiunti finlandese, rumeno e ucraino
+7. Correzioni di bug e miglioramenti
+</it-IT>
+<iw-IL>
+גרסה 1.4.9
+1. האפליקציה, ההתראות ותוכן הבינה המלאכותית בשפה שלכם
+2. התראות הודעות מקובצות לפי אדם; השב או סמן כנקרא מתוכן
+3. ההתראות פותחות את הצ'אט, הפרופיל או היומן הנכון
+4. הלוגו של Lunosfer בהתראות
+5. כניסה מהירה יותר עם Google בלי לצאת מהאפליקציה
+6. נוספו פינית, רומנית ואוקראינית
+7. תיקוני באגים ושיפורים
+</iw-IL>
+<ja-JP>
+バージョン 1.4.9
+1. アプリ・通知・AIコンテンツがあなたの言語に対応
+2. メッセージ通知を相手ごとにまとめ、通知から返信・既読が可能に
+3. 通知から正しいチャット、プロフィール、日記が開くように
+4. 通知にLunosferのロゴを表示
+5. アプリを離れずにGoogleでより速くログイン
+6. フィンランド語・ルーマニア語・ウクライナ語を追加
+7. バグ修正と改善
+</ja-JP>
+<ko-KR>
+버전 1.4.9
+1. 앱, 알림, AI 콘텐츠가 사용자 언어를 따릅니다
+2. 메시지 알림을 사람별로 묶고 알림에서 바로 답장 또는 읽음 표시
+3. 알림이 올바른 채팅, 프로필, 일기를 엶
+4. 알림에 Lunosfer 로고 표시
+5. 앱을 벗어나지 않는 더 빠른 Google 로그인
+6. 핀란드어, 루마니아어, 우크라이나어 추가
+7. 버그 수정 및 개선
+</ko-KR>
+<pt-BR>
+Versão 1.4.9
+1. O app, as notificações e o conteúdo de IA seguem seu idioma
+2. Notificações agrupadas por pessoa; responda ou marque como lida
+3. Notificações abrem o chat, perfil ou diário certo
+4. Logo do Lunosfer nas notificações
+5. Login com Google mais rápido, sem sair do app
+6. Adicionados finlandês, romeno e ucraniano
+7. Correções de bugs e melhorias
+</pt-BR>
+<ru-RU>
+Версия 1.4.9
+1. Приложение, уведомления и ИИ-контент теперь на вашем языке
+2. Уведомления сгруппированы по собеседнику; ответ и «прочитано» прямо из них
+3. Уведомления открывают нужный чат, профиль или дневник
+4. Логотип Lunosfer в уведомлениях
+5. Быстрый вход через Google без выхода из приложения
+6. Добавлены финский, румынский и украинский
+7. Исправления ошибок и улучшения
+</ru-RU>
+<tr-TR>
+Sürüm 1.4.9
+1. Uygulama, bildirimler ve yapay zekâ içerikleri artık sizin dilinizde
+2. Mesaj bildirimleri kişi bazında; bildirimden yanıt verin veya okundu işaretleyin
+3. Bildirimler doğru sohbeti, profili veya günlüğü açıyor
+4. Bildirimlerde Lunosfer logosu
+5. Uygulamadan çıkmadan daha hızlı Google ile giriş
+6. Fince, Rumence ve Ukraynaca eklendi
+7. Hata düzeltmeleri ve iyileştirmeler
+</tr-TR>
+<uk>
+Версія 1.4.9
+1. Застосунок, сповіщення та ШІ-контент тепер вашою мовою
+2. Сповіщення згруповано за співрозмовником; відповідайте або позначайте прочитаним
+3. Сповіщення відкривають потрібний чат, профіль або щоденник
+4. Логотип Lunosfer у сповіщеннях
+5. Швидший вхід через Google без виходу із застосунку
+6. Додано фінську, румунську та українську
+7. Виправлення помилок і покращення
+</uk>
