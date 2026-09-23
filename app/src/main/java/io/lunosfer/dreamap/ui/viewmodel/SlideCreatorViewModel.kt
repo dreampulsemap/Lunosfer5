@@ -86,7 +86,7 @@ class SlideCreatorViewModel(
                     setError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
                 }
             } catch (e: Exception) {
-                setError(e.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
+                setError(io.lunosfer.dreamap.util.safeMessage(e) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
             }
         }
     }
@@ -128,7 +128,7 @@ class SlideCreatorViewModel(
                     setError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
                 }
             } catch (e: Exception) {
-                setError(e.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
+                setError(io.lunosfer.dreamap.util.safeMessage(e) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
             }
         }
     }

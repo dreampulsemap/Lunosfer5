@@ -221,7 +221,7 @@ class VideoEditorViewModel(application: Application) : AndroidViewModel(applicat
             )
             rebuildTimeline()
         } catch (e: Exception) {
-            _state.value = _state.value.copy(toast = appContext.getString(R.string.toast_pixabay_import_failed_format, e.message ?: ""))
+            _state.value = _state.value.copy(toast = appContext.getString(R.string.toast_pixabay_import_failed_format, io.lunosfer.dreamap.util.safeMessage(e) ?: ""))
         } finally {
             _state.value = _state.value.copy(isImportingPixabay = false)
         }

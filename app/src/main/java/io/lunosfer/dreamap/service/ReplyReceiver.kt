@@ -38,6 +38,8 @@ class ReplyReceiver : BroadcastReceiver() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                // Arka planda oturum yuklu/gecerli olmayabilir (bkz. SessionGuard).
+                io.lunosfer.dreamap.data.network.SessionGuard.freshAccessToken()
                 NetworkModule.api.sendMessage(
                     SendMessageRequest(recipientId = senderId, content = replyText)
                 )

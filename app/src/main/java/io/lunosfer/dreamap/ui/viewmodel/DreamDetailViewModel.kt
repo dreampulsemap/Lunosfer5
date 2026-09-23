@@ -53,7 +53,7 @@ class DreamDetailViewModel : ViewModel() {
                 _state.value = successState
                 loadComments(id)
             }.onFailure { error ->
-                _state.value = DreamDetailUiState.Error(error.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_dream_load))
+                _state.value = DreamDetailUiState.Error(io.lunosfer.dreamap.util.safeMessage(error) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_dream_load))
             }
         }
     }

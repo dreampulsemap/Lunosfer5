@@ -343,6 +343,11 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
                     onClick = {
                         coroutineScope.launch {
                             try {
+                                // Once yerel Google girisi: tarayici acilmaz, Google hesap
+                                // seciciyi "Lunosfer" adiyla gosterir ("supabase.co'ya devam
+                                // et" yazisi cikmaz). Yapilandirilmamissa/hata verirse
+                                // asagidaki tarayici akisina duser.
+                                if (signInWithGoogleNative(context)) return@launch
                                 val url = supabaseClient.auth.getOAuthUrl(provider = Google, redirectUrl = "io.lunosfer.dreamap://auth-callback")
                                 // Duz ACTION_VIEW (ayri Chrome sekmesi) yerine Custom Tabs:
                                 // coklu-adimli OAuth redirect zincirinde (Google -> Supabase ->
@@ -410,6 +415,47 @@ private fun pendingUsernameFromMetadata(user: io.github.jan.supabase.auth.user.U
         ?.contentOrNull
         ?.trim()
         ?.takeIf { it.isNotBlank() }
+
+/**
+ * Credential Manager ile yerel Google girisi. true: giris yapildi ya da kullanici
+ * iptal etti (tarayiciya dusme). false: yapilandirma yok/desteklenmiyor, tarayici
+ * (OAuth) akisiyla devam edilmeli.
+ */
+private suspend fun signInWithGoogleNative(context: Context): Boolean {
+    val clientId = io.lunosfer.dreamap.BuildConfig.GOOGLE_WEB_CLIENT_ID
+    if (!clientId.endsWith(".apps.googleusercontent.com")) return false
+
+    val rawNonce = java.util.UUID.randomUUID().toString()
+    val hashedNonce = java.security.MessageDigest.getInstance("SHA-256")
+        .digest(rawNonce.toByteArray())
+        .joinToString("") { "%02x".format(it) }
+
+    val option = com.google.android.libraries.identity.googleid.GetGoogleIdOption.Builder()
+        .setFilterByAuthorizedAccounts(false)
+        .setServerClientId(clientId)
+        .setNonce(hashedNonce)
+        .build()
+    val request = androidx.credentials.GetCredentialRequest.Builder()
+        .addCredentialOption(option)
+        .build()
+
+    return try {
+        val result = androidx.credentials.CredentialManager.create(context).getCredential(context, request)
+        val google = com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+            .createFrom(result.credential.data)
+        supabaseClient.auth.signInWith(io.github.jan.supabase.auth.providers.builtin.IDToken) {
+            idToken = google.idToken
+            provider = Google
+            nonce = rawNonce
+        }
+        true
+    } catch (e: androidx.credentials.exceptions.GetCredentialCancellationException) {
+        true
+    } catch (e: Exception) {
+        android.util.Log.w("AuthScreen", "Yerel Google girisi basarisiz, tarayici akisina geciliyor", e)
+        false
+    }
+}
 
 /**
  * Profil satirinin var oldugundan emin olur.

@@ -254,7 +254,7 @@ class DiaryStoryViewerViewModel(
                     val latest = _state.value as? DiaryStoryViewerUiState.Content ?: return@onFailure
                     _state.value = latest.copy(
                         isPostingComment = false,
-                        actionError = it.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)
+                        actionError = io.lunosfer.dreamap.util.safeMessage(it) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)
                     )
                 }
         }

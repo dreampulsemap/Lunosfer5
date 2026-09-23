@@ -293,7 +293,7 @@ fun DiaryComposerScreen(
 
                         // Optional direct URL input
                         OutlinedTextField(
-                            value = contentState.mediaUrl,
+                            value = contentState.mediaUrl.takeUnless { io.lunosfer.dreamap.util.isInternalMediaUrl(it) } ?: "",
                             onValueChange = { viewModel.setMediaUrl(it) },
                             label = { Text(stringResource(R.string.diary_composer_media_url_label), color = Color.Gray) },
                             modifier = Modifier.fillMaxWidth(),

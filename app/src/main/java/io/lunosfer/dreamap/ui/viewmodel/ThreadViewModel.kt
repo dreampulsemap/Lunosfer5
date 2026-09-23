@@ -149,7 +149,7 @@ class ThreadViewModel(
                 uploadResult.getOrElse { error ->
                     _state.value = _state.value.copy(
                         isSending = false,
-                        sendError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_file_upload).format(error.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_unknown_error))
+                        sendError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_file_upload).format(io.lunosfer.dreamap.util.safeMessage(error) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_unknown_error))
                     )
                     return@launch
                 }
@@ -175,7 +175,7 @@ class ThreadViewModel(
                 .onFailure { error ->
                     _state.value = _state.value.copy(
                         isSending = false,
-                        sendError = error.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_send_message)
+                        sendError = io.lunosfer.dreamap.util.safeMessage(error) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_send_message)
                     )
                 }
         }

@@ -80,7 +80,8 @@ class LunosferMessagingService : FirebaseMessagingService() {
         ensureChannel(notificationManager, CHANNEL_ID, R.string.notif_channel_name, R.string.notif_channel_description, NotificationManager.IMPORTANCE_DEFAULT)
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_stat_lunosfer)
+            .setColor(NOTIFICATION_ACCENT)
             .setContentTitle(title)
             .setContentText(message)
             .setAutoCancel(true)
@@ -158,7 +159,8 @@ class LunosferMessagingService : FirebaseMessagingService() {
             .build()
 
         val notification = NotificationCompat.Builder(this, MESSAGE_CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_stat_lunosfer)
+            .setColor(NOTIFICATION_ACCENT)
             .setStyle(style)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setContentIntent(contentPendingIntent)
@@ -191,6 +193,8 @@ class LunosferMessagingService : FirebaseMessagingService() {
         const val CHANNEL_ID = "lunosfer_notifications"
         const val MESSAGE_CHANNEL_ID = "lunosfer_messages"
         const val ME_PERSON_KEY = "me"
+        // Marka altin rengi (launcher ikonundaki #D9B166).
+        const val NOTIFICATION_ACCENT = 0xFFD9B166.toInt()
 
         // Ayni gonderenin bildirimi her zaman AYNI notification ID'ye dusmeli ki
         // yeni mesaj eskisini kapatip yeni satir acmak yerine mevcut kutuya eklensin.

@@ -91,7 +91,7 @@ class DiaryJournalViewModel(
                     val latest = _state.value as? DiaryJournalUiState.Success ?: return@onFailure
                     _state.value = latest.copy(
                         deletingId = null,
-                        actionError = error.message
+                        actionError = io.lunosfer.dreamap.util.safeMessage(error)
                             ?: DreamapApp.instance.getString(R.string.diary_journal_delete_failed)
                     )
                 }

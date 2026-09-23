@@ -156,7 +156,7 @@ fun CreateDreamScreen(navController: NavController) {
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, e.message ?: commonErrorUnknownMsg, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, io.lunosfer.dreamap.util.safeMessage(e) ?: commonErrorUnknownMsg, Toast.LENGTH_SHORT).show()
             } finally {
                 isUploadingImage = false
             }
@@ -897,7 +897,7 @@ val charCount = content.length
                             }
 
                         } catch (e: Exception) {
-                            errorMessage = context.getString(R.string.dream_createFailed) + ": ${e.message}"
+                            errorMessage = context.getString(R.string.dream_createFailed) + (io.lunosfer.dreamap.util.safeMessage(e)?.let { ": $it" } ?: "")
                             isSubmitting = false
                         }
                     }

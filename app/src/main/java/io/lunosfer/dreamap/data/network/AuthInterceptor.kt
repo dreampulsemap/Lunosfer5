@@ -40,8 +40,17 @@ class AuthInterceptor : Interceptor {
         }
 
         val statusToken = (status as? SessionStatus.Authenticated)?.session?.accessToken
-        val sessionToken = supabaseClient.auth.currentSessionOrNull()?.accessToken
-        val token = statusToken ?: sessionToken
+        val session = supabaseClient.auth.currentSessionOrNull()
+        val sessionToken = session?.accessToken
+        val expiringSoon = session != null &&
+            session.expiresAt.toEpochMilliseconds() - System.currentTimeMillis() < 60_000
+        // Uygulama arka plandayken (bildirimden cevap vb.) oturum diskten hic
+        // yuklenmemis ya da suresi dolmus olabiliyor; 401 almadan once duzelt.
+        val token = if ((statusToken ?: sessionToken) == null || expiringSoon) {
+            runBlocking { SessionGuard.freshAccessToken() }
+        } else {
+            statusToken ?: sessionToken
+        }
         val hasToken = token != null
 
         if (BuildConfig.DEBUG) {

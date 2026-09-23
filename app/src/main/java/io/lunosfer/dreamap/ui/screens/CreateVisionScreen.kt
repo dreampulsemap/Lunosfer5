@@ -134,7 +134,7 @@ fun CreateVisionScreen(
                         }
                     }
                 } catch (e: Exception) {
-                    Toast.makeText(context, imageUploadFailedTemplate.format(e.message ?: ""), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, imageUploadFailedTemplate.format(io.lunosfer.dreamap.util.safeMessage(e) ?: ""), Toast.LENGTH_SHORT).show()
                 } finally {
                     isUploadingCover = false
                 }

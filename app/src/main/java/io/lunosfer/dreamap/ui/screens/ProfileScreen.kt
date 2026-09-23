@@ -360,6 +360,7 @@ fun ProfileScreen(
                                     // hesaba sizmasin).
                                     io.lunosfer.dreamap.data.repository.UserWallet.clear()
                                     supabaseClient.auth.signOut()
+                                    io.lunosfer.dreamap.util.AppLanguage.resetSync()
                                     onLogout()
                                 }
                             }) {
@@ -1038,7 +1039,7 @@ private fun EditProfileDialog(
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(dialogContext, e.message ?: commonErrorUnknownMsg, Toast.LENGTH_SHORT).show()
+                Toast.makeText(dialogContext, io.lunosfer.dreamap.util.safeMessage(e) ?: commonErrorUnknownMsg, Toast.LENGTH_SHORT).show()
             } finally {
                 isUploadingAvatar = false
             }
@@ -1184,7 +1185,9 @@ private fun EditProfileDialog(
 
                 // Avatar URL
                 OutlinedTextField(
-                    value = avatarUrl,
+                    // Yuklenen fotografin depolama adresi (supabase.co) gosterilmez;
+                    // kutu yalnizca kullanicinin elle girdigi bir link icin.
+                    value = avatarUrl.takeUnless { io.lunosfer.dreamap.util.isInternalMediaUrl(it) } ?: "",
                     onValueChange = { avatarUrl = it },
                     label = { Text(stringResource(R.string.profile_edit_avatar_url_label), color = Color.Gray) },
                     modifier = Modifier.fillMaxWidth(),

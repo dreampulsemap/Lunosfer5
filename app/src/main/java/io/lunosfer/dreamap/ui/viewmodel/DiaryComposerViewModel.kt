@@ -135,7 +135,7 @@ class DiaryComposerViewModel(
                 }
             } catch (e: Exception) {
                 val latest = _state.value as? DiaryComposerUiState.Content ?: return@launch
-                _state.value = latest.copy(isUploading = false, error = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_image_upload_failed, e.message ?: ""))
+                _state.value = latest.copy(isUploading = false, error = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_image_upload_failed, io.lunosfer.dreamap.util.safeMessage(e) ?: ""))
             }
         }
     }

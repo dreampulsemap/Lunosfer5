@@ -185,7 +185,7 @@ class ProfileViewModel(
                 }
             } catch (e: Exception) {
                 val latest = _state.value as? ProfileUiState.Content ?: return@launch
-                _state.value = latest.copy(actionError = e.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_unknown))
+                _state.value = latest.copy(actionError = io.lunosfer.dreamap.util.safeMessage(e) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_unknown))
             }
         }
     }
@@ -212,6 +212,7 @@ class ProfileViewModel(
                 .onSuccess {
                     try {
                         supabaseClient.auth.signOut()
+                        io.lunosfer.dreamap.util.AppLanguage.resetSync()
                     } catch (_: Exception) {
                         // Hesap sunucuda zaten silindi; yerel signOut başarısız
                         // olsa bile kullanıcıyı login'e yönlendirmeye devam ediyoruz.

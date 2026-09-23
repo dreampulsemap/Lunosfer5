@@ -31,6 +31,8 @@ class MarkReadReceiver : BroadcastReceiver() {
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                // Arka planda oturum yuklu/gecerli olmayabilir (bkz. SessionGuard).
+                io.lunosfer.dreamap.data.network.SessionGuard.freshAccessToken()
                 io.lunosfer.dreamap.data.network.NetworkModule.api.getThread(
                     otherUserId = senderId,
                     before = null
