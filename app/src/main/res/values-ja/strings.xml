@@ -124,6 +124,8 @@
     <string name="thread_retry">再試行</string>
     <string name="thread_msg_read">既読</string>
     <string name="thread_msg_sent">送信済み</string>
+    <string name="thread_msg_sending">送信中…</string>
+    <string name="thread_msg_failed">送信に失敗しました</string>
     <string name="thread_play_desc">再生</string>
     <string name="thread_attachment_photo_desc">写真</string>
     <string name="thread_attachment_video_desc">動画</string>

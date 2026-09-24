@@ -124,6 +124,8 @@
     <string name="thread_retry">重试</string>
     <string name="thread_msg_read">已读</string>
     <string name="thread_msg_sent">已发送</string>
+    <string name="thread_msg_sending">发送中…</string>
+    <string name="thread_msg_failed">发送失败</string>
     <string name="thread_play_desc">播放</string>
     <string name="thread_attachment_photo_desc">照片</string>
     <string name="thread_attachment_video_desc">视频</string>

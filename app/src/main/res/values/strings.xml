@@ -146,6 +146,8 @@
     <string name="thread_retry">Retry</string>
     <string name="thread_msg_read">Read</string>
     <string name="thread_msg_sent">Sent</string>
+    <string name="thread_msg_sending">Sending…</string>
+    <string name="thread_msg_failed">Failed to send</string>
     <string name="thread_play_desc">Play</string>
     <string name="thread_attachment_photo_desc">Photo</string>
     <string name="thread_attachment_video_desc">Video</string>

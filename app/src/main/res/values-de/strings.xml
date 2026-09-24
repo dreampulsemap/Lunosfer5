@@ -126,6 +126,8 @@
     <string name="thread_retry">Wiederholen</string>
     <string name="thread_msg_read">Gelesen</string>
     <string name="thread_msg_sent">Gesendet</string>
+    <string name="thread_msg_sending">Wird gesendet…</string>
+    <string name="thread_msg_failed">Senden fehlgeschlagen</string>
     <string name="thread_play_desc">Wiedergabe</string>
     <string name="thread_attachment_photo_desc">Foto</string>
     <string name="thread_attachment_video_desc">Video</string>

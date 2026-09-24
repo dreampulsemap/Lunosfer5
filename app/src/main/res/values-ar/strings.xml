@@ -153,6 +153,8 @@
     <string name="friend_search_placeholder">ابحث باسم المستخدم أو الاسم...</string>
     <string name="spiritual_psychic_score">النتيجة الروحانية</string>
     <string name="thread_msg_sent">تم الإرسال</string>
+    <string name="thread_msg_sending">جارٍ الإرسال…</string>
+    <string name="thread_msg_failed">فشل الإرسال</string>
     <string name="spiritual_synthesize_btn">توليف الجدار الذهني</string>
     <string name="friend_default_user">مستخدم</string>
     <string name="msg_load_failed">تعذر تحميل الرسائل</string>

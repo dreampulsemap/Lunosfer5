@@ -22,6 +22,8 @@ import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DoneAll
+import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Close
@@ -49,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import io.lunosfer.dreamap.data.model.Message
+import io.lunosfer.dreamap.data.model.MessageDeliveryStatus
 import io.lunosfer.dreamap.data.model.UserProfile
 import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.theme.*
@@ -179,7 +182,8 @@ fun ThreadScreen(otherUserId: String, navController: androidx.navigation.NavCont
                     state = state,
                     isOwnMessage = viewModel::isOwnMessage,
                     onLoadOlder = viewModel::loadOlder,
-                    onReactMessage = viewModel::reactMessage
+                    onReactMessage = viewModel::reactMessage,
+                    onRetrySend = viewModel::retrySend
                 )
             }
         }
@@ -318,15 +322,28 @@ private fun ThreadMessageList(
     state: ThreadUiState,
     isOwnMessage: (Message) -> Boolean,
     onLoadOlder: () -> Unit,
-    onReactMessage: (String, String) -> Unit
+    onReactMessage: (String, String) -> Unit,
+    onRetrySend: (Message) -> Unit
 ) {
     val listState = rememberLazyListState()
     val latestState = rememberUpdatedState(state)
     val lastMessageId = state.messages.lastOrNull()?.id
+    // İlk açılışta (henüz hiç mesaj render edilmemişken) animateScrollToItem
+    // en üstten başlayıp aşağı doğru KAYARAK iniyordu — kullanıcı thread'i
+    // açar açmaz kısa bir an önceki mesajları, sonra son mesaja "kayarken"
+    // görüyordu. İlk yüklemede ani (scrollToItem), sonraki yeni mesajlarda
+    // (kullanıcı zaten sohbeti görüntülerken) hâlâ akıcı animasyon.
+    var hasScrolledOnce by remember { mutableStateOf(false) }
 
     LaunchedEffect(lastMessageId) {
         if (state.messages.isNotEmpty()) {
-            listState.animateScrollToItem(state.messages.size - 1)
+            val targetIndex = state.messages.size - 1
+            if (!hasScrolledOnce) {
+                listState.scrollToItem(targetIndex)
+                hasScrolledOnce = true
+            } else {
+                listState.animateScrollToItem(targetIndex)
+            }
         }
     }
 
@@ -361,7 +378,12 @@ private fun ThreadMessageList(
             if (showDateDivider) {
                 DateDivider(label = dayLabel(message.createdAt))
             }
-            MessageBubble(message = message, isOwn = isOwnMessage(message), onReact = { reaction -> onReactMessage(message.id, reaction) })
+            MessageBubble(
+                message = message,
+                isOwn = isOwnMessage(message),
+                onReact = { reaction -> onReactMessage(message.id, reaction) },
+                onRetry = { onRetrySend(message) }
+            )
         }
     }
 }
@@ -381,8 +403,9 @@ private fun DateDivider(label: String) {
 }
 
 @Composable
-private fun MessageBubble(message: Message, isOwn: Boolean, onReact: (String) -> Unit) {
+private fun MessageBubble(message: Message, isOwn: Boolean, onReact: (String) -> Unit, onRetry: () -> Unit = {}) {
     var showReactions by remember { mutableStateOf(false) }
+    val isFailed = message.deliveryStatus == MessageDeliveryStatus.FAILED
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -400,8 +423,8 @@ private fun MessageBubble(message: Message, isOwn: Boolean, onReact: (String) ->
                         bottomStart = if (isOwn) 16.dp else 4.dp,
                         bottomEnd = if (isOwn) 4.dp else 16.dp
                     ),
-                    color = if (isOwn) AstralGold.copy(alpha = 0.9f) else Void800,
-                    modifier = Modifier.clickable { showReactions = true }
+                    color = if (isOwn) AstralGold.copy(alpha = if (isFailed) 0.5f else 0.9f) else Void800,
+                    modifier = Modifier.clickable { if (isFailed) onRetry() else showReactions = true }
                 ) {
                     SelectionContainer {
                         if (message.content != null && message.content.isNotBlank()) {
@@ -463,12 +486,26 @@ private fun MessageBubble(message: Message, isOwn: Boolean, onReact: (String) ->
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
                 if (isOwn) {
-                    Icon(
-                        imageVector = if (message.isRead) Icons.Filled.DoneAll else Icons.Filled.Done,
-                        contentDescription = if (message.isRead) stringResource(R.string.thread_msg_read) else stringResource(R.string.thread_msg_sent),
-                        tint = if (message.isRead) SemanticSuccess400 else Color(0xFF64748B),
-                        modifier = Modifier.size(12.dp)
-                    )
+                    when (message.deliveryStatus) {
+                        MessageDeliveryStatus.SENDING -> Icon(
+                            imageVector = Icons.Filled.Schedule,
+                            contentDescription = stringResource(R.string.thread_msg_sending),
+                            tint = Color(0xFF64748B),
+                            modifier = Modifier.size(12.dp)
+                        )
+                        MessageDeliveryStatus.FAILED -> Icon(
+                            imageVector = Icons.Filled.ErrorOutline,
+                            contentDescription = stringResource(R.string.thread_msg_failed),
+                            tint = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.size(12.dp)
+                        )
+                        MessageDeliveryStatus.SENT -> Icon(
+                            imageVector = if (message.isRead) Icons.Filled.DoneAll else Icons.Filled.Done,
+                            contentDescription = if (message.isRead) stringResource(R.string.thread_msg_read) else stringResource(R.string.thread_msg_sent),
+                            tint = if (message.isRead) SemanticSuccess400 else Color(0xFF64748B),
+                            modifier = Modifier.size(12.dp)
+                        )
+                    }
                 }
             }
         }

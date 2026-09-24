@@ -136,6 +136,8 @@
     <string name="thread_retry">Reîncearcă</string>
     <string name="thread_msg_read">Citit</string>
     <string name="thread_msg_sent">Trimis</string>
+    <string name="thread_msg_sending">Se trimite…</string>
+    <string name="thread_msg_failed">Trimitere eșuată</string>
     <string name="thread_play_desc">Redă</string>
     <string name="thread_attachment_photo_desc">Fotografie</string>
     <string name="thread_attachment_video_desc">Video</string>

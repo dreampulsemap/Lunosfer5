@@ -125,6 +125,8 @@
     <string name="thread_retry">Tentar novamente</string>
     <string name="thread_msg_read">Lida</string>
     <string name="thread_msg_sent">Enviada</string>
+    <string name="thread_msg_sending">Enviando…</string>
+    <string name="thread_msg_failed">Falha ao enviar</string>
     <string name="thread_play_desc">Reproduzir</string>
     <string name="thread_attachment_photo_desc">Foto</string>
     <string name="thread_attachment_video_desc">Vídeo</string>

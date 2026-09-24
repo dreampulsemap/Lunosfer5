@@ -146,6 +146,8 @@
     <string name="thread_retry">Tekrar Dene</string>
     <string name="thread_msg_read">Okundu</string>
     <string name="thread_msg_sent">Gönderildi</string>
+    <string name="thread_msg_sending">Gönderiliyor…</string>
+    <string name="thread_msg_failed">Gönderilemedi</string>
     <string name="thread_play_desc">Oynat</string>
     <string name="thread_attachment_photo_desc">Fotoğraf</string>
     <string name="thread_attachment_video_desc">Video</string>

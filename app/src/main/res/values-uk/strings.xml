@@ -136,6 +136,8 @@
     <string name="thread_retry">Повторити</string>
     <string name="thread_msg_read">Прочитано</string>
     <string name="thread_msg_sent">Надіслано</string>
+    <string name="thread_msg_sending">Надсилається…</string>
+    <string name="thread_msg_failed">Не вдалося надіслати</string>
     <string name="thread_play_desc">Відтворити</string>
     <string name="thread_attachment_photo_desc">Фото</string>
     <string name="thread_attachment_video_desc">Відео</string>

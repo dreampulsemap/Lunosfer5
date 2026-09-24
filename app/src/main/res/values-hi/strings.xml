@@ -125,6 +125,8 @@
     <string name="thread_retry">पुनः प्रयास करें</string>
     <string name="thread_msg_read">पढ़ा गया</string>
     <string name="thread_msg_sent">भेजा गया</string>
+    <string name="thread_msg_sending">भेजा जा रहा है…</string>
+    <string name="thread_msg_failed">भेजने में विफल</string>
     <string name="thread_play_desc">चलाएं</string>
     <string name="thread_attachment_photo_desc">फ़ोटो</string>
     <string name="thread_attachment_video_desc">वीडियो</string>

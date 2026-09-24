@@ -125,6 +125,8 @@
     <string name="thread_retry">Reintentar</string>
     <string name="thread_msg_read">Leído</string>
     <string name="thread_msg_sent">Enviado</string>
+    <string name="thread_msg_sending">Enviando…</string>
+    <string name="thread_msg_failed">Error al enviar</string>
     <string name="thread_play_desc">Reproducir</string>
     <string name="thread_attachment_photo_desc">Foto</string>
     <string name="thread_attachment_video_desc">Video</string>

@@ -124,6 +124,8 @@
     <string name="thread_retry">Réessayer</string>
     <string name="thread_msg_read">Lu</string>
     <string name="thread_msg_sent">Envoyé</string>
+    <string name="thread_msg_sending">Envoi en cours…</string>
+    <string name="thread_msg_failed">Échec de l\'envoi</string>
     <string name="thread_play_desc">Lire</string>
     <string name="thread_attachment_photo_desc">Photo</string>
     <string name="thread_attachment_video_desc">Vidéo</string>

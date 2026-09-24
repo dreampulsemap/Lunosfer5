@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import io.lunosfer.dreamap.data.model.Message
+import io.lunosfer.dreamap.data.model.MessageDeliveryStatus
 import io.lunosfer.dreamap.data.model.UserProfile
 import io.lunosfer.dreamap.data.repository.BlockRepository
 import io.lunosfer.dreamap.data.repository.MessagesRepository
@@ -134,7 +135,38 @@ class ThreadViewModel(
         if ((trimmed == null || trimmed.isEmpty()) && localUri == null && directUrl == null) return
         if (_state.value.isSending || _state.value.isUploadingAttachment) return
 
-        _state.value = _state.value.copy(isSending = true, sendError = null)
+        // Optimistic echo: balon aği turu beklemeden hemen listede görünsün
+        // (WhatsApp tarzı). Gerçek sunucu cevabı gelince aynı geçici id
+        // gerçek mesajla değiştirilir; başarısız olursa balon silinmez,
+        // SENDING yerine FAILED işaretlenir (kaybolmasın, tekrar denenebilsin).
+        val tempId = "local_${java.util.UUID.randomUUID()}"
+        val optimisticMessage = Message(
+            id = tempId,
+            senderId = currentUserId ?: "",
+            recipientId = otherUserId,
+            content = if (trimmed.isNullOrEmpty()) null else trimmed,
+            isRead = false,
+            createdAt = java.time.Instant.now().toString(),
+            attachmentUrl = localUri?.toString() ?: directUrl,
+            attachmentType = attachmentType,
+            attachmentName = attachmentName,
+            attachmentMime = attachmentMime,
+            attachmentSize = attachmentSize,
+            deliveryStatus = MessageDeliveryStatus.SENDING
+        )
+
+        _state.value = _state.value.copy(
+            isSending = true,
+            sendError = null,
+            messages = _state.value.messages + optimisticMessage
+        )
+
+        fun replaceOptimistic(with: Message) {
+            _state.value = _state.value.copy(
+                messages = _state.value.messages.map { if (it.id == tempId) with else it }
+            )
+        }
+
         viewModelScope.launch {
             val resolvedUrl: String? = if (localUri != null && appContext != null) {
                 _state.value = _state.value.copy(isUploadingAttachment = true)
@@ -147,6 +179,7 @@ class ThreadViewModel(
                 _state.value = _state.value.copy(isUploadingAttachment = false)
 
                 uploadResult.getOrElse { error ->
+                    replaceOptimistic(optimisticMessage.copy(deliveryStatus = MessageDeliveryStatus.FAILED))
                     _state.value = _state.value.copy(
                         isSending = false,
                         sendError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_file_upload).format(io.lunosfer.dreamap.util.safeMessage(error) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_unknown_error))
@@ -167,18 +200,40 @@ class ThreadViewModel(
                 attachmentSize = attachmentSize
             )
                 .onSuccess { sentMessage ->
-                    _state.value = _state.value.copy(
-                        isSending = false,
-                        messages = _state.value.messages + sentMessage
-                    )
+                    replaceOptimistic(sentMessage)
+                    _state.value = _state.value.copy(isSending = false)
                 }
                 .onFailure { error ->
+                    replaceOptimistic(optimisticMessage.copy(deliveryStatus = MessageDeliveryStatus.FAILED))
                     _state.value = _state.value.copy(
                         isSending = false,
                         sendError = io.lunosfer.dreamap.util.safeMessage(error) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_send_message)
                     )
                 }
         }
+    }
+
+    /** FAILED balonuna dokunup yeniden denemek için: eski geçici mesajı
+     * kaldırır ve aynı içerikle gönderimi baştan başlatır. Yerel dosyadan
+     * (henüz yüklenmemiş, content:// uri) eklenmiş eklerde güvenle yeniden
+     * deneyecek elimizde orijinal Uri kalmadığı için bu durumda no-op —
+     * kullanıcı ekli dosyayı elle yeniden seçip göndermeli. */
+    fun retrySend(failedMessage: Message) {
+        if (failedMessage.deliveryStatus != MessageDeliveryStatus.FAILED) return
+        val attachmentUrl = failedMessage.attachmentUrl
+        if (attachmentUrl != null && !attachmentUrl.startsWith("http")) return
+
+        _state.value = _state.value.copy(
+            messages = _state.value.messages.filterNot { it.id == failedMessage.id }
+        )
+        sendMessage(
+            content = failedMessage.content,
+            directUrl = attachmentUrl,
+            attachmentType = failedMessage.attachmentType,
+            attachmentName = failedMessage.attachmentName,
+            attachmentMime = failedMessage.attachmentMime,
+            attachmentSize = failedMessage.attachmentSize
+        )
     }
 
     fun reactMessage(messageId: String, reaction: String) {

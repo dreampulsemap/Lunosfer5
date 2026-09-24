@@ -136,6 +136,8 @@
     <string name="thread_retry">Yritä uudelleen</string>
     <string name="thread_msg_read">Luettu</string>
     <string name="thread_msg_sent">Lähetetty</string>
+    <string name="thread_msg_sending">Lähetetään…</string>
+    <string name="thread_msg_failed">Lähetys epäonnistui</string>
     <string name="thread_play_desc">Toista</string>
     <string name="thread_attachment_photo_desc">Kuva</string>
     <string name="thread_attachment_video_desc">Video</string>

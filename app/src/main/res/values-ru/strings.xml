@@ -124,6 +124,8 @@
     <string name="thread_retry">Повторить</string>
     <string name="thread_msg_read">Прочитано</string>
     <string name="thread_msg_sent">Отправлено</string>
+    <string name="thread_msg_sending">Отправка…</string>
+    <string name="thread_msg_failed">Не удалось отправить</string>
     <string name="thread_play_desc">Воспроизвести</string>
     <string name="thread_attachment_photo_desc">Фото</string>
     <string name="thread_attachment_video_desc">Видео</string>

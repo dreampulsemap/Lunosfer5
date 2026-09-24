@@ -2,6 +2,12 @@ package io.lunosfer.dreamap.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+
+/** Sunucudan hiç gelmez — yalnızca gönderim sırasında yerel (optimistic) bir
+ * balonu işaretlemek için var. Backend'den dönen her mesaj varsayılan
+ * (SENT) ile deserialize olur. */
+enum class MessageDeliveryStatus { SENDING, SENT, FAILED }
 
 @Serializable
 data class Message(
@@ -16,7 +22,8 @@ data class Message(
     @SerialName("attachment_name") val attachmentName: String? = null,
     @SerialName("attachment_mime") val attachmentMime: String? = null,
     @SerialName("attachment_size") val attachmentSize: Long? = null,
-    val reaction: String? = null
+    val reaction: String? = null,
+    @Transient val deliveryStatus: MessageDeliveryStatus = MessageDeliveryStatus.SENT
 )
 
 /** pages/api/messages/conversations.js: her satır bir kişiyle olan son durumu özetler. */
