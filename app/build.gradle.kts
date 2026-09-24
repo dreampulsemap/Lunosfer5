@@ -10,6 +10,7 @@ plugins {
   alias(libs.plugins.roborazzi)
   alias(libs.plugins.secrets)
   alias(libs.plugins.google.services)
+  alias(libs.plugins.play.publisher)
   kotlin("plugin.serialization") version "2.2.10"
 }
 
@@ -21,7 +22,7 @@ android {
     applicationId = "io.lunosfer.dreamap"
     minSdk = 24
     targetSdk = 36
-    versionCode = 20
+    versionCode = 21
     versionName = "1.4.9"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -87,6 +88,16 @@ android {
   }
   // Desteklenen dilleri (res/values-*) Android 13+ "Uygulama dili" ayarina bildirir.
   androidResources { generateLocaleConfig = true }
+  // KRITIK: Play App Bundle varsayilani dile gore ayri "config APK" bolup
+  // cihaza SADECE kurulum anindaki sistem diliyle eslesen dil paketini
+  // gonderiyor (1.4.9/versionCode 20'de generateLocaleConfig + resources.properties
+  // eklenince bu ilk kez devreye girdi). Uygulama ici dil secici sonradan baska
+  // bir dile gecince o dilin kaynaklari cihazda hic yok - Android bu durumda
+  // "en" config'ine (resources.properties: unqualifiedResLocale=en) duser, yani
+  // hangi dil secilirse secilsin her sey Ingilizce kaliyordu. enableSplit=false
+  // ile her kurulum 14 dilin TAMAMINI iceriyor (birkac yuz KB), boylece dil
+  // secimi Play'in hangi paketi gonderdigine bagli olmaktan cikiyor.
+  bundle { language { enableSplit = false } }
   testOptions { unitTests { isIncludeAndroidResources = true } }
   dependenciesInfo {
     includeInApk = false
@@ -211,4 +222,14 @@ dependencies {
   debugImplementation(libs.androidx.compose.ui.tooling)
   "ksp"(libs.androidx.room.compiler)
   
+}
+
+// Gradle Play Publisher: ./gradlew publishReleaseBundle -> release AAB'yi Play'e yukler.
+// Kimlik dosyasi git'e girmez (keystore/play-service-account.json .gitignore'da).
+play {
+  serviceAccountCredentials.set(rootProject.file("keystore/play-service-account.json"))
+  track.set("alpha")
+  defaultToAppBundles.set(true)
+  // versionCode'u Play'deki en yuksek surum +1 yapar; elle artirmaya gerek yok.
+  resolutionStrategy.set(com.github.triplet.gradle.androidpublisher.ResolutionStrategy.AUTO)
 }

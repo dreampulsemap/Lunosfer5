@@ -1,0 +1,1 @@
+Correzione: la selezione della lingua ora funziona correttamente in tutta l'app (prima rimaneva bloccata sull'inglese).

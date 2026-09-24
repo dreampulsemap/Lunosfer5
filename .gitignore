@@ -27,3 +27,5 @@ build/
 # Firebase konsolundan yeniden indirmek gerekir (yoksa build sadece uyarir,
 # bkz. app/build.gradle.kts -> missingGoogleServicesStrategy = WARN).
 app/google-services.json
+
+keystore/play-service-account.json

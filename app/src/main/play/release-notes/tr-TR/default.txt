@@ -1,0 +1,1 @@
+Düzeltme: Dil seçimi artık uygulamanın her yerinde doğru çalışıyor (önceden İngilizce'de takılı kalıyordu).
