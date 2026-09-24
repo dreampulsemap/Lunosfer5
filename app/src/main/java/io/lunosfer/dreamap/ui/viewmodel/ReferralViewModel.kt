@@ -57,11 +57,13 @@ class ReferralViewModel(
 
         viewModelScope.launch {
             repository.claimReferral(code.trim())
-                .onSuccess { res ->
+                .onSuccess {
                     _isClaiming.value = false
-                    val awarded = res.manaAwarded
-                    val msg = res.message ?: if (awarded > 0) io.lunosfer.dreamap.DreamapApp.instance.resources.getQuantityString(io.lunosfer.dreamap.R.plurals.msg_mana_awarded, awarded, awarded) else io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.msg_referral_applied)
-                    _claimMessage.value = msg
+                    // Odul davet EDENE gidiyor (backend: inviter.image_credits),
+                    // kodu giren kisiye degil — o yuzden burada bir "sen +N
+                    // kazandin" mesaji YANLIS olurdu; sadece kodun uygulandigini
+                    // bildiriyoruz.
+                    _claimMessage.value = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.msg_referral_applied)
                     loadStats()
                 }
                 .onFailure { err ->

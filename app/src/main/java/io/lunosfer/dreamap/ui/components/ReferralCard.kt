@@ -160,8 +160,8 @@ fun ReferralCard(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        StatItem(label = stringResource(R.string.referral_stat_friends), value = "${stats.totalReferrals}")
-                        StatItem(label = stringResource(R.string.referral_stat_mana), value = "✨ ${stats.totalManaEarned}")
+                        StatItem(label = stringResource(R.string.referral_stat_friends), value = "${stats.totalInvited}")
+                        StatItem(label = stringResource(R.string.referral_stat_mana), value = "✨ ${stats.totalCreditsEarned}")
                     }
 
                     Divider(color = Color.White.copy(alpha = 0.1f))

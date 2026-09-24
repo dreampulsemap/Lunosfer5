@@ -11,17 +11,13 @@ class ReferralRepository(
 ) {
     suspend fun getReferralStats(): Result<ReferralStatsResponse> = runCatching {
         val res = api.getReferralStats()
-        if (res.ok == false && res.error != null) {
-            throw Exception(res.error)
-        }
+        if (res.error != null) throw Exception(res.error)
         res
     }
 
     suspend fun claimReferral(code: String): Result<ClaimReferralResponse> = runCatching {
-        val res = api.claimReferral(ClaimReferralRequest(referralCode = code, code = code))
-        if (res.ok == false && res.error != null) {
-            throw Exception(res.error)
-        }
+        val res = api.claimReferral(ClaimReferralRequest(inviterCode = code))
+        if (res.error != null) throw Exception(res.error)
         res
     }
 }
