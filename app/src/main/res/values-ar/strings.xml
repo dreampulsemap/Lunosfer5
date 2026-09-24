@@ -822,6 +822,10 @@
     <string name="notif_mana_received_body">أرسل %1$s مانا إلى رؤيتك.</string>
     <string name="notif_diary_comment_title">تعليق جديد</string>
     <string name="notif_diary_comment_body">علّق %1$s على مدوّنتك اليومية.</string>
+    <string name="notif_dream_like_title">إعجاب جديد</string>
+    <string name="notif_dream_like_body">أعجب %1$s بحلمك.</string>
+    <string name="notif_dream_comment_title">تعليق جديد</string>
+    <string name="notif_dream_comment_body">علّق %1$s على حلمك.</string>
     <string name="notif_dream_image_gift_title">صورة الحلم جاهزة</string>
     <string name="notif_dream_image_gift_body">تم إنشاء صورة حلم من أجلك.</string>
     <string name="notif_request_no_longer_available">لم يعد طلب المتابعة هذا متاحًا.</string>

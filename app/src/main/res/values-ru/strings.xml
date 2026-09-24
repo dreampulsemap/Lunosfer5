@@ -821,6 +821,10 @@
     <string name="notif_mana_received_body">%1$s отправил(а) ману вашему видению.</string>
     <string name="notif_diary_comment_title">Новый комментарий</string>
     <string name="notif_diary_comment_body">%1$s прокомментировал(а) вашу запись в дневнике.</string>
+    <string name="notif_dream_like_title">Новый лайк</string>
+    <string name="notif_dream_like_body">%1$s понравился ваш сон.</string>
+    <string name="notif_dream_comment_title">Новый комментарий</string>
+    <string name="notif_dream_comment_body">%1$s прокомментировал(а) ваш сон.</string>
     <string name="notif_dream_image_gift_title">Изображение сна готово</string>
     <string name="notif_dream_image_gift_body">Для вас создано изображение сна.</string>
     <string name="notif_request_no_longer_available">Эта заявка на подписку больше недоступна.</string>

@@ -822,6 +822,10 @@
     <string name="notif_mana_received_body">%1$s 向你的愿景送出了玛那。</string>
     <string name="notif_diary_comment_title">新评论</string>
     <string name="notif_diary_comment_body">%1$s 评论了你的日记。</string>
+    <string name="notif_dream_like_title">新点赞</string>
+    <string name="notif_dream_like_body">%1$s 点赞了你的梦。</string>
+    <string name="notif_dream_comment_title">新评论</string>
+    <string name="notif_dream_comment_body">%1$s 评论了你的梦。</string>
     <string name="notif_dream_image_gift_title">梦境图像已生成</string>
     <string name="notif_dream_image_gift_body">已为你生成一张梦境图像。</string>
     <string name="notif_request_no_longer_available">该关注请求已失效。</string>

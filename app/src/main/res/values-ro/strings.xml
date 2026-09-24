@@ -832,6 +832,10 @@
     <string name="notif_mana_received_body">%1$s a trimis Mana viziunii tale.</string>
     <string name="notif_diary_comment_title">Comentariu nou</string>
     <string name="notif_diary_comment_body">%1$s a comentat la intrarea ta din jurnal.</string>
+    <string name="notif_dream_like_title">Apreciere nouă</string>
+    <string name="notif_dream_like_body">%1$s a apreciat visul tău.</string>
+    <string name="notif_dream_comment_title">Comentariu nou</string>
+    <string name="notif_dream_comment_body">%1$s a comentat visul tău.</string>
     <string name="notif_dream_image_gift_title">Imaginea visului este gata</string>
     <string name="notif_dream_image_gift_body">A fost creată o imagine a visului pentru tine.</string>
     <string name="notif_request_no_longer_available">Această cerere de urmărire nu mai este disponibilă.</string>

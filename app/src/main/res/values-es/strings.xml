@@ -821,6 +821,10 @@
     <string name="notif_mana_received_body">%1$s envió maná a tu visión.</string>
     <string name="notif_diary_comment_title">Comentario nuevo</string>
     <string name="notif_diary_comment_body">%1$s comentó tu entrada del diario.</string>
+    <string name="notif_dream_like_title">Nuevo me gusta</string>
+    <string name="notif_dream_like_body">A %1$s le gustó tu sueño.</string>
+    <string name="notif_dream_comment_title">Comentario nuevo</string>
+    <string name="notif_dream_comment_body">%1$s comentó tu sueño.</string>
     <string name="notif_dream_image_gift_title">Imagen del sueño lista</string>
     <string name="notif_dream_image_gift_body">Se ha creado una imagen de sueño para ti.</string>
     <string name="notif_request_no_longer_available">Esta solicitud de seguimiento ya no está disponible.</string>

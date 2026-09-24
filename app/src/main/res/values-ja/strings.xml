@@ -820,6 +820,10 @@
     <string name="notif_mana_received_body">%1$sさんがあなたのビジョンにマナを送りました。</string>
     <string name="notif_diary_comment_title">新しいコメント</string>
     <string name="notif_diary_comment_body">%1$sさんがあなたの日記にコメントしました。</string>
+    <string name="notif_dream_like_title">新しいいいね</string>
+    <string name="notif_dream_like_body">%1$sさんがあなたの夢にいいねしました。</string>
+    <string name="notif_dream_comment_title">新しいコメント</string>
+    <string name="notif_dream_comment_body">%1$sさんがあなたの夢にコメントしました。</string>
     <string name="notif_dream_image_gift_title">夢の画像が完成しました</string>
     <string name="notif_dream_image_gift_body">あなたのために夢の画像が作成されました。</string>
     <string name="notif_request_no_longer_available">このフォローリクエストは利用できなくなりました。</string>

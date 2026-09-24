@@ -823,6 +823,10 @@
     <string name="notif_mana_received_body">%1$s hat Mana an deine Vision gesendet.</string>
     <string name="notif_diary_comment_title">Neuer Kommentar</string>
     <string name="notif_diary_comment_body">%1$s hat deinen Tagebucheintrag kommentiert.</string>
+    <string name="notif_dream_like_title">Neues Gefällt mir</string>
+    <string name="notif_dream_like_body">%1$s gefällt dein Traum.</string>
+    <string name="notif_dream_comment_title">Neuer Kommentar</string>
+    <string name="notif_dream_comment_body">%1$s hat deinen Traum kommentiert.</string>
     <string name="notif_dream_image_gift_title">Traumbild fertig</string>
     <string name="notif_dream_image_gift_body">Ein Traumbild wurde für dich erstellt.</string>
     <string name="notif_request_no_longer_available">Diese Follow-Anfrage ist nicht mehr verfügbar.</string>

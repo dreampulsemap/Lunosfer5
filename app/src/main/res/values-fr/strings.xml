@@ -820,6 +820,10 @@
     <string name="notif_mana_received_body">%1$s a envoyé du mana à votre vision.</string>
     <string name="notif_diary_comment_title">Nouveau commentaire</string>
     <string name="notif_diary_comment_body">%1$s a commenté votre entrée de journal.</string>
+    <string name="notif_dream_like_title">Nouveau j\'aime</string>
+    <string name="notif_dream_like_body">%1$s a aimé votre rêve.</string>
+    <string name="notif_dream_comment_title">Nouveau commentaire</string>
+    <string name="notif_dream_comment_body">%1$s a commenté votre rêve.</string>
     <string name="notif_dream_image_gift_title">Image de rêve prête</string>
     <string name="notif_dream_image_gift_body">Une image de rêve a été créée pour vous.</string>
     <string name="notif_request_no_longer_available">Cette demande d\'abonnement n\'est plus disponible.</string>

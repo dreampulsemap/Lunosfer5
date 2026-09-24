@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -217,6 +218,16 @@ private fun NotificationRow(
             Icons.Default.ChatBubbleOutline,
             stringResource(R.string.notif_diary_comment_title),
             stringResource(R.string.notif_diary_comment_body).format(actor?.nameOrFallback ?: stringResource(R.string.common_someone_fallback))
+        )
+        "dream_like" -> Triple(
+            Icons.Default.Favorite,
+            stringResource(R.string.notif_dream_like_title),
+            stringResource(R.string.notif_dream_like_body).format(actor?.nameOrFallback ?: stringResource(R.string.common_someone_fallback))
+        )
+        "dream_comment" -> Triple(
+            Icons.Default.ChatBubbleOutline,
+            stringResource(R.string.notif_dream_comment_title),
+            stringResource(R.string.notif_dream_comment_body).format(actor?.nameOrFallback ?: stringResource(R.string.common_someone_fallback))
         )
         "dream_image_gift" -> Triple(
             Icons.Default.Image,

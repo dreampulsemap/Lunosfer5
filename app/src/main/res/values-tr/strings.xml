@@ -851,6 +851,10 @@
     <string name="notif_mana_received_body">%1$s vizyonuna mana gönderdi.</string>
     <string name="notif_diary_comment_title">Yeni Yorum</string>
     <string name="notif_diary_comment_body">%1$s günlük paylaşımına yorum yaptı.</string>
+    <string name="notif_dream_like_title">Yeni Beğeni</string>
+    <string name="notif_dream_like_body">%1$s rüyanı beğendi.</string>
+    <string name="notif_dream_comment_title">Yeni Yorum</string>
+    <string name="notif_dream_comment_body">%1$s rüyana yorum yaptı.</string>
     <string name="notif_dream_image_gift_title">Rüya Görseli Hazır</string>
     <string name="notif_dream_image_gift_body">Senin için bir rüya görseli oluşturuldu.</string>
     <string name="notif_request_no_longer_available">Bu takip isteği artık geçerli değil.</string>
