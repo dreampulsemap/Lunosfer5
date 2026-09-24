@@ -1,7 +1,11 @@
 package io.lunosfer.dreamap.ui.screens
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -231,6 +235,16 @@ private fun HomeFeedList(
             )
         }
 
+        // "Her an her şey olabilir" hissi: az önce yüklenmiş akıştan (yeni
+        // ağ isteği YOK) dönüşümlü olarak "şu an oluyor" satırları gösteren
+        // canlı bir bant. Sahte/simüle veri değil — gerçek son rüya/vizyon
+        // paylaşımları, sadece tek tek öne çıkarılıyor.
+        if (items.isNotEmpty()) {
+            item {
+                LiveActivityTicker(items = items)
+            }
+        }
+
         if (items.isEmpty()) {
             item {
                 Column(
@@ -305,6 +319,65 @@ private fun HomeFeedList(
                 ) {
                     CircularProgressIndicator(color = AstralGold, modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
                 }
+            }
+        }
+    }
+}
+
+/** Az önce yüklenen akıştan (yeni ağ isteği yok) dönüşümlü "şu an oluyor"
+ * satırları — en yeni ~10 öğe arasında birkaç saniyede bir geçiş yapar. */
+@Composable
+private fun LiveActivityTicker(items: List<FeedItem>) {
+    val recent = remember(items) { items.take(10) }
+    if (recent.isEmpty()) return
+
+    var index by remember(recent) { mutableStateOf(0) }
+    LaunchedEffect(recent) {
+        while (true) {
+            kotlinx.coroutines.delay(3500)
+            index = (index + 1) % recent.size
+        }
+    }
+
+    val text = when (val item = recent[index]) {
+        is FeedItem.DreamItem -> {
+            val name = item.dream.owner?.username?.takeIf { it.isNotBlank() }
+                ?: stringResource(R.string.home_live_ticker_someone)
+            stringResource(R.string.home_live_ticker_dream, name)
+        }
+        is FeedItem.VisionItem -> {
+            val name = item.goal.owner?.username?.takeIf { it.isNotBlank() }
+                ?: stringResource(R.string.home_live_ticker_someone)
+            stringResource(R.string.home_live_ticker_vision, name)
+        }
+    }
+
+    Surface(
+        shape = RoundedCornerShape(12.dp),
+        color = Void800.copy(alpha = 0.6f),
+        border = BorderStroke(1.dp, AstralGold.copy(alpha = 0.25f)),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        AnimatedContent(
+            targetState = text,
+            transitionSpec = { fadeIn() togetherWith fadeOut() },
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+            label = "live_ticker"
+        ) { label ->
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier
+                        .size(6.dp)
+                        .background(SemanticSuccess400, CircleShape)
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = label,
+                    color = Color(0xFFCBD5E1),
+                    style = MaterialTheme.typography.bodySmall,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
     }

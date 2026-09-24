@@ -347,6 +347,9 @@
     <string name="dream_detail_deep_analysis_title">Derinlemesine Analiz</string>
     <string name="dream_detail_sentiment_label">Duygu: %1$s</string>
     <string name="dream_detail_slide_title_detail">Detay</string>
+    <string name="home_live_ticker_dream">✨ %1$s az önce bir rüya paylaştı</string>
+    <string name="home_live_ticker_vision">🌠 %1$s az önce yeni bir vizyon başlattı</string>
+    <string name="home_live_ticker_someone">Biri</string>
     <string name="home_feed_empty_title">Henüz akışında bir şey yok</string>
     <string name="home_feed_empty_desc">Bir rüya kaydet ya da bir vizyon oluştur, burada görünsün.</string>
     <string name="home_welcome_title">HOŞ GELDİN</string>

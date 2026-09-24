@@ -344,6 +344,9 @@
     <string name="dream_detail_deep_analysis_title">التحليل العميق</string>
     <string name="dream_detail_sentiment_label">المشاعر: %1$s</string>
     <string name="dream_detail_slide_title_detail">التفاصيل</string>
+    <string name="home_live_ticker_dream">✨ %1$s شارك للتو حلمًا</string>
+    <string name="home_live_ticker_vision">🌠 %1$s بدأ للتو رؤية جديدة</string>
+    <string name="home_live_ticker_someone">شخص ما</string>
     <string name="home_feed_empty_title">لا يوجد شيء في مغذّاك بعد</string>
     <string name="home_welcome_title">مرحبًا</string>
     <string name="home_feed_sentiment_label">المشاعر: %1$s</string>

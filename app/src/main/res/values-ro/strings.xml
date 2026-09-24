@@ -398,6 +398,9 @@
     <string name="dream_detail_deep_analysis_title">Analiză profundă</string>
     <string name="dream_detail_sentiment_label">Emoție: %1$s</string>
     <string name="dream_detail_slide_title_detail">Detalii</string>
+    <string name="home_live_ticker_dream">✨ %1$s tocmai a distribuit un vis</string>
+    <string name="home_live_ticker_vision">🌠 %1$s tocmai a început o nouă viziune</string>
+    <string name="home_live_ticker_someone">Cineva</string>
     <string name="home_feed_empty_title">Încă nu e nimic în fluxul tău</string>
     <string name="home_feed_empty_desc">Notează un vis sau creează o viziune ca să apară aici.</string>
     <string name="home_welcome_title">BINE AI VENIT</string>

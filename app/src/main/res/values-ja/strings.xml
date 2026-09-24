@@ -262,6 +262,9 @@
     <string name="dream_detail_bounty_title">バウンティ（オーラ）を追加</string>
     <string name="profile_logout_btn">ログアウト</string>
     <string name="dream_detail_slide_title_detail">詳細</string>
+    <string name="home_live_ticker_dream">✨ %1$sさんが夢を共有しました</string>
+    <string name="home_live_ticker_vision">🌠 %1$sさんが新しいビジョンを始めました</string>
+    <string name="home_live_ticker_someone">誰か</string>
     <string name="home_feed_empty_title">まだフィードに何もありません</string>
     <string name="error_psyche_map">サイキマップの読み込みに失敗しました</string>
     <string name="vision_start_btn">ビジョンを開始</string>

@@ -323,6 +323,9 @@
     <string name="dream_detail_deep_analysis_title">Глубокий анализ</string>
     <string name="dream_detail_sentiment_label">Эмоция: %1$s</string>
     <string name="dream_detail_slide_title_detail">Детали</string>
+    <string name="home_live_ticker_dream">✨ %1$s только что поделился сном</string>
+    <string name="home_live_ticker_vision">🌠 %1$s только что начал новое видение</string>
+    <string name="home_live_ticker_someone">Кто-то</string>
     <string name="home_feed_empty_title">В вашей ленте пока пусто</string>
     <string name="home_feed_empty_desc">Запишите сон или создайте видение, чтобы увидеть их здесь.</string>
     <string name="home_welcome_title">ДОБРО ПОЖАЛОВАТЬ</string>

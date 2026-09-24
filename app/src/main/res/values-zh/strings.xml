@@ -324,6 +324,9 @@
     <string name="dream_detail_deep_analysis_title">深度分析</string>
     <string name="dream_detail_sentiment_label">情绪：%1$s</string>
     <string name="dream_detail_slide_title_detail">详情</string>
+    <string name="home_live_ticker_dream">✨ %1$s 刚刚分享了一个梦</string>
+    <string name="home_live_ticker_vision">🌠 %1$s 刚刚开启了一个新愿景</string>
+    <string name="home_live_ticker_someone">有人</string>
     <string name="home_feed_empty_title">你的动态还是空的</string>
     <string name="home_feed_empty_desc">记录一个梦境或创建一个愿景，即可在这里看到。</string>
     <string name="home_welcome_title">欢迎</string>

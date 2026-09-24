@@ -410,6 +410,9 @@
     <string name="dream_detail_deep_analysis_title">Deep Analysis</string>
     <string name="dream_detail_sentiment_label">Emotion: %1$s</string>
     <string name="dream_detail_slide_title_detail">Detail</string>
+    <string name="home_live_ticker_dream">✨ %1$s just shared a dream</string>
+    <string name="home_live_ticker_vision">🌠 %1$s just started a new vision</string>
+    <string name="home_live_ticker_someone">Someone</string>
     <string name="home_feed_empty_title">Nothing in your feed yet</string>
     <string name="home_feed_empty_desc">Record a dream or create a vision to see it here.</string>
     <string name="home_welcome_title">WELCOME</string>

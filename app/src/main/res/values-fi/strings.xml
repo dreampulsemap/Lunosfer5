@@ -398,6 +398,9 @@
     <string name="dream_detail_deep_analysis_title">Syväanalyysi</string>
     <string name="dream_detail_sentiment_label">Tunne: %1$s</string>
     <string name="dream_detail_slide_title_detail">Tiedot</string>
+    <string name="home_live_ticker_dream">✨ %1$s jakoi juuri unen</string>
+    <string name="home_live_ticker_vision">🌠 %1$s aloitti juuri uuden vision</string>
+    <string name="home_live_ticker_someone">Joku</string>
     <string name="home_feed_empty_title">Syötteessäsi ei ole vielä mitään</string>
     <string name="home_feed_empty_desc">Kirjaa uni tai luo visio nähdäksesi sen täällä.</string>
     <string name="home_welcome_title">TERVETULOA</string>

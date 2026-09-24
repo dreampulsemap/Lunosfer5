@@ -241,6 +241,9 @@
     <string name="home_feed_completion_text">%1$s%% पूरा हुआ</string>
     <string name="dream_detail_save_btn">सहेजें</string>
     <string name="profile_edit_btn">प्रोफ़ाइल संपादित करें</string>
+    <string name="home_live_ticker_dream">✨ %1$s ने अभी एक सपना साझा किया</string>
+    <string name="home_live_ticker_vision">🌠 %1$s ने अभी एक नया विज़न शुरू किया</string>
+    <string name="home_live_ticker_someone">कोई</string>
     <string name="home_feed_empty_title">आपकी फ़ीड में अभी कुछ भी नहीं है</string>
     <string name="diary_composer_no_vision">लिंक (कोई नहीं)</string>
     <string name="public_profile_no_dreams">अभी तक कोई साझा सपने नहीं हैं।</string>

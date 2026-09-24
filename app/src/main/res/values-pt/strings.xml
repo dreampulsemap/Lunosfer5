@@ -263,6 +263,9 @@
     <string name="dream_detail_bounty_title">Adicionar Recompensa (Aura)</string>
     <string name="profile_logout_btn">Sair</string>
     <string name="dream_detail_slide_title_detail">Detalhe</string>
+    <string name="home_live_ticker_dream">✨ %1$s acabou de compartilhar um sonho</string>
+    <string name="home_live_ticker_vision">🌠 %1$s acabou de iniciar uma nova visão</string>
+    <string name="home_live_ticker_someone">Alguém</string>
     <string name="home_feed_empty_title">Nada no seu feed ainda</string>
     <string name="error_psyche_map">Falha ao carregar o Mapa da Psique</string>
     <string name="vision_start_btn">Iniciar Visão</string>

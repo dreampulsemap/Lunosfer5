@@ -262,6 +262,9 @@
     <string name="dream_detail_bounty_title">Ajouter une prime (Aura)</string>
     <string name="profile_logout_btn">Se déconnecter</string>
     <string name="dream_detail_slide_title_detail">Détail</string>
+    <string name="home_live_ticker_dream">✨ %1$s vient de partager un rêve</string>
+    <string name="home_live_ticker_vision">🌠 %1$s vient de démarrer une nouvelle vision</string>
+    <string name="home_live_ticker_someone">Quelqu\'un</string>
     <string name="home_feed_empty_title">Rien dans votre fil pour le moment</string>
     <string name="error_psyche_map">Échec du chargement de la carte psychique</string>
     <string name="vision_start_btn">Commencer la vision</string>
