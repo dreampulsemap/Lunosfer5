@@ -92,6 +92,8 @@
     <string name="referral_your_code">Kutsukoodisi:</string>
     <string name="referral_copied">Kutsukoodi kopioitu!</string>
     <string name="referral_copy">Kopioi</string>
+    <string name="referral_share">Jaa</string>
+    <string name="referral_share_message">Liity Lunosferiin! Käytä koodiani %1$s rekisteröityessäsi ja saat bonuksen. https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="referral_stat_friends">Kutsutut ystävät</string>
     <string name="referral_stat_mana">Ansaittu mana</string>
     <string name="referral_enter_code_label">Syötä ystävän koodi:</string>

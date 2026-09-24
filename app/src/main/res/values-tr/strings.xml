@@ -98,6 +98,8 @@
     <string name="referral_your_code">Davet Kodun:</string>
     <string name="referral_copied">Davet kodu kopyalandı!</string>
     <string name="referral_copy">Kopyala</string>
+    <string name="referral_share">Paylaş</string>
+    <string name="referral_share_message">Lunosfer\'e katıl! Kayıt olurken %1$s kodumu kullan, bonus kazan. https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="referral_stat_friends">Toplanan Arkadaş</string>
     <string name="referral_stat_mana">Kazanılan Mana</string>
     <string name="referral_enter_code_label">Bir Arkadaşının Kodunu Gir:</string>

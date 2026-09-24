@@ -92,6 +92,8 @@
     <string name="referral_your_code">Ваш код запрошення:</string>
     <string name="referral_copied">Код запрошення скопійовано!</string>
     <string name="referral_copy">Копіювати</string>
+    <string name="referral_share">Поділитися</string>
+    <string name="referral_share_message">Приєднуйся до мене в Lunosfer! Використай мій код %1$s під час реєстрації та отримай бонус. https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="referral_stat_friends">Запрошені друзі</string>
     <string name="referral_stat_mana">Отримана мана</string>
     <string name="referral_enter_code_label">Введіть код друга:</string>

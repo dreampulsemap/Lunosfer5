@@ -89,6 +89,8 @@
     <string name="referral_your_code">Ihr Einladungscode:</string>
     <string name="referral_copied">Einladungscode kopiert!</string>
     <string name="referral_copy">Kopieren</string>
+    <string name="referral_share">Teilen</string>
+    <string name="referral_share_message">Komm zu Lunosfer! Nutze meinen Code %1$s bei der Anmeldung für einen Bonus. https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="referral_stat_friends">Eingeladene Freunde</string>
     <string name="referral_stat_mana">Verdientes Mana</string>
     <string name="referral_enter_code_label">Code eines Freundes eingeben:</string>

@@ -87,6 +87,8 @@
     <string name="referral_your_code">您的邀请码：</string>
     <string name="referral_copied">邀请码已复制！</string>
     <string name="referral_copy">复制</string>
+    <string name="referral_share">分享</string>
+    <string name="referral_share_message">快来 Lunosfer 加入我吧！注册时使用我的邀请码 %1$s 即可获得奖励。https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="referral_stat_friends">已邀请好友</string>
     <string name="referral_stat_mana">已赚取法力值</string>
     <string name="referral_enter_code_label">输入好友的邀请码：</string>

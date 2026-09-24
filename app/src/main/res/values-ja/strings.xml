@@ -87,6 +87,8 @@
     <string name="referral_your_code">あなたの招待コード:</string>
     <string name="referral_copied">招待コードをコピーしました！</string>
     <string name="referral_copy">コピー</string>
+    <string name="referral_share">共有</string>
+    <string name="referral_share_message">Lunosferで一緒に始めましょう！登録時に私のコード%1$sを使うとボーナスがもらえます。https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="referral_stat_friends">招待した友達</string>
     <string name="referral_stat_mana">獲得したマナ</string>
     <string name="referral_enter_code_label">友達のコードを入力:</string>

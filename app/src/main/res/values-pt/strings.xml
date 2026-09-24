@@ -88,6 +88,8 @@
     <string name="referral_your_code">Seu Código de Convite:</string>
     <string name="referral_copied">Código de convite copiado!</string>
     <string name="referral_copy">Copiar</string>
+    <string name="referral_share">Compartilhar</string>
+    <string name="referral_share_message">Junte-se a mim no Lunosfer! Use meu código %1$s ao se cadastrar para ganhar um bônus. https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="referral_stat_friends">Amigos Convidados</string>
     <string name="referral_stat_mana">Mana Ganho</string>
     <string name="referral_enter_code_label">Insira o Código de um Amigo:</string>

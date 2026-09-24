@@ -88,6 +88,8 @@
     <string name="referral_your_code">आपका आमंत्रण कोड:</string>
     <string name="referral_copied">आमंत्रण कोड कॉपी कर लिया गया!</string>
     <string name="referral_copy">कॉपी करें</string>
+    <string name="referral_share">साझा करें</string>
+    <string name="referral_share_message">Lunosfer पर मेरे साथ जुड़ें! साइन अप करते समय मेरा कोड %1$s इस्तेमाल करें और बोनस पाएं। https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="referral_stat_friends">आमंत्रित मित्र</string>
     <string name="referral_stat_mana">कमाई गई माना</string>
     <string name="referral_enter_code_label">किसी मित्र का कोड दर्ज करें:</string>

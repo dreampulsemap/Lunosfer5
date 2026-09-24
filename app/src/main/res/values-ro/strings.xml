@@ -92,6 +92,8 @@
     <string name="referral_your_code">Codul tău de invitație:</string>
     <string name="referral_copied">Cod de invitație copiat!</string>
     <string name="referral_copy">Copiază</string>
+    <string name="referral_share">Distribuie</string>
+    <string name="referral_share_message">Alătură-te mie pe Lunosfer! Folosește codul meu %1$s la înregistrare pentru un bonus. https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="referral_stat_friends">Prieteni invitați</string>
     <string name="referral_stat_mana">Mana câștigată</string>
     <string name="referral_enter_code_label">Introdu codul unui prieten:</string>

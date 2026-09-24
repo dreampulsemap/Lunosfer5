@@ -128,6 +128,8 @@
     <string name="thread_load_failed">تعذر تحميل المحادثة</string>
     <string name="thread_cancel_btn">إلغاء</string>
     <string name="referral_copy">نسخ</string>
+    <string name="referral_share">مشاركة</string>
+    <string name="referral_share_message">انضم إليّ في Lunosfer! استخدم الرمز %1$s عند التسجيل للحصول على مكافأة. https://play.google.com/store/apps/details?id=io.lunosfer.dreamap</string>
     <string name="pixabay_search_placeholder">بحث...</string>
     <string name="friend_reject">رفض</string>
     <string name="friend_follow">متابعة</string>
