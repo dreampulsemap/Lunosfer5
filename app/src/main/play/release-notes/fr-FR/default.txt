@@ -1,1 +1,5 @@
-Correctif : la sélection de la langue fonctionne désormais correctement dans toute l'app (elle restait bloquée en anglais).
+- Nouveaux indicateurs de statut des messages dans le chat (envoi/échec, réessayer)
+- Le chat va désormais directement au dernier message à l'ouverture, sans défilement saccadé
+- Partage en un geste ajouté à la carte d'invitation d'amis
+- Nouveau bandeau d'activité en direct « en ce moment » sur l'accueil
+- Corrections de bugs mineurs et améliorations de performance

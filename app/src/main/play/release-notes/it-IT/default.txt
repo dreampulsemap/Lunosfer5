@@ -1,1 +1,5 @@
-Correzione: la selezione della lingua ora funziona correttamente in tutta l'app (prima rimaneva bloccata sull'inglese).
+- Nuovi indicatori di stato dei messaggi in chat (invio/fallito, riprova)
+- La chat ora va subito all'ultimo messaggio all'apertura, niente più scatti
+- Aggiunta condivisione con un tocco alla scheda inviti amici
+- Nuovo banner attività dal vivo "sta succedendo ora" nella home
+- Piccole correzioni di bug e miglioramenti delle prestazioni

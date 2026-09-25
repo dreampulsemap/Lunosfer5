@@ -1,1 +1,5 @@
-Düzeltme: Dil seçimi artık uygulamanın her yerinde doğru çalışıyor (önceden İngilizce'de takılı kalıyordu).
+- Sohbette yeni mesaj durumu göstergeleri (gönderiliyor/başarısız, yeniden dene)
+- Sohbet ekranı ilk açılışta artık kaymadan anında son mesaja gidiyor
+- Arkadaş davet kartına tek dokunuşla paylaşım eklendi
+- Ana akışta "şu an oluyor" canlı etkinlik bandı
+- Küçük hata düzeltmeleri ve performans iyileştirmeleri

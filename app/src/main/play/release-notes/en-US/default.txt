@@ -1,1 +1,5 @@
-Fix: language selection now works correctly across the whole app (previously stuck on English).
+- New message status indicators in chat (sending/failed, retry)
+- Chat screen now jumps straight to the latest message on open, no more scroll flicker
+- One-tap sharing added to the friend invite card
+- Live "happening now" activity ticker on the home feed
+- Minor bug fixes and performance improvements

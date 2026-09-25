@@ -1,1 +1,5 @@
-Fehlerbehebung: Die Sprachauswahl funktioniert jetzt überall in der App korrekt (zuvor blieb sie bei Englisch hängen).
+- Neue Nachrichtenstatus-Anzeigen im Chat (wird gesendet/fehlgeschlagen, erneut versuchen)
+- Chat springt beim Öffnen jetzt sofort zur letzten Nachricht, kein Ruckeln mehr
+- Freunde-Einladungskarte hat jetzt Teilen mit einem Tippen
+- Live-Aktivitätsanzeige "passiert gerade" im Startbildschirm
+- Kleinere Fehlerbehebungen und Leistungsverbesserungen
