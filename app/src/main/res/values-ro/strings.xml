@@ -1144,4 +1144,21 @@
     <string name="compass_card_title">Busola Zilnică</string>
     <string name="compass_card_archetype">Arhetipul zilei</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">Ghidul aplicației</string>
+    <string name="onb_map_title">Cunoaște meniurile</string>
+    <string name="onb_map_body">Totul în aplicație se deschide din aceste meniuri. Atinge pictogramele de mai jos ca să vezi ce face fiecare.</string>
+    <string name="onb_map_action">Atinge toate cele 5 pictograme din bara de jos</string>
+    <string name="onb_map_pick">Atinge o pictogramă</string>
+    <string name="onb_map_mana">💧 Mana: primești 20 de Mana în fiecare zi. Trimite-o viziunilor altora ca să arăți că crezi în ei.</string>
+    <string name="onb_map_aura">⭐ Aura: soldul tău pentru funcțiile AI premium, ca analiza profundă a viselor și Oracolul.</string>
+    <string name="onb_map_bell">🔔 Notificări: aprecieri, comentarii, cereri de prietenie și Mana primită.</string>
+    <string name="onb_map_profile">👤 Profil: visele, jurnalul, viziunile, prietenii și setările tale.</string>
+    <string name="onb_map_more">⋮ Mai mult: Călătoria mea (XP, ranguri, misiuni), Glob, Instrumente spirituale, Analiză profundă, Setări și acest ghid.</string>
+    <string name="onb_map_home">Acasă: Busola zilei, misiuni zilnice, poveștile din jurnal ale prietenilor și fluxul.</string>
+    <string name="onb_map_explore">Explorează: descoperă vise și viziuni din toată lumea, apreciază și comentează.</string>
+    <string name="onb_map_create">＋ Creează: notează un vis nou sau pornește o viziune nouă.</string>
+    <string name="onb_map_vision">Viziune: transformă-ți obiectivele în panouri de viziune și urmărește-ți progresul.</string>
+    <string name="onb_map_messages">Mesaje: vorbește cu prietenii și distribuie vise, momente din jurnal și viziuni.</string>
+    <string name="onb_c2_steps" formatted="true">Cum îl notezi:\n1. Atinge butonul ＋ de jos → %1$s\n2. Scrie visul cât mai detaliat\n3. Atinge %2$s → interpretarea și imaginea ta sunt pregătite</string>
+    <string name="onb_c3_steps" formatted="true">Cum o creezi:\n1. Atinge butonul ＋ de jos → %1$s\n2. Scrie un titlu; opțional adaugă descriere, copertă și dată țintă\n3. Adaugă pași în foaia de parcurs → %2$s</string>
 </resources>

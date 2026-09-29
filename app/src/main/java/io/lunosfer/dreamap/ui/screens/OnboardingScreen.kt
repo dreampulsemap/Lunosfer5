@@ -63,6 +63,15 @@ import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.WaterDrop
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Explore
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.TrackChanges
+import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -128,20 +137,29 @@ enum class OnboardingMode {
     VISITOR
 }
 
-// Her bölüm +10 -> 5 bölüm = sunucudaki xp_rules('onboarding_completed') = 50.
+// Her bölüm +10 -> 6 bölüm = sunucudaki xp_rules('onboarding_completed') = 60.
 // ponytail: istemci sabiti; sunucu kuralı değişirse burası da güncellenmeli.
 private const val XP_PER_CHAPTER = 10
-private const val CHAPTER_COUNT = 5
 
-private data class Chapter(@StringRes val title: Int, @StringRes val body: Int?, @StringRes val action: Int)
+private data class Chapter(
+    @StringRes val title: Int,
+    @StringRes val body: Int?,
+    @StringRes val action: Int,
+    /** "Nasıl yapılır" adımları (rüya kaydetme, vizyon oluşturma). */
+    @StringRes val steps: Int? = null,
+    /** steps metnindeki %1$s, %2$s: uygulamadaki gerçek düğme adları (her dilde birebir). */
+    val stepArgs: List<Int> = emptyList()
+)
 
 private val CHAPTERS = listOf(
     Chapter(R.string.onb_c1_title, R.string.onb_c1_body, R.string.onb_c1_action),
-    Chapter(R.string.onb_c2_title, R.string.onb_c2_body, R.string.onb_c2_action),
-    Chapter(R.string.onb_c3_title, R.string.onb_c3_body, R.string.onb_c3_action),
+    Chapter(R.string.onb_map_title, R.string.onb_map_body, R.string.onb_map_action),
+    Chapter(R.string.onb_c2_title, R.string.onb_c2_body, R.string.onb_c2_action, R.string.onb_c2_steps, listOf(R.string.nav_new_dream, R.string.dream_submit)),
+    Chapter(R.string.onb_c3_title, R.string.onb_c3_body, R.string.onb_c3_action, R.string.onb_c3_steps, listOf(R.string.nav_new_vision, R.string.create_vision_submit_btn)),
     Chapter(R.string.onb_c4_title, R.string.onb_c4_body, R.string.onb_c4_action),
     Chapter(R.string.onb_c5_title, null, R.string.onb_c5_action)
 )
+private val CHAPTER_COUNT = CHAPTERS.size
 
 /**
  * İlk kez açan / kayıt olan kullanıcıya uygulamayı oyun gibi öğreten tur.
@@ -304,9 +322,10 @@ private fun ChapterPage(index: Int, done: Boolean, onDone: () -> Unit) {
                 ) {
                     when (index) {
                         0 -> MoonScene(done, onDone)
-                        1 -> DreamCardScene(done, onDone)
-                        2 -> ManaScene(done, onDone)
-                        3 -> HeartScene(done, onDone)
+                        1 -> MenuMapScene(done, onDone)
+                        2 -> DreamCardScene(done, onDone)
+                        3 -> ManaScene(done, onDone)
+                        4 -> HeartScene(done, onDone)
                         else -> ChestScene(done, onDone)
                     }
                 }
@@ -340,6 +359,23 @@ private fun ChapterTexts(chapter: Chapter) {
             )
         } else {
             GameRules()
+        }
+        if (chapter.steps != null) {
+            Spacer(Modifier.height(12.dp))
+            Text(
+                stringResource(chapter.steps, *chapter.stepArgs.map { stringResource(it) }.toTypedArray()),
+                color = AstralGold.copy(alpha = 0.95f),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Start,
+                lineHeight = 21.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(Void900)
+                    .border(1.dp, AstralGold.copy(alpha = 0.25f), RoundedCornerShape(14.dp))
+                    .padding(horizontal = 14.dp, vertical = 10.dp)
+            )
         }
         Spacer(Modifier.height(8.dp))
     }
@@ -404,6 +440,97 @@ private fun GameRuleLine(icon: ImageVector, @StringRes text: Int) {
 }
 
 // --- Bölüm sahneleri ---------------------------------------------------------
+
+private data class MapItem(val icon: ImageVector, @StringRes val label: Int?, @StringRes val desc: Int)
+
+private val MAP_TOP = listOf(
+    MapItem(Icons.Filled.WaterDrop, null, R.string.onb_map_mana),
+    MapItem(Icons.Filled.Star, null, R.string.onb_map_aura),
+    MapItem(Icons.Filled.Notifications, null, R.string.onb_map_bell),
+    MapItem(Icons.Filled.Person, null, R.string.onb_map_profile),
+    MapItem(Icons.Filled.MoreVert, null, R.string.onb_map_more)
+)
+private val MAP_BOTTOM = listOf(
+    MapItem(Icons.Filled.Home, R.string.nav_home, R.string.onb_map_home),
+    MapItem(Icons.Filled.Explore, R.string.nav_explore, R.string.onb_map_explore),
+    MapItem(Icons.Filled.Add, null, R.string.onb_map_create),
+    MapItem(Icons.Filled.TrackChanges, R.string.nav_vision, R.string.onb_map_vision),
+    MapItem(Icons.AutoMirrored.Filled.Message, R.string.nav_messages, R.string.onb_map_messages)
+)
+// Alt menünün 5 simgesinin hepsine dokununca bölüm tamamlanır.
+private const val MAP_BOTTOM_ALL = 0b11111
+
+/** Uygulamanın küçük bir kopyası: her simgeye dokununca ne işe yaradığı yazar. */
+@Composable
+private fun MenuMapScene(done: Boolean, onDone: () -> Unit) {
+    var selected by rememberSaveable { mutableIntStateOf(-1) }
+    var bottomMask by rememberSaveable { mutableIntStateOf(if (done) MAP_BOTTOM_ALL else 0) }
+    val all = MAP_TOP + MAP_BOTTOM
+    Column(
+        Modifier
+            .width(340.dp)
+            .height(262.dp)
+            .clip(RoundedCornerShape(22.dp))
+            .background(Void900)
+            .border(1.dp, AstralGold.copy(alpha = 0.35f), RoundedCornerShape(22.dp))
+    ) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 6.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            MAP_TOP.forEachIndexed { i, item ->
+                val tint = when (i) { 0 -> AetherCyan; 1 -> AstralGold; else -> Color.White }
+                MapIcon(item, selected == i, tint) { selected = i }
+            }
+        }
+        Box(
+            Modifier.fillMaxWidth().weight(1f).padding(horizontal = 14.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                if (selected >= 0) stringResource(all[selected].desc) else stringResource(R.string.onb_map_pick),
+                color = if (selected >= 0) Color.White else MoonSilver,
+                fontSize = 13.sp,
+                lineHeight = 18.sp,
+                textAlign = TextAlign.Center
+            )
+        }
+        Row(
+            Modifier.fillMaxWidth().background(Void800).padding(horizontal = 4.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            MAP_BOTTOM.forEachIndexed { i, item ->
+                val idx = MAP_TOP.size + i
+                val seen = bottomMask and (1 shl i) != 0
+                val tint = when {
+                    i == 2 -> AstralGold
+                    seen -> AetherCyan
+                    else -> MoonSilver
+                }
+                MapIcon(item, selected == idx, tint) {
+                    selected = idx
+                    bottomMask = bottomMask or (1 shl i)
+                    if (bottomMask == MAP_BOTTOM_ALL && !done) onDone()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MapIcon(item: MapItem, selected: Boolean, tint: Color, onClick: () -> Unit) {
+    Column(
+        Modifier
+            .clip(RoundedCornerShape(10.dp))
+            .background(if (selected) AstralGold.copy(alpha = 0.18f) else Color.Transparent)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 6.dp, vertical = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(item.icon, contentDescription = stringResource(item.desc), tint = tint, modifier = Modifier.size(22.dp))
+        if (item.label != null) {
+            Text(stringResource(item.label), color = tint, fontSize = 9.sp, maxLines = 1)
+        }
+    }
+}
 
 @Composable
 private fun MoonScene(done: Boolean, onDone: () -> Unit) {

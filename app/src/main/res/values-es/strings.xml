@@ -1137,4 +1137,21 @@
     <string name="compass_card_title">Brújula Diaria</string>
     <string name="compass_card_archetype">Arquetipo de hoy</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">Guía de la app</string>
+    <string name="onb_map_title">Conoce los menús</string>
+    <string name="onb_map_body">Todo en la app se abre desde estos menús. Toca los iconos de abajo para ver qué hace cada uno.</string>
+    <string name="onb_map_action">Toca los 5 iconos de la barra inferior</string>
+    <string name="onb_map_pick">Toca un icono</string>
+    <string name="onb_map_mana">💧 Maná: recibes 20 de Maná cada día. Envíalo a las visiones de otros para mostrar que crees en ellos.</string>
+    <string name="onb_map_aura">⭐ Aura: tu saldo para funciones premium de IA, como el análisis profundo de sueños y el Oráculo.</string>
+    <string name="onb_map_bell">🔔 Notificaciones: me gusta, comentarios, solicitudes de amistad y el Maná que te envían.</string>
+    <string name="onb_map_profile">👤 Perfil: tus sueños, diario, visiones, amigos y ajustes.</string>
+    <string name="onb_map_more">⋮ Más: Mi viaje (XP, rangos, misiones), Globo, Herramientas espirituales, Análisis profundo, Ajustes y esta guía.</string>
+    <string name="onb_map_home">Inicio: la Brújula del Día, misiones diarias, historias del diario de tus amigos y el feed.</string>
+    <string name="onb_map_explore">Explorar: descubre sueños y visiones de todo el mundo, da me gusta y comenta.</string>
+    <string name="onb_map_create">＋ Crear: registra un sueño nuevo o empieza una visión nueva.</string>
+    <string name="onb_map_vision">Visión: convierte tus metas en tableros de visión y sigue tu progreso.</string>
+    <string name="onb_map_messages">Mensajes: chatea con amigos y comparte sueños, momentos del diario y visiones.</string>
+    <string name="onb_c2_steps" formatted="true">Cómo registrarlo:\n1. Toca el botón ＋ de abajo → %1$s\n2. Escribe tu sueño con el mayor detalle posible\n3. Toca %2$s → se preparan tu interpretación y tu imagen</string>
+    <string name="onb_c3_steps" formatted="true">Cómo crearla:\n1. Toca el botón ＋ de abajo → %1$s\n2. Escribe un título; si quieres, añade descripción, portada y fecha objetivo\n3. Añade pasos a tu hoja de ruta → %2$s</string>
 </resources>

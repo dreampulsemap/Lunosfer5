@@ -1144,4 +1144,21 @@
     <string name="compass_card_title">Ежедневный компас</string>
     <string name="compass_card_archetype">Архетип дня</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">Гид по приложению</string>
+    <string name="onb_map_title">Знакомство с меню</string>
+    <string name="onb_map_body">Всё в приложении открывается из этих меню. Нажмите на значки ниже, чтобы узнать, для чего каждый.</string>
+    <string name="onb_map_action">Нажмите на все 5 значков нижней панели</string>
+    <string name="onb_map_pick">Нажмите на значок</string>
+    <string name="onb_map_mana">💧 Мана: каждый день вы получаете 20 маны. Отправляйте её в видения других, чтобы показать, что верите в них.</string>
+    <string name="onb_map_aura">⭐ Аура: ваш баланс для премиальных ИИ-функций — глубокого анализа снов и Оракула.</string>
+    <string name="onb_map_bell">🔔 Уведомления: лайки, комментарии, заявки в друзья и мана, которую вам присылают.</string>
+    <string name="onb_map_profile">👤 Профиль: ваши сны, дневник, видения, друзья и настройки.</string>
+    <string name="onb_map_more">⋮ Ещё: Мой путь (XP, ранги, задания), Глобус, Духовные инструменты, Глубокий анализ, Настройки и этот гид.</string>
+    <string name="onb_map_home">Главная: Компас дня, ежедневные задания, истории дневника друзей и лента.</string>
+    <string name="onb_map_explore">Обзор: открывайте сны и видения со всего мира, ставьте лайки и комментируйте.</string>
+    <string name="onb_map_create">＋ Создать: записать новый сон или начать новое видение.</string>
+    <string name="onb_map_vision">Видение: превращайте цели в доски видений и следите за прогрессом.</string>
+    <string name="onb_map_messages">Сообщения: общайтесь с друзьями и делитесь снами, записями дневника и видениями.</string>
+    <string name="onb_c2_steps" formatted="true">Как записать:\n1. Нажмите кнопку ＋ внизу → %1$s\n2. Опишите сон как можно подробнее\n3. Нажмите «%2$s» → будут готовы толкование и изображение</string>
+    <string name="onb_c3_steps" formatted="true">Как создать:\n1. Нажмите кнопку ＋ внизу → %1$s\n2. Введите название; при желании добавьте описание, обложку и дату цели\n3. Добавьте шаги в дорожную карту → %2$s</string>
 </resources>

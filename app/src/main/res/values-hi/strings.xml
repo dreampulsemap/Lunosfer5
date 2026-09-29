@@ -1131,4 +1131,21 @@
     <string name="compass_card_title">दैनिक कम्पास</string>
     <string name="compass_card_archetype">आज का आदिरूप</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">ऐप गाइड</string>
+    <string name="onb_map_title">मेनू को जानें</string>
+    <string name="onb_map_body">ऐप का हर हिस्सा इन मेनू से खुलता है। नीचे दिए आइकन पर टैप करें और देखें कि हर एक क्या करता है।</string>
+    <string name="onb_map_action">नीचे की पट्टी के सभी 5 आइकन पर टैप करें</string>
+    <string name="onb_map_pick">किसी आइकन पर टैप करें</string>
+    <string name="onb_map_mana">💧 माना: आपको हर दिन 20 माना मिलता है। दूसरों के विज़न पर भेजकर दिखाएँ कि आप उन पर भरोसा करते हैं।</string>
+    <string name="onb_map_aura">⭐ ऑरा: गहरे सपना विश्लेषण और ओरेकल जैसी प्रीमियम AI सुविधाओं के लिए आपका बैलेंस।</string>
+    <string name="onb_map_bell">🔔 सूचनाएँ: लाइक, कमेंट, दोस्ती के अनुरोध और आपको भेजा गया माना।</string>
+    <string name="onb_map_profile">👤 प्रोफ़ाइल: आपके सपने, डायरी, विज़न, दोस्त और सेटिंग्स।</string>
+    <string name="onb_map_more">⋮ और: मेरी यात्रा (XP, रैंक, क्वेस्ट), ग्लोब, आध्यात्मिक उपकरण, गहरा विश्लेषण, सेटिंग्स और यह गाइड।</string>
+    <string name="onb_map_home">होम: आज का कम्पास, दैनिक क्वेस्ट, दोस्तों की डायरी स्टोरी और फ़ीड।</string>
+    <string name="onb_map_explore">एक्सप्लोर: दुनिया भर के सपने और विज़न खोजें, लाइक और कमेंट करें।</string>
+    <string name="onb_map_create">＋ बनाएँ: नया सपना दर्ज करें या नया विज़न शुरू करें।</string>
+    <string name="onb_map_vision">विज़न: अपने लक्ष्यों को विज़न बोर्ड में बदलें और प्रगति देखें।</string>
+    <string name="onb_map_messages">संदेश: दोस्तों से चैट करें और सपने, डायरी पल और विज़न शेयर करें।</string>
+    <string name="onb_c2_steps" formatted="true">कैसे दर्ज करें:\n1. नीचे ＋ बटन पर टैप करें → %1$s\n2. अपना सपना जितना हो सके विस्तार से लिखें\n3. %2$s पर टैप करें → आपकी व्याख्या और तस्वीर तैयार होती है</string>
+    <string name="onb_c3_steps" formatted="true">कैसे बनाएँ:\n1. नीचे ＋ बटन पर टैप करें → %1$s\n2. शीर्षक लिखें; चाहें तो विवरण, कवर इमेज और लक्ष्य तिथि जोड़ें\n3. अपने रोडमैप में कदम जोड़ें → %2$s</string>
 </resources>

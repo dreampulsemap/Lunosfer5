@@ -791,6 +791,13 @@ fun TopBar(
                             }
                         )
                         DropdownMenuItem(
+                            text = { Text(stringResource(R.string.main_menu_app_guide)) },
+                            onClick = {
+                                showMoreMenu = false
+                                OnboardingController.show()
+                            }
+                        )
+                        DropdownMenuItem(
                             text = { Text(stringResource(R.string.main_menu_globe)) },
                             onClick = {
                                 showMoreMenu = false

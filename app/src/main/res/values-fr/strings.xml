@@ -1136,4 +1136,21 @@
     <string name="compass_card_title">Boussole Quotidienne</string>
     <string name="compass_card_archetype">Archétype du jour</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">Guide de l\'app</string>
+    <string name="onb_map_title">Découvre les menus</string>
+    <string name="onb_map_body">Tout dans l\'app s\'ouvre depuis ces menus. Touche les icônes ci-dessous pour voir à quoi elles servent.</string>
+    <string name="onb_map_action">Touche les 5 icônes de la barre du bas</string>
+    <string name="onb_map_pick">Touche une icône</string>
+    <string name="onb_map_mana">💧 Mana : tu reçois 20 Mana chaque jour. Envoie-le aux visions des autres pour montrer que tu crois en eux.</string>
+    <string name="onb_map_aura">⭐ Aura : ton solde pour les fonctions IA premium, comme l\'analyse approfondie des rêves et l\'Oracle.</string>
+    <string name="onb_map_bell">🔔 Notifications : j\'aime, commentaires, demandes d\'amis et le Mana qu\'on t\'envoie.</string>
+    <string name="onb_map_profile">👤 Profil : tes rêves, ton journal, tes visions, tes amis et tes réglages.</string>
+    <string name="onb_map_more">⋮ Plus : Mon voyage (XP, rangs, quêtes), Globe, Outils spirituels, Analyse approfondie, Réglages et ce guide.</string>
+    <string name="onb_map_home">Accueil : la Boussole du jour, les quêtes quotidiennes, les stories de journal de tes amis et le fil.</string>
+    <string name="onb_map_explore">Explorer : découvre des rêves et des visions du monde entier, aime et commente.</string>
+    <string name="onb_map_create">＋ Créer : enregistre un nouveau rêve ou lance une nouvelle vision.</string>
+    <string name="onb_map_vision">Vision : transforme tes objectifs en tableaux de vision et suis tes progrès.</string>
+    <string name="onb_map_messages">Messages : discute avec tes amis et partage rêves, moments de journal et visions.</string>
+    <string name="onb_c2_steps" formatted="true">Comment l\'enregistrer :\n1. Touche le bouton ＋ en bas → %1$s\n2. Écris ton rêve avec le plus de détails possible\n3. Touche %2$s → ton interprétation et ton image sont préparées</string>
+    <string name="onb_c3_steps" formatted="true">Comment la créer :\n1. Touche le bouton ＋ en bas → %1$s\n2. Écris un titre ; ajoute si tu veux une description, une couverture et une date cible\n3. Ajoute des étapes à ta feuille de route → %2$s</string>
 </resources>

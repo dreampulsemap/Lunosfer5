@@ -1124,4 +1124,21 @@
     <string name="compass_card_title">每日罗盘</string>
     <string name="compass_card_archetype">今日原型</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">应用指南</string>
+    <string name="onb_map_title">认识菜单</string>
+    <string name="onb_map_body">应用的所有功能都从这些菜单打开。点按下方图标，看看每个图标的作用。</string>
+    <string name="onb_map_action">点按底部栏的全部 5 个图标</string>
+    <string name="onb_map_pick">点按一个图标</string>
+    <string name="onb_map_mana">💧 法力：每天可获得 20 点法力。把它送给别人的愿景，表示你相信他们。</string>
+    <string name="onb_map_aura">⭐ 灵气：用于深度梦境分析、神谕等高级 AI 功能的余额。</string>
+    <string name="onb_map_bell">🔔 通知：点赞、评论、好友请求以及别人送你的法力。</string>
+    <string name="onb_map_profile">👤 个人资料：你的梦境、日记、愿景、好友和设置。</string>
+    <string name="onb_map_more">⋮ 更多：我的旅程（XP、等级、任务）、地球、心灵工具、深度分析、设置以及本指南。</string>
+    <string name="onb_map_home">首页：今日罗盘、每日任务、好友的日记故事和动态。</string>
+    <string name="onb_map_explore">探索：发现来自世界各地的梦境和愿景，点赞并评论。</string>
+    <string name="onb_map_create">＋ 创建：记录新的梦境或开启新的愿景。</string>
+    <string name="onb_map_vision">愿景：把目标变成愿景板，并追踪你的进度。</string>
+    <string name="onb_map_messages">消息：与好友聊天，分享梦境、日记片段和愿景。</string>
+    <string name="onb_c2_steps" formatted="true">如何记录：\n1. 点按底部的 ＋ 按钮 → %1$s\n2. 尽可能详细地写下你的梦\n3. 点按 %2$s → 为你生成解读和图片</string>
+    <string name="onb_c3_steps" formatted="true">如何创建：\n1. 点按底部的 ＋ 按钮 → %1$s\n2. 填写标题；可选添加描述、封面图和目标日期\n3. 为路线图添加步骤 → %2$s</string>
 </resources>

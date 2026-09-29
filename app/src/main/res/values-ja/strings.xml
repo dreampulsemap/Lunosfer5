@@ -1122,4 +1122,21 @@
     <string name="compass_card_title">デイリーコンパス</string>
     <string name="compass_card_archetype">今日のアーキタイプ</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">アプリガイド</string>
+    <string name="onb_map_title">メニューを知ろう</string>
+    <string name="onb_map_body">アプリのすべての機能はこのメニューから開けます。下のアイコンをタップして、それぞれの役割を確認しよう。</string>
+    <string name="onb_map_action">下部バーの 5 つのアイコンをすべてタップ</string>
+    <string name="onb_map_pick">アイコンをタップ</string>
+    <string name="onb_map_mana">💧 マナ：毎日 20 マナがもらえます。他の人のビジョンに送って、応援の気持ちを伝えよう。</string>
+    <string name="onb_map_aura">⭐ オーラ：夢の深層分析やオラクルなど、プレミアム AI 機能に使う残高です。</string>
+    <string name="onb_map_bell">🔔 通知：いいね、コメント、友達リクエスト、届いたマナ。</string>
+    <string name="onb_map_profile">👤 プロフィール：あなたの夢、日記、ビジョン、友達、設定。</string>
+    <string name="onb_map_more">⋮ その他：マイジャーニー（XP・ランク・クエスト）、グローブ、スピリチュアルツール、深層分析、設定、このガイド。</string>
+    <string name="onb_map_home">ホーム：今日のコンパス、デイリークエスト、友達の日記ストーリー、フィード。</string>
+    <string name="onb_map_explore">探索：世界中の夢やビジョンを見つけて、いいねやコメントをしよう。</string>
+    <string name="onb_map_create">＋ 作成：新しい夢を記録したり、新しいビジョンを始めたり。</string>
+    <string name="onb_map_vision">ビジョン：目標をビジョンボードにして、進み具合を記録しよう。</string>
+    <string name="onb_map_messages">メッセージ：友達とチャットし、夢や日記、ビジョンをシェアしよう。</string>
+    <string name="onb_c2_steps" formatted="true">記録のしかた：\n1. 下の ＋ ボタンをタップ → %1$s\n2. 夢をできるだけ詳しく書く\n3. %2$s をタップ → 解釈と画像が作られます</string>
+    <string name="onb_c3_steps" formatted="true">作り方：\n1. 下の ＋ ボタンをタップ → %1$s\n2. タイトルを入力。説明、カバー画像、目標日も追加できます\n3. ロードマップにステップを追加 → %2$s</string>
 </resources>

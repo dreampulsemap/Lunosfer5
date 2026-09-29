@@ -1159,4 +1159,21 @@
     <string name="compass_card_title">Günün Pusulası</string>
     <string name="compass_card_archetype">Bugünün arketipi</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">Uygulama Rehberi</string>
+    <string name="onb_map_title">Menüleri tanı</string>
+    <string name="onb_map_body">Uygulamanın her köşesi bu menülerden açılır. Aşağıdaki simgelere dokun, her birinin ne işe yaradığını gör.</string>
+    <string name="onb_map_action">Alttaki 5 simgenin hepsine dokun</string>
+    <string name="onb_map_pick">Bir simgeye dokun</string>
+    <string name="onb_map_mana">💧 Mana: her gün 20 Mana kazanırsın. Başkalarının vizyonlarına göndererek onlara inandığını gösterirsin.</string>
+    <string name="onb_map_aura">⭐ Aura: derin rüya analizi ve Kahin gibi premium yapay zekâ özelliklerinde kullandığın bakiye.</string>
+    <string name="onb_map_bell">🔔 Bildirimler: beğeniler, yorumlar, arkadaşlık istekleri ve sana gönderilen Mana.</string>
+    <string name="onb_map_profile">👤 Profil: rüyaların, güncen, vizyonların, arkadaşların ve ayarların.</string>
+    <string name="onb_map_more">⋮ Daha fazla: Yolculuğum (XP, rütbe, görevler), Küre, Ruhsal Araçlar, Derin Analiz, Ayarlar ve bu rehber.</string>
+    <string name="onb_map_home">Ana Sayfa: Günün Pusulası, günlük görevler, arkadaşlarının günce hikâyeleri ve akış.</string>
+    <string name="onb_map_explore">Keşfet: dünyanın dört bir yanından rüyaları ve vizyonları keşfet, beğen, yorum yap.</string>
+    <string name="onb_map_create">＋ Oluştur: yeni bir rüya kaydet ya da yeni bir vizyon başlat.</string>
+    <string name="onb_map_vision">Vizyon: hedeflerini vizyon panosuna dönüştür, ilerlemeni takip et.</string>
+    <string name="onb_map_messages">Mesajlar: arkadaşlarınla sohbet et; rüya, günce ve vizyon paylaş.</string>
+    <string name="onb_c2_steps" formatted="true">Nasıl kaydedilir?\n1. Alttaki ＋ düğmesine dokun → %1$s\n2. Rüyanı olabildiğince ayrıntılı yaz\n3. %2$s düğmesine bas → yorumun ve görselin hazırlanır</string>
+    <string name="onb_c3_steps" formatted="true">Nasıl oluşturulur?\n1. Alttaki ＋ düğmesine dokun → %1$s\n2. Başlığı yaz; istersen açıklama, kapak görseli ve hedef tarih ekle\n3. Yol haritasına adımlar ekle → %2$s</string>
 </resources>

@@ -1132,4 +1132,21 @@
     <string name="compass_card_title">Täglicher Kompass</string>
     <string name="compass_card_archetype">Heutiger Archetyp</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">App-Anleitung</string>
+    <string name="onb_map_title">Lerne die Menüs kennen</string>
+    <string name="onb_map_body">Alles in der App öffnest du über diese Menüs. Tippe unten auf die Symbole und sieh, wofür sie da sind.</string>
+    <string name="onb_map_action">Tippe alle 5 Symbole in der unteren Leiste an</string>
+    <string name="onb_map_pick">Tippe ein Symbol an</string>
+    <string name="onb_map_mana">💧 Mana: Du bekommst jeden Tag 20 Mana. Schicke es an Visionen anderer, um zu zeigen, dass du an sie glaubst.</string>
+    <string name="onb_map_aura">⭐ Aura: dein Guthaben für Premium-KI-Funktionen wie die tiefe Traumanalyse und das Orakel.</string>
+    <string name="onb_map_bell">🔔 Benachrichtigungen: Likes, Kommentare, Freundschaftsanfragen und Mana, das man dir schickt.</string>
+    <string name="onb_map_profile">👤 Profil: deine Träume, dein Tagebuch, deine Visionen, Freunde und Einstellungen.</string>
+    <string name="onb_map_more">⋮ Mehr: Meine Reise (XP, Ränge, Aufgaben), Globus, Spirituelle Werkzeuge, Tiefenanalyse, Einstellungen und diese Anleitung.</string>
+    <string name="onb_map_home">Start: Tageskompass, tägliche Aufgaben, Tagebuch-Stories deiner Freunde und der Feed.</string>
+    <string name="onb_map_explore">Entdecken: Träume und Visionen aus aller Welt entdecken, liken und kommentieren.</string>
+    <string name="onb_map_create">＋ Erstellen: einen neuen Traum festhalten oder eine neue Vision starten.</string>
+    <string name="onb_map_vision">Vision: Mach aus deinen Zielen Visionboards und verfolge deinen Fortschritt.</string>
+    <string name="onb_map_messages">Nachrichten: Chatte mit Freunden und teile Träume, Tagebuchmomente und Visionen.</string>
+    <string name="onb_c2_steps" formatted="true">So hältst du ihn fest:\n1. Tippe unten auf ＋ → %1$s\n2. Schreib deinen Traum so detailliert wie möglich\n3. Tippe auf %2$s → Deutung und Bild werden erstellt</string>
+    <string name="onb_c3_steps" formatted="true">So erstellst du sie:\n1. Tippe unten auf ＋ → %1$s\n2. Gib einen Titel ein; optional Beschreibung, Titelbild und Zieldatum\n3. Füge Schritte zu deinem Fahrplan hinzu → %2$s</string>
 </resources>

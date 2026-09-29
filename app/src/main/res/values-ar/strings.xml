@@ -1159,4 +1159,21 @@
     <string name="compass_card_title">البوصلة اليومية</string>
     <string name="compass_card_archetype">نمط اليوم</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">دليل التطبيق</string>
+    <string name="onb_map_title">تعرّف على القوائم</string>
+    <string name="onb_map_body">كل أجزاء التطبيق تُفتح من هذه القوائم. المس الأيقونات أدناه لترى وظيفة كل منها.</string>
+    <string name="onb_map_action">المس الأيقونات الخمس في الشريط السفلي</string>
+    <string name="onb_map_pick">المس أيقونة</string>
+    <string name="onb_map_mana">💧 المانا: تحصل على 20 مانا يوميًا. أرسلها إلى رؤى الآخرين لتُظهر أنك تؤمن بهم.</string>
+    <string name="onb_map_aura">⭐ الأورا: رصيدك لميزات الذكاء الاصطناعي المميزة مثل التحليل العميق للأحلام والعرّاف.</string>
+    <string name="onb_map_bell">🔔 الإشعارات: الإعجابات والتعليقات وطلبات الصداقة والمانا المرسلة إليك.</string>
+    <string name="onb_map_profile">👤 الملف الشخصي: أحلامك ويومياتك ورؤاك وأصدقاؤك وإعداداتك.</string>
+    <string name="onb_map_more">⋮ المزيد: رحلتي (XP والرتب والمهام)، الكرة، الأدوات الروحية، التحليل العميق، الإعدادات وهذا الدليل.</string>
+    <string name="onb_map_home">الرئيسية: بوصلة اليوم، المهام اليومية، قصص يوميات أصدقائك والموجز.</string>
+    <string name="onb_map_explore">استكشاف: اكتشف أحلامًا ورؤى من حول العالم، وأعجب بها وعلّق عليها.</string>
+    <string name="onb_map_create">＋ إنشاء: سجّل حلمًا جديدًا أو ابدأ رؤية جديدة.</string>
+    <string name="onb_map_vision">الرؤية: حوّل أهدافك إلى لوحات رؤية وتابع تقدمك.</string>
+    <string name="onb_map_messages">الرسائل: تحدّث مع أصدقائك وشارك الأحلام ولحظات اليوميات والرؤى.</string>
+    <string name="onb_c2_steps" formatted="true">كيف تسجّله:\n1. المس زر ＋ في الأسفل ← %1$s\n2. اكتب حلمك بأكبر قدر من التفاصيل\n3. المس %2$s ← يتم تجهيز تفسيرك وصورتك</string>
+    <string name="onb_c3_steps" formatted="true">كيف تنشئها:\n1. المس زر ＋ في الأسفل ← %1$s\n2. اكتب عنوانًا، وأضف إن شئت وصفًا وصورة غلاف وتاريخًا مستهدفًا\n3. أضف خطوات إلى خريطة الطريق ← %2$s</string>
 </resources>

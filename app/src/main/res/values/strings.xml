@@ -1161,4 +1161,21 @@
     <string name="compass_card_title">Daily Compass</string>
     <string name="compass_card_archetype">Today\'s archetype</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">App guide</string>
+    <string name="onb_map_title">Find your way around</string>
+    <string name="onb_map_body">Every corner of the app opens from these menus. Tap the icons below to see what each one does.</string>
+    <string name="onb_map_action">Tap all 5 icons in the bottom bar</string>
+    <string name="onb_map_pick">Tap an icon</string>
+    <string name="onb_map_mana">💧 Mana: you get 20 Mana every day. Send it to other people\'s visions to show you believe in them.</string>
+    <string name="onb_map_aura">⭐ Aura: your balance for premium AI features like deep dream analysis and the Oracle.</string>
+    <string name="onb_map_bell">🔔 Notifications: likes, comments, friend requests and the Mana people send you.</string>
+    <string name="onb_map_profile">👤 Profile: your dreams, diary, visions, friends and settings.</string>
+    <string name="onb_map_more">⋮ More: My Journey (XP, ranks, quests), Globe, Spiritual Tools, Deep Analysis, Settings and this guide.</string>
+    <string name="onb_map_home">Home: Daily Compass, daily quests, your friends\' diary stories and the feed.</string>
+    <string name="onb_map_explore">Explore: discover dreams and visions from around the world, like and comment.</string>
+    <string name="onb_map_create">＋ Create: record a new dream or start a new vision.</string>
+    <string name="onb_map_vision">Vision: turn your goals into vision boards and track your progress.</string>
+    <string name="onb_map_messages">Messages: chat with friends and share dreams, diary moments and visions.</string>
+    <string name="onb_c2_steps" formatted="true">How to record one:\n1. Tap the ＋ button at the bottom → %1$s\n2. Write your dream in as much detail as you can\n3. Tap %2$s → your interpretation and image are prepared</string>
+    <string name="onb_c3_steps" formatted="true">How to create one:\n1. Tap the ＋ button at the bottom → %1$s\n2. Write a title; add a description, cover image and target date if you like\n3. Add steps to your roadmap → %2$s</string>
 </resources>

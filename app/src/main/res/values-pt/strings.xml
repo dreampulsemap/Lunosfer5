@@ -1137,4 +1137,21 @@
     <string name="compass_card_title">Bússola Diária</string>
     <string name="compass_card_archetype">Arquétipo de hoje</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">Guia do app</string>
+    <string name="onb_map_title">Conheça os menus</string>
+    <string name="onb_map_body">Tudo no app abre a partir destes menus. Toque nos ícones abaixo para ver para que serve cada um.</string>
+    <string name="onb_map_action">Toque nos 5 ícones da barra inferior</string>
+    <string name="onb_map_pick">Toque em um ícone</string>
+    <string name="onb_map_mana">💧 Mana: você ganha 20 de Mana por dia. Envie para as visões de outras pessoas para mostrar que acredita nelas.</string>
+    <string name="onb_map_aura">⭐ Aura: seu saldo para recursos premium de IA, como a análise profunda de sonhos e o Oráculo.</string>
+    <string name="onb_map_bell">🔔 Notificações: curtidas, comentários, pedidos de amizade e o Mana que enviam para você.</string>
+    <string name="onb_map_profile">👤 Perfil: seus sonhos, diário, visões, amigos e configurações.</string>
+    <string name="onb_map_more">⋮ Mais: Minha jornada (XP, níveis, missões), Globo, Ferramentas espirituais, Análise profunda, Configurações e este guia.</string>
+    <string name="onb_map_home">Início: Bússola do Dia, missões diárias, stories do diário dos seus amigos e o feed.</string>
+    <string name="onb_map_explore">Explorar: descubra sonhos e visões do mundo todo, curta e comente.</string>
+    <string name="onb_map_create">＋ Criar: registre um novo sonho ou comece uma nova visão.</string>
+    <string name="onb_map_vision">Visão: transforme suas metas em quadros de visão e acompanhe seu progresso.</string>
+    <string name="onb_map_messages">Mensagens: converse com amigos e compartilhe sonhos, momentos do diário e visões.</string>
+    <string name="onb_c2_steps" formatted="true">Como registrar:\n1. Toque no botão ＋ embaixo → %1$s\n2. Escreva seu sonho com o máximo de detalhes\n3. Toque em %2$s → sua interpretação e imagem são preparadas</string>
+    <string name="onb_c3_steps" formatted="true">Como criar:\n1. Toque no botão ＋ embaixo → %1$s\n2. Escreva um título; se quiser, adicione descrição, capa e data-alvo\n3. Adicione etapas ao seu roteiro → %2$s</string>
 </resources>

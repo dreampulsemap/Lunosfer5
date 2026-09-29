@@ -1137,4 +1137,21 @@
     <string name="compass_card_title">Päivän kompassi</string>
     <string name="compass_card_archetype">Päivän arkkityyppi</string>
     <!-- paylasim:end -->
+    <string name="main_menu_app_guide">Sovellusopas</string>
+    <string name="onb_map_title">Tutustu valikoihin</string>
+    <string name="onb_map_body">Kaikki sovelluksessa avautuu näistä valikoista. Napauta alla olevia kuvakkeita ja katso, mitä ne tekevät.</string>
+    <string name="onb_map_action">Napauta kaikkia viittä alapalkin kuvaketta</string>
+    <string name="onb_map_pick">Napauta kuvaketta</string>
+    <string name="onb_map_mana">💧 Mana: saat joka päivä 20 manaa. Lähetä sitä muiden visioihin näyttääksesi, että uskot heihin.</string>
+    <string name="onb_map_aura">⭐ Aura: saldosi premium-tekoälytoimintoihin, kuten syvään unianalyysiin ja Oraakkeliin.</string>
+    <string name="onb_map_bell">🔔 Ilmoitukset: tykkäykset, kommentit, kaveripyynnöt ja sinulle lähetetty mana.</string>
+    <string name="onb_map_profile">👤 Profiili: unesi, päiväkirjasi, visiosi, kaverisi ja asetuksesi.</string>
+    <string name="onb_map_more">⋮ Lisää: Oma matka (XP, arvot, tehtävät), Maapallo, Henkiset työkalut, Syväanalyysi, Asetukset ja tämä opas.</string>
+    <string name="onb_map_home">Koti: Päivän kompassi, päivittäiset tehtävät, kavereiden päiväkirjatarinat ja syöte.</string>
+    <string name="onb_map_explore">Tutki: löydä unia ja visioita ympäri maailmaa, tykkää ja kommentoi.</string>
+    <string name="onb_map_create">＋ Luo: tallenna uusi uni tai aloita uusi visio.</string>
+    <string name="onb_map_vision">Visio: muuta tavoitteesi visiotauluiksi ja seuraa edistymistäsi.</string>
+    <string name="onb_map_messages">Viestit: juttele kavereiden kanssa ja jaa unia, päiväkirjahetkiä ja visioita.</string>
+    <string name="onb_c2_steps" formatted="true">Näin tallennat:\n1. Napauta alhaalla ＋ → %1$s\n2. Kirjoita unesi mahdollisimman tarkasti\n3. Napauta %2$s → tulkintasi ja kuvasi valmistuvat</string>
+    <string name="onb_c3_steps" formatted="true">Näin luot:\n1. Napauta alhaalla ＋ → %1$s\n2. Kirjoita otsikko; lisää halutessasi kuvaus, kansikuva ja tavoitepäivä\n3. Lisää vaiheita tiekarttaan → %2$s</string>
 </resources>

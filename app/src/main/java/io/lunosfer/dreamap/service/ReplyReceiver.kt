@@ -43,8 +43,11 @@ class ReplyReceiver : BroadcastReceiver() {
                 NetworkModule.api.sendMessage(
                     SendMessageRequest(recipientId = senderId, content = replyText)
                 )
+                // Cevap veren mesaji okumus sayilir (sunucu da okundu isaretliyor);
+                // bildirim tepside kalmasin.
                 if (notificationId != -1) {
-                    appendSentMessageToNotification(appContext, notificationId, replyText)
+                    (appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
+                        .cancel(notificationId)
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Cevap gonderilemedi", e)
@@ -58,24 +61,6 @@ class ReplyReceiver : BroadcastReceiver() {
                 pendingResult.finish()
             }
         }
-    }
-
-    // Cevap basariyla gonderildikten sonra bildirimi KAPATMIYORUZ — WhatsApp gibi,
-    // gonderilen mesaji da ayni MessagingStyle gecmisine ekleyip acik birakiyoruz.
-    private fun appendSentMessageToNotification(context: Context, notificationId: Int, replyText: String) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val active = notificationManager.activeNotifications.firstOrNull { it.id == notificationId } ?: return
-        val style = NotificationCompat.MessagingStyle.extractMessagingStyleFromNotification(active.notification) ?: return
-
-        style.addMessage(replyText, System.currentTimeMillis(), style.user)
-
-        // setOnlyAlertOnce: kendi cevabimiz icin tekrar ses/titresim olmasin.
-        val rebuilt = NotificationCompat.Builder(context, active.notification)
-            .setStyle(style)
-            .setOnlyAlertOnce(true)
-            .build()
-
-        notificationManager.notify(notificationId, rebuilt)
     }
 
     private fun repostNotification(context: Context, notificationId: Int) {
