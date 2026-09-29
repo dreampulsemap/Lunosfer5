@@ -22,8 +22,8 @@ android {
     applicationId = "io.lunosfer.dreamap"
     minSdk = 24
     targetSdk = 36
-    versionCode = 22
-    versionName = "1.4.10"
+    versionCode = 23
+    versionName = "1.5.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -87,7 +87,13 @@ android {
     buildConfig = true
   }
   // Desteklenen dilleri (res/values-*) Android 13+ "Uygulama dili" ayarina bildirir.
-  androidResources { generateLocaleConfig = true }
+  androidResources {
+    generateLocaleConfig = true
+    // Kutuphanelerin (play-services, compose...) uygulamanin desteklemedigi dillerdeki
+    // cevirilerini at: Play, otomatik ceviri acikken bundle'daki "fa" gibi dilleri
+    // "not supported for translation" diye reddediyor (1.5.0 yuklemesi).
+    localeFilters += listOf("en", "ar", "de", "es", "fi", "fr", "hi", "ja", "pt", "ro", "ru", "tr", "uk", "zh")
+  }
   // KRITIK: Play App Bundle varsayilani dile gore ayri "config APK" bolup
   // cihaza SADECE kurulum anindaki sistem diliyle eslesen dil paketini
   // gonderiyor (1.4.9/versionCode 20'de generateLocaleConfig + resources.properties
