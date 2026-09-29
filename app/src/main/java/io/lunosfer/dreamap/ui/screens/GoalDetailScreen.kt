@@ -54,6 +54,7 @@ import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.GoalDetailUiState
 import io.lunosfer.dreamap.ui.viewmodel.GoalDetailViewModel
 import io.lunosfer.dreamap.util.VisibilityPolicy
+import io.lunosfer.dreamap.util.toShareContent
 
 @Composable
 fun GoalDetailScreen(
@@ -321,6 +322,12 @@ private fun GoalDetailContent(
                 style = MaterialTheme.typography.titleMedium.copy(fontFamily = SerifFontFamily)
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
+                val shareContent = goal.toShareContent(currentUserId)
+                if (shareContent.canShare) {
+                    IconButton(onClick = { io.lunosfer.dreamap.util.ShareController.open(shareContent) }) {
+                        Icon(Icons.Filled.Share, contentDescription = stringResource(R.string.share_action), tint = AstralGold)
+                    }
+                }
                 IconButton(onClick = onToggleSave) {
                     Icon(
                         imageVector = if (state.hasSaved) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,

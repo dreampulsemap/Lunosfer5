@@ -36,8 +36,9 @@ sealed class Screen(val route: String) {
         fun createRoute(userId: String) = "public_profile/$userId"
     }
     object DiaryComposer : Screen("diary_composer")
-    object DiaryStoryViewer : Screen("diary_viewer/{userId}") {
+    object DiaryStoryViewer : Screen("diary_viewer/{userId}?entry={entry}") {
         fun routeFor(userId: String) = "diary_viewer/$userId"
+        fun routeFor(userId: String, entryId: String) = "diary_viewer/$userId?entry=$entryId"
     }
     object DiaryJournal : Screen("diary_journal/{userId}") {
         fun routeFor(userId: String) = "diary_journal/$userId"

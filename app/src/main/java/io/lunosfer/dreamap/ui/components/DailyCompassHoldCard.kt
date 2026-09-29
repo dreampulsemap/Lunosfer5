@@ -1,6 +1,5 @@
 package io.lunosfer.dreamap.ui.components
 
-import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,7 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -20,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -28,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.lunosfer.dreamap.R
+import io.lunosfer.dreamap.ui.components.share.CompassStorySheet
 import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.CompassUiState
 import kotlinx.coroutines.delay
@@ -49,10 +48,10 @@ fun DailyCompassHoldCard(
     onDraw: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
     val canDraw = state is CompassUiState.Idle || state is CompassUiState.Error
 
     var pressing by remember { mutableStateOf(false) }
+    var showStory by remember { mutableStateOf(false) }
     var progress by remember { mutableFloatStateOf(0f) }
 
     LaunchedEffect(pressing, canDraw) {
@@ -96,25 +95,24 @@ fun DailyCompassHoldCard(
             )
 
             when (state) {
-                is CompassUiState.Success -> CompassReading(
-                    archetype = state.archetype,
-                    reading = state.reading,
-                    accent = accent,
-                    onShare = {
-                        val body = context.getString(
-                            R.string.compass_share_text,
-                            state.archetype ?: "",
-                            state.reading
-                        )
-                        val send = Intent(Intent.ACTION_SEND).apply {
-                            type = "text/plain"
-                            putExtra(Intent.EXTRA_TEXT, body)
-                        }
-                        context.startActivity(
-                            Intent.createChooser(send, context.getString(R.string.compass_share_story))
+                is CompassUiState.Success -> {
+                    CompassReading(
+                        archetype = state.archetype,
+                        reading = state.reading,
+                        accent = accent,
+                        onShare = { showStory = true }
+                    )
+                    // Hikâye görseli üretilir; önce kendi güncene, istersen
+                    // filigranlı olarak Instagram hikâyesine.
+                    if (showStory) {
+                        CompassStorySheet(
+                            archetype = state.archetype,
+                            reading = state.reading,
+                            accentHex = state.color,
+                            onDismiss = { showStory = false }
                         )
                     }
-                )
+                }
 
                 is CompassUiState.AlreadyUsedToday -> CompassCountdown()
 
@@ -229,10 +227,10 @@ private fun CompassReading(
         colors = ButtonDefaults.buttonColors(containerColor = AstralGold),
         shape = RoundedCornerShape(50)
     ) {
-        Icon(Icons.Default.Share, contentDescription = null, tint = Void950, modifier = Modifier.size(14.dp))
+        Icon(Icons.AutoMirrored.Filled.MenuBook, contentDescription = null, tint = Void950, modifier = Modifier.size(14.dp))
         Spacer(Modifier.width(8.dp))
         Text(
-            stringResource(R.string.compass_share_story),
+            stringResource(R.string.compass_share_diary),
             color = Void950,
             fontSize = 11.sp,
             fontWeight = FontWeight.Bold,

@@ -217,7 +217,6 @@
     <string name="compass_decoding">Frekans çözümleniyor…</string>
     <string name="compass_realigning">PUSULA HİZALANIYOR…</string>
     <string name="compass_refresh_note">Her gece 00:00\'da yenileniyor.</string>
-    <string name="compass_share_story">Hikayende Paylaş</string>
     <string name="compass_share_text">✦ Lunosfer Günlük Pusulam 🔮\nBugünün Arketipi: %1$s\n\n\"%2$s\"\n\nSenin bugünkü frekansın ne? Öğrenmek için: lunosfer.com</string>
     <string name="vision_daily_seeds_title">Bugün Yapman Gerekenler (Günün Tohumları)</string>
     <string name="vision_daily_seeds_no_active_goals">Aktif bir vizyonun yok. Yeni bir vizyon ekleyerek günlük küçük adımlarını alabilirsin.</string>
@@ -1121,4 +1120,43 @@
     <string name="onb_cd_heart">Beğen</string>
     <string name="onb_cd_chest">Ödül sandığı</string>
     <!-- oyunlastirma:end -->
+    <!-- paylasim:start (ruya, gunce, vizyon, pusula paylasimi) -->
+    <string name="share_action">Paylaş</string>
+    <string name="share_sheet_title">Paylaş</string>
+    <string name="share_send_in_app">Lunosfer\'de gönder</string>
+    <string name="share_search_people">Kişi ara</string>
+    <string name="share_no_people">Buradan gönderebilmek için biriyle mesajlaş ya da arkadaş ekle.</string>
+    <string name="share_send">Gönder</string>
+    <string name="share_sent">Gönderildi</string>
+    <string name="share_note_hint">Not ekle (isteğe bağlı)</string>
+    <string name="share_to_apps">Uygulamalarda paylaş</string>
+    <string name="share_instagram_story">Instagram Hikâye</string>
+    <string name="share_copy_link">Bağlantıyı kopyala</string>
+    <string name="share_link_copied">Bağlantı kopyalandı</string>
+    <string name="share_save_image">Görseli kaydet</string>
+    <string name="share_image_saved">Galerine kaydedildi (Resimler/Lunosfer)</string>
+    <string name="share_more">Diğer</string>
+    <string name="share_private_note">Herkese açık değil: bağlantı yerine görsel kart paylaşılır.</string>
+    <string name="share_preparing">Görsel hazırlanıyor…</string>
+    <string name="share_failed">Paylaşılamadı, lütfen tekrar dene.</string>
+    <string name="share_not_allowed">Bu paylaşımı yalnızca sahibi paylaşabilir.</string>
+    <string name="share_text_dream">Lunosfer\'de bir rüya 🌙</string>
+    <string name="share_text_diary">Lunosfer\'de bir günce anı 📖</string>
+    <string name="share_text_vision">Lunosfer\'de bir vizyon ✨</string>
+    <string name="share_card_dream">Rüya</string>
+    <string name="share_card_diary">Günce</string>
+    <string name="share_card_vision">Vizyon</string>
+    <string name="share_card_tagline">Rüyalarını kaydet, anlamını keşfet · Google Play\'de ücretsiz</string>
+    <string name="shared_diary_unavailable">Bu günce anı artık görüntülenemiyor.</string>
+    <string name="xp_reason_content_shared">İçerik paylaşımı</string>
+    <string name="compass_share_diary">Güncende Paylaş</string>
+    <string name="compass_story_title">Günün pusulasını paylaş</string>
+    <string name="compass_story_post_diary">Günceme ekle</string>
+    <string name="compass_story_posted">Güncene eklendi ✨</string>
+    <string name="compass_story_external_hint">Ya da Lunosfer filigranıyla indirip Instagram hikâyende paylaş:</string>
+    <string name="compass_story_download">İndir</string>
+    <string name="compass_story_caption">🧭 Günün pusulası: %1$s</string>
+    <string name="compass_card_title">Günün Pusulası</string>
+    <string name="compass_card_archetype">Bugünün arketipi</string>
+    <!-- paylasim:end -->
 </resources>

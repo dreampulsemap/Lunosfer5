@@ -39,6 +39,7 @@ sealed class DiaryStoryViewerUiState {
 
 class DiaryStoryViewerViewModel(
     private val userId: String,
+    private val startEntryId: String? = null,
     private val repository: DiaryRepository = DiaryRepository()
 ) : ViewModel() {
 
@@ -62,7 +63,7 @@ class DiaryStoryViewerViewModel(
                     _state.value = DiaryStoryViewerUiState.Content(
                         owner = res.owner,
                         entries = res.entries,
-                        currentIndex = 0,
+                        currentIndex = res.entries.indexOfFirst { it.id == startEntryId }.coerceAtLeast(0),
                         isSelf = res.isSelf
                     )
                     startTimer()
@@ -260,10 +261,10 @@ class DiaryStoryViewerViewModel(
         }
     }
 
-    class Factory(private val userId: String) : ViewModelProvider.Factory {
+    class Factory(private val userId: String, private val startEntryId: String? = null) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return DiaryStoryViewerViewModel(userId) as T
+            return DiaryStoryViewerViewModel(userId, startEntryId) as T
         }
     }
 }

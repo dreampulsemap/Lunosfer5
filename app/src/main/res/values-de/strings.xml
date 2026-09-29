@@ -760,7 +760,6 @@
     <string name="compass_decoding">Frequenz wird entschlüsselt…</string>
     <string name="compass_realigning">KOMPASS RICHTET SICH NEU AUS…</string>
     <string name="compass_refresh_note">Wird jede Nacht um Mitternacht erneuert.</string>
-    <string name="compass_share_story">In Story teilen</string>
     <string name="compass_share_text">✦ Mein Lunosfer Täglicher Kompass 🔮\nHeutiger Archetyp: %1$s\n\n\"%2$s\"\n\nFinde deine tägliche Frequenz auf lunosfer.com</string>
     <string name="diary_like_cd">Gefällt mir</string>
     <string name="diary_comment_cd">Kommentieren</string>
@@ -1094,4 +1093,43 @@
     <string name="onb_cd_heart">Gefällt mir</string>
     <string name="onb_cd_chest">Belohnungstruhe</string>
     <!-- oyunlastirma:end -->
+    <!-- paylasim:start (ruya, gunce, vizyon, pusula paylasimi) -->
+    <string name="share_action">Teilen</string>
+    <string name="share_sheet_title">Teilen</string>
+    <string name="share_send_in_app">Auf Lunosfer senden</string>
+    <string name="share_search_people">Personen suchen</string>
+    <string name="share_no_people">Schreib jemandem oder füge Freunde hinzu, um Beiträge hier zu senden.</string>
+    <string name="share_send">Senden</string>
+    <string name="share_sent">Gesendet</string>
+    <string name="share_note_hint">Notiz hinzufügen (optional)</string>
+    <string name="share_to_apps">In Apps teilen</string>
+    <string name="share_instagram_story">Instagram-Story</string>
+    <string name="share_copy_link">Link kopieren</string>
+    <string name="share_link_copied">Link kopiert</string>
+    <string name="share_save_image">Bild speichern</string>
+    <string name="share_image_saved">In deiner Galerie gespeichert (Bilder/Lunosfer)</string>
+    <string name="share_more">Mehr</string>
+    <string name="share_private_note">Nicht öffentlich: statt eines Links wird eine Bildkarte geteilt.</string>
+    <string name="share_preparing">Bild wird vorbereitet…</string>
+    <string name="share_failed">Teilen fehlgeschlagen. Bitte versuche es erneut.</string>
+    <string name="share_not_allowed">Nur der Verfasser kann diesen Beitrag teilen.</string>
+    <string name="share_text_dream">Ein Traum auf Lunosfer 🌙</string>
+    <string name="share_text_diary">Ein Tagebuchmoment auf Lunosfer 📖</string>
+    <string name="share_text_vision">Eine Vision auf Lunosfer ✨</string>
+    <string name="share_card_dream">Traum</string>
+    <string name="share_card_diary">Tagebuch</string>
+    <string name="share_card_vision">Vision</string>
+    <string name="share_card_tagline">Halte Träume fest, entdecke ihre Bedeutung · kostenlos bei Google Play</string>
+    <string name="shared_diary_unavailable">Dieser Tagebuchmoment ist nicht mehr verfügbar.</string>
+    <string name="xp_reason_content_shared">Beitrag teilen</string>
+    <string name="compass_share_diary">Im Tagebuch teilen</string>
+    <string name="compass_story_title">Heutigen Kompass teilen</string>
+    <string name="compass_story_post_diary">Zu meinem Tagebuch hinzufügen</string>
+    <string name="compass_story_posted">Zu deinem Tagebuch hinzugefügt ✨</string>
+    <string name="compass_story_external_hint">Oder lade es mit Lunosfer-Wasserzeichen herunter und poste es in deiner Instagram-Story:</string>
+    <string name="compass_story_download">Herunterladen</string>
+    <string name="compass_story_caption">🧭 Heutiger Kompass: %1$s</string>
+    <string name="compass_card_title">Täglicher Kompass</string>
+    <string name="compass_card_archetype">Heutiger Archetyp</string>
+    <!-- paylasim:end -->
 </resources>

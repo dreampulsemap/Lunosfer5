@@ -90,6 +90,18 @@ class MessagesRepository {
         ).message
     }
 
+    /** Rüya / günce / vizyonu DM olarak gönderir; kart metnini sunucu üretir. */
+    suspend fun sendShare(recipientId: String, share: io.lunosfer.dreamap.data.model.ShareRequestRef, note: String?): Result<Message> = runCatching {
+        api.sendMessage(
+            SendMessageRequest(
+                recipientId = recipientId,
+                content = note?.trim()?.takeIf { it.isNotEmpty() },
+                lang = io.lunosfer.dreamap.util.AppLanguage.code(),
+                share = share
+            )
+        ).message
+    }
+
     suspend fun reactMessage(messageId: String, reaction: String): Result<Unit> = runCatching {
         api.reactMessage(io.lunosfer.dreamap.data.model.ReactMessageRequest(messageId, reaction))
     }

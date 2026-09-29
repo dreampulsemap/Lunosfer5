@@ -26,6 +26,8 @@ import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Share
+import io.lunosfer.dreamap.util.toShareContent
 import androidx.compose.material.icons.filled.TrackChanges
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.*
@@ -655,6 +657,17 @@ private fun DreamFeedCard(
                         )
                         Spacer(Modifier.width(4.dp))
                         Text("${dream.commentsCount ?: 0}", color = Color(0xFF94A3B8), fontSize = 12.sp)
+                    }
+                    val shareContent = dream.toShareContent(supabaseClient.auth.currentUserOrNull()?.id)
+                    if (shareContent.canShare) {
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(12.dp))
+                                .clickable { io.lunosfer.dreamap.util.ShareController.open(shareContent) }
+                                .padding(horizontal = 8.dp, vertical = 10.dp)
+                        ) {
+                            Icon(Icons.Filled.Share, contentDescription = stringResource(R.string.share_action), tint = Color(0xFF94A3B8), modifier = Modifier.size(15.dp))
+                        }
                     }
                 }
 

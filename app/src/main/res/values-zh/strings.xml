@@ -759,7 +759,6 @@
     <string name="compass_decoding">正在解码频率…</string>
     <string name="compass_realigning">罗盘正在重新校准…</string>
     <string name="compass_refresh_note">每晚午夜刷新。</string>
-    <string name="compass_share_story">分享到故事</string>
     <string name="compass_share_text">✦ 我的 Lunosfer 每日罗盘 🔮\n今日原型：%1$s\n\n\"%2$s\"\n\n在 lunosfer.com 找到你的每日频率</string>
     <string name="diary_like_cd">点赞</string>
     <string name="diary_comment_cd">评论</string>
@@ -1086,4 +1085,43 @@
     <string name="onb_cd_heart">点赞</string>
     <string name="onb_cd_chest">奖励宝箱</string>
     <!-- oyunlastirma:end -->
+    <!-- paylasim:start (ruya, gunce, vizyon, pusula paylasimi) -->
+    <string name="share_action">分享</string>
+    <string name="share_sheet_title">分享</string>
+    <string name="share_send_in_app">在 Lunosfer 发送</string>
+    <string name="share_search_people">搜索用户</string>
+    <string name="share_no_people">先与他人聊天或添加好友，才能在这里发送。</string>
+    <string name="share_send">发送</string>
+    <string name="share_sent">已发送</string>
+    <string name="share_note_hint">添加备注（可选）</string>
+    <string name="share_to_apps">分享到应用</string>
+    <string name="share_instagram_story">Instagram 快拍</string>
+    <string name="share_copy_link">复制链接</string>
+    <string name="share_link_copied">链接已复制</string>
+    <string name="share_save_image">保存图片</string>
+    <string name="share_image_saved">已保存到相册（Pictures/Lunosfer）</string>
+    <string name="share_more">更多</string>
+    <string name="share_private_note">非公开内容：将分享图片卡片而不是链接。</string>
+    <string name="share_preparing">正在生成图片…</string>
+    <string name="share_failed">分享失败，请重试。</string>
+    <string name="share_not_allowed">只有作者可以分享此内容。</string>
+    <string name="share_text_dream">Lunosfer 上的一个梦 🌙</string>
+    <string name="share_text_diary">Lunosfer 上的一则日记 📖</string>
+    <string name="share_text_vision">Lunosfer 上的一个愿景 ✨</string>
+    <string name="share_card_dream">梦境</string>
+    <string name="share_card_diary">日记</string>
+    <string name="share_card_vision">愿景</string>
+    <string name="share_card_tagline">记录梦境，发现意义 · Google Play 免费下载</string>
+    <string name="shared_diary_unavailable">此日记已无法查看。</string>
+    <string name="xp_reason_content_shared">分享内容</string>
+    <string name="compass_share_diary">分享到日记</string>
+    <string name="compass_story_title">分享今日罗盘</string>
+    <string name="compass_story_post_diary">添加到我的日记</string>
+    <string name="compass_story_posted">已添加到日记 ✨</string>
+    <string name="compass_story_external_hint">或下载带 Lunosfer 水印的图片，发布到 Instagram 快拍：</string>
+    <string name="compass_story_download">下载</string>
+    <string name="compass_story_caption">🧭 今日罗盘：%1$s</string>
+    <string name="compass_card_title">每日罗盘</string>
+    <string name="compass_card_archetype">今日原型</string>
+    <!-- paylasim:end -->
 </resources>

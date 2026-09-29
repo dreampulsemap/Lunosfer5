@@ -757,7 +757,6 @@
     <string name="compass_decoding">Décodage de la fréquence…</string>
     <string name="compass_realigning">LA BOUSSOLE SE RÉALIGNE…</string>
     <string name="compass_refresh_note">Se renouvelle chaque nuit à minuit.</string>
-    <string name="compass_share_story">Partager en Story</string>
     <string name="compass_share_text">✦ Ma Boussole Quotidienne Lunosfer 🔮\nArchétype du jour : %1$s\n\n\"%2$s\"\n\nTrouvez votre fréquence quotidienne sur lunosfer.com</string>
     <string name="diary_like_cd">J\'aime</string>
     <string name="diary_comment_cd">Commenter</string>
@@ -1098,4 +1097,43 @@
     <string name="onb_cd_heart">J\'aime</string>
     <string name="onb_cd_chest">Coffre de récompense</string>
     <!-- oyunlastirma:end -->
+    <!-- paylasim:start (ruya, gunce, vizyon, pusula paylasimi) -->
+    <string name="share_action">Partager</string>
+    <string name="share_sheet_title">Partager</string>
+    <string name="share_send_in_app">Envoyer sur Lunosfer</string>
+    <string name="share_search_people">Rechercher des personnes</string>
+    <string name="share_no_people">Écris à quelqu’un ou ajoute des amis pour envoyer des publications ici.</string>
+    <string name="share_send">Envoyer</string>
+    <string name="share_sent">Envoyé</string>
+    <string name="share_note_hint">Ajouter une note (facultatif)</string>
+    <string name="share_to_apps">Partager dans les apps</string>
+    <string name="share_instagram_story">Story Instagram</string>
+    <string name="share_copy_link">Copier le lien</string>
+    <string name="share_link_copied">Lien copié</string>
+    <string name="share_save_image">Enregistrer l\'image</string>
+    <string name="share_image_saved">Enregistrée dans ta galerie (Images/Lunosfer)</string>
+    <string name="share_more">Plus</string>
+    <string name="share_private_note">Non publique : une carte image est partagée au lieu d\'un lien.</string>
+    <string name="share_preparing">Préparation de l\'image…</string>
+    <string name="share_failed">Partage impossible. Réessaie.</string>
+    <string name="share_not_allowed">Seul l\'auteur peut partager cette publication.</string>
+    <string name="share_text_dream">Un rêve sur Lunosfer 🌙</string>
+    <string name="share_text_diary">Un moment de journal sur Lunosfer 📖</string>
+    <string name="share_text_vision">Une vision sur Lunosfer ✨</string>
+    <string name="share_card_dream">Rêve</string>
+    <string name="share_card_diary">Journal</string>
+    <string name="share_card_vision">Vision</string>
+    <string name="share_card_tagline">Note tes rêves, découvre leur sens · gratuit sur Google Play</string>
+    <string name="shared_diary_unavailable">Ce moment de journal n\'est plus disponible.</string>
+    <string name="xp_reason_content_shared">Partage de publication</string>
+    <string name="compass_share_diary">Partager dans ton Journal</string>
+    <string name="compass_story_title">Partage la boussole du jour</string>
+    <string name="compass_story_post_diary">Ajouter à mon Journal</string>
+    <string name="compass_story_posted">Ajouté à ton journal ✨</string>
+    <string name="compass_story_external_hint">Ou télécharge-la avec le filigrane Lunosfer et publie-la dans ta story Instagram :</string>
+    <string name="compass_story_download">Télécharger</string>
+    <string name="compass_story_caption">🧭 Boussole du jour : %1$s</string>
+    <string name="compass_card_title">Boussole Quotidienne</string>
+    <string name="compass_card_archetype">Archétype du jour</string>
+    <!-- paylasim:end -->
 </resources>

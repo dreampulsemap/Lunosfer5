@@ -205,7 +205,6 @@
     <string name="compass_decoding">Розшифрування частоти…</string>
     <string name="compass_realigning">КОМПАС ПЕРЕНАЛАШТОВУЄТЬСЯ…</string>
     <string name="compass_refresh_note">Оновлюється щоночі опівночі.</string>
-    <string name="compass_share_story">Поділитися в історії</string>
     <string name="compass_share_text">✦ Мій щоденний компас Lunosfer 🔮\nАрхетип дня: %1$s\n\n\"%2$s\"\n\nЗнайдіть свою щоденну частоту на lunosfer.com</string>
     <string name="vision_daily_seeds_title">Справи на сьогодні (Щоденні зерна)</string>
     <string name="vision_daily_seeds_no_active_goals">У вас немає активної візії. Додайте нову візію, щоб робити маленькі щоденні кроки.</string>
@@ -1113,4 +1112,43 @@
     <string name="onb_cd_heart">Вподобати</string>
     <string name="onb_cd_chest">Скриня з нагородою</string>
     <!-- oyunlastirma:end -->
+    <!-- paylasim:start (ruya, gunce, vizyon, pusula paylasimi) -->
+    <string name="share_action">Поділитися</string>
+    <string name="share_sheet_title">Поділитися</string>
+    <string name="share_send_in_app">Надіслати в Lunosfer</string>
+    <string name="share_search_people">Пошук людей</string>
+    <string name="share_no_people">Напишіть комусь або додайте друзів, щоб надсилати дописи тут.</string>
+    <string name="share_send">Надіслати</string>
+    <string name="share_sent">Надіслано</string>
+    <string name="share_note_hint">Додати нотатку (необов’язково)</string>
+    <string name="share_to_apps">Поділитися в застосунках</string>
+    <string name="share_instagram_story">Історія Instagram</string>
+    <string name="share_copy_link">Копіювати посилання</string>
+    <string name="share_link_copied">Посилання скопійовано</string>
+    <string name="share_save_image">Зберегти зображення</string>
+    <string name="share_image_saved">Збережено в галереї (Pictures/Lunosfer)</string>
+    <string name="share_more">Ще</string>
+    <string name="share_private_note">Не публічно: замість посилання надсилається картка-зображення.</string>
+    <string name="share_preparing">Готуємо зображення…</string>
+    <string name="share_failed">Не вдалося поділитися. Спробуйте ще раз.</string>
+    <string name="share_not_allowed">Поділитися цим дописом може лише автор.</string>
+    <string name="share_text_dream">Сон у Lunosfer 🌙</string>
+    <string name="share_text_diary">Момент зі щоденника в Lunosfer 📖</string>
+    <string name="share_text_vision">Візія в Lunosfer ✨</string>
+    <string name="share_card_dream">Сон</string>
+    <string name="share_card_diary">Щоденник</string>
+    <string name="share_card_vision">Візія</string>
+    <string name="share_card_tagline">Записуйте сни, відкривайте їхній зміст · безкоштовно в Google Play</string>
+    <string name="shared_diary_unavailable">Цей запис щоденника більше недоступний.</string>
+    <string name="xp_reason_content_shared">Поширення допису</string>
+    <string name="compass_share_diary">Поділитися в щоденнику</string>
+    <string name="compass_story_title">Поділіться компасом дня</string>
+    <string name="compass_story_post_diary">Додати до мого щоденника</string>
+    <string name="compass_story_posted">Додано до щоденника ✨</string>
+    <string name="compass_story_external_hint">Або завантажте з водяним знаком Lunosfer і опублікуйте в історії Instagram:</string>
+    <string name="compass_story_download">Завантажити</string>
+    <string name="compass_story_caption">🧭 Компас дня: %1$s</string>
+    <string name="compass_card_title">Щоденний компас</string>
+    <string name="compass_card_archetype">Архетип дня</string>
+    <!-- paylasim:end -->
 </resources>

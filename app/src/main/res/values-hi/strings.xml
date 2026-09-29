@@ -759,7 +759,6 @@
     <string name="compass_decoding">आवृत्ति डिकोड हो रही है…</string>
     <string name="compass_realigning">कम्पास फिर से संरेखित हो रहा है…</string>
     <string name="compass_refresh_note">हर रात आधी रात को नया होता है।</string>
-    <string name="compass_share_story">स्टोरी में साझा करें</string>
     <string name="compass_share_text">✦ मेरा Lunosfer दैनिक कम्पास 🔮\nआज का आदिरूप: %1$s\n\n\"%2$s\"\n\nअपनी दैनिक आवृत्ति lunosfer.com पर पाएँ</string>
     <string name="diary_like_cd">पसंद</string>
     <string name="diary_comment_cd">टिप्पणी</string>
@@ -1093,4 +1092,43 @@
     <string name="onb_cd_heart">लाइक</string>
     <string name="onb_cd_chest">इनाम संदूक</string>
     <!-- oyunlastirma:end -->
+    <!-- paylasim:start (ruya, gunce, vizyon, pusula paylasimi) -->
+    <string name="share_action">साझा करें</string>
+    <string name="share_sheet_title">साझा करें</string>
+    <string name="share_send_in_app">Lunosfer पर भेजें</string>
+    <string name="share_search_people">लोगों को खोजें</string>
+    <string name="share_no_people">यहाँ से पोस्ट भेजने के लिए किसी से बात करें या दोस्त जोड़ें।</string>
+    <string name="share_send">भेजें</string>
+    <string name="share_sent">भेजा गया</string>
+    <string name="share_note_hint">एक नोट जोड़ें (वैकल्पिक)</string>
+    <string name="share_to_apps">ऐप्स में साझा करें</string>
+    <string name="share_instagram_story">Instagram स्टोरी</string>
+    <string name="share_copy_link">लिंक कॉपी करें</string>
+    <string name="share_link_copied">लिंक कॉपी हो गया</string>
+    <string name="share_save_image">इमेज सेव करें</string>
+    <string name="share_image_saved">गैलरी में सेव हो गई (Pictures/Lunosfer)</string>
+    <string name="share_more">और</string>
+    <string name="share_private_note">सार्वजनिक नहीं: लिंक की जगह इमेज कार्ड साझा होगा।</string>
+    <string name="share_preparing">इमेज तैयार हो रही है…</string>
+    <string name="share_failed">साझा नहीं हो सका। फिर से कोशिश करें।</string>
+    <string name="share_not_allowed">इस पोस्ट को सिर्फ़ इसका मालिक साझा कर सकता है।</string>
+    <string name="share_text_dream">Lunosfer पर एक सपना 🌙</string>
+    <string name="share_text_diary">Lunosfer पर डायरी का एक पल 📖</string>
+    <string name="share_text_vision">Lunosfer पर एक विज़न ✨</string>
+    <string name="share_card_dream">सपना</string>
+    <string name="share_card_diary">डायरी</string>
+    <string name="share_card_vision">विज़न</string>
+    <string name="share_card_tagline">अपने सपने लिखें, उनका अर्थ जानें · Google Play पर मुफ़्त</string>
+    <string name="shared_diary_unavailable">डायरी का यह पल अब उपलब्ध नहीं है।</string>
+    <string name="xp_reason_content_shared">पोस्ट साझा करना</string>
+    <string name="compass_share_diary">अपनी डायरी में साझा करें</string>
+    <string name="compass_story_title">आज का कम्पास साझा करें</string>
+    <string name="compass_story_post_diary">मेरी डायरी में जोड़ें</string>
+    <string name="compass_story_posted">आपकी डायरी में जोड़ दिया गया ✨</string>
+    <string name="compass_story_external_hint">या इसे Lunosfer वॉटरमार्क के साथ डाउनलोड करके Instagram स्टोरी में पोस्ट करें:</string>
+    <string name="compass_story_download">डाउनलोड</string>
+    <string name="compass_story_caption">🧭 आज का कम्पास: %1$s</string>
+    <string name="compass_card_title">दैनिक कम्पास</string>
+    <string name="compass_card_archetype">आज का आदिरूप</string>
+    <!-- paylasim:end -->
 </resources>

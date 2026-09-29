@@ -22,6 +22,8 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.TrackChanges
+import androidx.compose.material.icons.filled.Share
+import io.lunosfer.dreamap.util.toShareContent
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -377,6 +379,12 @@ internal fun SlidesViewerContent(
                     fontSize = 11.sp,
                     fontWeight = FontWeight.SemiBold
                 )
+            }
+
+            state.goal?.toShareContent(supabaseClient.auth.currentUserOrNull()?.id)?.takeIf { it.canShare }?.let { shareContent ->
+                IconButton(onClick = { io.lunosfer.dreamap.util.ShareController.open(shareContent) }) {
+                    Icon(Icons.Default.Share, contentDescription = stringResource(R.string.share_action), tint = Color.White, modifier = Modifier.size(26.dp))
+                }
             }
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

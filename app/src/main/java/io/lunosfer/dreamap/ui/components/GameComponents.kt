@@ -55,6 +55,7 @@ import androidx.compose.material.icons.filled.MilitaryTech
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Redeem
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material.icons.filled.Visibility
@@ -367,6 +368,7 @@ fun xpReasonRes(reason: String?): Int = when (reason) {
     "profile_completed" -> R.string.xp_reason_profile_completed
     "daily_quests_bonus" -> R.string.xp_reason_daily_quests_bonus
     "badge_earned" -> R.string.xp_reason_badge_earned
+    "content_shared" -> R.string.xp_reason_content_shared
     else -> R.string.xp_reason_other
 }
 
@@ -385,6 +387,7 @@ fun xpReasonIcon(reason: String?): ImageVector = when (reason) {
     "profile_completed" -> Icons.Filled.AccountCircle
     "daily_quests_bonus" -> Icons.Filled.Redeem
     "badge_earned" -> Icons.Filled.MilitaryTech
+    "content_shared" -> Icons.Filled.Share
     else -> Icons.Filled.AutoAwesome
 }
 

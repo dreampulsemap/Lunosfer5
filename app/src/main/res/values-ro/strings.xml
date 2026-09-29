@@ -205,7 +205,6 @@
     <string name="compass_decoding">Se decodează frecvența…</string>
     <string name="compass_realigning">BUSOLA SE REALINIAZĂ…</string>
     <string name="compass_refresh_note">Se reîmprospătează în fiecare noapte la miezul nopții.</string>
-    <string name="compass_share_story">Distribuie în poveste</string>
     <string name="compass_share_text">✦ Busola mea zilnică Lunosfer 🔮\nArhetipul de azi: %1$s\n\n\"%2$s\"\n\nDescoperă-ți frecvența zilnică pe lunosfer.com</string>
     <string name="vision_daily_seeds_title">De făcut azi (Semințele zilei)</string>
     <string name="vision_daily_seeds_no_active_goals">Nu ai nicio viziune activă. Adaugă o viziune nouă ca să faci pași mici zilnic.</string>
@@ -1106,4 +1105,43 @@
     <string name="onb_cd_heart">Apreciază</string>
     <string name="onb_cd_chest">Cufăr cu recompensă</string>
     <!-- oyunlastirma:end -->
+    <!-- paylasim:start (ruya, gunce, vizyon, pusula paylasimi) -->
+    <string name="share_action">Distribuie</string>
+    <string name="share_sheet_title">Distribuie</string>
+    <string name="share_send_in_app">Trimite pe Lunosfer</string>
+    <string name="share_search_people">Caută persoane</string>
+    <string name="share_no_people">Scrie cuiva sau adaugă prieteni ca să trimiți postări de aici.</string>
+    <string name="share_send">Trimite</string>
+    <string name="share_sent">Trimis</string>
+    <string name="share_note_hint">Adaugă o notă (opțional)</string>
+    <string name="share_to_apps">Distribuie în aplicații</string>
+    <string name="share_instagram_story">Story Instagram</string>
+    <string name="share_copy_link">Copiază linkul</string>
+    <string name="share_link_copied">Link copiat</string>
+    <string name="share_save_image">Salvează imaginea</string>
+    <string name="share_image_saved">Salvată în galerie (Pictures/Lunosfer)</string>
+    <string name="share_more">Mai mult</string>
+    <string name="share_private_note">Nu este publică: se distribuie un card imagine în locul linkului.</string>
+    <string name="share_preparing">Se pregătește imaginea…</string>
+    <string name="share_failed">Nu s-a putut distribui. Încearcă din nou.</string>
+    <string name="share_not_allowed">Doar autorul poate distribui această postare.</string>
+    <string name="share_text_dream">Un vis pe Lunosfer 🌙</string>
+    <string name="share_text_diary">Un moment din jurnal pe Lunosfer 📖</string>
+    <string name="share_text_vision">O viziune pe Lunosfer ✨</string>
+    <string name="share_card_dream">Vis</string>
+    <string name="share_card_diary">Jurnal</string>
+    <string name="share_card_vision">Viziune</string>
+    <string name="share_card_tagline">Notează-ți visele, descoperă-le sensul · gratuit pe Google Play</string>
+    <string name="shared_diary_unavailable">Acest moment din jurnal nu mai este disponibil.</string>
+    <string name="xp_reason_content_shared">Distribuirea unei postări</string>
+    <string name="compass_share_diary">Distribuie în Jurnal</string>
+    <string name="compass_story_title">Distribuie busola zilei</string>
+    <string name="compass_story_post_diary">Adaugă în jurnalul meu</string>
+    <string name="compass_story_posted">Adăugat în jurnal ✨</string>
+    <string name="compass_story_external_hint">Sau descarc-o cu filigranul Lunosfer și postează-o în story-ul tău de Instagram:</string>
+    <string name="compass_story_download">Descarcă</string>
+    <string name="compass_story_caption">🧭 Busola zilei: %1$s</string>
+    <string name="compass_card_title">Busola Zilnică</string>
+    <string name="compass_card_archetype">Arhetipul zilei</string>
+    <!-- paylasim:end -->
 </resources>

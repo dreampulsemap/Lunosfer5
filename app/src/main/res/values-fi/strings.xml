@@ -205,7 +205,6 @@
     <string name="compass_decoding">Taajuutta puretaan…</string>
     <string name="compass_realigning">KOMPASSI SUUNTAUTUU…</string>
     <string name="compass_refresh_note">Päivittyy joka yö keskiyöllä.</string>
-    <string name="compass_share_story">Jaa tarinaan</string>
     <string name="compass_share_text">✦ Lunosfer-päivän kompassini 🔮\nPäivän arkkityyppi: %1$s\n\n\"%2$s\"\n\nLöydä päivän taajuutesi osoitteessa lunosfer.com</string>
     <string name="vision_daily_seeds_title">Tämän päivän tehtävät (Päivän siemenet)</string>
     <string name="vision_daily_seeds_no_active_goals">Sinulla ei ole aktiivista visiota. Lisää uusi visio ottaaksesi pieniä päivittäisiä askeleita.</string>
@@ -1099,4 +1098,43 @@
     <string name="onb_cd_heart">Tykkää</string>
     <string name="onb_cd_chest">Palkintoarkku</string>
     <!-- oyunlastirma:end -->
+    <!-- paylasim:start (ruya, gunce, vizyon, pusula paylasimi) -->
+    <string name="share_action">Jaa</string>
+    <string name="share_sheet_title">Jaa</string>
+    <string name="share_send_in_app">Lähetä Lunosferissa</string>
+    <string name="share_search_people">Hae ihmisiä</string>
+    <string name="share_no_people">Viestittele jonkun kanssa tai lisää ystäviä lähettääksesi julkaisuja täältä.</string>
+    <string name="share_send">Lähetä</string>
+    <string name="share_sent">Lähetetty</string>
+    <string name="share_note_hint">Lisää viesti (valinnainen)</string>
+    <string name="share_to_apps">Jaa sovelluksiin</string>
+    <string name="share_instagram_story">Instagram-tarina</string>
+    <string name="share_copy_link">Kopioi linkki</string>
+    <string name="share_link_copied">Linkki kopioitu</string>
+    <string name="share_save_image">Tallenna kuva</string>
+    <string name="share_image_saved">Tallennettu galleriaan (Pictures/Lunosfer)</string>
+    <string name="share_more">Lisää</string>
+    <string name="share_private_note">Ei julkinen: linkin sijaan jaetaan kuvakortti.</string>
+    <string name="share_preparing">Valmistellaan kuvaa…</string>
+    <string name="share_failed">Jakaminen epäonnistui. Yritä uudelleen.</string>
+    <string name="share_not_allowed">Vain tekijä voi jakaa tämän julkaisun.</string>
+    <string name="share_text_dream">Uni Lunosferissa 🌙</string>
+    <string name="share_text_diary">Päiväkirjahetki Lunosferissa 📖</string>
+    <string name="share_text_vision">Visio Lunosferissa ✨</string>
+    <string name="share_card_dream">Uni</string>
+    <string name="share_card_diary">Päiväkirja</string>
+    <string name="share_card_vision">Visio</string>
+    <string name="share_card_tagline">Tallenna unesi, löydä niiden merkitys · ilmaiseksi Google Playssa</string>
+    <string name="shared_diary_unavailable">Tämä päiväkirjahetki ei ole enää saatavilla.</string>
+    <string name="xp_reason_content_shared">Julkaisun jakaminen</string>
+    <string name="compass_share_diary">Jaa päiväkirjaasi</string>
+    <string name="compass_story_title">Jaa päivän kompassi</string>
+    <string name="compass_story_post_diary">Lisää päiväkirjaani</string>
+    <string name="compass_story_posted">Lisätty päiväkirjaasi ✨</string>
+    <string name="compass_story_external_hint">Tai lataa se Lunosfer-vesileimalla ja julkaise Instagram-tarinassasi:</string>
+    <string name="compass_story_download">Lataa</string>
+    <string name="compass_story_caption">🧭 Päivän kompassi: %1$s</string>
+    <string name="compass_card_title">Päivän kompassi</string>
+    <string name="compass_card_archetype">Päivän arkkityyppi</string>
+    <!-- paylasim:end -->
 </resources>

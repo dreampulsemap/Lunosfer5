@@ -23,7 +23,31 @@ data class Message(
     @SerialName("attachment_mime") val attachmentMime: String? = null,
     @SerialName("attachment_size") val attachmentSize: Long? = null,
     val reaction: String? = null,
+    @SerialName("shared_ref") val sharedRef: SharedRef? = null,
     @Transient val deliveryStatus: MessageDeliveryStatus = MessageDeliveryStatus.SENT
+)
+
+/**
+ * DM'de paylaşılan rüya / günce / vizyonun sunucuda üretilmiş anlık görüntüsü
+ * (bkz. web lib/shareSnapshot.js). Metni sunucu yazar; istemci yalnızca
+ * [ShareRequestRef] gönderir.
+ */
+@Serializable
+data class SharedRef(
+    val type: String,
+    val id: String,
+    val title: String? = null,
+    val excerpt: String? = null,
+    @SerialName("image_url") val imageUrl: String? = null,
+    @SerialName("owner_id") val ownerId: String? = null,
+    @SerialName("owner_name") val ownerName: String? = null,
+    val visibility: String? = null
+)
+
+@Serializable
+data class ShareRequestRef(
+    val type: String,
+    val id: String
 )
 
 /** pages/api/messages/conversations.js: her satır bir kişiyle olan son durumu özetler. */
@@ -60,7 +84,8 @@ data class SendMessageRequest(
     val attachmentType: String? = null,
     val attachmentName: String? = null,
     val attachmentMime: String? = null,
-    val attachmentSize: Long? = null
+    val attachmentSize: Long? = null,
+    val share: ShareRequestRef? = null
 )
 
 @Serializable

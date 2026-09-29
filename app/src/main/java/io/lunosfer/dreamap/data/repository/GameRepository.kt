@@ -146,6 +146,29 @@ object GameRepository {
         return result
     }
 
+    /**
+     * Dış platform paylaşımını (WhatsApp, Instagram...) XP'ye sayar. Sunucu
+     * içerik + kanal + gün başına bir kez ve günde en fazla 5 kez ödüllendirir;
+     * hata paylaşımı asla engellemez. Kendi kapsamında çalışır: paylaşım
+     * sayfası dış uygulama açılırken kapansa da istek iptal olmaz.
+     */
+    fun recordShare(type: String, id: String, channel: String) {
+        if (supabaseClient.auth.currentUserOrNull() == null) return
+        scope.launch {
+            runCatching {
+                supabaseClient.postgrest.rpc(
+                    "record_share",
+                    buildJsonObject {
+                        put("p_type", type)
+                        put("p_id", id)
+                        put("p_channel", channel)
+                    }
+                ) {}
+                requestRefresh()
+            }.onFailure { Log.w(TAG, "record_share failed: ${it.message}") }
+        }
+    }
+
     suspend fun leaderboard(period: String): List<LeaderboardEntry> {
         val raw = supabaseClient.postgrest.rpc(
             "get_leaderboard",

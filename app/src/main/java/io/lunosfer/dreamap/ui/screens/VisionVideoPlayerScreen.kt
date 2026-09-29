@@ -23,6 +23,8 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.Share
+import io.lunosfer.dreamap.util.toShareContent
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -356,6 +358,13 @@ internal fun VisionVideoPlayerContent(
                     fontSize = 11.sp,
                     fontWeight = FontWeight.SemiBold
                 )
+            }
+
+            val shareContent = state.goal.toShareContent(supabaseClient.auth.currentUserOrNull()?.id)
+            if (shareContent.canShare) {
+                IconButton(onClick = { io.lunosfer.dreamap.util.ShareController.open(shareContent) }) {
+                    Icon(Icons.Default.Share, contentDescription = stringResource(R.string.share_action), tint = Color.White, modifier = Modifier.size(26.dp))
+                }
             }
 
             IconButton(onClick = onToggleSave) {

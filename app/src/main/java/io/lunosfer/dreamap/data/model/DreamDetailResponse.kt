@@ -27,6 +27,8 @@ data class DreamDetail(
     @SerialName("cover_image_url") val coverImageUrl: String? = null,
     @SerialName("ai_image_url") val aiImageUrl: String? = null,
     @SerialName("image_url") val imageUrl: String? = null,
+    // Paylaşım kartı başlığı için (get-dream select('*') zaten döndürüyor).
+    @SerialName("ai_title") val aiTitle: String? = null,
     @SerialName("likes_count") val likesCount: Int = 0,
     @SerialName("comments_count") val commentsCount: Int = 0,
     @SerialName("is_liked") val isLiked: Boolean = false,

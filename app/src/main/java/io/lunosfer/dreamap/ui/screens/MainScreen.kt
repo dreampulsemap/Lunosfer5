@@ -47,6 +47,7 @@ import io.lunosfer.dreamap.ui.screens.videoeditor.VideoEditorScreen
 import io.lunosfer.dreamap.ui.theme.*
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.status.SessionStatus
+import io.github.jan.supabase.postgrest.postgrest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -530,14 +531,38 @@ fun MainScreen(
                     DiaryComposerScreen(onBack = { navController.popBackStack() })
                 }
                 composable(
-                    "diary_viewer/{userId}",
-                    arguments = listOf(androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType })
+                    Screen.DiaryStoryViewer.route,
+                    arguments = listOf(
+                        androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType },
+                        // Paylaşılan bir günce anından gelindiğinde o girdiden başla.
+                        androidx.navigation.navArgument("entry") {
+                            type = androidx.navigation.NavType.StringType
+                            nullable = true
+                            defaultValue = null
+                        }
+                    )
                 ) { backStackEntry ->
                     val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
                     DiaryStoryViewerScreen(
                         userId = userId,
+                        startEntryId = backStackEntry.arguments?.getString("entry"),
                         onBack = { navController.popBackStack() },
                         onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) }
+                    )
+                }
+                composable(
+                    io.lunosfer.dreamap.util.SHARED_DIARY_ROUTE,
+                    arguments = listOf(androidx.navigation.navArgument("entryId") { type = androidx.navigation.NavType.StringType })
+                ) { backStackEntry ->
+                    val entryId = backStackEntry.arguments?.getString("entryId") ?: return@composable
+                    SharedDiaryResolver(
+                        entryId = entryId,
+                        onResolved = { ownerId ->
+                            navController.navigate(Screen.DiaryStoryViewer.routeFor(ownerId, entryId)) {
+                                popUpTo(io.lunosfer.dreamap.util.SHARED_DIARY_ROUTE) { inclusive = true }
+                            }
+                        },
+                        onBack = { navController.popBackStack() }
                     )
                 }
                 composable(
@@ -597,7 +622,43 @@ fun MainScreen(
     if (isLoggedIn && !showTour) {
         GameEventHost()
     }
+
+    // Rüya / günce / vizyon paylaşım sayfası (her ekran ShareController.open ile açar).
+    if (isLoggedIn) {
+        io.lunosfer.dreamap.ui.components.share.ShareSheetHost()
+    }
 }
+
+/** Sahibi bilinmeyen günce bağlantısını (lunosfer.com/share/diary/...) çözüp hikâyeye yönlendirir. */
+@Composable
+private fun SharedDiaryResolver(entryId: String, onResolved: (String) -> Unit, onBack: () -> Unit) {
+    var failed by remember { mutableStateOf(false) }
+    LaunchedEffect(entryId) {
+        val ownerId = runCatching {
+            supabaseClient.postgrest["diary_entries"]
+                .select(columns = io.github.jan.supabase.postgrest.query.Columns.list("user_id")) { filter { eq("id", entryId) } }
+                .decodeList<DiaryOwnerRow>()
+                .firstOrNull()?.userId
+        }.getOrNull()
+        if (ownerId != null) onResolved(ownerId) else failed = true
+    }
+    Box(Modifier.fillMaxSize().background(Void950), contentAlignment = Alignment.Center) {
+        if (failed) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(24.dp)) {
+                Text(stringResource(R.string.shared_diary_unavailable), color = Color.White, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                Spacer(Modifier.height(16.dp))
+                Button(onClick = onBack, colors = ButtonDefaults.buttonColors(containerColor = AstralGold)) {
+                    Text(stringResource(R.string.common_go_back), color = Void950)
+                }
+            }
+        } else {
+            CircularProgressIndicator(color = AstralGold)
+        }
+    }
+}
+
+@kotlinx.serialization.Serializable
+private data class DiaryOwnerRow(@kotlinx.serialization.SerialName("user_id") val userId: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

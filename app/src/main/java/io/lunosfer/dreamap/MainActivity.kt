@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         
         handleAuthDeeplink(intent)
-        
+        handleShareDeeplink(intent)
+
         intent.getStringExtra("target_route")?.let { route ->
             if (route.isNotBlank()) {
                 pendingRouteState.value = route
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         handleAuthDeeplink(intent)
+        handleShareDeeplink(intent)
 
         val route = intent.getStringExtra("target_route")
         if (!route.isNullOrBlank()) {
@@ -76,6 +78,14 @@ class MainActivity : AppCompatActivity() {
             intent.data = null
             setIntent(intent)
         }
+    }
+
+    /** Paylaşılan rüya / günce / vizyon bağlantısı; giriş yapılınca MainScreen o ekrana gider. */
+    private fun handleShareDeeplink(intent: Intent) {
+        val route = io.lunosfer.dreamap.util.shareRouteFromUri(intent.data) ?: return
+        pendingRouteState.value = route
+        intent.data = null
+        setIntent(intent)
     }
 
     private fun requestNotificationPermission() {

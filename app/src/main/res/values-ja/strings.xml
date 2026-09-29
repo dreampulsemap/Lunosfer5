@@ -757,7 +757,6 @@
     <string name="compass_decoding">周波数を解読中…</string>
     <string name="compass_realigning">コンパスを再調整中…</string>
     <string name="compass_refresh_note">毎晩0時に更新されます。</string>
-    <string name="compass_share_story">ストーリーズでシェア</string>
     <string name="compass_share_text">✦ 私のLunosfer デイリーコンパス 🔮\n今日のアーキタイプ: %1$s\n\n\"%2$s\"\n\n今日の周波数は lunosfer.com で</string>
     <string name="diary_like_cd">いいね</string>
     <string name="diary_comment_cd">コメント</string>
@@ -1084,4 +1083,43 @@
     <string name="onb_cd_heart">いいね</string>
     <string name="onb_cd_chest">報酬の宝箱</string>
     <!-- oyunlastirma:end -->
+    <!-- paylasim:start (ruya, gunce, vizyon, pusula paylasimi) -->
+    <string name="share_action">シェア</string>
+    <string name="share_sheet_title">シェア</string>
+    <string name="share_send_in_app">Lunosferで送る</string>
+    <string name="share_search_people">ユーザーを検索</string>
+    <string name="share_no_people">ここから送るには、誰かとメッセージするか友達を追加してください。</string>
+    <string name="share_send">送信</string>
+    <string name="share_sent">送信済み</string>
+    <string name="share_note_hint">メモを追加（任意）</string>
+    <string name="share_to_apps">アプリでシェア</string>
+    <string name="share_instagram_story">Instagramストーリーズ</string>
+    <string name="share_copy_link">リンクをコピー</string>
+    <string name="share_link_copied">リンクをコピーしました</string>
+    <string name="share_save_image">画像を保存</string>
+    <string name="share_image_saved">ギャラリーに保存しました（Pictures/Lunosfer）</string>
+    <string name="share_more">その他</string>
+    <string name="share_private_note">非公開のため、リンクの代わりに画像カードをシェアします。</string>
+    <string name="share_preparing">画像を準備中…</string>
+    <string name="share_failed">シェアできませんでした。もう一度お試しください。</string>
+    <string name="share_not_allowed">この投稿は投稿者だけがシェアできます。</string>
+    <string name="share_text_dream">Lunosferの夢 🌙</string>
+    <string name="share_text_diary">Lunosferの日記の瞬間 📖</string>
+    <string name="share_text_vision">Lunosferのビジョン ✨</string>
+    <string name="share_card_dream">夢</string>
+    <string name="share_card_diary">日記</string>
+    <string name="share_card_vision">ビジョン</string>
+    <string name="share_card_tagline">夢を記録して意味を見つけよう · Google Playで無料</string>
+    <string name="shared_diary_unavailable">この日記の瞬間はもう表示できません。</string>
+    <string name="xp_reason_content_shared">投稿のシェア</string>
+    <string name="compass_share_diary">日記でシェア</string>
+    <string name="compass_story_title">今日のコンパスをシェア</string>
+    <string name="compass_story_post_diary">日記に追加</string>
+    <string name="compass_story_posted">日記に追加しました ✨</string>
+    <string name="compass_story_external_hint">またはLunosferの透かし入りで保存してInstagramストーリーズに投稿：</string>
+    <string name="compass_story_download">保存</string>
+    <string name="compass_story_caption">🧭 今日のコンパス：%1$s</string>
+    <string name="compass_card_title">デイリーコンパス</string>
+    <string name="compass_card_archetype">今日のアーキタイプ</string>
+    <!-- paylasim:end -->
 </resources>

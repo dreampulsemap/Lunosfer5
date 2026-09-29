@@ -19,6 +19,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Share
+import io.github.jan.supabase.auth.auth
+import io.lunosfer.dreamap.util.toShareContent
 import androidx.compose.material.icons.filled.TrackChanges
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
@@ -132,10 +135,12 @@ private fun DiaryStoryVideoPlayer(
 @Composable
 fun DiaryStoryViewerScreen(
     userId: String,
+    startEntryId: String? = null,
     onBack: () -> Unit,
     onGoalClick: ((String) -> Unit)? = null
 ) {
-    val factory = remember(userId) { DiaryStoryViewerViewModel.Factory(userId) }
+    val factory = remember(userId, startEntryId) { DiaryStoryViewerViewModel.Factory(userId, startEntryId) }
+    val currentUserId = remember { io.lunosfer.dreamap.supabase.supabaseClient.auth.currentUserOrNull()?.id }
     val viewModel: DiaryStoryViewerViewModel = viewModel(factory = factory)
     val state by viewModel.state.collectAsState()
 
@@ -327,6 +332,22 @@ fun DiaryStoryViewerScreen(
                                     fontWeight = FontWeight.Bold
                                 )
                             }
+                        }
+
+                        val shareContent = currentEntry.toShareContent(s.owner, userId, currentUserId)
+                        if (shareContent.canShare) {
+                            Icon(
+                                imageVector = Icons.Filled.Share,
+                                contentDescription = stringResource(R.string.share_action),
+                                tint = Color.White,
+                                modifier = Modifier.size(28.dp).clickable(
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() }
+                                ) {
+                                    viewModel.pauseTimer()
+                                    io.lunosfer.dreamap.util.ShareController.open(shareContent)
+                                }
+                            )
                         }
                     }
 

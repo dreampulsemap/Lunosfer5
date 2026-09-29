@@ -413,8 +413,16 @@ private fun ConversationRow(conversation: Conversation, currentUserId: String?, 
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                 }
+                // content boş string gelir (DB'de NOT NULL); ?: yerine isNotBlank kontrolü
+                // şart — yoksa ekli/paylaşımlı mesajların önizlemesi boş kalıyordu.
+                val shared = conversation.lastMessage.sharedRef
                 Text(
-                    text = conversation.lastMessage.content
+                    text = conversation.lastMessage.content?.takeIf { it.isNotBlank() }
+                        ?: shared?.let { ref ->
+                            val label = "${io.lunosfer.dreamap.ui.components.share.sharedEmoji(ref.type)} " +
+                                stringResource(io.lunosfer.dreamap.ui.components.share.sharedTypeRes(ref.type))
+                            if (ref.title.isNullOrBlank()) label else "$label: ${ref.title}"
+                        }
                         ?: when (conversation.lastMessage.attachmentType) {
                             "image" -> stringResource(R.string.msg_attachment_photo)
                             "video" -> stringResource(R.string.msg_attachment_video)

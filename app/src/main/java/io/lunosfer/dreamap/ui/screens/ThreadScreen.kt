@@ -55,6 +55,7 @@ import io.lunosfer.dreamap.data.model.MessageDeliveryStatus
 import io.lunosfer.dreamap.data.model.UserProfile
 import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.theme.*
+import io.lunosfer.dreamap.util.route
 import io.lunosfer.dreamap.ui.viewmodel.ThreadUiState
 import io.lunosfer.dreamap.ui.viewmodel.ThreadViewModel
 import io.github.jan.supabase.auth.auth
@@ -183,7 +184,8 @@ fun ThreadScreen(otherUserId: String, navController: androidx.navigation.NavCont
                     isOwnMessage = viewModel::isOwnMessage,
                     onLoadOlder = viewModel::loadOlder,
                     onReactMessage = viewModel::reactMessage,
-                    onRetrySend = viewModel::retrySend
+                    onRetrySend = viewModel::retrySend,
+                    onOpenShared = { ref -> ref.route()?.let { navController.navigate(it) } }
                 )
             }
         }
@@ -323,7 +325,8 @@ private fun ThreadMessageList(
     isOwnMessage: (Message) -> Boolean,
     onLoadOlder: () -> Unit,
     onReactMessage: (String, String) -> Unit,
-    onRetrySend: (Message) -> Unit
+    onRetrySend: (Message) -> Unit,
+    onOpenShared: (io.lunosfer.dreamap.data.model.SharedRef) -> Unit
 ) {
     val listState = rememberLazyListState()
     val latestState = rememberUpdatedState(state)
@@ -382,7 +385,8 @@ private fun ThreadMessageList(
                 message = message,
                 isOwn = isOwnMessage(message),
                 onReact = { reaction -> onReactMessage(message.id, reaction) },
-                onRetry = { onRetrySend(message) }
+                onRetry = { onRetrySend(message) },
+                onOpenShared = onOpenShared
             )
         }
     }
@@ -403,7 +407,13 @@ private fun DateDivider(label: String) {
 }
 
 @Composable
-private fun MessageBubble(message: Message, isOwn: Boolean, onReact: (String) -> Unit, onRetry: () -> Unit = {}) {
+private fun MessageBubble(
+    message: Message,
+    isOwn: Boolean,
+    onReact: (String) -> Unit,
+    onRetry: () -> Unit = {},
+    onOpenShared: (io.lunosfer.dreamap.data.model.SharedRef) -> Unit = {}
+) {
     var showReactions by remember { mutableStateOf(false) }
     val isFailed = message.deliveryStatus == MessageDeliveryStatus.FAILED
 
@@ -426,28 +436,37 @@ private fun MessageBubble(message: Message, isOwn: Boolean, onReact: (String) ->
                     color = if (isOwn) AstralGold.copy(alpha = if (isFailed) 0.5f else 0.9f) else Void800,
                     modifier = Modifier.clickable { if (isFailed) onRetry() else showReactions = true }
                 ) {
-                    SelectionContainer {
-                        if (message.content != null && message.content.isNotBlank()) {
-                            Text(
-                                text = message.content,
-                                color = if (isOwn) Void950 else Color.White,
-                                fontSize = 14.sp,
-                                modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp)
-                            )
-                        } else if (message.attachmentType != null && message.attachmentUrl != null) {
+                    // Paylaşım kartı, ek ve metin birlikte olabilir (ör. rüya + not,
+                    // fotoğraf + açıklama); önceden metin varsa ek hiç gösterilmiyordu.
+                    Column {
+                        message.sharedRef?.let { ref ->
+                            io.lunosfer.dreamap.ui.components.share.SharedContentCard(ref, isOwn) { onOpenShared(ref) }
+                        }
+                        val hasText = !message.content.isNullOrBlank()
+                        if (message.attachmentType != null && message.attachmentUrl != null) {
                             AttachmentContent(
                                 url = message.attachmentUrl,
                                 type = message.attachmentType,
                                 name = message.attachmentName,
                                 isOwn = isOwn
                             )
-                        } else if (message.attachmentType != null) {
+                        } else if (message.attachmentType != null && !hasText) {
                             Text(
                                 text = attachmentLabel(message.attachmentType),
                                 color = if (isOwn) Void950 else Color(0xFF94A3B8),
                                 fontSize = 13.sp,
                                 modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp)
                             )
+                        }
+                        if (hasText) {
+                            SelectionContainer {
+                                Text(
+                                    text = message.content.orEmpty(),
+                                    color = if (isOwn) Void950 else Color.White,
+                                    fontSize = 14.sp,
+                                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp)
+                                )
+                            }
                         }
                     }
                 }

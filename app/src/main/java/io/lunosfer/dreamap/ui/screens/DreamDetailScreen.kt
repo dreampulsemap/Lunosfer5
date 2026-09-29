@@ -48,6 +48,7 @@ import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.theme.*
 import io.lunosfer.dreamap.ui.viewmodel.DreamDetailUiState
 import io.lunosfer.dreamap.ui.viewmodel.DreamDetailViewModel
+import io.lunosfer.dreamap.util.toShareContent
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -418,6 +419,13 @@ fun DreamDetailContent(
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold
                 )
+            }
+
+            val shareContent = dream.toShareContent(currentUserId)
+            if (shareContent.canShare) {
+                IconButton(onClick = { io.lunosfer.dreamap.util.ShareController.open(shareContent) }, modifier = Modifier.size(40.dp)) {
+                    Icon(Icons.Filled.Share, contentDescription = stringResource(R.string.share_action), tint = AstralGold, modifier = Modifier.size(20.dp))
+                }
             }
 
             // Owner features: Boost & Add Bounty
