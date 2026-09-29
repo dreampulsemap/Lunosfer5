@@ -163,6 +163,7 @@ fun PublicProfileScreen(
                         // Header Span
                         item(span = { GridItemSpan(2) }) {
                             ProfileHeaderCard(
+                                userId = userId,
                                 state = s,
                                 onFollowClick = viewModel::sendFollowRequest,
                                 onMessageClick = { onMessageClick(userId) }
@@ -333,6 +334,7 @@ fun PublicProfileScreen(
 
 @Composable
 private fun ProfileHeaderCard(
+    userId: String,
     state: PublicProfileUiState.Success,
     onFollowClick: () -> Unit,
     onMessageClick: () -> Unit
@@ -395,6 +397,9 @@ private fun ProfileHeaderCard(
                     fontSize = 12.sp
                 )
             }
+
+            // Rütbe + rozetler (profil görünürlüğü izin veriyorsa).
+            io.lunosfer.dreamap.ui.components.PublicRankRow(userId = userId)
 
             // stringResource(R.string.public_profile_follows_you) Badge
             if (state.followsViewer) {

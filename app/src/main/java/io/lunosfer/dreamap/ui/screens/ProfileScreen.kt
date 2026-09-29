@@ -78,6 +78,7 @@ fun ProfileScreen(
     onOpenReels: (List<io.lunosfer.dreamap.data.model.Goal>, Int) -> Unit = { _, _ -> },
     onOpenDreamReels: (List<io.lunosfer.dreamap.data.model.Dream>, Int) -> Unit = { _, _ -> },
     onBlockedUsersClick: () -> Unit = {},
+    onJourneyClick: () -> Unit = {},
     initialShowSettings: Boolean = false,
     viewModel: ProfileViewModel = viewModel()
 ) {
@@ -174,6 +175,8 @@ fun ProfileScreen(
                                 onEditClick = { viewModel.openEditModal() },
                                 onFriendsClick = onFriendsListClick
                             )
+
+                            io.lunosfer.dreamap.ui.components.JourneySummaryCard(onClick = onJourneyClick)
 
                             NotificationPermissionBanner()
 
@@ -359,6 +362,7 @@ fun ProfileScreen(
                                     // (mana rozeti ve gunluk pusula okumasi bir sonraki
                                     // hesaba sizmasin).
                                     io.lunosfer.dreamap.data.repository.UserWallet.clear()
+                                    io.lunosfer.dreamap.data.repository.GameRepository.clear()
                                     supabaseClient.auth.signOut()
                                     io.lunosfer.dreamap.util.AppLanguage.resetSync()
                                     onLogout()

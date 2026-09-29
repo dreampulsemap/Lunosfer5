@@ -32,9 +32,17 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.navArgument
 import io.lunosfer.dreamap.R
+import io.lunosfer.dreamap.data.repository.GameRepository
 import io.lunosfer.dreamap.supabase.supabaseClient
+import io.lunosfer.dreamap.ui.components.GameEventHost
 import io.lunosfer.dreamap.ui.components.GuestSignUpSheet
+import io.lunosfer.dreamap.ui.components.RankRingAvatar
+import io.lunosfer.dreamap.util.GuestMode
+import io.lunosfer.dreamap.util.GuestPrompt
+import io.lunosfer.dreamap.util.OnboardingController
+import io.lunosfer.dreamap.util.OnboardingPrefs
 import io.lunosfer.dreamap.util.requireAccount
+import kotlinx.coroutines.launch
 import io.lunosfer.dreamap.ui.screens.videoeditor.VideoEditorScreen
 import io.lunosfer.dreamap.ui.theme.*
 import io.github.jan.supabase.auth.auth
@@ -50,6 +58,27 @@ fun MainScreen(
     val localContext = androidx.compose.ui.platform.LocalContext.current
     val sessionStatus by supabaseClient.auth.sessionStatus.collectAsState(initial = SessionStatus.Initializing)
     val isLoggedIn = sessionStatus is SessionStatus.Authenticated
+    // Hesap degisimini de yakalamak icin (misafir -> kayitli hesap gecisinde
+    // isLoggedIn iki durumda da true kaliyor).
+    val currentUserId = (sessionStatus as? SessionStatus.Authenticated)?.session?.user?.id
+    val coroutineScope = rememberCoroutineScope()
+
+    // Oyunlastirma: ilerleme hesap degisince sifirlanip yuklenir, uygulamaya
+    // donuste (bu arada gelen begeni/yorum XP'si icin) tazelenir.
+    LaunchedEffect(currentUserId) {
+        GameRepository.clear()
+        if (currentUserId != null) GameRepository.refresh()
+    }
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner, currentUserId) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME && currentUserId != null) {
+                GameRepository.refreshIfStale()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
 
     // Uygulama her acilista (oturum zaten acikken) dili profile gore esitle:
     // dili hic secmemis kullanici cihaz dilini gorur.
@@ -82,6 +111,49 @@ fun MainScreen(
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+    // Tanitim turu: bu cihazda ilk acilista (girissiz de) ya da giris yapan
+    // hesap turu hic gormemisse. Sonuc once diske (pendingResult) yaziliyor,
+    // sunucu onaylayinca siliniyor: ag hatasinda ya da ilerleme turdan sonra
+    // yuklendiginde tur ikinci kez acilmiyor, odul de kaybolmuyor.
+    val gameProgress by GameRepository.progress.collectAsState()
+    val replayTour by OnboardingController.visible.collectAsState()
+    var autoTour by remember { mutableStateOf(!OnboardingPrefs.deviceSeen) }
+    LaunchedEffect(gameProgress?.onboardingStatus, gameProgress?.isGuest, currentUserId) {
+        val p = gameProgress ?: return@LaunchedEffect
+        if (p.isGuest || p.onboardingStatus != "none") return@LaunchedEffect
+        val pending = OnboardingPrefs.pendingResult
+        if (pending != null) {
+            runCatching { GameRepository.finishOnboarding(pending == OnboardingPrefs.COMPLETED) }
+                .onSuccess { OnboardingPrefs.pendingResult = null }
+        } else if (OnboardingPrefs.deviceSeen) {
+            // Bu cihazda tur daha once gosterildi ama bu hesap hic gormedi (ikinci hesap).
+            autoTour = true
+        }
+    }
+    val showTour = autoTour || replayTour
+    val onTourFinished: (Boolean) -> Unit = { completed ->
+        autoTour = false
+        OnboardingController.hide()
+        OnboardingPrefs.deviceSeen = true
+        // Bir kez "tamamlandi" kaydedildiyse sonraki "atla" onu ezmesin (odul kaybolmasin).
+        if (OnboardingPrefs.pendingResult != OnboardingPrefs.COMPLETED) {
+            OnboardingPrefs.pendingResult = if (completed) OnboardingPrefs.COMPLETED else OnboardingPrefs.SKIPPED
+        }
+        if (!completed) {
+            android.widget.Toast.makeText(localContext, R.string.onb_skip_hint, android.widget.Toast.LENGTH_LONG).show()
+        }
+        if (isLoggedIn && !GuestMode.isGuest()) {
+            val result = OnboardingPrefs.pendingResult
+            coroutineScope.launch {
+                runCatching { GameRepository.finishOnboarding(result == OnboardingPrefs.COMPLETED) }
+                    .onSuccess { OnboardingPrefs.pendingResult = null }
+            }
+        } else if (completed && isLoggedIn) {
+            // Misafir: odul hesap acilinca verilecek; kayit davetini ac.
+            GuestPrompt.show()
+        }
+    }
 
     var unreadCount by remember { mutableStateOf(0) }
     var unreadMessages by remember { mutableStateOf(0) }
@@ -168,7 +240,8 @@ fun MainScreen(
         Screen.CreateVision.route,
         Screen.DiaryComposer.route,
         Screen.DiaryJournal.route,
-        Screen.BlockedUsers.route
+        Screen.BlockedUsers.route,
+        Screen.Journey.route
     )
     val showTopBottomBars = currentRoute != Screen.Auth.route && currentRoute !in fullScreenRoutes
 
@@ -184,285 +257,310 @@ fun MainScreen(
         navController.navigate(Screen.DreamReels.route)
     }
 
-    Scaffold(
-        topBar = {
-            if (showTopBottomBars) {
-                TopBar(
-                    isLoggedIn = isLoggedIn,
-                    unreadCount = unreadCount,
-                    auraBalance = auraBalance,
-                    manaBalance = manaBalance,
-                    onLoginClick = { navController.navigate(Screen.Auth.route) },
-                    // Profil ust bardan aciliyor: Ana Sayfa'nin USTUNE itilirse
-                    // sekme gecislerinde Ana Sayfa'nin kaydedilmis yiginina
-                    // giriyor ve "Ana Sayfa"ya basildiginda akis yerine yine
-                    // Profil aciliyordu. Bu yuzden o da sekme gibi degistiriliyor.
-                    onProfileClick = { navController.navigateToTab(Screen.Profile.createRoute(false)) },
-                    onSettingsClick = { navController.navigateToTab(Screen.Profile.createRoute(true)) },
-                    onHelpClick = {
-                        val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(io.lunosfer.dreamap.util.LegalLinks.helpSupportUrl))
-                        localContext.startActivity(intent)
-                    },
-                    onNotificationsClick = { navController.navigate(Screen.Notifications.route) },
-                    onGlobeClick = { navController.navigate(Screen.Globe.route) },
-                    onSharedVisionsClick = { navController.navigate(Screen.SharedVisions.route) },
-                    onSpiritualToolsClick = { navController.navigate(Screen.SpiritualTools.route) },
-                    onDeepAnalysisClick = { navController.navigate(Screen.DeepAnalysis.route) },
-                    onBuyAuraClick = {
-                        billingSheetTab = BillingTab.AURA
-                        showBillingSheet = true
-                    }
-                )
-            }
-        },
-        bottomBar = {
-            if (showTopBottomBars && isLoggedIn) {
-                BottomNavBar(navController, unreadMessages = unreadMessages)
-            }
-        },
-        containerColor = Void950
-    ) { padding ->
-        NavHost(
-            navController = navController,
-            startDestination = if (isLoggedIn) Screen.Home.route else Screen.Auth.route,
-            modifier = Modifier.padding(padding)
-        ) {
-            composable(Screen.Auth.route) {
-                AuthScreen(onLoginSuccess = {
-                    navController.navigate(Screen.Home.route) {
-                        popUpTo(0)
-                    }
-                })
-            }
-            composable(Screen.Home.route) {
-                HomeScreen(
-                    onOpenDreamReels = openDreamReels,
-                    onOpenComposer = { navController.navigate(Screen.DiaryComposer.route) },
-                    onOpenViewer = { userId -> navController.navigate(Screen.DiaryStoryViewer.routeFor(userId)) },
-                    onOpenReels = openReels,
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
-                )
-            }
-            composable(Screen.Explore.route) {
-                ExploreScreen(onOpenReels = openReels, onOpenDreamReels = openDreamReels)
-            }
-            composable(Screen.Vision.route) {
-                VisionScreen(
-                    onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) },
-                    onOpenReels = openReels
-                )
-            }
-            composable(Screen.Messages.route) { 
-                MessagesScreen(navController = navController, onLoginClick = { navController.navigate(Screen.Auth.route) }) 
-            }
-            composable(Screen.Thread.route) { backStackEntry ->
-                val otherUserId = backStackEntry.arguments?.getString("otherUserId") ?: return@composable
-                ThreadScreen(otherUserId = otherUserId, navController = navController)
-            }
-            composable(Screen.CreateDream.route) { CreateDreamScreen(navController) }
-            composable(Screen.CreateVision.route) { CreateVisionScreen(navController) }
-            composable(
-                "dream/{dreamId}",
-                arguments = listOf(androidx.navigation.navArgument("dreamId") { type = androidx.navigation.NavType.LongType })
-            ) { backStackEntry ->
-                val dreamId = backStackEntry.arguments?.getLong("dreamId") ?: return@composable
-                DreamDetailScreen(
-                    dreamId = dreamId,
-                    onBack = { navController.popBackStack() },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
-                )
-            }
-            composable(
-                "goal/{goalId}",
-                arguments = listOf(androidx.navigation.navArgument("goalId") { type = androidx.navigation.NavType.StringType })
-            ) { backStackEntry ->
-                val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
-                GoalDetailScreen(
-                    goalId = goalId,
-                    onBack = { navController.popBackStack() },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) },
-                    onOpenReelsEditor = { navController.navigate(Screen.VideoEditor.createRoute(goalId)) },
-                    onWatchVideo = { navController.navigate(Screen.VisionVideoPlayer.createRoute(goalId)) },
-                    onWatchSlides = { navController.navigate(Screen.SlidesViewer.createRoute(goalId)) },
-                    onEditSlides = { navController.navigate(Screen.SlideCreator.createRoute(goalId)) }
-                )
-            }
-            composable(
-                Screen.VisionVideoPlayer.route,
-                arguments = listOf(navArgument("goalId") { type = NavType.StringType })
-            ) { backStackEntry ->
-                val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
-                VisionVideoPlayerScreen(
-                    goalId = goalId,
-                    onBack = { navController.popBackStack() },
-                    onEdit = { navController.navigate(Screen.VideoEditor.createRoute(goalId)) },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
-                )
-            }
-            composable(
-                Screen.SlidesViewer.route,
-                arguments = listOf(navArgument("goalId") { type = NavType.StringType })
-            ) { backStackEntry ->
-                val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
-                SlidesViewerScreen(
-                    goalId = goalId,
-                    onBack = { navController.popBackStack() },
-                    onGoalClick = { gid -> navController.navigate(Screen.GoalDetail.createRoute(gid)) },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
-                )
-            }
-            composable(
-                Screen.SlideCreator.route,
-                arguments = listOf(navArgument("goalId") { type = NavType.StringType })
-            ) { backStackEntry ->
-                val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
-                SlideCreatorScreen(goalId = goalId, onBack = { navController.popBackStack() })
-            }
-            composable(
-                Screen.VideoEditor.route,
-                arguments = listOf(navArgument("goalId") { type = NavType.StringType })
-            ) { backStackEntry ->
-                val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
-                VideoEditorScreen(goalId = goalId, onClose = { navController.popBackStack() })
-            }
-            composable(Screen.Globe.route) {
-                GlobeScreen(onBack = { navController.popBackStack() })
-            }
-            composable(Screen.SpiritualTools.route) {
-                SpiritualToolsScreen(
-                    onBack = { navController.popBackStack() },
-                    onUpgrade = {
-                        billingSheetTab = BillingTab.PREMIUM
-                        showBillingSheet = true
-                    },
-                    onOpenDeepAnalysis = { navController.navigate(Screen.DeepAnalysis.route) }
-                )
-            }
-            composable(Screen.DeepAnalysis.route) {
-                DeepAnalysisScreen(
-                    onBack = { navController.popBackStack() },
-                    onBuyAuras = {
-                        billingSheetTab = BillingTab.AURA
-                        showBillingSheet = true
-                    }
-                )
-            }
-            composable(Screen.SharedVisions.route) {
-                SharedVisionsScreen(
-                    onBack = { navController.popBackStack() },
-                    onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) }
-                )
-            }
-            composable(Screen.VisionReels.route) {
-                VisionReelsScreen(
-                    onClose = { navController.popBackStack() },
-                    onOpenGoalDetail = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) },
-                    onEditVideo = { goalId -> navController.navigate(Screen.VideoEditor.createRoute(goalId)) },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
-                )
-            }
-            composable(Screen.DreamReels.route) {
-                DreamReelsScreen(
-                    onClose = { navController.popBackStack() },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
-                )
-            }
-            composable(
-                Screen.Profile.route,
-                arguments = listOf(navArgument("showSettings") { type = NavType.BoolType; defaultValue = false })
-            ) { backStackEntry ->
-                val showInitSettings = backStackEntry.arguments?.getBoolean("showSettings") ?: false
-                val currentUserId = supabaseClient.auth.currentSessionOrNull()?.user?.id ?: ""
-                ProfileScreen(
-                    onLogout = {
-                        navController.navigate(Screen.Auth.route) {
+    Box(Modifier.fillMaxSize()) {
+        Scaffold(
+            topBar = {
+                if (showTopBottomBars) {
+                    TopBar(
+                        isLoggedIn = isLoggedIn,
+                        unreadCount = unreadCount,
+                        auraBalance = auraBalance,
+                        manaBalance = manaBalance,
+                        onLoginClick = { navController.navigate(Screen.Auth.route) },
+                        // Profil ust bardan aciliyor: Ana Sayfa'nin USTUNE itilirse
+                        // sekme gecislerinde Ana Sayfa'nin kaydedilmis yiginina
+                        // giriyor ve "Ana Sayfa"ya basildiginda akis yerine yine
+                        // Profil aciliyordu. Bu yuzden o da sekme gibi degistiriliyor.
+                        onProfileClick = { navController.navigateToTab(Screen.Profile.createRoute(false)) },
+                        onSettingsClick = { navController.navigateToTab(Screen.Profile.createRoute(true)) },
+                        onHelpClick = {
+                            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(io.lunosfer.dreamap.util.LegalLinks.helpSupportUrl))
+                            localContext.startActivity(intent)
+                        },
+                        onNotificationsClick = { navController.navigate(Screen.Notifications.route) },
+                        onGlobeClick = { navController.navigate(Screen.Globe.route) },
+                        onSharedVisionsClick = { navController.navigate(Screen.SharedVisions.route) },
+                        onSpiritualToolsClick = { navController.navigate(Screen.SpiritualTools.route) },
+                        onDeepAnalysisClick = { navController.navigate(Screen.DeepAnalysis.route) },
+                        onJourneyClick = { navController.navigate(Screen.Journey.route) },
+                        onBuyAuraClick = {
+                            billingSheetTab = BillingTab.AURA
+                            showBillingSheet = true
+                        }
+                    )
+                }
+            },
+            bottomBar = {
+                if (showTopBottomBars && isLoggedIn) {
+                    BottomNavBar(navController, unreadMessages = unreadMessages)
+                }
+            },
+            containerColor = Void950
+        ) { padding ->
+            NavHost(
+                navController = navController,
+                startDestination = if (isLoggedIn) Screen.Home.route else Screen.Auth.route,
+                modifier = Modifier.padding(padding)
+            ) {
+                composable(Screen.Auth.route) {
+                    AuthScreen(onLoginSuccess = {
+                        navController.navigate(Screen.Home.route) {
                             popUpTo(0)
                         }
-                    },
-                    onAddFriendClick = {
-                        navController.navigate(Screen.AddFriend.route)
-                    },
-                    onFriendsListClick = {
-                        navController.navigate(Screen.FriendsList.route)
-                    },
-                    onDiaryJournalClick = {
-                        if (currentUserId.isNotBlank()) navController.navigate(Screen.DiaryJournal.routeFor(currentUserId))
-                    },
-                    onUpgradeClick = {
-                        billingSheetTab = BillingTab.PREMIUM
-                        showBillingSheet = true
-                    },
-                    onOpenReels = openReels,
-                    onOpenDreamReels = openDreamReels,
-                    onBlockedUsersClick = {
-                        navController.navigate(Screen.BlockedUsers.route)
-                    },
-                    initialShowSettings = showInitSettings
-                )
+                    })
+                }
+                composable(Screen.Home.route) {
+                    HomeScreen(
+                        onOpenDreamReels = openDreamReels,
+                        onOpenComposer = { navController.navigate(Screen.DiaryComposer.route) },
+                        onOpenViewer = { userId -> navController.navigate(Screen.DiaryStoryViewer.routeFor(userId)) },
+                        onOpenReels = openReels,
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) },
+                        onOpenJourney = { navController.navigate(Screen.Journey.route) }
+                    )
+                }
+                composable(Screen.Journey.route) {
+                    JourneyScreen(
+                        onBack = { navController.popBackStack() },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
+                    )
+                }
+                composable(Screen.Explore.route) {
+                    ExploreScreen(onOpenReels = openReels, onOpenDreamReels = openDreamReels)
+                }
+                composable(Screen.Vision.route) {
+                    VisionScreen(
+                        onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) },
+                        onOpenReels = openReels
+                    )
+                }
+                composable(Screen.Messages.route) { 
+                    MessagesScreen(navController = navController, onLoginClick = { navController.navigate(Screen.Auth.route) }) 
+                }
+                composable(Screen.Thread.route) { backStackEntry ->
+                    val otherUserId = backStackEntry.arguments?.getString("otherUserId") ?: return@composable
+                    ThreadScreen(otherUserId = otherUserId, navController = navController)
+                }
+                composable(Screen.CreateDream.route) { CreateDreamScreen(navController) }
+                composable(Screen.CreateVision.route) { CreateVisionScreen(navController) }
+                composable(
+                    "dream/{dreamId}",
+                    arguments = listOf(androidx.navigation.navArgument("dreamId") { type = androidx.navigation.NavType.LongType })
+                ) { backStackEntry ->
+                    val dreamId = backStackEntry.arguments?.getLong("dreamId") ?: return@composable
+                    DreamDetailScreen(
+                        dreamId = dreamId,
+                        onBack = { navController.popBackStack() },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
+                    )
+                }
+                composable(
+                    "goal/{goalId}",
+                    arguments = listOf(androidx.navigation.navArgument("goalId") { type = androidx.navigation.NavType.StringType })
+                ) { backStackEntry ->
+                    val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
+                    GoalDetailScreen(
+                        goalId = goalId,
+                        onBack = { navController.popBackStack() },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) },
+                        onOpenReelsEditor = { navController.navigate(Screen.VideoEditor.createRoute(goalId)) },
+                        onWatchVideo = { navController.navigate(Screen.VisionVideoPlayer.createRoute(goalId)) },
+                        onWatchSlides = { navController.navigate(Screen.SlidesViewer.createRoute(goalId)) },
+                        onEditSlides = { navController.navigate(Screen.SlideCreator.createRoute(goalId)) }
+                    )
+                }
+                composable(
+                    Screen.VisionVideoPlayer.route,
+                    arguments = listOf(navArgument("goalId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
+                    VisionVideoPlayerScreen(
+                        goalId = goalId,
+                        onBack = { navController.popBackStack() },
+                        onEdit = { navController.navigate(Screen.VideoEditor.createRoute(goalId)) },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
+                    )
+                }
+                composable(
+                    Screen.SlidesViewer.route,
+                    arguments = listOf(navArgument("goalId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
+                    SlidesViewerScreen(
+                        goalId = goalId,
+                        onBack = { navController.popBackStack() },
+                        onGoalClick = { gid -> navController.navigate(Screen.GoalDetail.createRoute(gid)) },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
+                    )
+                }
+                composable(
+                    Screen.SlideCreator.route,
+                    arguments = listOf(navArgument("goalId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
+                    SlideCreatorScreen(goalId = goalId, onBack = { navController.popBackStack() })
+                }
+                composable(
+                    Screen.VideoEditor.route,
+                    arguments = listOf(navArgument("goalId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val goalId = backStackEntry.arguments?.getString("goalId") ?: return@composable
+                    VideoEditorScreen(goalId = goalId, onClose = { navController.popBackStack() })
+                }
+                composable(Screen.Globe.route) {
+                    GlobeScreen(onBack = { navController.popBackStack() })
+                }
+                composable(Screen.SpiritualTools.route) {
+                    SpiritualToolsScreen(
+                        onBack = { navController.popBackStack() },
+                        onUpgrade = {
+                            billingSheetTab = BillingTab.PREMIUM
+                            showBillingSheet = true
+                        },
+                        onOpenDeepAnalysis = { navController.navigate(Screen.DeepAnalysis.route) }
+                    )
+                }
+                composable(Screen.DeepAnalysis.route) {
+                    DeepAnalysisScreen(
+                        onBack = { navController.popBackStack() },
+                        onBuyAuras = {
+                            billingSheetTab = BillingTab.AURA
+                            showBillingSheet = true
+                        }
+                    )
+                }
+                composable(Screen.SharedVisions.route) {
+                    SharedVisionsScreen(
+                        onBack = { navController.popBackStack() },
+                        onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) }
+                    )
+                }
+                composable(Screen.VisionReels.route) {
+                    VisionReelsScreen(
+                        onClose = { navController.popBackStack() },
+                        onOpenGoalDetail = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) },
+                        onEditVideo = { goalId -> navController.navigate(Screen.VideoEditor.createRoute(goalId)) },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
+                    )
+                }
+                composable(Screen.DreamReels.route) {
+                    DreamReelsScreen(
+                        onClose = { navController.popBackStack() },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
+                    )
+                }
+                composable(
+                    Screen.Profile.route,
+                    arguments = listOf(navArgument("showSettings") { type = NavType.BoolType; defaultValue = false })
+                ) { backStackEntry ->
+                    val showInitSettings = backStackEntry.arguments?.getBoolean("showSettings") ?: false
+                    val currentUserId = supabaseClient.auth.currentSessionOrNull()?.user?.id ?: ""
+                    ProfileScreen(
+                        onLogout = {
+                            navController.navigate(Screen.Auth.route) {
+                                popUpTo(0)
+                            }
+                        },
+                        onAddFriendClick = {
+                            navController.navigate(Screen.AddFriend.route)
+                        },
+                        onFriendsListClick = {
+                            navController.navigate(Screen.FriendsList.route)
+                        },
+                        onDiaryJournalClick = {
+                            if (currentUserId.isNotBlank()) navController.navigate(Screen.DiaryJournal.routeFor(currentUserId))
+                        },
+                        onUpgradeClick = {
+                            billingSheetTab = BillingTab.PREMIUM
+                            showBillingSheet = true
+                        },
+                        onOpenReels = openReels,
+                        onOpenDreamReels = openDreamReels,
+                        onBlockedUsersClick = {
+                            navController.navigate(Screen.BlockedUsers.route)
+                        },
+                        onJourneyClick = { navController.navigate(Screen.Journey.route) },
+                        initialShowSettings = showInitSettings
+                    )
+                }
+                composable(Screen.BlockedUsers.route) {
+                    BlockedUsersScreen(onBack = { navController.popBackStack() })
+                }
+                composable(Screen.AddFriend.route) {
+                    AddFriendScreen(
+                        onBack = { navController.popBackStack() },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
+                    )
+                }
+                composable(Screen.FriendsList.route) {
+                    FriendsListScreen(
+                        onBack = { navController.popBackStack() },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
+                    )
+                }
+                composable(Screen.Notifications.route) {
+                    NotificationsScreen(
+                        onBack = { navController.popBackStack() },
+                        onDreamClick = { dreamId -> navController.navigate(Screen.DreamDetail.createRoute(dreamId)) },
+                        onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) },
+                        onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) },
+                        onDiaryClick = { userId -> navController.navigate(Screen.DiaryJournal.routeFor(userId)) }
+                    )
+                }
+                composable(
+                    "public_profile/{userId}",
+                    arguments = listOf(androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType })
+                ) { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
+                    PublicProfileScreen(
+                        userId = userId,
+                        onBack = { navController.popBackStack() },
+                        onOpenDreamReels = openDreamReels,
+                        onOpenReels = openReels,
+                        onDiaryJournalClick = { navController.navigate(Screen.DiaryJournal.routeFor(userId)) },
+                        onMessageClick = { otherUserId -> navController.navigate(Screen.Thread.routeFor(otherUserId)) }
+                    )
+                }
+                composable(Screen.DiaryComposer.route) {
+                    DiaryComposerScreen(onBack = { navController.popBackStack() })
+                }
+                composable(
+                    "diary_viewer/{userId}",
+                    arguments = listOf(androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType })
+                ) { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
+                    DiaryStoryViewerScreen(
+                        userId = userId,
+                        onBack = { navController.popBackStack() },
+                        onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) }
+                    )
+                }
+                composable(
+                    "diary_journal/{userId}",
+                    arguments = listOf(androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType })
+                ) { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
+                    DiaryJournalScreen(
+                        userId = userId,
+                        onBack = { navController.popBackStack() },
+                        onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) }
+                    )
+                }
             }
-            composable(Screen.BlockedUsers.route) {
-                BlockedUsersScreen(onBack = { navController.popBackStack() })
-            }
-            composable(Screen.AddFriend.route) {
-                AddFriendScreen(
-                    onBack = { navController.popBackStack() },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
-                )
-            }
-            composable(Screen.FriendsList.route) {
-                FriendsListScreen(
-                    onBack = { navController.popBackStack() },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) }
-                )
-            }
-            composable(Screen.Notifications.route) {
-                NotificationsScreen(
-                    onBack = { navController.popBackStack() },
-                    onDreamClick = { dreamId -> navController.navigate(Screen.DreamDetail.createRoute(dreamId)) },
-                    onUserClick = { userId -> navController.navigate(Screen.PublicProfile.createRoute(userId)) },
-                    onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) },
-                    onDiaryClick = { userId -> navController.navigate(Screen.DiaryJournal.routeFor(userId)) }
-                )
-            }
-            composable(
-                "public_profile/{userId}",
-                arguments = listOf(androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType })
-            ) { backStackEntry ->
-                val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
-                PublicProfileScreen(
-                    userId = userId,
-                    onBack = { navController.popBackStack() },
-                    onOpenDreamReels = openDreamReels,
-                    onOpenReels = openReels,
-                    onDiaryJournalClick = { navController.navigate(Screen.DiaryJournal.routeFor(userId)) },
-                    onMessageClick = { otherUserId -> navController.navigate(Screen.Thread.routeFor(otherUserId)) }
-                )
-            }
-            composable(Screen.DiaryComposer.route) {
-                DiaryComposerScreen(onBack = { navController.popBackStack() })
-            }
-            composable(
-                "diary_viewer/{userId}",
-                arguments = listOf(androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType })
-            ) { backStackEntry ->
-                val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
-                DiaryStoryViewerScreen(
-                    userId = userId,
-                    onBack = { navController.popBackStack() },
-                    onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) }
-                )
-            }
-            composable(
-                "diary_journal/{userId}",
-                arguments = listOf(androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType })
-            ) { backStackEntry ->
-                val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
-                DiaryJournalScreen(
-                    userId = userId,
-                    onBack = { navController.popBackStack() },
-                    onGoalClick = { goalId -> navController.navigate(Screen.GoalDetail.createRoute(goalId)) }
-                )
-            }
+        }
+
+        // Tanıtım turu: her şeyin (üst/alt bar dahil) üstünde tam ekran.
+        if (showTour) {
+            OnboardingScreen(
+                mode = when {
+                    !isLoggedIn || GuestMode.isGuest() -> OnboardingMode.VISITOR
+                    gameProgress?.onboardingStatus == "completed" -> OnboardingMode.ACCOUNT_REPLAY
+                    else -> OnboardingMode.ACCOUNT
+                },
+                currentRank = gameProgress?.takeIf { !it.isGuest }?.rank ?: 0,
+                currentXp = gameProgress?.takeIf { !it.isGuest }?.xp ?: 0,
+                onFinish = onTourFinished
+            )
         }
     }
 
@@ -489,6 +587,11 @@ fun MainScreen(
             navController.navigate(Screen.Auth.route)
         }
     )
+
+    // +XP / rozet / rütbe kutlamaları (tur açıkken üstüne binmesin).
+    if (isLoggedIn && !showTour) {
+        GameEventHost()
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -507,7 +610,8 @@ fun TopBar(
     onGlobeClick: (() -> Unit)? = null,
     onSharedVisionsClick: (() -> Unit)? = null,
     onSpiritualToolsClick: (() -> Unit)? = null,
-    onDeepAnalysisClick: (() -> Unit)? = null
+    onDeepAnalysisClick: (() -> Unit)? = null,
+    onJourneyClick: (() -> Unit)? = null
 ) {
     var showAuraPopup by remember { mutableStateOf(false) }
 
@@ -601,25 +705,25 @@ fun TopBar(
                         Icon(Icons.Filled.Notifications, contentDescription = stringResource(R.string.cd_notifications), tint = Color.White)
                     }
                 }
-                val profileCd = stringResource(R.string.cd_profile)
-                Box(
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .size(32.dp)
-                        .clip(CircleShape)
-                        .background(Void800)
-                        .clickable(onClickLabel = profileCd) { onProfileClick?.invoke() }
-                        .semantics { contentDescription = profileCd },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(Icons.Filled.Person, contentDescription = null, tint = AstralGold, modifier = Modifier.size(20.dp))
-                }
+                // Profil düğmesi: çevresinde rütbe renginde XP halkası + seviye rozeti.
+                RankRingAvatar(
+                    onClick = { onProfileClick?.invoke() },
+                    modifier = Modifier.padding(end = 8.dp)
+                )
                 var showMoreMenu by remember { mutableStateOf(false) }
                 Box {
                     IconButton(onClick = { showMoreMenu = true }) {
                         Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.cd_more_menu), tint = Color.White)
                     }
                     DropdownMenu(expanded = showMoreMenu, onDismissRequest = { showMoreMenu = false }) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.main_menu_journey)) },
+                            leadingIcon = { Icon(Icons.Filled.EmojiEvents, contentDescription = null, tint = AstralGold) },
+                            onClick = {
+                                showMoreMenu = false
+                                onJourneyClick?.invoke()
+                            }
+                        )
                         DropdownMenuItem(
                             text = { Text(stringResource(R.string.main_menu_globe)) },
                             onClick = {

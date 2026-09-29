@@ -86,4 +86,7 @@ sealed class Screen(val route: String) {
     // ile tek rapor uretilir (10 Aura / premium). Tek ruyanin derin
     // analizinden (DreamDetailScreen) ayri bir ekran.
     object DeepAnalysis : Screen("deep_analysis")
+
+    // "Yolculuğum" — XP, rütbe, günlük görevler, rozetler, sıralama.
+    object Journey : Screen("journey")
 }

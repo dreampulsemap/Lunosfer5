@@ -63,6 +63,7 @@ object GameRepository {
     private val mutex = Mutex()
     // OkHttp is parcaciklarindan da cagriliyor.
     @Volatile private var pendingRefresh: Job? = null
+    @Volatile private var lastRefreshAt = 0L
 
     private val _progress = MutableStateFlow<GameProgress?>(null)
     val progress: StateFlow<GameProgress?> = _progress.asStateFlow()
@@ -95,8 +96,14 @@ object GameRepository {
         if (supabaseClient.auth.currentUserOrNull()?.id != userId) return@withLock null
 
         _progress.value = fresh
+        lastRefreshAt = System.currentTimeMillis()
         if (!fresh.isGuest) diffAgainstSeen(userId, fresh)
         fresh
+    }
+
+    /** Uygulamaya donuste: az once tazelendiyse tekrar sorgulama. */
+    fun refreshIfStale(maxAgeMs: Long = 30_000) {
+        if (System.currentTimeMillis() - lastRefreshAt > maxAgeMs) requestRefresh(0)
     }
 
     private fun diffAgainstSeen(userId: String, p: GameProgress) {
@@ -162,6 +169,7 @@ object GameRepository {
 
     fun clear() {
         pendingRefresh?.cancel()
+        lastRefreshAt = 0L
         _progress.value = null
         _events.value = emptyList()
     }

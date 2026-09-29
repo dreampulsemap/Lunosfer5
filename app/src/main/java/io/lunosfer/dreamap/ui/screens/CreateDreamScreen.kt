@@ -879,6 +879,9 @@ val charCount = content.length
                             val insertedId = result.firstOrNull()?.id
                             
                             if (insertedId != null) {
+                                // Rüya doğrudan PostgREST ile ekleniyor (API interceptor'ı
+                                // görmüyor); XP'yi trigger verdi, istemciye haber ver.
+                                io.lunosfer.dreamap.data.repository.GameRepository.requestRefresh()
                                 // Fire and forget analyze
                                 coroutineScope.launch(Dispatchers.IO) {
                                     try {

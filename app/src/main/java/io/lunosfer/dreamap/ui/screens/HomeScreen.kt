@@ -73,7 +73,8 @@ fun HomeScreen(
     onOpenComposer: () -> Unit = {},
     onOpenViewer: (String) -> Unit = {},
     onOpenReels: (List<Goal>, Int) -> Unit = { _, _ -> },
-    onUserClick: (String) -> Unit = {}
+    onUserClick: (String) -> Unit = {},
+    onOpenJourney: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsState()
     val compassState by compassViewModel.state.collectAsState()
@@ -121,7 +122,8 @@ fun HomeScreen(
                 isLoadingMore = isLoadingMore,
                 canLoadMore = canLoadMore,
                 onLoadMore = viewModel::loadMore,
-                onUserClick = onUserClick
+                onUserClick = onUserClick,
+                onOpenJourney = onOpenJourney
             )
         }
     }
@@ -186,7 +188,8 @@ private fun HomeFeedList(
     isLoadingMore: Boolean = false,
     canLoadMore: Boolean = false,
     onLoadMore: () -> Unit = {},
-    onUserClick: (String) -> Unit = {}
+    onUserClick: (String) -> Unit = {},
+    onOpenJourney: () -> Unit = {}
 ) {
     val listState = rememberLazyListState()
 
@@ -217,6 +220,12 @@ private fun HomeFeedList(
                 dreamCount = headerCounts.todayDreams,
                 visionCount = headerCounts.activeVisions
             )
+        }
+
+        // Günlük görevler: uygulamanın özelliklerini (rüya, günce, yorum,
+        // mana, pusula) her gün küçük hedeflerle keşfettirir.
+        item {
+            io.lunosfer.dreamap.ui.components.DailyQuestsCard(onClick = onOpenJourney)
         }
 
         item {
