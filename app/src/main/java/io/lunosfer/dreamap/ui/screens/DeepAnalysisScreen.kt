@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.geometry.Offset
 import android.os.Build
 import android.provider.MediaStore
 import androidx.compose.foundation.BorderStroke
@@ -317,6 +319,12 @@ private fun DeepAnalysisResultView(
     var savedMessage by remember { mutableStateOf<String?>(null) }
     val savedOk = stringResource(R.string.deep_analysis_card_saved)
     val savedFail = stringResource(R.string.deep_analysis_card_save_failed)
+    val shareText = deepAnalysisShareText(
+        analysis,
+        stringResource(R.string.deep_analysis_section_personality),
+        stringResource(R.string.deep_analysis_section_fears),
+        stringResource(R.string.deep_analysis_section_solution)
+    )
 
     Column(
         modifier = modifier
@@ -351,7 +359,8 @@ private fun DeepAnalysisResultView(
                 onClick = {
                     scope.launch {
                         val bitmap = cardHost.captureBitmap()
-                        cardHost.share(context, bitmap)
+                        // Yalnizca kart gorseli degil, analizin tamami metin olarak gider.
+                        cardHost.share(context, bitmap, shareText)
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = AstralGold),
@@ -473,9 +482,11 @@ private fun ConfrontationCard(analysis: DeepAnalysis, modifier: Modifier = Modif
         modifier = modifier
             .size(width = CardWidth, height = CardHeight)
             .clip(RoundedCornerShape(20.dp))
-            .background(Brush.verticalGradient(listOf(Void950, Void900, Void950)))
+            .background(Brush.verticalGradient(listOf(Color(0xFF2A1B5E), Color(0xFF3B1450), Void950)))
     ) {
-        if (!analysis.cardImageUrl.isNullOrBlank()) {
+        if (analysis.cardImageUrl.isNullOrBlank()) {
+            NebulaBackdrop(Modifier.fillMaxSize())
+        } else {
             AsyncImage(
                 model = analysis.cardImageUrl,
                 contentDescription = null,
@@ -524,6 +535,54 @@ private fun ConfrontationCard(analysis: DeepAnalysis, modifier: Modifier = Modif
         }
     }
 }
+
+/** Gorselsiz kart icin renkli bulutsu + hilal + yildizlar (sabit tohum: her cekimde ayni). */
+@Composable
+private fun NebulaBackdrop(modifier: Modifier) {
+    Canvas(modifier) {
+        val w = size.width
+        val h = size.height
+        drawCircle(
+            Brush.radialGradient(listOf(Color(0xCC8B5CF6), Color.Transparent), center = Offset(w * 0.2f, h * 0.25f), radius = w * 0.8f),
+            radius = w * 0.8f, center = Offset(w * 0.2f, h * 0.25f)
+        )
+        drawCircle(
+            Brush.radialGradient(listOf(Color(0xAAEC4899), Color.Transparent), center = Offset(w * 0.9f, h * 0.45f), radius = w * 0.7f),
+            radius = w * 0.7f, center = Offset(w * 0.9f, h * 0.45f)
+        )
+        drawCircle(
+            Brush.radialGradient(listOf(Color(0x9938BDF8), Color.Transparent), center = Offset(w * 0.4f, h * 0.6f), radius = w * 0.6f),
+            radius = w * 0.6f, center = Offset(w * 0.4f, h * 0.6f)
+        )
+        val rnd = kotlin.random.Random(7)
+        repeat(70) {
+            drawCircle(
+                Color.White.copy(alpha = 0.35f + rnd.nextFloat() * 0.6f),
+                radius = 1f + rnd.nextFloat() * 2.5f,
+                center = Offset(rnd.nextFloat() * w, rnd.nextFloat() * h * 0.7f)
+            )
+        }
+        val c = Offset(w * 0.68f, h * 0.2f)
+        val r = w * 0.16f
+        drawCircle(Brush.radialGradient(listOf(Color(0x66E6C687), Color.Transparent), center = c, radius = r * 2.2f), radius = r * 2.2f, center = c)
+        drawCircle(Color(0xFFF3E3B5), radius = r, center = c)
+        drawCircle(Color(0xFF2E1A5A), radius = r * 0.92f, center = Offset(c.x - r * 0.45f, c.y - r * 0.15f))
+    }
+}
+
+private fun deepAnalysisShareText(a: DeepAnalysis, personality: String, fears: String, solution: String): String =
+    buildString {
+        a.cardHeadline?.takeIf { it.isNotBlank() }?.let { appendLine("✦ $it"); appendLine() }
+        a.cardAffirmation?.takeIf { it.isNotBlank() }?.let { appendLine("“$it”"); appendLine() }
+        a.personalityAnalysis?.takeIf { it.isNotBlank() }?.let { appendLine(personality); appendLine(it); appendLine() }
+        a.fearMap?.takeIf { it.isNotEmpty() }?.let { list ->
+            appendLine(fears)
+            list.forEach { f -> appendLine("• ${f.symbol}" + (f.evidence?.takeIf { e -> e.isNotBlank() }?.let { e -> " — $e" } ?: "")) }
+            appendLine()
+        }
+        a.confrontationSolution?.takeIf { it.isNotBlank() }?.let { appendLine(solution); appendLine(it); appendLine() }
+        append("lunosfer.com")
+    }.trim()
 
 /** MediaStore'a kaydeder; API 29+ scoped storage, altinda WRITE izni gerekmiyor cunku
  *  uygulamanin kendi olusturdugu medyayi ekliyoruz (RELATIVE_PATH yalnizca Q+). */

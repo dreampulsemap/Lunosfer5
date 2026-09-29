@@ -1,5 +1,5 @@
-- Novo: um tour curto em estilo de jogo que mostra o que é o Lunosfer (dá para pular)
+- Novo: guia passo a passo de menus, sonhos e visões
 - Novo: tela Jornada — ganhe XP, suba de nível, missões diárias, insígnias e ranking
 - Todo sonho, momento do diário e visão agora pode ser compartilhado: envie a um amigo no chat ou compartilhe no WhatsApp, Instagram, X e mais
 - Imagem de story da Bússola do Dia: publique no seu diário ou baixe com marca d'água para o Instagram
-- Correções e melhorias
+- Mensagens enviadas mais rápido, a notificação fecha ao responder; Bússola do Dia corrigida

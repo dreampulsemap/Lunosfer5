@@ -1,5 +1,5 @@
-- Neu: kurze, spielerische Einführungstour durch Lunosfer (überspringbar)
+- Neu: Schritt-für-Schritt-Anleitung zu Menüs, Träumen und Visionen
 - Neu: Reise-Bildschirm — sammle XP, steig im Rang auf, tägliche Aufgaben, Abzeichen und Bestenliste
 - Jeder Traum, jeder Tagebuchmoment und jede Vision lässt sich teilen: im Chat an Freunde oder auf WhatsApp, Instagram, X und mehr
 - Tageskompass als Story-Bild: im Tagebuch posten oder mit Wasserzeichen für deine Instagram-Story laden
-- Fehlerbehebungen und Verbesserungen
+- Schnellere Nachrichten, Benachrichtigung schließt nach Antwort; Tageskompass repariert

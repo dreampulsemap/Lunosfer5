@@ -1,5 +1,5 @@
-- Nuevo: un breve tour tipo juego que explica qué es Lunosfer (puedes saltarlo)
+- Nuevo: guía paso a paso de menús, sueños y visiones
 - Nuevo: pantalla Viaje — gana XP, sube de rango, misiones diarias, insignias y clasificación
 - Cada sueño, momento del diario y visión se puede compartir: envíalo a un amigo por chat o compártelo en WhatsApp, Instagram, X y más
 - Imagen de historia para la Brújula del Día: publícala en tu diario o descárgala con marca de agua para Instagram
-- Correcciones y mejoras
+- Mensajes más rápidos, la notificación se cierra al responder; Brújula del Día corregida
