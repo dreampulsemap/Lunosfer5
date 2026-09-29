@@ -1,5 +1,5 @@
-- Nuevos indicadores de estado de mensaje en el chat (enviando/fallido, reintentar)
-- El chat ahora salta directo al último mensaje al abrirse, sin parpadeos
-- Compartir con un toque añadido a la tarjeta de invitación de amigos
-- Nueva franja de actividad en vivo "está pasando ahora" en el inicio
-- Correcciones menores y mejoras de rendimiento
+- Nuevo: un breve tour tipo juego que explica qué es Lunosfer (puedes saltarlo)
+- Nuevo: pantalla Viaje — gana XP, sube de rango, misiones diarias, insignias y clasificación
+- Cada sueño, momento del diario y visión se puede compartir: envíalo a un amigo por chat o compártelo en WhatsApp, Instagram, X y más
+- Imagen de historia para la Brújula del Día: publícala en tu diario o descárgala con marca de agua para Instagram
+- Correcciones y mejoras

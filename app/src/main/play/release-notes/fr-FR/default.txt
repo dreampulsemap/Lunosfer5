@@ -1,5 +1,5 @@
-- Nouveaux indicateurs de statut des messages dans le chat (envoi/échec, réessayer)
-- Le chat va désormais directement au dernier message à l'ouverture, sans défilement saccadé
-- Partage en un geste ajouté à la carte d'invitation d'amis
-- Nouveau bandeau d'activité en direct « en ce moment » sur l'accueil
-- Corrections de bugs mineurs et améliorations de performance
+- Nouveau : une courte visite façon jeu pour découvrir Lunosfer (facultative)
+- Nouveau : écran Voyage — gagne de l'XP, monte en rang, quêtes quotidiennes, badges et classement
+- Chaque rêve, moment de journal et vision peut être partagé : en message à un ami ou sur WhatsApp, Instagram, X et plus
+- Image story pour la Boussole du jour : publie-la dans ton journal ou télécharge-la avec filigrane pour Instagram
+- Corrections et améliorations

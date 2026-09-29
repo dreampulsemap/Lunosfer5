@@ -1,5 +1,5 @@
-- Neue Nachrichtenstatus-Anzeigen im Chat (wird gesendet/fehlgeschlagen, erneut versuchen)
-- Chat springt beim Öffnen jetzt sofort zur letzten Nachricht, kein Ruckeln mehr
-- Freunde-Einladungskarte hat jetzt Teilen mit einem Tippen
-- Live-Aktivitätsanzeige "passiert gerade" im Startbildschirm
-- Kleinere Fehlerbehebungen und Leistungsverbesserungen
+- Neu: kurze, spielerische Einführungstour durch Lunosfer (überspringbar)
+- Neu: Reise-Bildschirm — sammle XP, steig im Rang auf, tägliche Aufgaben, Abzeichen und Bestenliste
+- Jeder Traum, jeder Tagebuchmoment und jede Vision lässt sich teilen: im Chat an Freunde oder auf WhatsApp, Instagram, X und mehr
+- Tageskompass als Story-Bild: im Tagebuch posten oder mit Wasserzeichen für deine Instagram-Story laden
+- Fehlerbehebungen und Verbesserungen

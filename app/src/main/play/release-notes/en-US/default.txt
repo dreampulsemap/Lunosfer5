@@ -1,5 +1,5 @@
-- New message status indicators in chat (sending/failed, retry)
-- Chat screen now jumps straight to the latest message on open, no more scroll flicker
-- One-tap sharing added to the friend invite card
-- Live "happening now" activity ticker on the home feed
-- Minor bug fixes and performance improvements
+- New: a short, game-like intro tour that shows what Lunosfer is (skippable)
+- New: Journey screen — earn XP, rank up, daily quests, badges and a leaderboard
+- Every dream, diary moment and vision is now shareable: send it to a friend in chat or share to WhatsApp, Instagram, X and more
+- Daily Compass story image: post it to your diary or download it with a watermark for your Instagram story
+- Bug fixes and improvements

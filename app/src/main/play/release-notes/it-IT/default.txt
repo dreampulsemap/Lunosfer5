@@ -1,5 +1,5 @@
-- Nuovi indicatori di stato dei messaggi in chat (invio/fallito, riprova)
-- La chat ora va subito all'ultimo messaggio all'apertura, niente più scatti
-- Aggiunta condivisione con un tocco alla scheda inviti amici
-- Nuovo banner attività dal vivo "sta succedendo ora" nella home
-- Piccole correzioni di bug e miglioramenti delle prestazioni
+- Novità: un breve tour in stile gioco che spiega cos'è Lunosfer (puoi saltarlo)
+- Novità: schermata Viaggio — guadagna XP, sali di grado, missioni giornaliere, badge e classifica
+- Ogni sogno, momento del diario e visione ora si può condividere: in chat con un amico o su WhatsApp, Instagram, X e altro
+- Immagine story per la Bussola del giorno: pubblicala nel diario o scaricala con filigrana per Instagram
+- Correzioni e miglioramenti

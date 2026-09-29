@@ -1,5 +1,5 @@
-- Novos indicadores de status de mensagem no chat (enviando/falhou, tentar novamente)
-- A tela de chat agora vai direto para a última mensagem ao abrir, sem rolagem truncada
-- Compartilhamento com um toque adicionado ao cartão de convite de amigos
-- Nova faixa de atividade ao vivo "acontecendo agora" na tela inicial
-- Pequenas correções de bugs e melhorias de desempenho
+- Novo: um tour curto em estilo de jogo que mostra o que é o Lunosfer (dá para pular)
+- Novo: tela Jornada — ganhe XP, suba de nível, missões diárias, insígnias e ranking
+- Todo sonho, momento do diário e visão agora pode ser compartilhado: envie a um amigo no chat ou compartilhe no WhatsApp, Instagram, X e mais
+- Imagem de story da Bússola do Dia: publique no seu diário ou baixe com marca d'água para o Instagram
+- Correções e melhorias
