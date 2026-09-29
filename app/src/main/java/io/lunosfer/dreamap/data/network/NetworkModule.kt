@@ -42,6 +42,7 @@ object NetworkModule {
 
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(AuthInterceptor())
+        .addInterceptor(GameRefreshInterceptor())
         .addInterceptor(loggingInterceptor)
         .connectTimeout(15, TimeUnit.SECONDS)
         // Derin analiz ucu sunucuda OpenAI cagrisi + gorsel uretimi yapiyor ve
