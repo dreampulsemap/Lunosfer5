@@ -29,7 +29,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -180,7 +184,11 @@ fun OnboardingScreen(
         StarField()
         Column(
             Modifier
-                .fillMaxSize()
+                .align(Alignment.TopCenter)
+                .fillMaxHeight()
+                // Tablette metin tüm genişliğe yayılmasın.
+                .widthIn(max = 640.dp)
+                .fillMaxWidth()
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .padding(horizontal = 20.dp)
@@ -225,9 +233,13 @@ fun OnboardingScreen(
                     ChapterPage(
                         index = c,
                         done = isDone(c),
-                        showXp = showXp,
                         onDone = { markDone(c) }
                     )
+                }
+
+                // Butonun hemen üstünde sabit: kısa/yatay ekranda kaydırmayla kaybolmasın.
+                Box(Modifier.fillMaxWidth().padding(top = 8.dp), contentAlignment = Alignment.Center) {
+                    ActionHint(done = isDone(chapter), text = stringResource(CHAPTERS[chapter].action), showXp = showXp)
                 }
 
                 Button(
@@ -259,25 +271,52 @@ fun OnboardingScreen(
     }
 }
 
+// Sahneler bu yükseklik için tasarlandı; alan azsa bütün sahne orantılı küçülür.
+private val SCENE_HEIGHT = 270.dp
+
 @Composable
-private fun ChapterPage(index: Int, done: Boolean, showXp: Boolean, onDone: () -> Unit) {
+private fun ChapterPage(index: Int, done: Boolean, onDone: () -> Unit) {
     val chapter = CHAPTERS[index]
-    Column(
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(Modifier.height(12.dp))
-        Box(Modifier.fillMaxWidth().height(270.dp), contentAlignment = Alignment.Center) {
-            when (index) {
-                0 -> MoonScene(done, onDone)
-                1 -> DreamCardScene(done, onDone)
-                2 -> ManaScene(done, onDone)
-                3 -> HeartScene(done, onDone)
-                else -> ChestScene(done, onDone)
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        // Son bölümde açıklama yerine 4 satırlık kural listesi var: sahneye daha az yer.
+        val sceneFraction = if (chapter.body == null) 0.36f else 0.45f
+        val sceneHeight = (maxHeight * sceneFraction).coerceIn(150.dp, SCENE_HEIGHT)
+        val sceneScale = sceneHeight / SCENE_HEIGHT
+        Column(
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(Modifier.height(12.dp))
+            Box(Modifier.fillMaxWidth().height(sceneHeight), contentAlignment = Alignment.Center) {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .requiredHeight(SCENE_HEIGHT)
+                        .graphicsLayer {
+                            scaleX = sceneScale
+                            scaleY = sceneScale
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    when (index) {
+                        0 -> MoonScene(done, onDone)
+                        1 -> DreamCardScene(done, onDone)
+                        2 -> ManaScene(done, onDone)
+                        3 -> HeartScene(done, onDone)
+                        else -> ChestScene(done, onDone)
+                    }
+                }
             }
+            ChapterTexts(chapter)
         }
+    }
+}
+
+@Composable
+private fun ChapterTexts(chapter: Chapter) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(Modifier.height(16.dp))
         Text(
             stringResource(chapter.title),
@@ -300,8 +339,6 @@ private fun ChapterPage(index: Int, done: Boolean, showXp: Boolean, onDone: () -
         } else {
             GameRules()
         }
-        Spacer(Modifier.height(16.dp))
-        ActionHint(done = done, text = stringResource(chapter.action), showXp = showXp)
         Spacer(Modifier.height(8.dp))
     }
 }
@@ -380,6 +417,7 @@ private fun MoonScene(done: Boolean, onDone: () -> Unit) {
         RankEmblem(
             rank = 8,
             lit = lit,
+            sparkles = false,
             size = 190.dp,
             modifier = Modifier
                 .scale(if (done) 1f else pulse)

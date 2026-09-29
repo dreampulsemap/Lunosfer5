@@ -157,7 +157,7 @@ fun rankColor(rank: Int): Color = when (rank.coerceIn(0, 9)) {
  * 9 = parlayan dolunay). [lit] verilirse evre ondan alınır (tanıtım turu).
  */
 @Composable
-fun RankEmblem(rank: Int, modifier: Modifier = Modifier, size: Dp = 48.dp, lit: Float? = null) {
+fun RankEmblem(rank: Int, modifier: Modifier = Modifier, size: Dp = 48.dp, lit: Float? = null, sparkles: Boolean = true) {
     val color = rankColor(rank)
     val litFraction = (lit ?: (0.12f + 0.88f * (rank.coerceIn(0, 9) / 9f))).coerceIn(0f, 1f)
     Canvas(modifier.size(size)) {
@@ -182,11 +182,12 @@ fun RankEmblem(rank: Int, modifier: Modifier = Modifier, size: Dp = 48.dp, lit: 
                 radius = moonR,
                 center = c
             )
-            // Gölge sola kaydıkça aydınlık kısım büyür; litFraction = 1 -> tamamen dışarıda.
-            drawCircle(Void900, radius = moonR * 1.02f, center = Offset(c.x - moonR * 2f * litFraction, c.y))
+            // Gölge sola kaydıkça aydınlık kısım büyür; litFraction = 1 -> tamamen dışarıda
+            // (2.1 > 1 + 1.02: dolunayda sol kenarda ince koyu şerit kalmasın).
+            drawCircle(Void900, radius = moonR * 1.02f, center = Offset(c.x - moonR * 2.1f * litFraction, c.y))
         }
 
-        if (rank >= 7) {
+        if (sparkles && rank >= 7) {
             repeat(rank - 5) { i ->
                 val angle = Math.toRadians(-60.0 + i * 40.0)
                 val p = Offset(c.x + r * 0.9f * cos(angle).toFloat(), c.y + r * 0.9f * sin(angle).toFloat())
