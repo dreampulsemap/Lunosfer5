@@ -39,6 +39,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -238,7 +239,8 @@ fun OnboardingScreen(
                 }
 
                 // Butonun hemen üstünde sabit: kısa/yatay ekranda kaydırmayla kaybolmasın.
-                Box(Modifier.fillMaxWidth().padding(top = 8.dp), contentAlignment = Alignment.Center) {
+                // Sabit yükseklik: ipucu -> XP rozeti değişince sahne zıplamasın.
+                Box(Modifier.fillMaxWidth().padding(top = 8.dp).heightIn(min = 36.dp), contentAlignment = Alignment.Center) {
                     ActionHint(done = isDone(chapter), text = stringResource(CHAPTERS[chapter].action), showXp = showXp)
                 }
 
@@ -378,7 +380,8 @@ private fun ActionHint(done: Boolean, text: String, showXp: Boolean) {
 
 @Composable
 private fun GameRules() {
-    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    // Sıkı aralık: yatay tablette (600dp yükseklik) 4 satır kaydırmadan sığsın.
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         GameRuleLine(Icons.Filled.AutoAwesome, R.string.onb_c5_line1)
         GameRuleLine(Icons.AutoMirrored.Filled.TrendingUp, R.string.onb_c5_line2)
         GameRuleLine(Icons.Filled.TaskAlt, R.string.onb_c5_line3)
@@ -390,10 +393,10 @@ private fun GameRules() {
 private fun GameRuleLine(icon: ImageVector, @StringRes text: Int) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Box(
-            Modifier.size(32.dp).clip(CircleShape).background(AetherViolet.copy(alpha = 0.2f)),
+            Modifier.size(28.dp).clip(CircleShape).background(AetherViolet.copy(alpha = 0.2f)),
             contentAlignment = Alignment.Center
         ) {
-            Icon(icon, contentDescription = null, tint = AstralGold, modifier = Modifier.size(18.dp))
+            Icon(icon, contentDescription = null, tint = AstralGold, modifier = Modifier.size(16.dp))
         }
         Spacer(Modifier.width(12.dp))
         Text(stringResource(text), color = Color.White.copy(alpha = 0.9f), fontSize = 14.sp, lineHeight = 19.sp)
