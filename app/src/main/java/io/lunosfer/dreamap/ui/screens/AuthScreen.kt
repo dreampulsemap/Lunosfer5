@@ -61,7 +61,7 @@ private data class ProfileIdentityRow(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthScreen(onLoginSuccess: () -> Unit) {
+fun AuthScreen(onLoginSuccess: () -> Unit, startInSignUp: Boolean = false) {
     val sessionStatus by supabaseClient.auth.sessionStatus.collectAsState(initial = io.github.jan.supabase.auth.status.SessionStatus.Initializing)
     LaunchedEffect(sessionStatus) {
         // Misafir oturumu da "Authenticated" sayiliyor. Bu kontrol misafiri
@@ -76,7 +76,8 @@ fun AuthScreen(onLoginSuccess: () -> Unit) {
         }
     }
 
-    var isLogin by remember { mutableStateOf(true) }
+    // Tanıtım turundan "Ücretsiz hesap oluştur" ile gelen doğrudan kayıt formunu görsün.
+    var isLogin by remember(startInSignUp) { mutableStateOf(!startInSignUp) }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }

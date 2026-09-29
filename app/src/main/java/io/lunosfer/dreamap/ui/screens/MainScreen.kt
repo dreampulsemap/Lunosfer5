@@ -132,8 +132,10 @@ fun MainScreen(
         }
     }
     val showTour = autoTour || replayTour
+    var signUpAfterTour by remember { mutableStateOf(false) }
     val onTourFinished: (Boolean) -> Unit = { completed ->
         autoTour = false
+        if (completed && !isLoggedIn) signUpAfterTour = true
         OnboardingController.hide()
         OnboardingPrefs.deviceSeen = true
         // Bir kez "tamamlandi" kaydedildiyse sonraki "atla" onu ezmesin (odul kaybolmasin).
@@ -303,11 +305,14 @@ fun MainScreen(
                 modifier = Modifier.padding(padding)
             ) {
                 composable(Screen.Auth.route) {
-                    AuthScreen(onLoginSuccess = {
-                        navController.navigate(Screen.Home.route) {
-                            popUpTo(0)
+                    AuthScreen(
+                        startInSignUp = signUpAfterTour,
+                        onLoginSuccess = {
+                            navController.navigate(Screen.Home.route) {
+                                popUpTo(0)
+                            }
                         }
-                    })
+                    )
                 }
                 composable(Screen.Home.route) {
                     HomeScreen(
