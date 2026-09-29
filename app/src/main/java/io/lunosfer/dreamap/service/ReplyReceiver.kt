@@ -34,6 +34,14 @@ class ReplyReceiver : BroadcastReceiver() {
         if (replyText.isNullOrBlank()) return
 
         val appContext = context.applicationContext
+        // Bildirimi HEMEN kapat: ag istegi (soguk surecte oturum yukleme +
+        // token yenileme dahil) birkac saniye surebiliyor, kullanici bu surede
+        // cevap kutusunu "gonderiliyor" diye bekliyordu. Hata olursa asagida
+        // Toast ile bildiriliyor.
+        if (notificationId != -1) {
+            (appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
+                .cancel(notificationId)
+        }
         val pendingResult = goAsync()
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -43,17 +51,8 @@ class ReplyReceiver : BroadcastReceiver() {
                 NetworkModule.api.sendMessage(
                     SendMessageRequest(recipientId = senderId, content = replyText)
                 )
-                // Cevap veren mesaji okumus sayilir (sunucu da okundu isaretliyor);
-                // bildirim tepside kalmasin.
-                if (notificationId != -1) {
-                    (appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
-                        .cancel(notificationId)
-                }
             } catch (e: Exception) {
                 Log.e(TAG, "Cevap gonderilemedi", e)
-                // Bildirim yeniden post edilmezse cevap kutusu sonsuza dek "gonderiliyor"
-                // spinner'inda kalir; ayni icerikle yeniden gosterip kullaniciyi uyariyoruz.
-                if (notificationId != -1) repostNotification(appContext, notificationId)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(appContext, R.string.notif_reply_failed, Toast.LENGTH_SHORT).show()
                 }
@@ -61,15 +60,6 @@ class ReplyReceiver : BroadcastReceiver() {
                 pendingResult.finish()
             }
         }
-    }
-
-    private fun repostNotification(context: Context, notificationId: Int) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val active = notificationManager.activeNotifications.firstOrNull { it.id == notificationId } ?: return
-        val rebuilt = NotificationCompat.Builder(context, active.notification)
-            .setOnlyAlertOnce(true)
-            .build()
-        notificationManager.notify(notificationId, rebuilt)
     }
 
     companion object {
