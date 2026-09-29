@@ -939,7 +939,7 @@
     <string name="deep_analysis_price_note">%1$d Aura · free with Premium · written in the language you record your dreams in</string>
     <string name="deep_analysis_cta">Run Deep Analysis (%1$d Aura)</string>
     <string name="deep_analysis_balance">%1$d Aura</string>
-    <string name="deep_analysis_loading_hint">This takes 5-15 seconds. Keep the screen open.</string>
+    <string name="deep_analysis_loading_hint">This takes about a minute. Keep the screen open.</string>
     <string name="deep_analysis_step_reading">Reading your dreams…</string>
     <string name="deep_analysis_step_patterns">Finding the patterns…</string>
     <string name="deep_analysis_step_fears">Mapping the fears…</string>

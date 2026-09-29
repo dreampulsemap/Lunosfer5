@@ -916,7 +916,7 @@
     <string name="deep_analysis_price_note">%1$d Ауры · бесплатно с Premium · на том языке, на котором вы записываете сны</string>
     <string name="deep_analysis_cta">Сделать глубокий анализ (%1$d Ауры)</string>
     <string name="deep_analysis_balance">%1$d Ауры</string>
-    <string name="deep_analysis_loading_hint">Это займёт 5–15 секунд. Не закрывайте экран.</string>
+    <string name="deep_analysis_loading_hint">Это займёт около минуты. Не закрывайте экран.</string>
     <string name="deep_analysis_step_reading">Читаем ваши сны…</string>
     <string name="deep_analysis_step_patterns">Ищем закономерности…</string>
     <string name="deep_analysis_step_fears">Составляем карту страхов…</string>

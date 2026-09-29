@@ -908,7 +908,7 @@
     <string name="deep_analysis_price_note">%1$d Aura · gratuit avec Premium · dans la langue où vous écrivez vos rêves</string>
     <string name="deep_analysis_cta">Lancer l\'Analyse Profonde (%1$d Aura)</string>
     <string name="deep_analysis_balance">%1$d Aura</string>
-    <string name="deep_analysis_loading_hint">Cela prend 5 à 15 secondes. Gardez l\'écran ouvert.</string>
+    <string name="deep_analysis_loading_hint">Cela prend environ une minute. Gardez l\'écran ouvert.</string>
     <string name="deep_analysis_step_reading">Lecture de vos rêves…</string>
     <string name="deep_analysis_step_patterns">Recherche des motifs…</string>
     <string name="deep_analysis_step_fears">Cartographie des peurs…</string>

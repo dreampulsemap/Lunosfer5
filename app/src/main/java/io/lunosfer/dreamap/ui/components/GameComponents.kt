@@ -455,7 +455,8 @@ private fun QuestRow(q: DailyQuest) {
         )
         Text("${q.progress.coerceAtMost(q.target)}/${q.target}", color = MoonSilver, fontSize = 12.sp)
         Spacer(Modifier.width(8.dp))
-        Text(stringResource(R.string.xp_toast_format, q.xp), color = AstralGold, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        // xp eylem basinadir (xp_rules); gorevin toplam odulu = xp * target.
+        Text(stringResource(R.string.xp_toast_format, q.xp * q.target), color = AstralGold, fontSize = 12.sp, fontWeight = FontWeight.Bold)
     }
 }
 

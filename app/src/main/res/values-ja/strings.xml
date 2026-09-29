@@ -894,7 +894,7 @@
     <string name="deep_analysis_price_note">%1$d オーラ · プレミアムなら無料 · 夢を書いている言語で</string>
     <string name="deep_analysis_cta">ディープ分析する（%1$d オーラ）</string>
     <string name="deep_analysis_balance">%1$d オーラ</string>
-    <string name="deep_analysis_loading_hint">5〜15秒かかります。画面を開いたままにしてください。</string>
+    <string name="deep_analysis_loading_hint">約1分かかります。画面を開いたままにしてください。</string>
     <string name="deep_analysis_step_reading">夢を読んでいます…</string>
     <string name="deep_analysis_step_patterns">パターンを探しています…</string>
     <string name="deep_analysis_step_fears">恐れを地図にしています…</string>

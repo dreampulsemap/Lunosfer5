@@ -930,7 +930,7 @@
     <string name="deep_analysis_price_note">%1$d Аури · безкоштовно з Premium · написано мовою, якою ви записуєте сни</string>
     <string name="deep_analysis_cta">Запустити глибокий аналіз (%1$d Аури)</string>
     <string name="deep_analysis_balance">%1$d Аури</string>
-    <string name="deep_analysis_loading_hint">Це триває 5–15 секунд. Не закривайте екран.</string>
+    <string name="deep_analysis_loading_hint">Це триває близько хвилини. Не закривайте екран.</string>
     <string name="deep_analysis_step_reading">Читаємо ваші сни…</string>
     <string name="deep_analysis_step_patterns">Шукаємо закономірності…</string>
     <string name="deep_analysis_step_fears">Картуємо страхи…</string>

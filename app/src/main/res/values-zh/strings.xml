@@ -896,7 +896,7 @@
     <string name="deep_analysis_price_note">%1$d 灵气 · 高级会员免费 · 使用你记录梦境的语言</string>
     <string name="deep_analysis_cta">进行深度分析（%1$d 灵气）</string>
     <string name="deep_analysis_balance">%1$d 灵气</string>
-    <string name="deep_analysis_loading_hint">大约需要 5-15 秒，请保持屏幕打开。</string>
+    <string name="deep_analysis_loading_hint">大约需要 1 分钟，请保持屏幕打开。</string>
     <string name="deep_analysis_step_reading">正在阅读你的梦境…</string>
     <string name="deep_analysis_step_patterns">正在寻找模式…</string>
     <string name="deep_analysis_step_fears">正在绘制恐惧地图…</string>

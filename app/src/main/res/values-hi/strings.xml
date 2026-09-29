@@ -903,7 +903,7 @@
     <string name="deep_analysis_price_note">%1$d Aura · Premium के साथ मुफ़्त · उसी भाषा में जिसमें आप सपने लिखते हैं</string>
     <string name="deep_analysis_cta">गहन विश्लेषण करें (%1$d Aura)</string>
     <string name="deep_analysis_balance">%1$d Aura</string>
-    <string name="deep_analysis_loading_hint">इसमें 5-15 सेकंड लगते हैं। स्क्रीन खुली रखें।</string>
+    <string name="deep_analysis_loading_hint">इसमें लगभग एक मिनट लगता है। स्क्रीन खुली रखें।</string>
     <string name="deep_analysis_step_reading">आपके सपने पढ़े जा रहे हैं…</string>
     <string name="deep_analysis_step_patterns">पैटर्न खोजे जा रहे हैं…</string>
     <string name="deep_analysis_step_fears">डर का नक्शा बन रहा है…</string>

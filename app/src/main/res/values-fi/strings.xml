@@ -916,7 +916,7 @@
     <string name="deep_analysis_price_note">%1$d Auraa · ilmainen Premiumilla · kirjoitetaan kielellä, jolla kirjaat unesi</string>
     <string name="deep_analysis_cta">Suorita syväanalyysi (%1$d Auraa)</string>
     <string name="deep_analysis_balance">%1$d Auraa</string>
-    <string name="deep_analysis_loading_hint">Tämä kestää 5–15 sekuntia. Pidä näyttö auki.</string>
+    <string name="deep_analysis_loading_hint">Tämä kestää noin minuutin. Pidä näyttö auki.</string>
     <string name="deep_analysis_step_reading">Luetaan uniasi…</string>
     <string name="deep_analysis_step_patterns">Etsitään toistuvia kuvioita…</string>
     <string name="deep_analysis_step_fears">Kartoitetaan pelkoja…</string>

@@ -937,7 +937,7 @@
     <string name="deep_analysis_price_note">%1$d Aura · Premium\'da ücretsiz · rüyalarını yazdığın dilde</string>
     <string name="deep_analysis_cta">Derin Analiz Yap (%1$d Aura)</string>
     <string name="deep_analysis_balance">%1$d Aura</string>
-    <string name="deep_analysis_loading_hint">Bu 5-15 saniye sürer. Ekranı açık tut.</string>
+    <string name="deep_analysis_loading_hint">Bu yaklaşık 1 dakika sürer. Ekranı açık tut.</string>
     <string name="deep_analysis_step_reading">Rüyaların okunuyor…</string>
     <string name="deep_analysis_step_patterns">Örüntüler çıkarılıyor…</string>
     <string name="deep_analysis_step_fears">Korku haritası kuruluyor…</string>
