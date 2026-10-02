@@ -892,6 +892,13 @@
     <string name="diary_journal_delete_confirm">Eliminar</string>
     <string name="diary_journal_delete_cancel">Cancelar</string>
     <string name="diary_journal_delete_failed">Não foi possível eliminar a entrada</string>
+    <string name="diary_journal_edit">Editar</string>
+    <string name="diary_journal_edit_title">Editar entrada</string>
+    <string name="diary_journal_edit_hint">Como você se sentiu hoje?</string>
+    <string name="diary_journal_edit_save">Salvar</string>
+    <string name="diary_journal_edit_failed">Não foi possível salvar a entrada</string>
+    <string name="diary_journal_text_required">Uma entrada de texto não pode ficar vazia</string>
+    <string name="diary_journal_friends_badge">Amigos</string>
     <string name="spiritual_deep_prompt_title">Queres uma interpretação mais profunda?</string>
     <string name="spiritual_deep_prompt_body">O Premium dá leituras detalhadas ilimitadas. Ou desbloqueia só esta por %1$d Aura.</string>
     <string name="spiritual_deep_btn_aura">Desbloquear com %1$d Aura</string>

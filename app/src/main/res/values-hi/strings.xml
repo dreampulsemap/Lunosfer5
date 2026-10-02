@@ -886,6 +886,13 @@
     <string name="diary_journal_delete_confirm">हटाएँ</string>
     <string name="diary_journal_delete_cancel">रद्द करें</string>
     <string name="diary_journal_delete_failed">प्रविष्टि हटाई नहीं जा सकी</string>
+    <string name="diary_journal_edit">संपादित करें</string>
+    <string name="diary_journal_edit_title">प्रविष्टि संपादित करें</string>
+    <string name="diary_journal_edit_hint">आज कैसा महसूस हुआ?</string>
+    <string name="diary_journal_edit_save">सहेजें</string>
+    <string name="diary_journal_edit_failed">प्रविष्टि सहेजी नहीं जा सकी</string>
+    <string name="diary_journal_text_required">टेक्स्ट प्रविष्टि खाली नहीं हो सकती</string>
+    <string name="diary_journal_friends_badge">मित्र</string>
     <string name="spiritual_deep_prompt_title">क्या आप गहरी व्याख्या चाहते हैं?</string>
     <string name="spiritual_deep_prompt_body">Premium असीमित विस्तृत व्याख्याएँ देता है। या सिर्फ़ यही %1$d Aura में खोलें।</string>
     <string name="spiritual_deep_btn_aura">%1$d Aura में खोलें</string>

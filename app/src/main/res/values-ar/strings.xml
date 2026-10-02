@@ -914,6 +914,13 @@
     <string name="diary_journal_delete_confirm">حذف</string>
     <string name="diary_journal_delete_cancel">إلغاء</string>
     <string name="diary_journal_delete_failed">تعذّر حذف السجل</string>
+    <string name="diary_journal_edit">تعديل</string>
+    <string name="diary_journal_edit_title">تعديل الإدخال</string>
+    <string name="diary_journal_edit_hint">كيف كان شعورك اليوم؟</string>
+    <string name="diary_journal_edit_save">حفظ</string>
+    <string name="diary_journal_edit_failed">تعذّر حفظ الإدخال</string>
+    <string name="diary_journal_text_required">لا يمكن أن يكون الإدخال النصي فارغًا</string>
+    <string name="diary_journal_friends_badge">الأصدقاء</string>
     <string name="spiritual_deep_prompt_title">هل تريد تفسيرًا أعمق؟</string>
     <string name="spiritual_deep_prompt_body">يمنحك Premium قراءات معمّقة بلا حدود. أو افتح هذه القراءة فقط مقابل %1$d أورا.</string>
     <string name="spiritual_deep_btn_aura">افتح مقابل %1$d أورا</string>

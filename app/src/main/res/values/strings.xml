@@ -922,6 +922,13 @@
     <string name="diary_journal_delete_confirm">Delete</string>
     <string name="diary_journal_delete_cancel">Cancel</string>
     <string name="diary_journal_delete_failed">The entry could not be deleted</string>
+    <string name="diary_journal_edit">Edit</string>
+    <string name="diary_journal_edit_title">Edit entry</string>
+    <string name="diary_journal_edit_hint">How did today feel?</string>
+    <string name="diary_journal_edit_save">Save</string>
+    <string name="diary_journal_edit_failed">Couldn\'t save the entry</string>
+    <string name="diary_journal_text_required">A text entry cannot be empty</string>
+    <string name="diary_journal_friends_badge">Friends</string>
     <string name="spiritual_deep_prompt_title">Want a deeper interpretation?</string>
     <string name="spiritual_deep_prompt_body">Premium gives unlimited in-depth readings. Or unlock just this one for %1$d Aura.</string>
     <string name="spiritual_deep_btn_aura">Unlock with %1$d Aura</string>

@@ -900,6 +900,13 @@
     <string name="diary_journal_delete_confirm">Poista</string>
     <string name="diary_journal_delete_cancel">Peruuta</string>
     <string name="diary_journal_delete_failed">Merkintää ei voitu poistaa</string>
+    <string name="diary_journal_edit">Muokkaa</string>
+    <string name="diary_journal_edit_title">Muokkaa merkintää</string>
+    <string name="diary_journal_edit_hint">Miltä tänään tuntui?</string>
+    <string name="diary_journal_edit_save">Tallenna</string>
+    <string name="diary_journal_edit_failed">Merkintää ei voitu tallentaa</string>
+    <string name="diary_journal_text_required">Tekstimerkintä ei voi olla tyhjä</string>
+    <string name="diary_journal_friends_badge">Ystävät</string>
     <string name="spiritual_deep_prompt_title">Haluatko syvemmän tulkinnan?</string>
     <string name="spiritual_deep_prompt_body">Premium antaa rajattomasti syvällisiä tulkintoja. Tai avaa vain tämä %1$d Auralla.</string>
     <string name="spiritual_deep_btn_aura">Avaa %1$d Auralla</string>

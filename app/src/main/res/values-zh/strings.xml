@@ -879,6 +879,13 @@
     <string name="diary_journal_delete_confirm">删除</string>
     <string name="diary_journal_delete_cancel">取消</string>
     <string name="diary_journal_delete_failed">无法删除该记录</string>
+    <string name="diary_journal_edit">编辑</string>
+    <string name="diary_journal_edit_title">编辑条目</string>
+    <string name="diary_journal_edit_hint">今天感觉如何？</string>
+    <string name="diary_journal_edit_save">保存</string>
+    <string name="diary_journal_edit_failed">无法保存条目</string>
+    <string name="diary_journal_text_required">文字条目不能为空</string>
+    <string name="diary_journal_friends_badge">好友</string>
     <string name="spiritual_deep_prompt_title">想要更深入的解读吗？</string>
     <string name="spiritual_deep_prompt_body">高级会员可无限获得深度解读。或用 %1$d 灵气仅解锁这一次。</string>
     <string name="spiritual_deep_btn_aura">用 %1$d 灵气解锁</string>

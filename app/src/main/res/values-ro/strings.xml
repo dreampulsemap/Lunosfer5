@@ -907,6 +907,13 @@
     <string name="diary_journal_delete_confirm">Șterge</string>
     <string name="diary_journal_delete_cancel">Anulează</string>
     <string name="diary_journal_delete_failed">Intrarea nu a putut fi ștearsă</string>
+    <string name="diary_journal_edit">Editează</string>
+    <string name="diary_journal_edit_title">Editează intrarea</string>
+    <string name="diary_journal_edit_hint">Cum te-ai simțit azi?</string>
+    <string name="diary_journal_edit_save">Salvează</string>
+    <string name="diary_journal_edit_failed">Intrarea nu a putut fi salvată</string>
+    <string name="diary_journal_text_required">O intrare text nu poate fi goală</string>
+    <string name="diary_journal_friends_badge">Prieteni</string>
     <string name="spiritual_deep_prompt_title">Vrei o interpretare mai profundă?</string>
     <string name="spiritual_deep_prompt_body">Premium oferă citiri detaliate nelimitate. Sau deblochează doar aceasta pentru %1$d Aura.</string>
     <string name="spiritual_deep_btn_aura">Deblochează cu %1$d Aura</string>

@@ -920,6 +920,13 @@
     <string name="diary_journal_delete_confirm">Sil</string>
     <string name="diary_journal_delete_cancel">Vazgeç</string>
     <string name="diary_journal_delete_failed">Kayıt silinemedi</string>
+    <string name="diary_journal_edit">Düzenle</string>
+    <string name="diary_journal_edit_title">Girdiyi düzenle</string>
+    <string name="diary_journal_edit_hint">Bugün neler hissettin?</string>
+    <string name="diary_journal_edit_save">Kaydet</string>
+    <string name="diary_journal_edit_failed">Girdi kaydedilemedi</string>
+    <string name="diary_journal_text_required">Metin girdisi boş olamaz</string>
+    <string name="diary_journal_friends_badge">Arkadaşlar</string>
     <string name="spiritual_deep_prompt_title">Daha derin bir yorum ister misin?</string>
     <string name="spiritual_deep_prompt_body">Premium sınırsız ve çok daha ayrıntılı yorum verir. Ya da yalnızca bunu %1$d Aura ile aç.</string>
     <string name="spiritual_deep_btn_aura">%1$d Aura ile aç</string>

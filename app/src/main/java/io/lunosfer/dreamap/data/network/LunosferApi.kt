@@ -323,10 +323,18 @@ interface LunosferApi {
     @GET("api/diary/feed")
     suspend fun getDiaryFeed(): io.lunosfer.dreamap.data.model.DiaryFeedResponse
 
+    // recent="1": yalnizca son 24 saat (hikaye goruntuleyici). Parametresiz:
+    // tum arsiv (profildeki kalici Gunce).
     @GET("api/diary/list-for-user")
     suspend fun getDiaryListForUser(
-        @Query("userId") userId: String
+        @Query("userId") userId: String,
+        @Query("recent") recent: String? = null
     ): io.lunosfer.dreamap.data.model.DiaryListResponse
+
+    @POST("api/diary/update")
+    suspend fun updateDiaryEntry(
+        @Body input: io.lunosfer.dreamap.data.model.UpdateDiaryInput
+    ): io.lunosfer.dreamap.data.model.UpdateDiaryResponse
 
     @POST("api/diary/mark-seen")
     suspend fun markDiarySeen(

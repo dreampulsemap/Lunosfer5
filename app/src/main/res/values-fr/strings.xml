@@ -891,6 +891,13 @@
     <string name="diary_journal_delete_confirm">Supprimer</string>
     <string name="diary_journal_delete_cancel">Annuler</string>
     <string name="diary_journal_delete_failed">Impossible de supprimer l\'entrée</string>
+    <string name="diary_journal_edit">Modifier</string>
+    <string name="diary_journal_edit_title">Modifier l\'entrée</string>
+    <string name="diary_journal_edit_hint">Comment s\'est passée ta journée ?</string>
+    <string name="diary_journal_edit_save">Enregistrer</string>
+    <string name="diary_journal_edit_failed">Impossible d\'enregistrer l\'entrée</string>
+    <string name="diary_journal_text_required">Une entrée texte ne peut pas être vide</string>
+    <string name="diary_journal_friends_badge">Amis</string>
     <string name="spiritual_deep_prompt_title">Vous voulez une interprétation plus approfondie ?</string>
     <string name="spiritual_deep_prompt_body">Premium offre des lectures approfondies illimitées. Ou débloquez celle-ci pour %1$d Aura.</string>
     <string name="spiritual_deep_btn_aura">Débloquer pour %1$d Aura</string>

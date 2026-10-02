@@ -887,6 +887,13 @@
     <string name="diary_journal_delete_confirm">Löschen</string>
     <string name="diary_journal_delete_cancel">Abbrechen</string>
     <string name="diary_journal_delete_failed">Der Eintrag konnte nicht gelöscht werden</string>
+    <string name="diary_journal_edit">Bearbeiten</string>
+    <string name="diary_journal_edit_title">Eintrag bearbeiten</string>
+    <string name="diary_journal_edit_hint">Wie hat sich der Tag angefühlt?</string>
+    <string name="diary_journal_edit_save">Speichern</string>
+    <string name="diary_journal_edit_failed">Eintrag konnte nicht gespeichert werden</string>
+    <string name="diary_journal_text_required">Ein Texteintrag darf nicht leer sein</string>
+    <string name="diary_journal_friends_badge">Freunde</string>
     <string name="spiritual_deep_prompt_title">Möchtest du eine tiefere Deutung?</string>
     <string name="spiritual_deep_prompt_body">Premium bietet unbegrenzte, ausführliche Deutungen. Oder schalte nur diese für %1$d Aura frei.</string>
     <string name="spiritual_deep_btn_aura">Für %1$d Aura freischalten</string>

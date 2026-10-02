@@ -118,3 +118,25 @@ data class MarkDiarySeenInput(
 data class DeleteDiaryInput(
     val entryId: String
 )
+
+/** pages/api/diary/update.js — yalnizca sahibi; aciklama + gorunurluk. */
+@Serializable
+data class UpdateDiaryInput(
+    val entryId: String,
+    val caption: String,
+    val visibility: String
+)
+
+@Serializable
+data class UpdatedDiaryFields(
+    val id: String = "",
+    val caption: String? = null,
+    val visibility: String = "private"
+)
+
+@Serializable
+data class UpdateDiaryResponse(
+    val success: Boolean = false,
+    val entry: UpdatedDiaryFields? = null,
+    val error: String? = null
+)

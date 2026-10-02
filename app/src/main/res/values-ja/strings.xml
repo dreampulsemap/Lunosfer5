@@ -877,6 +877,13 @@
     <string name="diary_journal_delete_confirm">削除</string>
     <string name="diary_journal_delete_cancel">キャンセル</string>
     <string name="diary_journal_delete_failed">記録を削除できませんでした</string>
+    <string name="diary_journal_edit">編集</string>
+    <string name="diary_journal_edit_title">エントリーを編集</string>
+    <string name="diary_journal_edit_hint">今日はどんな気分でしたか？</string>
+    <string name="diary_journal_edit_save">保存</string>
+    <string name="diary_journal_edit_failed">エントリーを保存できませんでした</string>
+    <string name="diary_journal_text_required">テキストエントリーは空にできません</string>
+    <string name="diary_journal_friends_badge">友達</string>
     <string name="spiritual_deep_prompt_title">もっと深い解釈を見ますか？</string>
     <string name="spiritual_deep_prompt_body">プレミアムなら詳しい解釈が無制限です。または今回だけ %1$d オーラで解放できます。</string>
     <string name="spiritual_deep_btn_aura">%1$d オーラで解放</string>

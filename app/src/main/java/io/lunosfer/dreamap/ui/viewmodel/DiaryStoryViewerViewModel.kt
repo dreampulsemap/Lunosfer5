@@ -56,7 +56,9 @@ class DiaryStoryViewerViewModel(
     fun loadData() {
         viewModelScope.launch {
             _state.value = DiaryStoryViewerUiState.Loading
-            repository.getEntriesForUser(userId).onSuccess { res ->
+            // Halkadan acilinca yalnizca son 24 saat; paylasilan bir baglantiyla
+            // belirli bir girdiye gelindiyse (startEntryId) eski girdi de acilabilsin.
+            repository.getEntriesForUser(userId, recentOnly = startEntryId == null).onSuccess { res ->
                 if (res.entries.isEmpty()) {
                     _state.value = DiaryStoryViewerUiState.Error(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_diary_not_found))
                 } else {

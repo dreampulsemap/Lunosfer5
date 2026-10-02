@@ -62,8 +62,14 @@ class DiaryRepository {
         api.getDiaryFeed().rings
     }
 
-    suspend fun getEntriesForUser(userId: String): Result<DiaryListResponse> = runCatching {
-        api.getDiaryListForUser(userId)
+    /** [recentOnly]: yalnizca son 24 saat — hikaye halkasi Instagram gibi 24 saatte soner. */
+    suspend fun getEntriesForUser(userId: String, recentOnly: Boolean = false): Result<DiaryListResponse> = runCatching {
+        api.getDiaryListForUser(userId, if (recentOnly) "1" else null)
+    }
+
+    suspend fun updateEntry(entryId: String, caption: String, visibility: String): Result<io.lunosfer.dreamap.data.model.UpdatedDiaryFields> = runCatching {
+        val res = api.updateDiaryEntry(io.lunosfer.dreamap.data.model.UpdateDiaryInput(entryId, caption, visibility))
+        res.entry ?: throw Exception(DreamapApp.instance.getString(R.string.diary_journal_edit_failed))
     }
 
     suspend fun markSeen(ownerId: String): Result<Unit> = runCatching {

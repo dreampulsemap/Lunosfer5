@@ -914,6 +914,13 @@
     <string name="diary_journal_delete_confirm">Видалити</string>
     <string name="diary_journal_delete_cancel">Скасувати</string>
     <string name="diary_journal_delete_failed">Не вдалося видалити запис</string>
+    <string name="diary_journal_edit">Редагувати</string>
+    <string name="diary_journal_edit_title">Редагувати запис</string>
+    <string name="diary_journal_edit_hint">Яким був твій день?</string>
+    <string name="diary_journal_edit_save">Зберегти</string>
+    <string name="diary_journal_edit_failed">Не вдалося зберегти запис</string>
+    <string name="diary_journal_text_required">Текстовий запис не може бути порожнім</string>
+    <string name="diary_journal_friends_badge">Друзі</string>
     <string name="spiritual_deep_prompt_title">Хочете глибше тлумачення?</string>
     <string name="spiritual_deep_prompt_body">Premium дає необмежені детальні тлумачення. Або відкрийте лише це за %1$d Аури.</string>
     <string name="spiritual_deep_btn_aura">Відкрити за %1$d Аури</string>

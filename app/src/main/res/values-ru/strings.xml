@@ -899,6 +899,13 @@
     <string name="diary_journal_delete_confirm">Удалить</string>
     <string name="diary_journal_delete_cancel">Отмена</string>
     <string name="diary_journal_delete_failed">Не удалось удалить запись</string>
+    <string name="diary_journal_edit">Изменить</string>
+    <string name="diary_journal_edit_title">Изменить запись</string>
+    <string name="diary_journal_edit_hint">Каким был твой день?</string>
+    <string name="diary_journal_edit_save">Сохранить</string>
+    <string name="diary_journal_edit_failed">Не удалось сохранить запись</string>
+    <string name="diary_journal_text_required">Текстовая запись не может быть пустой</string>
+    <string name="diary_journal_friends_badge">Друзья</string>
     <string name="spiritual_deep_prompt_title">Хотите более глубокое толкование?</string>
     <string name="spiritual_deep_prompt_body">Premium даёт безлимитные подробные толкования. Или откройте только это за %1$d Ауры.</string>
     <string name="spiritual_deep_btn_aura">Открыть за %1$d Ауры</string>
