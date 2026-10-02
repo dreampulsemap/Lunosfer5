@@ -115,7 +115,8 @@ fun CreateDreamScreen(navController: NavController) {
     val configuration = LocalConfiguration.current
     val isWideScreen = configuration.screenWidthDp > 600
 
-    var content by remember { mutableStateOf("") }
+    // Misafirken yazilip kayit davetine takilan ruya, hesap acildiktan sonra geri gelsin.
+    var content by remember { mutableStateOf(io.lunosfer.dreamap.util.DreamDraft.content.orEmpty()) }
     var location by remember { mutableStateOf("") }
     var visibility by remember { mutableStateOf("public") }
     // KullanÄ±cÄ±nÄ±n profil gizliliÄŸi â€” paylaÅŸÄ±m gizliliÄŸi seÃ§enekleri buna gÃ¶re
@@ -837,8 +838,14 @@ val charCount = content.length
                         return@Button
                     }
                     errorMessage = null
+                    // Sunucu misafir yazmalarini reddediyor; metni saklayip kayda yonlendir.
+                    if (io.lunosfer.dreamap.util.GuestMode.isGuest()) {
+                        io.lunosfer.dreamap.util.DreamDraft.content = content
+                        io.lunosfer.dreamap.util.GuestPrompt.show()
+                        return@Button
+                    }
                     isSubmitting = true
-                    
+
                     coroutineScope.launch {
                         try {
                             val user = supabaseClient.auth.currentUserOrNull()
@@ -879,6 +886,7 @@ val charCount = content.length
                             val insertedId = result.firstOrNull()?.id
                             
                             if (insertedId != null) {
+                                io.lunosfer.dreamap.util.DreamDraft.content = null
                                 // Rüya doğrudan PostgREST ile ekleniyor (API interceptor'ı
                                 // görmüyor); XP'yi trigger verdi, istemciye haber ver.
                                 io.lunosfer.dreamap.data.repository.GameRepository.requestRefresh()

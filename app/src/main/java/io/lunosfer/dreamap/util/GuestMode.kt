@@ -100,3 +100,22 @@ object GuestPrompt {
 inline fun requireAccount(action: () -> Unit) {
     if (GuestMode.isGuest()) GuestPrompt.show() else action()
 }
+
+/**
+ * Misafirin yazdigi ama sunucunun kabul etmedigi ruya metni. Misafir kayit
+ * davetine gidip hesap acinca CreateDreamScreen bunu geri yukler; aksi halde
+ * uzun uzun yazilan ruya kayboluyordu (canli veride 50 misafirden 0 ruya).
+ */
+object DreamDraft {
+    private const val PREFS = "lunosfer_dream_draft"
+    private const val KEY = "content"
+
+    private fun prefs() = io.lunosfer.dreamap.DreamapApp.instance
+        .getSharedPreferences(PREFS, android.content.Context.MODE_PRIVATE)
+
+    var content: String?
+        get() = prefs().getString(KEY, null)
+        set(value) {
+            prefs().edit().apply { if (value.isNullOrBlank()) remove(KEY) else putString(KEY, value) }.apply()
+        }
+}
