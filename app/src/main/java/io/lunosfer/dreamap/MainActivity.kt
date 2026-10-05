@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val pendingRouteState = androidx.compose.runtime.mutableStateOf<String?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         
         handleAuthDeeplink(intent)
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         io.lunosfer.dreamap.util.GlobalContentPicker.register(this)
         io.lunosfer.dreamap.util.GlobalCameraCapture.register(this)
 
-        enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
                 MainScreen(
