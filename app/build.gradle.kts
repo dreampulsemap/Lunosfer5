@@ -22,8 +22,8 @@ android {
     applicationId = "io.lunosfer.dreamap"
     minSdk = 24
     targetSdk = 36
-    versionCode = 26
-    versionName = "1.5.3"
+    versionCode = 27
+    versionName = "1.5.4"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -57,7 +57,8 @@ android {
   buildTypes {
     release {
       isCrunchPngs = false
-      isMinifyEnabled = false
+      isMinifyEnabled = true
+      isShrinkResources = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("release")
       // Her islemi Sentry'ye gondermek kotayi hizla tuketir; uretimde ornekle.
