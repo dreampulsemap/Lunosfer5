@@ -1,0 +1,45 @@
+{
+  "listings": [
+    {
+      "languageCode": "en-US",
+      "title": "Premium Membership"
+    },
+    {
+      "languageCode": "tr-TR",
+      "title": "Premium Uyelik"
+    },
+    {
+      "languageCode": "ar",
+      "title": "عضوية بريميوم"
+    },
+    {
+      "languageCode": "fr-FR",
+      "title": "ABONNEMENT PREMIUM"
+    },
+    {
+      "languageCode": "ja-JP",
+      "title": "プレミアム会員"
+    },
+    {
+      "languageCode": "pt-PT",
+      "title": "ASSINATURA PREMIUM"
+    },
+    {
+      "languageCode": "zh-TW",
+      "title": "高级会员"
+    },
+    {
+      "languageCode": "es-ES",
+      "title": "MEMBRESÍA PREMIUM"
+    },
+    {
+      "languageCode": "de-DE",
+      "title": "Premium-Mitgliedschaft"
+    }
+  ],
+  "packageName": "io.lunosfer.dreamap",
+  "productId": "premium",
+  "taxAndComplianceSettings": {
+    "eeaWithdrawalRightType": "WITHDRAWAL_RIGHT_SERVICE"
+  }
+}

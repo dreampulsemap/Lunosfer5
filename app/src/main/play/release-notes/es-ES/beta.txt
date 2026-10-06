@@ -1,0 +1,4 @@
+- Nuevo: «✍️ Añadir a tu sueño» en sueños cortos — añade detalles y obtén una nueva interpretación
+- Explorar muestra ahora sueños en tu idioma y en inglés
+- Las emociones del sueño aparecen ahora en el idioma de la app
+- Mensajes de error más claros en el Análisis Profundo, incluido el reembolso de Aura

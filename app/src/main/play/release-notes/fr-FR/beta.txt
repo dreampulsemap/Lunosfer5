@@ -1,0 +1,4 @@
+- Nouveau : « ✍️ Compléter ton rêve » pour les rêves courts — ajoute des détails et obtiens une nouvelle interprétation
+- Explorer affiche désormais les rêves dans ta langue et en anglais
+- Les émotions du rêve s'affichent dans la langue de l'app
+- Messages d'erreur plus clairs pour l'Analyse approfondie, y compris le remboursement d'Aura

@@ -1,0 +1,4 @@
+- New: “✍️ Add to your dream” on short dreams — add details and get a fresh interpretation
+- Explore now shows dreams in your language and English
+- Dream emotions now appear in your app language
+- Clearer Deep Analysis error messages, including when your Aura was refunded

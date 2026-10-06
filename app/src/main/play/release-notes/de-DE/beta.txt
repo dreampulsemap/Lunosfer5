@@ -1,0 +1,4 @@
+- Neu: „✍️ Zu deinem Traum hinzufügen“ bei kurzen Träumen — Details ergänzen und neu deuten lassen
+- Entdecken zeigt jetzt Träume in deiner Sprache und auf Englisch
+- Traumgefühle erscheinen jetzt in deiner App-Sprache
+- Klarere Fehlermeldungen bei der Tiefenanalyse, inkl. Aura-Erstattung
