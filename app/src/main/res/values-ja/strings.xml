@@ -1146,4 +1146,15 @@
     <string name="onb_map_messages">メッセージ：友達とチャットし、夢や日記、ビジョンをシェアしよう。</string>
     <string name="onb_c2_steps" formatted="true">記録のしかた：\n1. 下の ＋ ボタンをタップ → %1$s\n2. 夢をできるだけ詳しく書く\n3. %2$s をタップ → 解釈と画像が作られます</string>
     <string name="onb_c3_steps" formatted="true">作り方：\n1. 下の ＋ ボタンをタップ → %1$s\n2. タイトルを入力。説明、カバー画像、目標日も追加できます\n3. ロードマップにステップを追加 → %2$s</string>
+    <string name="feed_add_to_dream">✍️ 夢に書き足す</string>
+    <string name="feed_add_placeholder">どこにいて、何が起きて、どう感じた？</string>
+    <string name="feed_add_save">保存して解釈し直す</string>
+    <string name="feed_add_cancel">キャンセル</string>
+    <string name="feed_add_saving">解釈中…</string>
+    <string name="feed_add_error">保存できませんでした。もう一度お試しください。</string>
+    <string name="sentiment_mysterious">神秘的</string>
+    <string name="sentiment_tender">優しい</string>
+    <string name="sentiment_restless">落ち着かない</string>
+    <string name="sentiment_heavy">重い</string>
+    <string name="sentiment_luminous">輝く</string>
 </resources>

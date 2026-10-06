@@ -1161,4 +1161,15 @@
     <string name="onb_map_messages">Viestit: juttele kavereiden kanssa ja jaa unia, päiväkirjahetkiä ja visioita.</string>
     <string name="onb_c2_steps" formatted="true">Näin tallennat:\n1. Napauta alhaalla ＋ → %1$s\n2. Kirjoita unesi mahdollisimman tarkasti\n3. Napauta %2$s → tulkintasi ja kuvasi valmistuvat</string>
     <string name="onb_c3_steps" formatted="true">Näin luot:\n1. Napauta alhaalla ＋ → %1$s\n2. Kirjoita otsikko; lisää halutessasi kuvaus, kansikuva ja tavoitepäivä\n3. Lisää vaiheita tiekarttaan → %2$s</string>
+    <string name="feed_add_to_dream">✍️ Lisää uneesi</string>
+    <string name="feed_add_placeholder">Missä olit, mitä tapahtui, miltä sinusta tuntui?</string>
+    <string name="feed_add_save">Tallenna ja tulkitse uudelleen</string>
+    <string name="feed_add_cancel">Peruuta</string>
+    <string name="feed_add_saving">Tulkitaan…</string>
+    <string name="feed_add_error">Tallennus epäonnistui, yritä uudelleen.</string>
+    <string name="sentiment_mysterious">Salaperäinen</string>
+    <string name="sentiment_tender">Hellä</string>
+    <string name="sentiment_restless">Levoton</string>
+    <string name="sentiment_heavy">Raskas</string>
+    <string name="sentiment_luminous">Valoisa</string>
 </resources>

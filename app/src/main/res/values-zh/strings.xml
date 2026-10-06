@@ -1148,4 +1148,15 @@
     <string name="onb_map_messages">消息：与好友聊天，分享梦境、日记片段和愿景。</string>
     <string name="onb_c2_steps" formatted="true">如何记录：\n1. 点按底部的 ＋ 按钮 → %1$s\n2. 尽可能详细地写下你的梦\n3. 点按 %2$s → 为你生成解读和图片</string>
     <string name="onb_c3_steps" formatted="true">如何创建：\n1. 点按底部的 ＋ 按钮 → %1$s\n2. 填写标题；可选添加描述、封面图和目标日期\n3. 为路线图添加步骤 → %2$s</string>
+    <string name="feed_add_to_dream">✍️ 补充你的梦</string>
+    <string name="feed_add_placeholder">你在哪里，发生了什么，你有什么感受？</string>
+    <string name="feed_add_save">保存并重新解读</string>
+    <string name="feed_add_cancel">取消</string>
+    <string name="feed_add_saving">正在解读…</string>
+    <string name="feed_add_error">保存失败，请重试。</string>
+    <string name="sentiment_mysterious">神秘</string>
+    <string name="sentiment_tender">温柔</string>
+    <string name="sentiment_restless">不安</string>
+    <string name="sentiment_heavy">沉重</string>
+    <string name="sentiment_luminous">明亮</string>
 </resources>

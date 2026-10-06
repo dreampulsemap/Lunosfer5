@@ -1168,4 +1168,15 @@
     <string name="onb_map_messages">Mesaje: vorbește cu prietenii și distribuie vise, momente din jurnal și viziuni.</string>
     <string name="onb_c2_steps" formatted="true">Cum îl notezi:\n1. Atinge butonul ＋ de jos → %1$s\n2. Scrie visul cât mai detaliat\n3. Atinge %2$s → interpretarea și imaginea ta sunt pregătite</string>
     <string name="onb_c3_steps" formatted="true">Cum o creezi:\n1. Atinge butonul ＋ de jos → %1$s\n2. Scrie un titlu; opțional adaugă descriere, copertă și dată țintă\n3. Adaugă pași în foaia de parcurs → %2$s</string>
+    <string name="feed_add_to_dream">✍️ Adaugă la visul tău</string>
+    <string name="feed_add_placeholder">Unde erai, ce s-a întâmplat, ce ai simțit?</string>
+    <string name="feed_add_save">Salvează și reinterpretează</string>
+    <string name="feed_add_cancel">Renunță</string>
+    <string name="feed_add_saving">Se interpretează…</string>
+    <string name="feed_add_error">Nu s-a putut salva, încearcă din nou.</string>
+    <string name="sentiment_mysterious">Misterios</string>
+    <string name="sentiment_tender">Tandru</string>
+    <string name="sentiment_restless">Neliniștit</string>
+    <string name="sentiment_heavy">Apăsător</string>
+    <string name="sentiment_luminous">Luminos</string>
 </resources>

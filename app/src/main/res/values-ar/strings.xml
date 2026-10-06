@@ -1183,4 +1183,15 @@
     <string name="onb_map_messages">الرسائل: تحدّث مع أصدقائك وشارك الأحلام ولحظات اليوميات والرؤى.</string>
     <string name="onb_c2_steps" formatted="true">كيف تسجّله:\n1. المس زر ＋ في الأسفل ← %1$s\n2. اكتب حلمك بأكبر قدر من التفاصيل\n3. المس %2$s ← يتم تجهيز تفسيرك وصورتك</string>
     <string name="onb_c3_steps" formatted="true">كيف تنشئها:\n1. المس زر ＋ في الأسفل ← %1$s\n2. اكتب عنوانًا، وأضف إن شئت وصفًا وصورة غلاف وتاريخًا مستهدفًا\n3. أضف خطوات إلى خريطة الطريق ← %2$s</string>
+    <string name="feed_add_to_dream">✍️ أضف إلى حلمك</string>
+    <string name="feed_add_placeholder">أين كنت، ماذا حدث، بماذا شعرت؟</string>
+    <string name="feed_add_save">احفظ وأعد التفسير</string>
+    <string name="feed_add_cancel">إلغاء</string>
+    <string name="feed_add_saving">جارٍ التفسير…</string>
+    <string name="feed_add_error">تعذّر الحفظ، حاول مرة أخرى.</string>
+    <string name="sentiment_mysterious">غامض</string>
+    <string name="sentiment_tender">حنون</string>
+    <string name="sentiment_restless">قلق</string>
+    <string name="sentiment_heavy">ثقيل</string>
+    <string name="sentiment_luminous">مضيء</string>
 </resources>

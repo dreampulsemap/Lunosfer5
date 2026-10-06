@@ -1161,4 +1161,15 @@
     <string name="onb_map_messages">Mensajes: chatea con amigos y comparte sueños, momentos del diario y visiones.</string>
     <string name="onb_c2_steps" formatted="true">Cómo registrarlo:\n1. Toca el botón ＋ de abajo → %1$s\n2. Escribe tu sueño con el mayor detalle posible\n3. Toca %2$s → se preparan tu interpretación y tu imagen</string>
     <string name="onb_c3_steps" formatted="true">Cómo crearla:\n1. Toca el botón ＋ de abajo → %1$s\n2. Escribe un título; si quieres, añade descripción, portada y fecha objetivo\n3. Añade pasos a tu hoja de ruta → %2$s</string>
+    <string name="feed_add_to_dream">✍️ Añadir a tu sueño</string>
+    <string name="feed_add_placeholder">¿Dónde estabas, qué pasó, cómo te sentiste?</string>
+    <string name="feed_add_save">Guardar y reinterpretar</string>
+    <string name="feed_add_cancel">Cancelar</string>
+    <string name="feed_add_saving">Interpretando…</string>
+    <string name="feed_add_error">No se pudo guardar, inténtalo de nuevo.</string>
+    <string name="sentiment_mysterious">Misterioso</string>
+    <string name="sentiment_tender">Tierno</string>
+    <string name="sentiment_restless">Inquieto</string>
+    <string name="sentiment_heavy">Pesado</string>
+    <string name="sentiment_luminous">Luminoso</string>
 </resources>

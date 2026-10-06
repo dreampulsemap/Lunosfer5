@@ -56,6 +56,10 @@ class DreamRepository {
         api.analyzeDream(AnalyzeDreamRequest(dreamId, content, lang))
     }
 
+    suspend fun reanalyzeDream(dreamId: Long, content: String, lang: String): Result<AnalyzedDreamFields?> = runCatching {
+        api.reanalyzeDream(AnalyzeDreamRequest(dreamId, content, lang)).dream
+    }
+
     suspend fun likeDream(dreamId: Long, userId: String): Result<LikeResponse> = runCatching {
         try {
             api.likeDream(LikeRequest(dreamId, userId))

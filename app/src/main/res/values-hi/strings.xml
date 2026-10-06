@@ -1155,4 +1155,15 @@
     <string name="onb_map_messages">संदेश: दोस्तों से चैट करें और सपने, डायरी पल और विज़न शेयर करें।</string>
     <string name="onb_c2_steps" formatted="true">कैसे दर्ज करें:\n1. नीचे ＋ बटन पर टैप करें → %1$s\n2. अपना सपना जितना हो सके विस्तार से लिखें\n3. %2$s पर टैप करें → आपकी व्याख्या और तस्वीर तैयार होती है</string>
     <string name="onb_c3_steps" formatted="true">कैसे बनाएँ:\n1. नीचे ＋ बटन पर टैप करें → %1$s\n2. शीर्षक लिखें; चाहें तो विवरण, कवर इमेज और लक्ष्य तिथि जोड़ें\n3. अपने रोडमैप में कदम जोड़ें → %2$s</string>
+    <string name="feed_add_to_dream">✍️ अपने सपने में जोड़ें</string>
+    <string name="feed_add_placeholder">तुम कहाँ थे, क्या हुआ, तुमने क्या महसूस किया?</string>
+    <string name="feed_add_save">सहेजें और फिर से व्याख्या करें</string>
+    <string name="feed_add_cancel">रद्द करें</string>
+    <string name="feed_add_saving">व्याख्या हो रही है…</string>
+    <string name="feed_add_error">सहेजा नहीं जा सका, फिर से कोशिश करें।</string>
+    <string name="sentiment_mysterious">रहस्यमय</string>
+    <string name="sentiment_tender">कोमल</string>
+    <string name="sentiment_restless">बेचैन</string>
+    <string name="sentiment_heavy">भारी</string>
+    <string name="sentiment_luminous">उजला</string>
 </resources>

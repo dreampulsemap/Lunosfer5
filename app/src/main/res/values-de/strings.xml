@@ -1156,4 +1156,15 @@
     <string name="onb_map_messages">Nachrichten: Chatte mit Freunden und teile Träume, Tagebuchmomente und Visionen.</string>
     <string name="onb_c2_steps" formatted="true">So hältst du ihn fest:\n1. Tippe unten auf ＋ → %1$s\n2. Schreib deinen Traum so detailliert wie möglich\n3. Tippe auf %2$s → Deutung und Bild werden erstellt</string>
     <string name="onb_c3_steps" formatted="true">So erstellst du sie:\n1. Tippe unten auf ＋ → %1$s\n2. Gib einen Titel ein; optional Beschreibung, Titelbild und Zieldatum\n3. Füge Schritte zu deinem Fahrplan hinzu → %2$s</string>
+    <string name="feed_add_to_dream">✍️ Zu deinem Traum hinzufügen</string>
+    <string name="feed_add_placeholder">Wo warst du, was ist passiert, wie hast du dich gefühlt?</string>
+    <string name="feed_add_save">Speichern und neu deuten</string>
+    <string name="feed_add_cancel">Abbrechen</string>
+    <string name="feed_add_saving">Wird gedeutet…</string>
+    <string name="feed_add_error">Speichern fehlgeschlagen, bitte erneut versuchen.</string>
+    <string name="sentiment_mysterious">Geheimnisvoll</string>
+    <string name="sentiment_tender">Zärtlich</string>
+    <string name="sentiment_restless">Rastlos</string>
+    <string name="sentiment_heavy">Schwer</string>
+    <string name="sentiment_luminous">Leuchtend</string>
 </resources>

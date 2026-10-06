@@ -1185,4 +1185,15 @@
     <string name="onb_map_messages">Messages: chat with friends and share dreams, diary moments and visions.</string>
     <string name="onb_c2_steps" formatted="true">How to record one:\n1. Tap the ＋ button at the bottom → %1$s\n2. Write your dream in as much detail as you can\n3. Tap %2$s → your interpretation and image are prepared</string>
     <string name="onb_c3_steps" formatted="true">How to create one:\n1. Tap the ＋ button at the bottom → %1$s\n2. Write a title; add a description, cover image and target date if you like\n3. Add steps to your roadmap → %2$s</string>
+    <string name="feed_add_to_dream">✍️ Add to your dream</string>
+    <string name="feed_add_placeholder">Where were you, what happened, how did you feel?</string>
+    <string name="feed_add_save">Save and re-interpret</string>
+    <string name="feed_add_cancel">Cancel</string>
+    <string name="feed_add_saving">Interpreting…</string>
+    <string name="feed_add_error">Could not save, please try again.</string>
+    <string name="sentiment_mysterious">Mysterious</string>
+    <string name="sentiment_tender">Tender</string>
+    <string name="sentiment_restless">Restless</string>
+    <string name="sentiment_heavy">Heavy</string>
+    <string name="sentiment_luminous">Luminous</string>
 </resources>

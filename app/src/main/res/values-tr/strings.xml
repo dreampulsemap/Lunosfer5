@@ -1183,4 +1183,15 @@
     <string name="onb_map_messages">Mesajlar: arkadaşlarınla sohbet et; rüya, günce ve vizyon paylaş.</string>
     <string name="onb_c2_steps" formatted="true">Nasıl kaydedilir?\n1. Alttaki ＋ düğmesine dokun → %1$s\n2. Rüyanı olabildiğince ayrıntılı yaz\n3. %2$s düğmesine bas → yorumun ve görselin hazırlanır</string>
     <string name="onb_c3_steps" formatted="true">Nasıl oluşturulur?\n1. Alttaki ＋ düğmesine dokun → %1$s\n2. Başlığı yaz; istersen açıklama, kapak görseli ve hedef tarih ekle\n3. Yol haritasına adımlar ekle → %2$s</string>
+    <string name="feed_add_to_dream">✍️ Rüyana ekle</string>
+    <string name="feed_add_placeholder">Neredeydin, ne oldu, ne hissettin?</string>
+    <string name="feed_add_save">Kaydet ve yeniden yorumla</string>
+    <string name="feed_add_cancel">Vazgeç</string>
+    <string name="feed_add_saving">Yorumlanıyor…</string>
+    <string name="feed_add_error">Kaydedilemedi, tekrar dene.</string>
+    <string name="sentiment_mysterious">Gizemli</string>
+    <string name="sentiment_tender">Şefkatli</string>
+    <string name="sentiment_restless">Huzursuz</string>
+    <string name="sentiment_heavy">Ağır</string>
+    <string name="sentiment_luminous">Işıltılı</string>
 </resources>

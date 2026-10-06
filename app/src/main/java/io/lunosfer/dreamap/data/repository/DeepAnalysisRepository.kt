@@ -52,7 +52,8 @@ class DeepAnalysisRepository(
             "not_enough_dreams" -> DeepAnalysisError.NotEnoughDreams(json.optInt("minimum", 3))
             "rate_limited" -> DeepAnalysisError.RateLimited(json.optInt("retryAfterMinutes", 60))
             "generation_failed", "claude_refusal", "claude_truncated",
-            "invalid_json_from_model", "anthropic_key_missing" ->
+            "invalid_json_from_model", "anthropic_key_missing",
+            "openai_key_missing", "model_refusal", "model_truncated", "internal_error" ->
                 DeepAnalysisError.GenerationFailed(json.optBoolean("refunded", false))
             else -> ApiErrors.translate(error)
         }

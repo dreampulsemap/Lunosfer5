@@ -1168,4 +1168,15 @@
     <string name="onb_map_messages">Сообщения: общайтесь с друзьями и делитесь снами, записями дневника и видениями.</string>
     <string name="onb_c2_steps" formatted="true">Как записать:\n1. Нажмите кнопку ＋ внизу → %1$s\n2. Опишите сон как можно подробнее\n3. Нажмите «%2$s» → будут готовы толкование и изображение</string>
     <string name="onb_c3_steps" formatted="true">Как создать:\n1. Нажмите кнопку ＋ внизу → %1$s\n2. Введите название; при желании добавьте описание, обложку и дату цели\n3. Добавьте шаги в дорожную карту → %2$s</string>
+    <string name="feed_add_to_dream">✍️ Дополнить сон</string>
+    <string name="feed_add_placeholder">Где ты был(а), что произошло, что ты чувствовал(а)?</string>
+    <string name="feed_add_save">Сохранить и истолковать заново</string>
+    <string name="feed_add_cancel">Отмена</string>
+    <string name="feed_add_saving">Толкуем…</string>
+    <string name="feed_add_error">Не удалось сохранить, попробуй ещё раз.</string>
+    <string name="sentiment_mysterious">Таинственное</string>
+    <string name="sentiment_tender">Нежное</string>
+    <string name="sentiment_restless">Беспокойное</string>
+    <string name="sentiment_heavy">Тяжёлое</string>
+    <string name="sentiment_luminous">Светлое</string>
 </resources>

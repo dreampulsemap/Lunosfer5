@@ -125,7 +125,11 @@ fun HomeScreen(
                 canLoadMore = canLoadMore,
                 onLoadMore = viewModel::loadMore,
                 onUserClick = onUserClick,
-                onOpenJourney = onOpenJourney
+                onOpenJourney = onOpenJourney,
+                currentUserId = currentUserId,
+                onAppendToDream = { dream, extra, done ->
+                    viewModel.appendToDream(dream, currentUserId, extra, AppLanguage.code(), done)
+                }
             )
         }
     }
@@ -191,7 +195,9 @@ private fun HomeFeedList(
     canLoadMore: Boolean = false,
     onLoadMore: () -> Unit = {},
     onUserClick: (String) -> Unit = {},
-    onOpenJourney: () -> Unit = {}
+    onOpenJourney: () -> Unit = {},
+    currentUserId: String? = null,
+    onAppendToDream: (Dream, String, (Boolean) -> Unit) -> Unit = { _, _, _ -> }
 ) {
     val listState = rememberLazyListState()
 
@@ -306,7 +312,9 @@ private fun HomeFeedList(
                             val index = dreamsList.indexOfFirst { it.id == id }.coerceAtLeast(0)
                             onOpenDreamReels(dreamsList, index)
                         },
-                        onUserClick = onUserClick
+                        onUserClick = onUserClick,
+                        isOwner = currentUserId != null && feedItem.dream.userId == currentUserId,
+                        onAppendToDream = { extra, done -> onAppendToDream(feedItem.dream, extra, done) }
                     )
                 }
                 is FeedItem.VisionItem -> {
@@ -563,7 +571,9 @@ private fun DreamFeedCard(
     likesCount: Int,
     onToggleLike: () -> Unit,
     onDreamClick: (Long) -> Unit,
-    onUserClick: (String) -> Unit = {}
+    onUserClick: (String) -> Unit = {},
+    isOwner: Boolean = false,
+    onAppendToDream: (String, (Boolean) -> Unit) -> Unit = { _, _ -> }
 ) {
     // 4 sayfa: gorsel, metin, sade anlatim, Jung analizi. Sade anlatim
     // yalnizca ruya detayinda vardi; akista hic gorunmuyordu.
@@ -610,7 +620,7 @@ private fun DreamFeedCard(
                 when (page) {
                     0 -> DreamImagePage(dream = dream, onDreamClick = onDreamClick)
                     1 -> DreamTextPage(dream = dream)
-                    2 -> DreamSimplePage(dream = dream)
+                    2 -> DreamSimplePage(dream = dream, isOwner = isOwner, onAppendToDream = onAppendToDream)
                     3 -> DreamAnalysisPage(dream = dream)
                 }
             }
@@ -848,7 +858,11 @@ private fun DreamTextPage(dream: Dream) {
  * alandan besleniyor, sadece akis karti olcusunde.
  */
 @Composable
-private fun DreamSimplePage(dream: Dream) {
+private fun DreamSimplePage(
+    dream: Dream,
+    isOwner: Boolean = false,
+    onAppendToDream: (String, (Boolean) -> Unit) -> Unit = { _, _ -> }
+) {
     val locale = AppLanguage.code()
     val analysis = dream.aiJungianAnalysis
     val simple = analysis?.simple?.get(locale)
@@ -888,9 +902,68 @@ private fun DreamSimplePage(dream: Dream) {
                 fontSize = 13.sp,
                 lineHeight = 21.sp
             )
+
+            // "Ruyana ekle": cok kisa ruyada sahibi ayrinti ekleyip analizi
+            // yeniletebilir. Esik, analyze-dream.js'teki SHORT_DREAM_WORDS (8)
+            // ile ayni; web karsiligi DreamFeedCard.jsx.
+            val isShortDream = dream.content.trim().split(WHITESPACE).count { it.isNotEmpty() } < 8
+            var adding by remember(dream.id) { mutableStateOf(false) }
+            var extra by remember(dream.id) { mutableStateOf("") }
+            var saving by remember(dream.id) { mutableStateOf(false) }
+            if (isOwner && isShortDream && simple.isNotBlank()) {
+                if (!adding) {
+                    TextButton(
+                        onClick = { adding = true },
+                        colors = ButtonDefaults.textButtonColors(
+                            containerColor = AetherCyan.copy(alpha = 0.15f),
+                            contentColor = AetherCyan
+                        ),
+                        shape = RoundedCornerShape(50)
+                    ) {
+                        Text(stringResource(R.string.feed_add_to_dream), fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                    }
+                } else {
+                    OutlinedTextField(
+                        value = extra,
+                        onValueChange = { extra = it },
+                        enabled = !saving,
+                        placeholder = { Text(stringResource(R.string.feed_add_placeholder), fontSize = 13.sp) },
+                        textStyle = LocalTextStyle.current.copy(fontSize = 13.sp, color = Color(0xFFE2E8F0)),
+                        minLines = 3,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Button(
+                            onClick = {
+                                saving = true
+                                onAppendToDream(extra) { ok ->
+                                    saving = false
+                                    if (ok) {
+                                        adding = false
+                                        extra = ""
+                                    }
+                                }
+                            },
+                            enabled = !saving && extra.isNotBlank(),
+                            colors = ButtonDefaults.buttonColors(containerColor = AetherCyan, contentColor = Void950)
+                        ) {
+                            Text(
+                                stringResource(if (saving) R.string.feed_add_saving else R.string.feed_add_save),
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                        TextButton(onClick = { adding = false; extra = "" }, enabled = !saving) {
+                            Text(stringResource(R.string.feed_add_cancel), fontSize = 12.sp, color = Color(0xFF94A3B8))
+                        }
+                    }
+                }
+            }
         }
     }
 }
+
+private val WHITESPACE = Regex("\\s+")
 
 @Composable
 private fun DreamAnalysisPage(dream: Dream) {

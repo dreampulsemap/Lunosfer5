@@ -103,6 +103,10 @@ interface LunosferApi {
     @POST("api/analyze-dream")
     suspend fun analyzeDream(@Body request: AnalyzeDreamRequest)
 
+    // Ayni uc; yanittaki guncel analizi okumak icin ("Ruyana ekle").
+    @POST("api/analyze-dream")
+    suspend fun reanalyzeDream(@Body request: AnalyzeDreamRequest): io.lunosfer.dreamap.data.model.AnalyzeDreamResponse
+
     @GET("api/get-dream")
     suspend fun getDream(@Query("id") id: Long): io.lunosfer.dreamap.data.model.DreamDetailResponse
 

@@ -1175,4 +1175,15 @@
     <string name="onb_map_messages">Повідомлення: спілкуйтеся з друзями й діліться снами, записами щоденника та візіями.</string>
     <string name="onb_c2_steps" formatted="true">Як записати:\n1. Торкніться кнопки ＋ внизу → %1$s\n2. Опишіть сон якомога детальніше\n3. Натисніть «%2$s» → буде готове тлумачення й зображення</string>
     <string name="onb_c3_steps" formatted="true">Як створити:\n1. Торкніться кнопки ＋ внизу → %1$s\n2. Введіть назву; за бажанням додайте опис, обкладинку й дату цілі\n3. Додайте кроки до дорожньої карти → %2$s</string>
+    <string name="feed_add_to_dream">✍️ Доповнити сон</string>
+    <string name="feed_add_placeholder">Де ти був(ла), що сталося, що ти відчував(ла)?</string>
+    <string name="feed_add_save">Зберегти й витлумачити знову</string>
+    <string name="feed_add_cancel">Скасувати</string>
+    <string name="feed_add_saving">Тлумачимо…</string>
+    <string name="feed_add_error">Не вдалося зберегти, спробуй ще раз.</string>
+    <string name="sentiment_mysterious">Таємниче</string>
+    <string name="sentiment_tender">Ніжне</string>
+    <string name="sentiment_restless">Неспокійне</string>
+    <string name="sentiment_heavy">Важке</string>
+    <string name="sentiment_luminous">Світле</string>
 </resources>

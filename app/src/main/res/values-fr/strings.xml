@@ -1160,4 +1160,15 @@
     <string name="onb_map_messages">Messages : discute avec tes amis et partage rêves, moments de journal et visions.</string>
     <string name="onb_c2_steps" formatted="true">Comment l\'enregistrer :\n1. Touche le bouton ＋ en bas → %1$s\n2. Écris ton rêve avec le plus de détails possible\n3. Touche %2$s → ton interprétation et ton image sont préparées</string>
     <string name="onb_c3_steps" formatted="true">Comment la créer :\n1. Touche le bouton ＋ en bas → %1$s\n2. Écris un titre ; ajoute si tu veux une description, une couverture et une date cible\n3. Ajoute des étapes à ta feuille de route → %2$s</string>
+    <string name="feed_add_to_dream">✍️ Compléter ton rêve</string>
+    <string name="feed_add_placeholder">Où étais-tu, que s'est-il passé, qu'as-tu ressenti ?</string>
+    <string name="feed_add_save">Enregistrer et réinterpréter</string>
+    <string name="feed_add_cancel">Annuler</string>
+    <string name="feed_add_saving">Interprétation…</string>
+    <string name="feed_add_error">Impossible d'enregistrer, réessaie.</string>
+    <string name="sentiment_mysterious">Mystérieux</string>
+    <string name="sentiment_tender">Tendre</string>
+    <string name="sentiment_restless">Agité</string>
+    <string name="sentiment_heavy">Lourd</string>
+    <string name="sentiment_luminous">Lumineux</string>
 </resources>

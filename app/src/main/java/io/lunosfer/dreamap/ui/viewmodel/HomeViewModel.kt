@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.lunosfer.dreamap.data.model.Dream
 import io.lunosfer.dreamap.data.model.FeedItem
+import io.lunosfer.dreamap.data.model.UpdateDreamRequest
 import io.lunosfer.dreamap.data.repository.DreamRepository
 import io.lunosfer.dreamap.data.repository.HomeRepository
 import io.lunosfer.dreamap.util.AppLanguage
@@ -128,6 +129,47 @@ class HomeViewModel(
                 _actionError.value = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_like_failed)
             }
         }
+    }
+
+    /**
+     * "Ruyana ekle": kisa ruyanin sonuna ayrinti ekler, kaydeder ve analizi
+     * yeniler (web: DreamFeedCard.jsx saveExtra). Icerik kaydedildiyse
+     * onDone(true) — analiz basarisiz olsa bile metin artik guncel.
+     */
+    fun appendToDream(dream: Dream, userId: String?, extra: String, lang: String, onDone: (Boolean) -> Unit) {
+        val add = extra.trim()
+        if (userId.isNullOrBlank() || add.isEmpty()) return onDone(false)
+        val content = "${dream.content.trim()}\n$add"
+        val failMsg = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.feed_add_error)
+        viewModelScope.launch {
+            val saved = dreamRepository.updateDream(UpdateDreamRequest(dreamId = dream.id, userId = userId, content = content))
+            if (saved.isFailure) {
+                _actionError.value = failMsg
+                onDone(false)
+                return@launch
+            }
+            replaceDream(dream.id) { it.copy(content = content) }
+            dreamRepository.reanalyzeDream(dream.id, content, lang)
+                .onSuccess { f ->
+                    if (f != null) replaceDream(dream.id) {
+                        it.copy(
+                            aiTitle = f.aiTitle ?: it.aiTitle,
+                            aiArchetypes = f.aiArchetypes ?: it.aiArchetypes,
+                            aiJungianAnalysis = f.aiJungianAnalysis ?: it.aiJungianAnalysis,
+                            aiSentiment = f.aiSentiment ?: it.aiSentiment
+                        )
+                    }
+                }
+                .onFailure { _actionError.value = failMsg }
+            onDone(true)
+        }
+    }
+
+    private fun replaceDream(id: Long, transform: (Dream) -> Dream) {
+        val items = (_state.value as? UiState.Success)?.data ?: return
+        _state.value = UiState.Success(items.map {
+            if (it is FeedItem.DreamItem && it.dream.id == id) FeedItem.DreamItem(transform(it.dream)) else it
+        })
     }
 
     init {

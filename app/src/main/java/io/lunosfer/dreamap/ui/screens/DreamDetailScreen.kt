@@ -1369,7 +1369,7 @@ private fun DreamAnalysisCardPage(
                                     .padding(horizontal = 12.dp, vertical = 5.dp)
                             ) {
                                 Text(
-                                    text = stringResource(R.string.dream_detail_sentiment_label, analysis.sentiment),
+                                    text = stringResource(R.string.dream_detail_sentiment_label, io.lunosfer.dreamap.util.sentimentResId(analysis.sentiment)?.let { stringResource(it) } ?: analysis.sentiment),
                                     color = Color.White,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Medium
