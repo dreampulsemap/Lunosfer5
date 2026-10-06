@@ -63,7 +63,9 @@ interface LunosferApi {
     suspend fun getExploreFeed(
         @Query("page") page: Int,
         @Query("rankToken") rankToken: String?,
-        @Query("asOf") asOf: String?
+        @Query("asOf") asOf: String?,
+        // Sunucu bu dildeki + Ingilizce ruyalari dondurur (explore/feed.js).
+        @Query("lang") lang: String? = io.lunosfer.dreamap.util.AppLanguage.code()
     ): ExploreFeedResponse
 
     // --- Vision / Goals  ---
