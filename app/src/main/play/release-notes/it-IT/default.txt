@@ -1,5 +1,4 @@
-- Novità: guida passo passo a menu, sogni e visioni
-- Novità: schermata Viaggio — guadagna XP, sali di grado, missioni giornaliere, badge e classifica
-- Ogni sogno, momento del diario e visione ora si può condividere: in chat con un amico o su WhatsApp, Instagram, X e altro
-- Immagine story per la Bussola del giorno: pubblicala nel diario o scaricala con filigrana per Instagram
-- Messaggi più veloci, la notifica si chiude quando rispondi; Bussola del giorno corretta
+- Novità: “✍️ Aggiungi al tuo sogno” per i sogni brevi — aggiungi dettagli e ottieni una nuova interpretazione
+- Esplora ora mostra sogni nella tua lingua e in inglese
+- Le emozioni del sogno ora appaiono nella lingua dell'app
+- Messaggi di errore più chiari nell'Analisi profonda, incluso il rimborso di Aura

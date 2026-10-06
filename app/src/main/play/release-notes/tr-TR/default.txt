@@ -1,5 +1,4 @@
-- Yeni: menüleri, rüya kaydetmeyi ve vizyon oluşturmayı adım adım anlatan rehber
-- Yeni: Yolculuk ekranı — XP topla, rütbe atla, günlük görevler, rozetler ve sıralama
-- Her rüya, günce ve vizyon artık paylaşılabilir: sohbette arkadaşına gönder ya da WhatsApp, Instagram, X ve diğer uygulamalarda paylaş
-- Günün Pusulası için hikâye görseli: güncende paylaş ya da filigranlı indirip Instagram hikâyene ekle
-- Mesajlar daha hızlı; cevap verince bildirim kapanıyor; Günün Pusulası düzeltildi
+- Yeni: Kısa rüyalarda “✍️ Rüyana ekle” — ayrıntı ekle, yorum yeniden yapılsın
+- Keşfet artık kendi dilindeki ve İngilizce rüyaları gösteriyor
+- Rüyanın duygusu artık uygulama dilinde görünüyor
+- Derin Analiz hatalarında daha net mesaj; Aura'n iade edildiyse yazıyor

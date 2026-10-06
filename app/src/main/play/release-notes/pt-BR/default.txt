@@ -1,5 +1,4 @@
-- Novo: guia passo a passo de menus, sonhos e visões
-- Novo: tela Jornada — ganhe XP, suba de nível, missões diárias, insígnias e ranking
-- Todo sonho, momento do diário e visão agora pode ser compartilhado: envie a um amigo no chat ou compartilhe no WhatsApp, Instagram, X e mais
-- Imagem de story da Bússola do Dia: publique no seu diário ou baixe com marca d'água para o Instagram
-- Mensagens enviadas mais rápido, a notificação fecha ao responder; Bússola do Dia corrigida
+- Novo: “✍️ Adicionar ao seu sonho” em sonhos curtos — adicione detalhes e receba uma nova interpretação
+- Explorar agora mostra sonhos no seu idioma e em inglês
+- As emoções do sonho agora aparecem no idioma do app
+- Mensagens de erro mais claras na Análise Profunda, incluindo reembolso de Aura

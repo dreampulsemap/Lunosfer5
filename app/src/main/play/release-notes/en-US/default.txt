@@ -1,5 +1,4 @@
-- New: a game-like guide to the app — menus, recording a dream and creating a vision, step by step
-- New: Journey screen — earn XP, rank up, daily quests, badges and a leaderboard
-- Every dream, diary moment and vision is now shareable: send it to a friend in chat or share to WhatsApp, Instagram, X and more
-- Daily Compass story image: post it to your diary or download it with a watermark for your Instagram story
-- Messages send faster, notifications close once you reply; Daily Compass fixed
+- New: “✍️ Add to your dream” on short dreams — add details and get a fresh interpretation
+- Explore now shows dreams in your language and English
+- Dream emotions now appear in your app language
+- Clearer Deep Analysis error messages, including when your Aura was refunded

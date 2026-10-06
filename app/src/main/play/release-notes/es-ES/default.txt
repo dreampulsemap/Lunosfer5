@@ -1,5 +1,4 @@
-- Nuevo: guía paso a paso de menús, sueños y visiones
-- Nuevo: pantalla Viaje — gana XP, sube de rango, misiones diarias, insignias y clasificación
-- Cada sueño, momento del diario y visión se puede compartir: envíalo a un amigo por chat o compártelo en WhatsApp, Instagram, X y más
-- Imagen de historia para la Brújula del Día: publícala en tu diario o descárgala con marca de agua para Instagram
-- Mensajes más rápidos, la notificación se cierra al responder; Brújula del Día corregida
+- Nuevo: «✍️ Añadir a tu sueño» en sueños cortos — añade detalles y obtén una nueva interpretación
+- Explorar muestra ahora sueños en tu idioma y en inglés
+- Las emociones del sueño aparecen ahora en el idioma de la app
+- Mensajes de error más claros en el Análisis Profundo, incluido el reembolso de Aura
