@@ -1172,4 +1172,6 @@
     <string name="sentiment_restless">Levoton</string>
     <string name="sentiment_heavy">Raskas</string>
     <string name="sentiment_luminous">Valoisa</string>
+    <string name="sentiment_reflective">Mietteliäs</string>
+    <string name="sentiment_nostalgic">Nostalginen</string>
 </resources>

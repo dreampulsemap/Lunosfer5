@@ -1157,4 +1157,6 @@
     <string name="sentiment_restless">落ち着かない</string>
     <string name="sentiment_heavy">重い</string>
     <string name="sentiment_luminous">輝く</string>
+    <string name="sentiment_reflective">内省的</string>
+    <string name="sentiment_nostalgic">懐かしい</string>
 </resources>

@@ -822,9 +822,10 @@ private fun DreamTextPage(dream: Dream) {
                 )
             }
 
-            if (!dream.aiTitle.isNullOrBlank()) {
+            val localizedTitle = dream.localizedTitle
+            if (localizedTitle != null) {
                 Text(
-                    text = dream.aiTitle,
+                    text = localizedTitle,
                     color = AstralGold,
                     style = MaterialTheme.typography.titleSmall.copy(
                         fontFamily = SerifFontFamily,

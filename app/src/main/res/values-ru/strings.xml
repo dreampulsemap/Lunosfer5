@@ -1179,4 +1179,6 @@
     <string name="sentiment_restless">Беспокойное</string>
     <string name="sentiment_heavy">Тяжёлое</string>
     <string name="sentiment_luminous">Светлое</string>
+    <string name="sentiment_reflective">Задумчивое</string>
+    <string name="sentiment_nostalgic">Ностальгическое</string>
 </resources>

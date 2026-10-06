@@ -5,7 +5,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GenerateSummaryRequest(
-    @SerialName("periodType") val periodType: String
+    @SerialName("periodType") val periodType: String,
+    // Ozet bu dilde yazilir (summaries/generate.js). Profildeki language cogu
+    // kullanicida varsayilan 'en' oldugu icin Turkce arayuzde Ingilizce cikiyordu.
+    val lang: String = io.lunosfer.dreamap.util.AppLanguage.code()
 )
 
 @Serializable

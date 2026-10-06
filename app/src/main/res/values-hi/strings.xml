@@ -1166,4 +1166,6 @@
     <string name="sentiment_restless">बेचैन</string>
     <string name="sentiment_heavy">भारी</string>
     <string name="sentiment_luminous">उजला</string>
+    <string name="sentiment_reflective">चिंतनशील</string>
+    <string name="sentiment_nostalgic">उदासीन यादें</string>
 </resources>

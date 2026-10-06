@@ -13,6 +13,8 @@ fun sentimentResId(raw: String): Int? = when (raw.trim().lowercase(java.util.Loc
     "restless", "uneasy", "agitated" -> R.string.sentiment_restless
     "heavy", "somber", "sombre", "gloomy" -> R.string.sentiment_heavy
     "luminous", "bright", "radiant" -> R.string.sentiment_luminous
+    "reflective", "contemplative", "pensive", "introspective", "thoughtful" -> R.string.sentiment_reflective
+    "nostalgic", "wistful" -> R.string.sentiment_nostalgic
     "hopeful", "hope" -> R.string.dream_emotion_hope
     "anxious", "anxiety", "tense", "nervous" -> R.string.dream_emotion_anxiety
     "joyful", "joy", "happy", "playful" -> R.string.dream_emotion_joy

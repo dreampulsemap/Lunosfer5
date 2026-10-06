@@ -1194,4 +1194,6 @@
     <string name="sentiment_restless">قلق</string>
     <string name="sentiment_heavy">ثقيل</string>
     <string name="sentiment_luminous">مضيء</string>
+    <string name="sentiment_reflective">تأملي</string>
+    <string name="sentiment_nostalgic">حنين</string>
 </resources>

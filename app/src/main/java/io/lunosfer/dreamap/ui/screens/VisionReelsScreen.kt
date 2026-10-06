@@ -86,18 +86,9 @@ fun VisionReelsScreen(
                 onUserClick = onUserClick
             )
         }
-
-        IconButton(
-            onClick = onClose,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .statusBarsPadding()
-                .padding(12.dp)
-                .clip(CircleShape)
-                .background(Color.Black.copy(alpha = 0.35f))
-        ) {
-            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.generic_close_cd), tint = Color.White)
-        }
+        // Ekran seviyesinde ayrica bir "X" vardi: video/slayt sayfalarinin
+        // kendi basliginda zaten kapatma var, kapak sayfasinda da kendi X'i;
+        // ikinci X avatarin ustune biniyordu. Her sayfa kendi kapatmasini ciziyor.
     }
 }
 

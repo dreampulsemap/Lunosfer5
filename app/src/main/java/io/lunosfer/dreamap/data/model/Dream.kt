@@ -34,5 +34,13 @@ data class Dream(
     @SerialName("premium_deep_analysis") val premiumDeepAnalysis: JsonElement? = null,
     @SerialName("premium_deep_analysis_status") val premiumDeepAnalysisStatus: String? = null
 ) {
-    val displayTitle: String get() = aiTitle?.takeIf { it.isNotBlank() } ?: content.take(60)
+    // ai_title sunucuda HER ZAMAN Ingilizce (analyze-dream.js); uygulama
+    // diline gore baslik analiz icindeki cok dilli `title`ta.
+    val localizedTitle: String? get() {
+        val titles = aiJungianAnalysis?.title
+        return (titles?.get(io.lunosfer.dreamap.util.AppLanguage.code()) ?: titles?.get("en"))
+            ?.takeIf { it.isNotBlank() }
+            ?: aiTitle?.takeIf { it.isNotBlank() }
+    }
+    val displayTitle: String get() = localizedTitle ?: content.take(60)
 }

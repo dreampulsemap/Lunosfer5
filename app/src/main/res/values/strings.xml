@@ -1196,4 +1196,6 @@
     <string name="sentiment_restless">Restless</string>
     <string name="sentiment_heavy">Heavy</string>
     <string name="sentiment_luminous">Luminous</string>
+    <string name="sentiment_reflective">Reflective</string>
+    <string name="sentiment_nostalgic">Nostalgic</string>
 </resources>

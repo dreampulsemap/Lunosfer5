@@ -1171,4 +1171,6 @@
     <string name="sentiment_restless">Agité</string>
     <string name="sentiment_heavy">Lourd</string>
     <string name="sentiment_luminous">Lumineux</string>
+    <string name="sentiment_reflective">Pensif</string>
+    <string name="sentiment_nostalgic">Nostalgique</string>
 </resources>

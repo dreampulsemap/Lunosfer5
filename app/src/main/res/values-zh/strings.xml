@@ -1159,4 +1159,6 @@
     <string name="sentiment_restless">不安</string>
     <string name="sentiment_heavy">沉重</string>
     <string name="sentiment_luminous">明亮</string>
+    <string name="sentiment_reflective">沉思</string>
+    <string name="sentiment_nostalgic">怀旧</string>
 </resources>

@@ -1194,4 +1194,6 @@
     <string name="sentiment_restless">Huzursuz</string>
     <string name="sentiment_heavy">Ağır</string>
     <string name="sentiment_luminous">Işıltılı</string>
+    <string name="sentiment_reflective">Düşünceli</string>
+    <string name="sentiment_nostalgic">Nostaljik</string>
 </resources>

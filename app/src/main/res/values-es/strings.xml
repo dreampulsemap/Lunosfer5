@@ -1172,4 +1172,6 @@
     <string name="sentiment_restless">Inquieto</string>
     <string name="sentiment_heavy">Pesado</string>
     <string name="sentiment_luminous">Luminoso</string>
+    <string name="sentiment_reflective">Reflexivo</string>
+    <string name="sentiment_nostalgic">Nostálgico</string>
 </resources>

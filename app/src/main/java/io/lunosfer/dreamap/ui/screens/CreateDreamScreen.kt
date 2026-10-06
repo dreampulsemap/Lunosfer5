@@ -3,6 +3,7 @@
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -21,7 +22,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalConfiguration
@@ -633,7 +633,10 @@ val charCount = content.length
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
-                            .background(if (isSelected) AstralGold.copy(alpha = 0.1f) else Void800)
+                            .background(if (isSelected) AstralGold.copy(alpha = 0.15f) else Void800)
+                            // Secili vurgu: shadow() clip+background'dan sonra geldigi icin
+                            // cipin ICINE koyu bir serit ciziyordu; kenarlik kullan.
+                            .border(1.dp, if (isSelected) AstralGold.copy(alpha = 0.7f) else Color.Transparent, RoundedCornerShape(8.dp))
                             .clickable {
                                 selectedEmotions = if (isSelected) {
                                     selectedEmotions - emotion
@@ -641,10 +644,6 @@ val charCount = content.length
                                     selectedEmotions + emotion
                                 }
                             }
-                            .then(
-                                if (isSelected) Modifier.shadow(8.dp, spotColor = AstralGold, ambientColor = AstralGold)
-                                else Modifier
-                            )
                             .padding(8.dp),
                         contentAlignment = Alignment.Center
                     ) {

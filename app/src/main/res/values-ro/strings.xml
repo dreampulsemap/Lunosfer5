@@ -1179,4 +1179,6 @@
     <string name="sentiment_restless">Neliniștit</string>
     <string name="sentiment_heavy">Apăsător</string>
     <string name="sentiment_luminous">Luminos</string>
+    <string name="sentiment_reflective">Meditativ</string>
+    <string name="sentiment_nostalgic">Nostalgic</string>
 </resources>

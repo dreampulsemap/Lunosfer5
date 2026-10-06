@@ -225,7 +225,7 @@ private fun SummaryContentView(
                         .padding(horizontal = 10.dp, vertical = 3.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.summary_sentiment, summary.dominantSentiment),
+                        text = stringResource(R.string.summary_sentiment, io.lunosfer.dreamap.util.sentimentResId(summary.dominantSentiment)?.let { stringResource(it) } ?: summary.dominantSentiment),
                         color = Color.LightGray,
                         fontSize = 11.sp
                     )
