@@ -214,6 +214,7 @@ class ProfileViewModel(
                         supabaseClient.auth.signOut()
                         io.lunosfer.dreamap.util.AppLanguage.resetSync()
                     } catch (_: Exception) {
+                        runCatching { supabaseClient.auth.clearSession() }
                         // Hesap sunucuda zaten silindi; yerel signOut başarısız
                         // olsa bile kullanıcıyı login'e yönlendirmeye devam ediyoruz.
                     }

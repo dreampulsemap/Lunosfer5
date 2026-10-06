@@ -17,7 +17,13 @@ import io.lunosfer.dreamap.service.LunosferMessagingService
 import io.lunosfer.dreamap.supabase.supabaseClient
 import io.lunosfer.dreamap.ui.screens.MainScreen
 import io.lunosfer.dreamap.ui.theme.MyApplicationTheme
-import io.github.jan.supabase.auth.handleDeeplinks
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.parseSessionFromFragment
+import io.github.jan.supabase.auth.status.SessionSource
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 
 class MainActivity : AppCompatActivity() {
     private val pendingRouteState = androidx.compose.runtime.mutableStateOf<String?>(null)
@@ -74,9 +80,32 @@ class MainActivity : AppCompatActivity() {
     private fun handleAuthDeeplink(intent: Intent) {
         val data = intent.data
         if (data != null && data.scheme == "io.lunosfer.dreamap" && data.host == "auth-callback") {
-            supabaseClient.handleDeeplinks(intent)
+            val fragment = data.fragment
             intent.data = null
             setIntent(intent)
+            // supabase handleDeeplinks() kullanicıyı kendi authScope'unda
+            // dogruluyordu; orada atilan AuthRestException yakalanamiyor ve
+            // uygulamayi cokertiyordu (Sentry, 1.5.4+27, Play on-lansman robotu).
+            // Iptal edilen/hatali OAuth donusunde (#error=...) token yok.
+            if (fragment.isNullOrBlank() || "access_token=" !in fragment) {
+                if (fragment?.contains("error") == true || data.getQueryParameter("error") != null) {
+                    Toast.makeText(this, R.string.common_error_unknown, Toast.LENGTH_LONG).show()
+                }
+                return
+            }
+            lifecycleScope.launch {
+                try {
+                    val auth = supabaseClient.auth
+                    val session = auth.parseSessionFromFragment(fragment)
+                    val user = auth.retrieveUser(session.accessToken)
+                    auth.importSession(session.copy(user = user), source = SessionSource.External)
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Log.w("MainActivity", "OAuth donusu islenemedi", e)
+                    Toast.makeText(this@MainActivity, R.string.common_error_unknown, Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 

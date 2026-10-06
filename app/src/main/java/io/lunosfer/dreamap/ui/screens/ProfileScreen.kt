@@ -363,7 +363,17 @@ fun ProfileScreen(
                                     // hesaba sizmasin).
                                     io.lunosfer.dreamap.data.repository.UserWallet.clear()
                                     io.lunosfer.dreamap.data.repository.GameRepository.clear()
-                                    supabaseClient.auth.signOut()
+                                    // Sunucu logout'u hata verse de (suresi dolmus oturum vb.)
+                                    // yerel oturumu kapatip cikisa devam et; yakalanmayan
+                                    // AuthRestException uygulamayi cokertiyordu.
+                                    try {
+                                        supabaseClient.auth.signOut()
+                                    } catch (e: kotlin.coroutines.cancellation.CancellationException) {
+                                        throw e
+                                    } catch (_: Exception) {
+                                        // signOut hata verince yerel oturumu silmiyor; elle temizle.
+                                        runCatching { supabaseClient.auth.clearSession() }
+                                    }
                                     io.lunosfer.dreamap.util.AppLanguage.resetSync()
                                     onLogout()
                                 }
