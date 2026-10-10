@@ -15,12 +15,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- Galeri erişimi için izinler. Android 13+ (API 33) için
-         ayrı izinler, eskiler için READ_EXTERNAL_STORAGE. -->
+    <!-- Galeri erişimi: foto/video seçimi sistem seçicisiyle (GetContent /
+         PickVisualMedia) yapılıyor, bu yüzden READ_MEDIA_* izinleri bilerek
+         YOK (Play politikası: sistem seçicisi yeterliyken bu izinler istenemez).
+         READ_EXTERNAL_STORAGE yalnızca Android 12 ve altı için. -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
     <!-- Paylaşım görselini galeriye kaydetmek için yalnızca Android 9 ve altı. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
 
