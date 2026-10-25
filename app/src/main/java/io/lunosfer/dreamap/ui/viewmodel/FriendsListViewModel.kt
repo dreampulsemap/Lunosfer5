@@ -51,7 +51,7 @@ class FriendsListViewModel(
                 .onSuccess { list -> _state.value = FriendsListUiState.Content(list) }
                 .onFailure { err ->
                     _state.value = FriendsListUiState.Error(
-                        err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_unknown)
+                        io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_unknown))
                     )
                 }
         }

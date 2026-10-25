@@ -100,11 +100,11 @@ class PublicProfileViewModel(
                 }
             }.onFailure { err ->
                 if (page == 0) {
-                    _state.value = PublicProfileUiState.Error(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_profile_load))
+                    _state.value = PublicProfileUiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_profile_load)))
                 } else {
                     val current = _state.value as? PublicProfileUiState.Success
                     if (current != null) {
-                        _state.value = current.copy(isLoadingMore = false, actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.public_profile_error_load_more))
+                        _state.value = current.copy(isLoadingMore = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.public_profile_error_load_more)))
                     }
                 }
             }
@@ -155,7 +155,7 @@ class PublicProfileViewModel(
                 )
             }.onFailure { err ->
                 val latest = _state.value as? PublicProfileUiState.Success ?: return@onFailure
-                _state.value = latest.copy(actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_error_follow_request_failed))
+                _state.value = latest.copy(actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_error_follow_request_failed)))
             }
         }
     }
@@ -209,7 +209,7 @@ class PublicProfileViewModel(
                 } else {
                     io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.unblock_user_error)
                 }
-                _state.value = latest.copy(isTogglingBlock = false, actionError = err.message ?: fallback)
+                _state.value = latest.copy(isTogglingBlock = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, fallback))
             }
         }
     }
@@ -243,7 +243,7 @@ class PublicProfileViewModel(
                 val latest = _state.value as? PublicProfileUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     isSubmittingReport = false,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error))
                 )
             }
         }

@@ -118,7 +118,7 @@ class HomeViewModel(
                     _likeCountOverrides.value = _likeCountOverrides.value + (dreamId to confirmedCount)
                 }
             }.onFailure { err ->
-                val msg = err.message ?: ""
+                val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                 if (msg.contains("Already liked", ignoreCase = true)) {
                     // Sessizce yut, optimistic state zaten doğru
                     return@onFailure

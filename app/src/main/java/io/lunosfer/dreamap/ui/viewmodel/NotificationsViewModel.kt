@@ -84,7 +84,7 @@ class NotificationsViewModel(
                 val latest = _state.value as? NotificationsUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     isMarkingRead = false,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.notifications_error_mark_read)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.notifications_error_mark_read))
                 )
                 onComplete()
             }
@@ -129,7 +129,7 @@ class NotificationsViewModel(
                     val latest = _state.value as? NotificationsUiState.Success ?: return@onFailure
                     // Istek artik yoksa (silinmis/yanitlanmis) butonlari kaldir ve
                     // sunucunun ham metni yerine anlasilir bir mesaj goster.
-                    val gone = (err.message ?: "").let {
+                    val gone = io.lunosfer.dreamap.util.ErrorText.matchText(err).let {
                         it.contains("404") || it.contains("bulunamad", ignoreCase = true) || it.contains("not found", ignoreCase = true)
                     }
                     _state.value = latest.copy(

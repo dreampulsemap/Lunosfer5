@@ -182,7 +182,7 @@ class ThreadViewModel(
                     replaceOptimistic(optimisticMessage.copy(deliveryStatus = MessageDeliveryStatus.FAILED))
                     _state.value = _state.value.copy(
                         isSending = false,
-                        sendError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_file_upload).format(io.lunosfer.dreamap.util.safeMessage(error) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_unknown_error))
+                        sendError = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_file_upload).format(io.lunosfer.dreamap.util.ErrorText.friendly(error, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_unknown_error)))
                     )
                     return@launch
                 }
@@ -207,7 +207,7 @@ class ThreadViewModel(
                     replaceOptimistic(optimisticMessage.copy(deliveryStatus = MessageDeliveryStatus.FAILED))
                     _state.value = _state.value.copy(
                         isSending = false,
-                        sendError = io.lunosfer.dreamap.util.safeMessage(error) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_send_message)
+                        sendError = io.lunosfer.dreamap.util.ErrorText.friendly(error, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.thread_error_send_message))
                     )
                 }
         }
@@ -294,7 +294,7 @@ class ThreadViewModel(
                 } else {
                     io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.unblock_user_error)
                 }
-                _state.value = _state.value.copy(isTogglingBlock = false, infoMessage = err.message ?: fallback)
+                _state.value = _state.value.copy(isTogglingBlock = false, infoMessage = io.lunosfer.dreamap.util.ErrorText.friendly(err, fallback))
             }
         }
     }
@@ -324,7 +324,7 @@ class ThreadViewModel(
                 .onFailure { err ->
                     _state.value = _state.value.copy(
                         isSubmittingReport = false,
-                        infoMessage = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error)
+                        infoMessage = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error))
                     )
                 }
         }

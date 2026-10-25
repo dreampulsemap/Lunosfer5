@@ -839,6 +839,8 @@
     <string name="error_timeout">Der Server hat zu lange gebraucht. Bitte versuche es erneut.</string>
     <string name="error_server">Auf unserer Seite ist etwas schiefgelaufen. Bitte versuche es gleich noch einmal.</string>
     <string name="error_session_expired">Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.</string>
+    <string name="error_content_private">Dieser Inhalt ist privat oder du darfst ihn nicht ansehen.</string>
+    <string name="error_content_not_found">Dieser Inhalt wurde nicht gefunden. Er wurde möglicherweise gelöscht.</string>
     <string name="cd_use_my_location">Meinen Standort verwenden</string>
     <plurals name="summary_dreams_analyzed_plural">
         <item quantity="one">🌙 %1$d Traum analysiert</item>

@@ -95,7 +95,7 @@ class VisionVideoPlayerViewModel(
                     )                }
             }.onFailure { err ->
                 _state.value = VisionVideoPlayerUiState.Error(
-                    err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_slides_load)
+                    io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_slides_load))
                 )
             }
         }
@@ -123,7 +123,7 @@ class VisionVideoPlayerViewModel(
                     _state.value = latest.copy(
                         hasReacted = wasReacted,
                         believersCount = oldCount,
-                        actionError = err.message
+                        actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_mana_failed))
                     )
                 }
             }
@@ -147,7 +147,7 @@ class VisionVideoPlayerViewModel(
                 _state.value = latest.copy(hasSaved = isSaved)
             }.onFailure { err ->
                 val latest = _state.value as? VisionVideoPlayerUiState.Content ?: return@onFailure
-                _state.value = latest.copy(hasSaved = wasSaved, actionError = err.message)
+                _state.value = latest.copy(hasSaved = wasSaved, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
             }
         }
     }
@@ -192,7 +192,7 @@ class VisionVideoPlayerViewModel(
                 )
             }.onFailure { err ->
                 val latest = _state.value as? VisionVideoPlayerUiState.Content ?: return@onFailure
-                _state.value = latest.copy(isSubmittingComment = false, actionError = err.message)
+                _state.value = latest.copy(isSubmittingComment = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
             }
         }
     }
@@ -241,7 +241,7 @@ class VisionVideoPlayerViewModel(
                 )
             }.onFailure { err ->
                 val latest = _state.value as? VisionVideoPlayerUiState.Content ?: return@onFailure
-                _state.value = latest.copy(isSubmittingReport = false, actionError = err.message)
+                _state.value = latest.copy(isSubmittingReport = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
             }
         }
     }
@@ -264,7 +264,7 @@ class VisionVideoPlayerViewModel(
                 _state.value = latest.copy(isCloning = false, cloneResultToast = res.alreadyCloned)
             }.onFailure { err ->
                 val latest = _state.value as? VisionVideoPlayerUiState.Content ?: return@onFailure
-                _state.value = latest.copy(isCloning = false, actionError = err.message)
+                _state.value = latest.copy(isCloning = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
             }
         }
     }
@@ -286,7 +286,7 @@ class VisionVideoPlayerViewModel(
                 _state.value = current.copy(isDeleting = false, isDeleted = true)
                 onSuccess()
             }.onFailure { err ->
-                _state.value = current.copy(isDeleting = false, actionError = err.message)
+                _state.value = current.copy(isDeleting = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
             }
         }
     }

@@ -124,7 +124,7 @@ class SlidesViewerViewModel(
                 }
             }.onFailure { err ->
                 _state.value = SlidesViewerUiState.Error(
-                    err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_slides_load)
+                    io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_slides_load))
                 )
             }
         }
@@ -208,7 +208,7 @@ class SlidesViewerViewModel(
                     _state.value = latest.copy(
                         hasReacted = wasReacted,
                         believersCount = oldCount,
-                        actionError = err.message
+                        actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_mana_failed))
                     )
                 }
             }
@@ -257,7 +257,7 @@ class SlidesViewerViewModel(
                 }
             }.onFailure { err ->
                 val latest = _state.value as? SlidesViewerUiState.Content ?: return@onFailure
-                _state.value = latest.copy(actionError = err.message)
+                _state.value = latest.copy(actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
                 startTimer()
             }
         }
@@ -313,7 +313,7 @@ class SlidesViewerViewModel(
                 )
             }.onFailure { err ->
                 val latest = _state.value as? SlidesViewerUiState.Content ?: return@onFailure
-                _state.value = latest.copy(isSubmittingComment = false, actionError = err.message)
+                _state.value = latest.copy(isSubmittingComment = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
             }
         }
     }
@@ -366,7 +366,7 @@ class SlidesViewerViewModel(
                 resumeTimer()
             }.onFailure { err ->
                 val latest = _state.value as? SlidesViewerUiState.Content ?: return@onFailure
-                _state.value = latest.copy(isSubmittingReport = false, actionError = err.message)
+                _state.value = latest.copy(isSubmittingReport = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
             }
         }
     }
@@ -393,7 +393,7 @@ class SlidesViewerViewModel(
                 resumeTimer()
             }.onFailure { err ->
                 val latest = _state.value as? SlidesViewerUiState.Content ?: return@onFailure
-                _state.value = latest.copy(isCloning = false, actionError = err.message)
+                _state.value = latest.copy(isCloning = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
                 resumeTimer()
             }
         }
@@ -417,7 +417,7 @@ class SlidesViewerViewModel(
                 _state.value = SlidesViewerUiState.Closed
                 onSuccess()
             }.onFailure { err ->
-                _state.value = current.copy(isDeleting = false, actionError = err.message)
+                _state.value = current.copy(isDeleting = false, actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
                 startTimer()
             }
         }

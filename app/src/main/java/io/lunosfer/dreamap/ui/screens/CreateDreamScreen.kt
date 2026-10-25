@@ -154,11 +154,11 @@ fun CreateDreamScreen(navController: NavController) {
                         imageWidth = null
                         imageHeight = null
                     }.onFailure { err ->
-                        Toast.makeText(context, imageUploadFailedTemplate.format(err.message ?: ""), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, imageUploadFailedTemplate.format(io.lunosfer.dreamap.util.ErrorText.friendly(err)), Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, io.lunosfer.dreamap.util.safeMessage(e) ?: commonErrorUnknownMsg, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, io.lunosfer.dreamap.util.ErrorText.friendly(e, commonErrorUnknownMsg), Toast.LENGTH_SHORT).show()
             } finally {
                 isUploadingImage = false
             }

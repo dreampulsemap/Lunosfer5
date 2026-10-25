@@ -72,7 +72,7 @@ class SpiritualToolsViewModel(
                 }
                 .onFailure { err ->
                     val app = io.lunosfer.dreamap.DreamapApp.instance
-                    val msg = err.message ?: ""
+                    val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                     // 400 iki farkli sebep olabiliyor ve ikisinin cozumu ayri:
                     // yeterli ruya yok VS aktif vizyon yok. Eskiden ikisi de
                     // "yeterli veri yok" diye tek metne dusuyordu.
@@ -100,7 +100,7 @@ class SpiritualToolsViewModel(
                     _psycheMapState.value = PsycheMapUiState.Success(res)
                 }
                 .onFailure { err ->
-                    _psycheMapState.value = PsycheMapUiState.Error(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_psyche_map))
+                    _psycheMapState.value = PsycheMapUiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_psyche_map)))
                 }
         }
     }

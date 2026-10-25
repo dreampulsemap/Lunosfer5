@@ -858,6 +858,8 @@
     <string name="error_timeout">Сервер відповідав надто довго. Спробуйте ще раз.</string>
     <string name="error_server">Щось пішло не так на нашому боці. Спробуйте трохи пізніше.</string>
     <string name="error_session_expired">Ваш сеанс завершився. Увійдіть знову.</string>
+    <string name="error_content_private">Цей вміст приватний, або у вас немає дозволу на його перегляд.</string>
+    <string name="error_content_not_found">Цей вміст не знайдено. Можливо, його видалено.</string>
 
     <string name="cd_use_my_location">Використати моє місцезнаходження</string>
 

@@ -838,6 +838,8 @@
     <string name="error_timeout">服务器响应时间过长。请重试。</string>
     <string name="error_server">我们这边出了点问题。请稍后重试。</string>
     <string name="error_session_expired">登录状态已过期。请重新登录。</string>
+    <string name="error_content_private">此内容为私密内容，或您无权查看。</string>
+    <string name="error_content_not_found">找不到此内容，可能已被删除。</string>
     <string name="cd_use_my_location">使用我的位置</string>
     <plurals name="summary_dreams_analyzed_plural">
         <item quantity="other">🌙 已分析 %1$d 个梦境</item>

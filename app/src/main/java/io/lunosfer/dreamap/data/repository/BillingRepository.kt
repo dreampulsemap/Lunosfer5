@@ -449,7 +449,7 @@ object BillingRepository : PurchasesUpdatedListener {
     /** HTTP hata govdesindeki `error` kodunu cikarir; yoksa genel bir kod doner. */
     private fun verifyErrorCode(error: Throwable): String {
         val http = error as? retrofit2.HttpException ?: return "verify_failed"
-        val body = runCatching { http.response()?.errorBody()?.string() }.getOrNull()
+        val body = io.lunosfer.dreamap.util.HttpErrorBody.read(http)
             ?: return "verify_failed"
         val code = runCatching { org.json.JSONObject(body).optString("error") }.getOrNull()
         return code?.takeIf { it.isNotBlank() } ?: "verify_failed"

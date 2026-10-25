@@ -83,7 +83,7 @@ class AddFriendViewModel(
                 val latest = _state.value as? AddFriendUiState.Content ?: return@onFailure
                 _state.value = latest.copy(
                     isSearching = false,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.add_friend_error_search_failed)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.add_friend_error_search_failed))
                 )
             }
         }
@@ -110,7 +110,7 @@ class AddFriendViewModel(
                 )
             }.onFailure { err ->
                 val latest = _state.value as? AddFriendUiState.Content ?: return@onFailure
-                _state.value = latest.copy(actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_error_request_failed))
+                _state.value = latest.copy(actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.friend_error_request_failed)))
             }
         }
     }
@@ -130,7 +130,7 @@ class AddFriendViewModel(
                 )
             }.onFailure { err ->
                 val latest = _state.value as? AddFriendUiState.Content ?: return@onFailure
-                _state.value = latest.copy(actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.add_friend_error_action_failed))
+                _state.value = latest.copy(actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.add_friend_error_action_failed)))
             }
         }
     }

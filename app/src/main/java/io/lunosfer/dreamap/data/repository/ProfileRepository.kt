@@ -145,7 +145,7 @@ class ProfileRepository {
     }
 
     private fun parseHttpError(e: HttpException): String {
-        val errorBody = e.response()?.errorBody()?.string()
+        val errorBody = io.lunosfer.dreamap.util.HttpErrorBody.read(e)
         if (!errorBody.isNullOrBlank()) {
             try {
                 val obj = json.parseToJsonElement(errorBody).jsonObject

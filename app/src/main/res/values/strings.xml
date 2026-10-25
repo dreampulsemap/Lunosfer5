@@ -877,6 +877,8 @@
     <string name="error_timeout">The server took too long to respond. Please try again.</string>
     <string name="error_server">Something went wrong on our side. Please try again shortly.</string>
     <string name="error_session_expired">Your session has expired. Please log in again.</string>
+    <string name="error_content_private">This content is private or you don\'t have permission to view it.</string>
+    <string name="error_content_not_found">This content couldn\'t be found. It may have been deleted.</string>
 
     <string name="cd_use_my_location">Use my location</string>
 

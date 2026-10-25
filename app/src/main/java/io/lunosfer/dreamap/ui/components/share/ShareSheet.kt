@@ -452,6 +452,6 @@ fun shareText(context: Context, content: ShareContent): String {
 }
 
 private fun apiErrorCode(err: Throwable): String? =
-    (err as? HttpException)?.response()?.errorBody()?.string()?.let {
+    (err as? HttpException)?.let { io.lunosfer.dreamap.util.HttpErrorBody.read(it) }?.let {
         Regex("\"error\"\\s*:\\s*\"([a-z_]+)\"").find(it)?.groupValues?.get(1)
     }

@@ -838,6 +838,8 @@
     <string name="error_timeout">सर्वर को जवाब देने में बहुत समय लगा। कृपया फिर कोशिश करें।</string>
     <string name="error_server">हमारी ओर से कुछ गड़बड़ हो गई। कृपया थोड़ी देर बाद फिर कोशिश करें।</string>
     <string name="error_session_expired">आपका सत्र समाप्त हो गया है। कृपया फिर से लॉग इन करें।</string>
+    <string name="error_content_private">यह सामग्री निजी है या आपको इसे देखने की अनुमति नहीं है।</string>
+    <string name="error_content_not_found">यह सामग्री नहीं मिली। हो सकता है इसे हटा दिया गया हो।</string>
     <string name="cd_use_my_location">मेरा स्थान उपयोग करें</string>
     <plurals name="summary_dreams_analyzed_plural">
         <item quantity="one">🌙 %1$d सपना विश्लेषित</item>

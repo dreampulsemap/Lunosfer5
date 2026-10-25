@@ -221,7 +221,7 @@ class VideoEditorViewModel(application: Application) : AndroidViewModel(applicat
             )
             rebuildTimeline()
         } catch (e: Exception) {
-            _state.value = _state.value.copy(toast = appContext.getString(R.string.toast_pixabay_import_failed_format, io.lunosfer.dreamap.util.safeMessage(e) ?: ""))
+            _state.value = _state.value.copy(toast = appContext.getString(R.string.toast_pixabay_import_failed_format, io.lunosfer.dreamap.util.ErrorText.friendly(e)))
         } finally {
             _state.value = _state.value.copy(isImportingPixabay = false)
         }
@@ -508,7 +508,7 @@ class VideoEditorViewModel(application: Application) : AndroidViewModel(applicat
 
         repository.attachToGoal(outputFile, userId, s.goalId)
             .onSuccess { _state.value = _state.value.copy(isExporting = false, didPublish = true, toast = appContext.getString(R.string.toast_publish_success)) }
-            .onFailure { err -> _state.value = _state.value.copy(isExporting = false, toast = appContext.getString(R.string.toast_upload_failed_format, err.message ?: "")) }
+            .onFailure { err -> _state.value = _state.value.copy(isExporting = false, toast = appContext.getString(R.string.toast_upload_failed_format, io.lunosfer.dreamap.util.ErrorText.friendly(err))) }
     }
 
     fun consumeToast() { _state.value = _state.value.copy(toast = null) }

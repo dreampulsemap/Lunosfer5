@@ -130,12 +130,12 @@ class DiaryComposerViewModel(
                     val latest = _state.value as? DiaryComposerUiState.Content ?: return@onFailure
                     _state.value = latest.copy(
                         isUploading = false,
-                        error = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_upload_failed, err.message ?: "")
+                        error = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_upload_failed, io.lunosfer.dreamap.util.ErrorText.friendly(err))
                     )
                 }
             } catch (e: Exception) {
                 val latest = _state.value as? DiaryComposerUiState.Content ?: return@launch
-                _state.value = latest.copy(isUploading = false, error = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_image_upload_failed, io.lunosfer.dreamap.util.safeMessage(e) ?: ""))
+                _state.value = latest.copy(isUploading = false, error = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_image_upload_failed, io.lunosfer.dreamap.util.ErrorText.friendly(e)))
             }
         }
     }
@@ -177,7 +177,7 @@ class DiaryComposerViewModel(
                 val latest = _state.value as? DiaryComposerUiState.Content ?: return@onFailure
                 _state.value = latest.copy(
                     isSubmitting = false,
-                    error = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_share_failed)
+                    error = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_share_failed))
                 )
             }
         }

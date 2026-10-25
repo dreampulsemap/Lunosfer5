@@ -59,7 +59,7 @@ object GuestMode {
         if (error == null) return false
         val bodyText = (error as? HttpException)?.let { http ->
             if (http.code() != 403) return false
-            runCatching { http.response()?.errorBody()?.string() }.getOrNull()
+            HttpErrorBody.read(http)
         }
         val haystack = listOfNotNull(bodyText, error.message).joinToString(" ").lowercase()
         return haystack.contains("guest_read_only") ||

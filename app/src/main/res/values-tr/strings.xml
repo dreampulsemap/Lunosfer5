@@ -871,6 +871,8 @@
     <string name="error_timeout">Sunucu yanıt vermedi. Lütfen tekrar dene.</string>
     <string name="error_server">Bizim tarafta bir sorun oluştu. Kısa süre sonra tekrar dene.</string>
     <string name="error_session_expired">Oturumun sona erdi. Lütfen tekrar giriş yap.</string>
+    <string name="error_content_private">Bu içerik gizli ya da görüntüleme iznin yok.</string>
+    <string name="error_content_not_found">Bu içerik bulunamadı. Silinmiş olabilir.</string>
 
     <string name="cd_use_my_location">Konumumu kullan</string>
     <plurals name="summary_dreams_analyzed_plural">

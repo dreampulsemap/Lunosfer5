@@ -83,10 +83,10 @@ class SlideCreatorViewModel(
                 repository.uploadSlideImage(bytes, fileName).onSuccess { url ->
                     createSlideWithImage(imageUrl = url, durationSeconds = DEFAULT_IMAGE_DURATION_SECONDS)
                 }.onFailure { err ->
-                    setError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
+                    setError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed)))
                 }
             } catch (e: Exception) {
-                setError(io.lunosfer.dreamap.util.safeMessage(e) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
+                setError(io.lunosfer.dreamap.util.ErrorText.friendly(e, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed)))
             }
         }
     }
@@ -125,10 +125,10 @@ class SlideCreatorViewModel(
                 repository.uploadSlideImage(bytes, fileName).onSuccess { url ->
                     createSlideWithImage(imageUrl = url, durationSeconds = durationSeconds)
                 }.onFailure { err ->
-                    setError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
+                    setError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed)))
                 }
             } catch (e: Exception) {
-                setError(io.lunosfer.dreamap.util.safeMessage(e) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed))
+                setError(io.lunosfer.dreamap.util.ErrorText.friendly(e, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_upload_failed)))
             }
         }
     }
@@ -216,7 +216,7 @@ class SlideCreatorViewModel(
             ).onSuccess { styled -> finishCreate(styled) }
                 .onFailure { finishCreate(created) } // stil kaydı başarısız olsa da slayt zaten var, düzenleyiciden tekrar denenebilir
         }.onFailure { err ->
-            setError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_create_slide))
+            setError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.slide_creator_error_create_slide)))
         }
     }
 

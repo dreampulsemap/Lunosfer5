@@ -53,7 +53,7 @@ class DreamDetailViewModel : ViewModel() {
                 _state.value = successState
                 loadComments(id)
             }.onFailure { error ->
-                _state.value = DreamDetailUiState.Error(io.lunosfer.dreamap.util.safeMessage(error) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_dream_load))
+                _state.value = DreamDetailUiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(error, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_dream_load)))
             }
         }
     }
@@ -105,7 +105,7 @@ class DreamDetailViewModel : ViewModel() {
                     likesCount = confirmedCount
                 )
             }.onFailure { err ->
-                val msg = err.message ?: ""
+                val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                 if (msg.contains("Already liked", ignoreCase = true)) {
                     // Sessizce yut, optimistic state zaten doğru
                     return@onFailure
@@ -153,7 +153,7 @@ class DreamDetailViewModel : ViewModel() {
                 val latest = _state.value as? DreamDetailUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     isSubmittingComment = false,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_comment_add_failed)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_comment_add_failed))
                 )
             }
         }
@@ -169,7 +169,7 @@ class DreamDetailViewModel : ViewModel() {
                     commentsCount = maxOf(0, latest.commentsCount - 1)
                 )
             }.onFailure { err ->
-                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_comment_delete_failed))
+                setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_comment_delete_failed)))
             }
         }
     }
@@ -193,7 +193,7 @@ class DreamDetailViewModel : ViewModel() {
                 }
                 onComplete()
             }.onFailure { err ->
-                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_update_failed))
+                setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_update_failed)))
             }
         }
     }
@@ -203,7 +203,7 @@ class DreamDetailViewModel : ViewModel() {
             repository.deleteDream(dreamId, userId, softDelete).onSuccess {
                 onSuccess()
             }.onFailure { err ->
-                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_delete_failed))
+                setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_delete_failed)))
             }
         }
     }
@@ -225,7 +225,7 @@ class DreamDetailViewModel : ViewModel() {
                     _state.value = latest.copy(dream = updatedDream)
                 }
             }.onFailure { err ->
-                val msg = err.message ?: ""
+                val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                 if (msg.contains("no_auras", ignoreCase = true) || msg.contains("402")) {
                     setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_insufficient_aura))
                 } else if (msg.contains("forbidden", ignoreCase = true) || msg.contains("403")) {
@@ -252,7 +252,7 @@ class DreamDetailViewModel : ViewModel() {
                     actionMessage = msg
                 )
             }.onFailure { err ->
-                val msg = err.message ?: ""
+                val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                 if (msg.contains("no_auras", ignoreCase = true) || msg.contains("402")) {
                     setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_insufficient_aura))
                 } else if (msg.contains("forbidden", ignoreCase = true) || msg.contains("403")) {
@@ -299,7 +299,7 @@ class DreamDetailViewModel : ViewModel() {
                 }
             }.onFailure { error ->
                 val latest = _state.value as? DreamDetailUiState.Success ?: return@onFailure
-                val msg = error.message ?: ""
+                val msg = io.lunosfer.dreamap.util.ErrorText.matchText(error)
                 val errText = when {
                     msg.contains("no_auras", ignoreCase = true) || msg.contains("402") -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_insufficient_aura)
                     else -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.dream_detail_error_deep_analysis_failed)
@@ -356,7 +356,7 @@ class DreamDetailViewModel : ViewModel() {
                 val latest = _state.value as? DreamDetailUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     isSubmittingReport = false,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error))
                 )
             }
         }

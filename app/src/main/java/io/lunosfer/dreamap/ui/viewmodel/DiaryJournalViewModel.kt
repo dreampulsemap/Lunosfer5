@@ -89,7 +89,7 @@ class DiaryJournalViewModel(
                 }
                 .onFailure { error ->
                     val fallback = DreamapApp.instance.getString(R.string.diary_journal_load_error)
-                    _state.value = DiaryJournalUiState.Error(error.message ?: fallback)
+                    _state.value = DiaryJournalUiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(error, fallback))
                 }
         }
     }
@@ -115,8 +115,8 @@ class DiaryJournalViewModel(
                     val latest = _state.value as? DiaryJournalUiState.Success ?: return@onFailure
                     _state.value = latest.copy(
                         deletingId = null,
-                        actionError = io.lunosfer.dreamap.util.safeMessage(error)
-                            ?: DreamapApp.instance.getString(R.string.diary_journal_delete_failed)
+                        actionError = io.lunosfer.dreamap.util.ErrorText.friendly(error,
+                            DreamapApp.instance.getString(R.string.diary_journal_delete_failed))
                     )
                 }
         }
@@ -141,8 +141,8 @@ class DiaryJournalViewModel(
                     val latest = _state.value as? DiaryJournalUiState.Success ?: return@onFailure
                     _state.value = latest.copy(
                         savingId = null,
-                        actionError = io.lunosfer.dreamap.util.safeMessage(error)
-                            ?: DreamapApp.instance.getString(R.string.diary_journal_edit_failed)
+                        actionError = io.lunosfer.dreamap.util.ErrorText.friendly(error,
+                            DreamapApp.instance.getString(R.string.diary_journal_edit_failed))
                     )
                 }
         }

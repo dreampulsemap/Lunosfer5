@@ -856,6 +856,8 @@
     <string name="error_timeout">Palvelin vastasi liian hitaasti. Yritä uudelleen.</string>
     <string name="error_server">Jokin meni vikaan meidän päässämme. Yritä pian uudelleen.</string>
     <string name="error_session_expired">Istuntosi on vanhentunut. Kirjaudu sisään uudelleen.</string>
+    <string name="error_content_private">Tämä sisältö on yksityinen tai sinulla ei ole oikeutta nähdä sitä.</string>
+    <string name="error_content_not_found">Sisältöä ei löytynyt. Se on ehkä poistettu.</string>
 
     <string name="cd_use_my_location">Käytä sijaintiani</string>
 

@@ -98,7 +98,7 @@ class DailyCompassViewModel(
                     }
                 }
                 .onFailure { err ->
-                    val msg = err.message ?: ""
+                    val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                     _state.value = if (msg.contains("429") || msg.contains("already_used")) {
                         CompassUiState.AlreadyUsedToday
                     } else {

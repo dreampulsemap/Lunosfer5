@@ -161,7 +161,7 @@ class ProfileViewModel(
                 val latest = _state.value as? ProfileUiState.Content ?: return@onFailure
                 _state.value = latest.copy(
                     isSavingProfile = false,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_update_failed)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_update_failed))
                 )
             }
         }
@@ -181,11 +181,11 @@ class ProfileViewModel(
                     onUploaded(url)
                 }.onFailure { err ->
                     val latest = _state.value as? ProfileUiState.Content ?: return@onFailure
-                    _state.value = latest.copy(actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_avatar_upload_failed))
+                    _state.value = latest.copy(actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_avatar_upload_failed)))
                 }
             } catch (e: Exception) {
                 val latest = _state.value as? ProfileUiState.Content ?: return@launch
-                _state.value = latest.copy(actionError = io.lunosfer.dreamap.util.safeMessage(e) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_unknown))
+                _state.value = latest.copy(actionError = io.lunosfer.dreamap.util.ErrorText.friendly(e, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_unknown)))
             }
         }
     }
@@ -230,7 +230,7 @@ class ProfileViewModel(
                     _state.value = latest.copy(
                         isDeletingAccount = false,
                         isDeleteAccountDialogOpen = false,
-                        actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_delete_account_failed)
+                        actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.profile_error_delete_account_failed))
                     )
                 }
         }

@@ -37,7 +37,7 @@ class BlockedUsersViewModel(
                 .onSuccess { users -> _state.value = BlockedUsersUiState.Success(users = users) }
                 .onFailure { err ->
                     _state.value = BlockedUsersUiState.Error(
-                        err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.blocked_users_load_error)
+                        io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.blocked_users_load_error))
                     )
                 }
         }
@@ -61,7 +61,7 @@ class BlockedUsersViewModel(
                     val latest = _state.value as? BlockedUsersUiState.Success ?: return@onFailure
                     _state.value = latest.copy(
                         unblockingUserId = null,
-                        error = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.unblock_user_error)
+                        error = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.unblock_user_error))
                     )
                 }
         }
