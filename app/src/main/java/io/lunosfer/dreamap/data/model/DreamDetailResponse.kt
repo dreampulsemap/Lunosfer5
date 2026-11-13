@@ -11,13 +11,16 @@ data class DreamDetailResponse(
 @Serializable
 data class DreamDetail(
     val id: Long,
-    @SerialName("user_id") val userId: String,
+    // user_id (hesabı silinmiş sahip) ya da dream_date null gelince tüm yanıtın
+    // çözümü patlıyor ve "Failed to load dream" görünüyordu; coerceInputValues
+    // null'ı yalnızca varsayılanı olan alana çevirebiliyor.
+    @SerialName("user_id") val userId: String = "",
     val content: String,
     @SerialName("location_name") val locationName: String? = null,
     val visibility: String,
     @SerialName("in_feed") val inFeed: Boolean,
     @SerialName("user_selected_sentiment") val userSelectedSentiment: String? = null,
-    @SerialName("dream_date") val dreamDate: String,
+    @SerialName("dream_date") val dreamDate: String = "",
     @SerialName("original_language") val originalLanguage: String? = null,
     val tags: List<String>? = null,
     @SerialName("created_at") val createdAt: String,
