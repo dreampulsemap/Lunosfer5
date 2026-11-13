@@ -40,7 +40,7 @@ class DeepAnalysisRepository(
     // hataya ceviriyoruz.
     private fun mapThrowable(error: Throwable): Throwable {
         val http = error as? HttpException ?: return error
-        val body = runCatching { http.response()?.errorBody()?.string() }.getOrNull()
+        val body = io.lunosfer.dreamap.util.HttpErrorBody.read(http)
         val json = body?.let { runCatching { org.json.JSONObject(it) }.getOrNull() }
             ?: return ApiErrors.translate(error)
 

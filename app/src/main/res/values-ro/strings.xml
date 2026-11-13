@@ -857,6 +857,8 @@
     <string name="error_timeout">Serverul a răspuns prea greu. Încearcă din nou.</string>
     <string name="error_server">Ceva nu a mers bine la noi. Încearcă din nou în curând.</string>
     <string name="error_session_expired">Sesiunea ta a expirat. Conectează-te din nou.</string>
+    <string name="error_content_private">Acest conținut este privat sau nu ai permisiunea să îl vezi.</string>
+    <string name="error_content_not_found">Acest conținut nu a fost găsit. Este posibil să fi fost șters.</string>
 
     <string name="cd_use_my_location">Folosește locația mea</string>
 

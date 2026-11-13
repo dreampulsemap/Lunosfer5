@@ -77,7 +77,7 @@ class GoalDetailViewModel(
                 }.onSuccess { goal ->
                     setGoalSuccess(goal)
                 }.onFailure { err ->
-                    _state.value = GoalDetailUiState.Error(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_vision_not_found, err.message ?: ""))
+                    _state.value = GoalDetailUiState.Error(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_vision_not_found, io.lunosfer.dreamap.util.ErrorText.friendly(err)))
                 }
             }
         }
@@ -130,7 +130,7 @@ class GoalDetailViewModel(
                 )
             }.onFailure { err ->
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
-                val msg = err.message ?: ""
+                val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                 val errText = if (msg.contains("duplicate", ignoreCase = true) || msg.contains("23505"))
                     io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_collaborators_already_invited)
                 else
@@ -147,7 +147,7 @@ class GoalDetailViewModel(
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onSuccess
                 _state.value = latest.copy(collaborators = latest.collaborators.filterNot { it.id == collaboratorId })
             }.onFailure { err ->
-                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed))
+                setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
             }
         }
     }
@@ -162,7 +162,7 @@ class GoalDetailViewModel(
                 loadCollaborators()
                 if (accept) loadGoal()
             }.onFailure { err ->
-                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed))
+                setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)))
             }
         }
     }
@@ -199,7 +199,7 @@ class GoalDetailViewModel(
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     hasSaved = wasSaved,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_save_failed)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_save_failed))
                 )
             }
         }
@@ -225,12 +225,12 @@ class GoalDetailViewModel(
                 _state.value = latest.copy(actionMessage = msg)
             }.onFailure { err ->
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
-                val msg = err.message ?: ""
+                val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                 val errText = when {
                     msg.contains("insufficient_mana", ignoreCase = true) || msg.contains("402") -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_insufficient_mana)
                     msg.contains("cannot_react_to_own_goal", ignoreCase = true) -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_own_goal_mana)
                     msg.contains("already_reacted", ignoreCase = true) -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_already_reacted_mana)
-                    else -> err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_mana_failed)
+                    else -> io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_mana_failed))
                 }
                 // Rollback
                 _state.value = latest.copy(
@@ -262,7 +262,7 @@ class GoalDetailViewModel(
                 _state.value = latest.copy(
                     hasReacted = wasReacted,
                     believersCount = oldCount,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed))
                 )
             }
         }
@@ -285,7 +285,7 @@ class GoalDetailViewModel(
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     isSubmittingComment = false,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_comment_add_failed)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_comment_add_failed))
                 )
             }
         }
@@ -299,7 +299,7 @@ class GoalDetailViewModel(
                     comments = latest.comments.filterNot { it.id == commentId }
                 )
             }.onFailure { err ->
-                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_comment_delete_failed))
+                setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_comment_delete_failed)))
             }
         }
     }
@@ -316,11 +316,11 @@ class GoalDetailViewModel(
                 }
                 onComplete()
             }.onFailure { err ->
-                val msg = err.message ?: ""
+                val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                 val errText = when {
                     msg.contains("not_owner", ignoreCase = true) || msg.contains("403") -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_not_authorized)
                     msg.contains("goal_already_resolved", ignoreCase = true) -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_resolved_immutable)
-                    else -> err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_status_update_failed)
+                    else -> io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_status_update_failed))
                 }
                 setActionError(errText)
             }
@@ -341,10 +341,10 @@ class GoalDetailViewModel(
                     )
                 }
             }.onFailure { err ->
-                val msg = err.message ?: ""
+                val msg = io.lunosfer.dreamap.util.ErrorText.matchText(err)
                 val errText = when {
                     msg.contains("not_owner", ignoreCase = true) || msg.contains("403") -> io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_not_authorized)
-                    else -> err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_visibility_update_failed)
+                    else -> io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_visibility_update_failed))
                 }
                 setActionError(errText)
             }
@@ -356,7 +356,7 @@ class GoalDetailViewModel(
             repository.deleteGoal(goalId).onSuccess {
                 onSuccess()
             }.onFailure { err ->
-                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_delete_failed))
+                setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_delete_failed)))
             }
         }
     }
@@ -374,7 +374,7 @@ class GoalDetailViewModel(
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_cover_generate_failed))
+                    setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_cover_generate_failed)))
                 }
         }
     }
@@ -390,7 +390,7 @@ class GoalDetailViewModel(
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_add_failed))
+                    setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_add_failed)))
                 }
         }
     }
@@ -432,7 +432,7 @@ class GoalDetailViewModel(
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_add_failed))
+                    setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_add_failed)))
                 }
         }
     }
@@ -455,10 +455,10 @@ class GoalDetailViewModel(
                         actionMessage = io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_msg_image_added)
                     )
                 }.onFailure { err ->
-                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_add_failed))
+                    setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_add_failed)))
                 }
             } catch (e: Exception) {
-                setActionError(io.lunosfer.dreamap.util.safeMessage(e) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_unknown))
+                setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(e, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_unknown)))
             }
         }
     }
@@ -474,7 +474,7 @@ class GoalDetailViewModel(
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_cover_set_failed))
+                    setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_cover_set_failed)))
                 }
         }
     }
@@ -491,7 +491,7 @@ class GoalDetailViewModel(
                     )
                 }
                 .onFailure { err ->
-                    setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_remove_failed))
+                    setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_image_remove_failed)))
                 }
         }
     }
@@ -512,7 +512,7 @@ class GoalDetailViewModel(
                     setActionError(io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_translation_fetch_failed))
                 }
             }.onFailure { err ->
-                setActionError(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_translation_failed))
+                setActionError(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.goal_detail_error_translation_failed)))
             }
         }
     }
@@ -564,7 +564,7 @@ class GoalDetailViewModel(
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     isSubmittingReport = false,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.report_submitted_error))
                 )
             }
         }
@@ -593,7 +593,7 @@ class GoalDetailViewModel(
                 val latest = _state.value as? GoalDetailUiState.Success ?: return@onFailure
                 _state.value = latest.copy(
                     isCloning = false,
-                    actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_clone_error_failed)
+                    actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.vision_clone_error_failed))
                 )
             }
         }

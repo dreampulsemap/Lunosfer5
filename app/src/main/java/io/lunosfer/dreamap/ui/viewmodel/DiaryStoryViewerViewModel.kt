@@ -71,7 +71,7 @@ class DiaryStoryViewerViewModel(
                     startTimer()
                 }
             }.onFailure { err ->
-                _state.value = DiaryStoryViewerUiState.Error(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_stories_load))
+                _state.value = DiaryStoryViewerUiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_stories_load)))
             }
         }
     }
@@ -175,7 +175,7 @@ class DiaryStoryViewerViewModel(
                     startTimer()
                 }
             }.onFailure { err ->
-                _state.value = current.copy(actionError = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_delete_failed))
+                _state.value = current.copy(actionError = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_delete_failed)))
                 startTimer()
             }
         }
@@ -257,7 +257,7 @@ class DiaryStoryViewerViewModel(
                     val latest = _state.value as? DiaryStoryViewerUiState.Content ?: return@onFailure
                     _state.value = latest.copy(
                         isPostingComment = false,
-                        actionError = io.lunosfer.dreamap.util.safeMessage(it) ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed)
+                        actionError = io.lunosfer.dreamap.util.ErrorText.friendly(it, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.common_error_action_failed))
                     )
                 }
         }

@@ -7,10 +7,15 @@ package io.lunosfer.dreamap.util
  * basiliyordu. Teknik gorunen mesajda null doner; cagiran kendi
  * yerellestirilmis yedek metnini gosterir.
  */
+private val HTTP_STATUS_MESSAGE = Regex("^HTTP \\d{3}\\b")
+
 fun safeMessage(t: Throwable?): String? {
     val msg = t?.message?.trim().orEmpty()
     if (msg.isEmpty()) return null
     val technical = msg.contains("://") ||
+        // Retrofit'in "HTTP 403 " mesaji: durum koduna gore anlasilir metin
+        // icin ErrorText.friendly kullanilmali; burada yedek metne dussun.
+        HTTP_STATUS_MESSAGE.containsMatchIn(msg) ||
         msg.contains("supabase", ignoreCase = true) ||
         msg.contains('\n') ||
         msg.contains("Headers", ignoreCase = true) ||

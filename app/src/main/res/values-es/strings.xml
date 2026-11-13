@@ -837,6 +837,8 @@
     <string name="error_timeout">El servidor tardó demasiado en responder. Inténtalo de nuevo.</string>
     <string name="error_server">Algo salió mal por nuestra parte. Inténtalo de nuevo en un momento.</string>
     <string name="error_session_expired">Tu sesión ha caducado. Inicia sesión de nuevo.</string>
+    <string name="error_content_private">Este contenido es privado o no tienes permiso para verlo.</string>
+    <string name="error_content_not_found">No se encontró este contenido. Puede que se haya eliminado.</string>
     <string name="cd_use_my_location">Usar mi ubicación</string>
     <plurals name="summary_dreams_analyzed_plural">
         <item quantity="one">🌙 %1$d sueño analizado</item>

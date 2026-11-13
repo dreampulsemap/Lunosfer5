@@ -24,7 +24,7 @@ object ApiErrors {
         val http = error as? HttpException ?: return error
         if (http.code() != 402) return error
 
-        val body = runCatching { http.response()?.errorBody()?.string() }.getOrNull()
+        val body = HttpErrorBody.read(http)
             ?: return InsufficientAuraException(0)
 
         val json = runCatching { JSONObject(body) }.getOrNull() ?: return InsufficientAuraException(0)

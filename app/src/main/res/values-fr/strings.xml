@@ -836,6 +836,8 @@
     <string name="error_timeout">Le serveur a mis trop de temps à répondre. Veuillez réessayer.</string>
     <string name="error_server">Un problème est survenu de notre côté. Veuillez réessayer dans un instant.</string>
     <string name="error_session_expired">Votre session a expiré. Veuillez vous reconnecter.</string>
+    <string name="error_content_private">Ce contenu est privé ou vous n\'avez pas l\'autorisation de le voir.</string>
+    <string name="error_content_not_found">Ce contenu est introuvable. Il a peut-être été supprimé.</string>
     <string name="cd_use_my_location">Utiliser ma position</string>
     <plurals name="summary_dreams_analyzed_plural">
         <item quantity="one">🌙 %1$d rêve analysé</item>

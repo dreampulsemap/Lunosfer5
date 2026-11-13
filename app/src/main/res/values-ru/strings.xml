@@ -837,6 +837,8 @@
     <string name="error_timeout">Сервер слишком долго не отвечал. Попробуйте ещё раз.</string>
     <string name="error_server">Что-то пошло не так на нашей стороне. Попробуйте чуть позже.</string>
     <string name="error_session_expired">Сеанс истёк. Войдите снова.</string>
+    <string name="error_content_private">Этот контент скрыт, или у вас нет прав на его просмотр.</string>
+    <string name="error_content_not_found">Этот контент не найден. Возможно, он был удалён.</string>
     <string name="cd_use_my_location">Использовать моё местоположение</string>
     <plurals name="summary_dreams_analyzed_plural">
         <item quantity="one">🌙 %1$d сон проанализирован</item>

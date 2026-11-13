@@ -32,7 +32,7 @@ class DiaryFeedViewModel(
             repository.getFeed().onSuccess { rings ->
                 _state.value = DiaryFeedUiState.Success(rings)
             }.onFailure { err ->
-                _state.value = DiaryFeedUiState.Error(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_diary_feed_load))
+                _state.value = DiaryFeedUiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_diary_feed_load)))
             }
         }
     }

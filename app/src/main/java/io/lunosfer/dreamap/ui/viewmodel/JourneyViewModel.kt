@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.lunosfer.dreamap.data.model.LeaderboardEntry
 import io.lunosfer.dreamap.data.repository.GameRepository
-import io.lunosfer.dreamap.util.safeMessage
+import io.lunosfer.dreamap.util.ErrorText
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,7 +38,7 @@ class JourneyViewModel : ViewModel() {
             _board.value = UiState.Loading
             _board.value = runCatching { GameRepository.leaderboard(_period.value) }.fold(
                 onSuccess = { UiState.Success(it) },
-                onFailure = { UiState.Error(safeMessage(it) ?: "") }
+                onFailure = { UiState.Error(ErrorText.friendly(it)) }
             )
         }
     }

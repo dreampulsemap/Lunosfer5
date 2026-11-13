@@ -44,7 +44,7 @@ class ReferralViewModel(
                     _uiState.value = ReferralUiState.Success(stats)
                 }
                 .onFailure { err ->
-                    _uiState.value = ReferralUiState.Error(err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_referral_stats))
+                    _uiState.value = ReferralUiState.Error(io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.error_referral_stats)))
                 }
         }
     }
@@ -68,7 +68,7 @@ class ReferralViewModel(
                 }
                 .onFailure { err ->
                     _isClaiming.value = false
-                    _claimError.value = err.message ?: io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.referral_error_code_invalid)
+                    _claimError.value = io.lunosfer.dreamap.util.ErrorText.friendly(err, io.lunosfer.dreamap.DreamapApp.instance.getString(io.lunosfer.dreamap.R.string.referral_error_code_invalid))
                 }
         }
     }

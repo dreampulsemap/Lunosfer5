@@ -836,6 +836,8 @@
     <string name="error_timeout">サーバーの応答に時間がかかりすぎました。もう一度お試しください。</string>
     <string name="error_server">こちら側で問題が発生しました。しばらくしてからもう一度お試しください。</string>
     <string name="error_session_expired">セッションの有効期限が切れました。もう一度ログインしてください。</string>
+    <string name="error_content_private">このコンテンツは非公開か、閲覧する権限がありません。</string>
+    <string name="error_content_not_found">このコンテンツは見つかりませんでした。削除された可能性があります。</string>
     <string name="cd_use_my_location">現在地を使用</string>
     <plurals name="summary_dreams_analyzed_plural">
         <item quantity="other">🌙 %1$d件の夢を分析しました</item>

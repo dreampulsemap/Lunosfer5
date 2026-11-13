@@ -960,7 +960,7 @@ private fun ChangePasswordDialog(onDismiss: () -> Unit) {
                                             Toast.makeText(context, success, Toast.LENGTH_LONG).show()
                                             onDismiss()
                                         } catch (e: Exception) {
-                                            errorText = e.message
+                                            errorText = io.lunosfer.dreamap.util.ErrorText.friendly(e)
                                         } finally {
                                             isSaving = false
                                         }
@@ -1049,11 +1049,11 @@ private fun EditProfileDialog(
                     profileRepo.uploadAvatar(bytes, fileName).onSuccess { uploadedUrl ->
                         avatarUrl = uploadedUrl
                     }.onFailure { err ->
-                        Toast.makeText(dialogContext, err.message ?: avatarUploadFailedMsg, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(dialogContext, io.lunosfer.dreamap.util.ErrorText.friendly(err, avatarUploadFailedMsg), Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(dialogContext, io.lunosfer.dreamap.util.safeMessage(e) ?: commonErrorUnknownMsg, Toast.LENGTH_SHORT).show()
+                Toast.makeText(dialogContext, io.lunosfer.dreamap.util.ErrorText.friendly(e, commonErrorUnknownMsg), Toast.LENGTH_SHORT).show()
             } finally {
                 isUploadingAvatar = false
             }
