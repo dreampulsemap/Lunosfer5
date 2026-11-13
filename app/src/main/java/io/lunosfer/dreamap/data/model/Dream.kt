@@ -13,7 +13,11 @@ import kotlinx.serialization.json.JsonElement
 @Serializable
 data class Dream(
     val id: Long,
-    @SerialName("user_id") val userId: String,
+    // Hesabı silinen kullanıcının rüyalarında user_id null geliyor; varsayılan
+    // değer olmadan tek bir böyle rüya tüm akış yanıtının çözümünü patlatıp
+    // Keşfet'i bozuyordu (coerceInputValues null'ı yalnızca varsayılanı olan
+    // alana çevirebilir).
+    @SerialName("user_id") val userId: String = "",
     val content: String,
     @SerialName("ai_title") val aiTitle: String? = null,
     @SerialName("ai_image_url") val aiImageUrl: String? = null,
